@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://ldomenichelli.github.io/sitemap.xml
