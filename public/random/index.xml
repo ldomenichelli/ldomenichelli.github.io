@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Lucia</title>
+    <link>https://ldomenichelli.github.io/random/</link>
+    <description>Recent content on Lucia</description>
+    <image>
+      <title>Lucia</title>
+      <url>https://ldomenichelli.github.io/logo.png</url>
+      <link>https://ldomenichelli.github.io/logo.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="https://ldomenichelli.github.io/random/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Quantum Computing - Intro </title>
+      <link>https://ldomenichelli.github.io/random/quantum/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ldomenichelli.github.io/random/quantum/</guid>
+      <description>Introduction to Quantum Computing</description>
+    </item>
+    
+  </channel>
+</rss>
