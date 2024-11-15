@@ -12,30 +12,13 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language><atom:link href="https://ldomenichelli.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title></title>
-      <link>https://ldomenichelli.github.io/posts/post2/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://ldomenichelli.github.io/posts/post2/</guid>
-      <description>&lt;p&gt;In NLP, it takes the form of anisotropy, a singular property of hidden representations which makes them unexpectedly close to each other in terms of angular distance (cosine-similarity).
-Anisotropy has been widely observed among self-supervised models based on Transformers -&amp;gt; recent literature says it could be related to optimizing the [[cross entropy loss[https://ml-cheatsheet.readthedocs.io/en/latest/loss_functions.html]]&lt;/p&gt;
-&lt;h3 id=&#34;anisotropy-in-pretrained-berts&#34;&gt;Anisotropy in pretrained BERTs&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;CharacterBERT&lt;/em&gt;&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;CANINE&lt;/em&gt; -&amp;gt; s downsampling contextualized character representations via astrided convolution before feeding them to aTransformers. It can be trained either with a subword-based objective (CANINE-s) or with a character-level one (CANINE-c).&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;MANTa-LM&lt;/em&gt;-&amp;gt; is based on a differentiable segmentation and embed- ding module added before an encoder-decoder model in the style of T5&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;ByT5&lt;/em&gt; -&amp;gt; is a version of T5 trained at byte - level.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Metric used is COSINE SIMILARITY&lt;/strong&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Coming soon</title>
+      <title>Space uniformity</title>
       <link>https://ldomenichelli.github.io/posts/post1/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ldomenichelli.github.io/posts/post1/</guid>
-      <description></description>
+      <description>&lt;h3 id=&#34;definition&#34;&gt;Definition&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;A distribution is isotropic if its variance is uniformly distributed across all dimensions.&lt;/em&gt; Namely, the covariance matrix of an isotropic distribution is proportional to the identity matrix. Conversely, an anisotropic distribution of data is one where the variance is dominated by a single dimension. For example, a line in &lt;em&gt;n-dimensional vector space&lt;/em&gt;  is maximally anisotropic. Robust isotropy metrics should return maximally isotropic scores for balls and minimally isotropic (i.e. anisotropic) scores for lines.&lt;/p&gt;</description>
     </item>
     
   </channel>

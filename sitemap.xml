@@ -6,8 +6,6 @@
   </url><url>
     <loc>https://ldomenichelli.github.io/posts/</loc>
   </url><url>
-    <loc>https://ldomenichelli.github.io/posts/post2/</loc>
-  </url><url>
     <loc>https://ldomenichelli.github.io/random/</loc>
   </url><url>
     <loc>https://ldomenichelli.github.io/tags/1-vs-1/</loc>
@@ -28,8 +26,6 @@
   </url><url>
     <loc>https://ldomenichelli.github.io/categories/</loc>
   </url><url>
-    <loc>https://ldomenichelli.github.io/posts/post1/</loc>
-  </url><url>
     <loc>https://ldomenichelli.github.io/</loc>
   </url><url>
     <loc>https://ldomenichelli.github.io/tags/quantum/</loc>
@@ -37,6 +33,8 @@
     <loc>https://ldomenichelli.github.io/random/quantum/</loc>
   </url><url>
     <loc>https://ldomenichelli.github.io/search/</loc>
+  </url><url>
+    <loc>https://ldomenichelli.github.io/posts/post1/</loc>
   </url><url>
     <loc>https://ldomenichelli.github.io/tags/</loc>
   </url>
