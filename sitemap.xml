@@ -26,7 +26,11 @@
   </url><url>
     <loc>https://ldomenichelli.github.io/categories/</loc>
   </url><url>
+    <loc>https://ldomenichelli.github.io/tags/hobby/</loc>
+  </url><url>
     <loc>https://ldomenichelli.github.io/</loc>
+  </url><url>
+    <loc>https://ldomenichelli.github.io/random/tea/</loc>
   </url><url>
     <loc>https://ldomenichelli.github.io/tags/quantum/</loc>
   </url><url>
@@ -37,5 +41,7 @@
     <loc>https://ldomenichelli.github.io/posts/post1/</loc>
   </url><url>
     <loc>https://ldomenichelli.github.io/tags/</loc>
+  </url><url>
+    <loc>https://ldomenichelli.github.io/tags/tea/</loc>
   </url>
 </urlset>

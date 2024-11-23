@@ -40,6 +40,18 @@
     
     
     <item>
+      <title>Pensieri del Tè 🍵</title>
+      <link>https://ldomenichelli.github.io/random/tea/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ldomenichelli.github.io/random/tea/</guid>
+      <description>&lt;p&gt;&lt;em&gt;L’uomo beve il Tè perché lo angoscia l’uomo.
+Il Tè beve l’uomo, l’erba più amara.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;-Guido Ceronetti&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Tea transcends being just a beverage—it&amp;rsquo;s a ritual, a tradition, and a bridge between nature and culture. With over &lt;strong&gt;3,000 varieties&lt;/strong&gt;, tea offers an incredible diversity of flavors, aromas, and benefits. Despite its vastness, every true tea originates from one remarkable plant: &lt;strong&gt;Camellia sinensis&lt;/strong&gt;. The wide variety arises from how the leaves are processed, combined, or infused. This guide delves into the unique categories of &lt;strong&gt;true teas&lt;/strong&gt;, &lt;strong&gt;mixed teas&lt;/strong&gt;, and &lt;strong&gt;herbal tisanes&lt;/strong&gt;, as well as the distinctions between Japanese and Chinese tea traditions.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Quantum Computing - Intro </title>
       <link>https://ldomenichelli.github.io/random/quantum/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -55,8 +67,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ldomenichelli.github.io/posts/post1/</guid>
-      <description>&lt;h3 id=&#34;definition&#34;&gt;Definition&lt;/h3&gt;
-&lt;p&gt;&lt;em&gt;A distribution is isotropic if its variance is uniformly distributed across all dimensions.&lt;/em&gt; Namely, the covariance matrix of an isotropic distribution is proportional to the identity matrix. Conversely, an anisotropic distribution of data is one where the variance is dominated by a single dimension. For example, a line in &lt;em&gt;n-dimensional vector space&lt;/em&gt;  is maximally anisotropic. Robust isotropy metrics should return maximally isotropic scores for balls and minimally isotropic (i.e. anisotropic) scores for lines.&lt;/p&gt;</description>
+      <description>&lt;p&gt;Understanding the &lt;strong&gt;curse of dimensionality&lt;/strong&gt; requires more than just examining the representational aspect of data. A key insight lies in the concept of &lt;strong&gt;intrinsic dimensionality (ID)&lt;/strong&gt;—the number of degrees of freedom within a data manifold or subspace. This ID is often independent of the dimensionality of the space in which the data is embedded. As a result, ID serves as a foundation for dimensionality reduction, which improves similarity measures and enhances the scalability of machine learning and data mining methods.&lt;/p&gt;</description>
     </item>
     
   </channel>
