@@ -20,16 +20,22 @@
       <description>&lt;p&gt;&lt;em&gt;L’uomo beve il Tè perché lo angoscia l’uomo.
 Il Tè beve l’uomo, l’erba più amara.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;-Guido Ceronetti&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Tea transcends being just a beverage—it&amp;rsquo;s a ritual, a tradition, and a bridge between nature and culture. With over &lt;strong&gt;3,000 varieties&lt;/strong&gt;, tea offers an incredible diversity of flavors, aromas, and benefits. Despite its vastness, every true tea originates from one remarkable plant: &lt;strong&gt;Camellia sinensis&lt;/strong&gt;. The wide variety arises from how the leaves are processed, combined, or infused. This guide delves into the unique categories of &lt;strong&gt;true teas&lt;/strong&gt;, &lt;strong&gt;mixed teas&lt;/strong&gt;, and &lt;strong&gt;herbal tisanes&lt;/strong&gt;, as well as the distinctions between Japanese and Chinese tea traditions.&lt;/p&gt;</description>
-    </item>
+&lt;p&gt;Tea transcends being just a beverage—it&amp;rsquo;s a ritual, a tradition, and a bridge between nature and culture. With over &lt;strong&gt;3,000 varieties&lt;/strong&gt;, tea offers an incredible diversity of flavors, aromas, and benefits. Despite its vastness, every true tea originates from one remarkable plant: &lt;strong&gt;Camellia sinensis&lt;/strong&gt;. The wide variety arises from how the leaves are processed, combined, or infused. This guide delves into the unique categories of &lt;strong&gt;true teas&lt;/strong&gt;, &lt;strong&gt;mixed teas&lt;/strong&gt;, and &lt;strong&gt;herbal tisanes&lt;/strong&gt;, as well as the distinctions between Japanese and Chinese tea traditions.
+
+
+
+
+
     
-    <item>
-      <title>Quantum Computing - Intro </title>
-      <link>https://ldomenichelli.github.io/random/quantum/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://ldomenichelli.github.io/random/quantum/</guid>
-      <description>Introduction to Quantum Computing</description>
+    &lt;input type=&#34;checkbox&#34; id=&#34;zoomCheck-a3854&#34; hidden&gt;
+    &lt;label for=&#34;zoomCheck-a3854&#34;&gt;
+        &lt;img class=&#34;zoomCheck&#34; loading=&#34;lazy&#34; decoding=&#34;async&#34;
+            src=&#34;img/step.png&#34; alt=&#34;tea&#34;
+             /&gt;
+    &lt;/label&gt;
+
+
+&lt;em&gt;Steps to produce tea (stolen from infograph)&lt;/em&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>
