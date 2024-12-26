@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adugo Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .board {
+            display: grid;
+            grid-template-columns: repeat(5, 80px);
+            grid-template-rows: repeat(5, 80px);
+            gap: 5px;
+            margin: 20px auto;
+            width: 425px;
+            background: #ddd;
+            padding: 5px;
+            border: 2px solid #333;
+        }
+        .cell {
+            width: 80px;
+            height: 80px;
+            background: #fff;
+            border: 1px solid #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .jaguar {
+            width: 60px;
+            height: 60px;
+            background: #ff9800;
+            border-radius: 50%;
+        }
+        .dog {
+            width: 60px;
+            height: 60px;
+            background: #6c757d;
+            border-radius: 50%;
+        }
+        .controls {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #status {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Adugo: The Game of the Jaguar and Dogs</h1>
+    <div class="board"></div>
+    <div class="controls">
+        <button id="reset">Reset Game</button>
+        <p id="status">Jaguar's Turn</p>
+    </div>
+    <script>
+        const board = document.querySelector('.board');
+        const status = document.getElementById('status');
+        const resetButton = document.getElementById('reset');
+
+        const rows = 5;
+        const cols = 5;
+        const jaguar = { position: 12 }; // Starting position at center
+        const dogs = [0, 1, 2, 3, 4]; // Initial positions
+        let currentPlayer = 'Jaguar';
+
+        function createBoard() {
+            for (let i = 0; i < rows * cols; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.dataset.index = i;
+                board.appendChild(cell);
+            }
+            placePieces();
+        }
+
+        function placePieces() {
+            // Place the Jaguar
+            const jaguarCell = document.querySelector(`.cell[data-index='${jaguar.position}']`);
+            const jaguarDiv = document.createElement('div');
+            jaguarDiv.classList.add('jaguar');
+            jaguarCell.appendChild(jaguarDiv);
+
+            // Place the Dogs
+            dogs.forEach(pos => {
+                const dogCell = document.querySelector(`.cell[data-index='${pos}']`);
+                const dogDiv = document.createElement('div');
+                dogDiv.classList.add('dog');
+                dogCell.appendChild(dogDiv);
+            });
+        }
+
+        function resetGame() {
+            board.innerHTML = '';
+            jaguar.position = 12;
+            dogs.splice(0, dogs.length, 0, 1, 2, 3, 4);
+            currentPlayer = 'Jaguar';
+            status.textContent = "Jaguar's Turn";
+            createBoard();
+        }
+
+        board.addEventListener('click', (event) => {
+            const cell = event.target.closest('.cell');
+            if (!cell) return;
+
+            const index = parseInt(cell.dataset.index);
+
+            if (currentPlayer === 'Jaguar') {
+                // Move Jaguar (basic logic)
+                if (Math.abs(index - jaguar.position) === 1 || Math.abs(index - jaguar.position) === 5) {
+                    const oldCell = document.querySelector(`.cell[data-index='${jaguar.position}']`);
+                    oldCell.innerHTML = '';
+                    jaguar.position = index;
+                    placePieces();
+                    currentPlayer = 'Dogs';
+                    status.textContent = "Dogs' Turn";
+                }
+            } else if (currentPlayer === 'Dogs') {
+                // Move a Dog (basic logic)
+                const dogIndex = dogs.indexOf(index);
+                if (dogIndex !== -1) {
+                    const oldCell = document.querySelector(`.cell[data-index='${dogs[dogIndex]}']`);
+                    oldCell.innerHTML = '';
+                    dogs[dogIndex] = index;
+                    placePieces();
+                    currentPlayer = 'Jaguar';
+                    status.textContent = "Jaguar's Turn";
+                }
+            }
+        });
+
+        resetButton.addEventListener('click', resetGame);
+
+        createBoard();
+    </script>
+</body>
+</html>
+
