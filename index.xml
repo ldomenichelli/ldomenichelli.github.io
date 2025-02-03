@@ -144,5 +144,15 @@ Let $ \Theta$ denote the space of its parameters, where each point $ \theta \in 
       <description>&lt;p&gt;Understanding the &lt;strong&gt;curse of dimensionality&lt;/strong&gt; requires more than just examining the representational aspect of data. A key insight lies in the concept of &lt;strong&gt;intrinsic dimensionality (ID)&lt;/strong&gt;—the number of degrees of freedom within a data manifold or subspace. This ID is often independent of the dimensionality of the space in which the data is embedded. As a result, ID serves as a foundation for dimensionality reduction, which improves similarity measures and enhances the scalability of machine learning and data mining methods.&lt;/p&gt;</description>
     </item>
     
+    <item>
+      <title>Topological Data Analysis&#39; Notes</title>
+      <link>https://ldomenichelli.github.io/posts/post4/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ldomenichelli.github.io/posts/post4/</guid>
+      <description>&lt;p&gt;Here are my notes from the lectures on &amp;ldquo;Topological Data Analysis&amp;rdquo; that was held from Prof. Patrizio Frosini at UniPi in Jan 2025.
+&lt;embed src=&#34;https://ldomenichelli.github.io/tdafull.pdf&#34; width=&#34;100%&#34; height=&#34;800px&#34; type=&#34;application/pdf&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    
   </channel>
 </rss>
