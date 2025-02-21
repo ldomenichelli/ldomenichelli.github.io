@@ -66,24 +66,30 @@
     
     
     <item>
-      <title>Optimal Trasport &amp; Wasserstein distance</title>
+      <title>HPLT &amp; NLPL Winter School</title>
+      <link>https://ldomenichelli.github.io/posts/post5/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ldomenichelli.github.io/posts/post5/</guid>
+      <description>On the HPLT &amp;amp; NLPL Winter School</description>
+    </item>
+    
+    <item>
+      <title>Notes on Mechanistic Interpretability</title>
+      <link>https://ldomenichelli.github.io/posts/post6/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ldomenichelli.github.io/posts/post6/</guid>
+      <description>Notes on the paper &amp;#34;Open Problems in MI&amp;#34;</description>
+    </item>
+    
+    <item>
+      <title>Optimal Transport 🕷️ and Wasserstein distance</title>
       <link>https://ldomenichelli.github.io/posts/post2/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ldomenichelli.github.io/posts/post2/</guid>
-      <description>&lt;p&gt;To qualify as a &lt;strong&gt;distance&lt;/strong&gt;, a measure must satisfy the following properties:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;Symmetry&lt;/strong&gt;: $ d(P, Q) = d(Q, P) )$&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Triangle inequality&lt;/strong&gt;: $ d(P, Q) + d(Q, R) \geq d(P, R) $&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;However, in practice, we often deal with &lt;strong&gt;weaker notions of distances&lt;/strong&gt;, commonly referred to as &lt;strong&gt;divergences&lt;/strong&gt;.&lt;/p&gt;
-&lt;h3 id=&#34;example-kl-divergence&#34;&gt;Example: KL Divergence&lt;/h3&gt;
-&lt;p&gt;The Kullback-Leibler (KL) divergence is defined as:
-$
-[
-D_{\text{KL}}(P || Q) = \int p(x) \log \frac{p(x)}{q(x)} dx
-]
-$&lt;/p&gt;</description>
+      <description>Intro to Optimal Transport with spider Cedric (Villani) :) 🕷️</description>
     </item>
     
     <item>
@@ -145,13 +151,12 @@ Let $ \Theta$ denote the space of its parameters, where each point $ \theta \in 
     </item>
     
     <item>
-      <title>Topological Data Analysis&#39; Notes</title>
+      <title>Topological Data Analysis</title>
       <link>https://ldomenichelli.github.io/posts/post4/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ldomenichelli.github.io/posts/post4/</guid>
-      <description>&lt;p&gt;Here are my notes from the lectures on &amp;ldquo;Topological Data Analysis&amp;rdquo; that was held from Prof. Patrizio Frosini at UniPi in Jan 2025.
-&lt;embed src=&#34;https://ldomenichelli.github.io/tdafull.pdf&#34; width=&#34;100%&#34; height=&#34;800px&#34; type=&#34;application/pdf&#34;&gt;&lt;/p&gt;</description>
+      <description>On the HPLT &amp;amp; NLPL Winter School</description>
     </item>
     
   </channel>
