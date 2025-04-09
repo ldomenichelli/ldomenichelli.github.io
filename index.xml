@@ -170,6 +170,23 @@ Let $ \Theta$ denote the space of its parameters, where each point $ \theta \in 
     </item>
     
     <item>
+      <title>Time Series</title>
+      <link>https://ldomenichelli.github.io/posts/post9/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ldomenichelli.github.io/posts/post9/</guid>
+      <description>&lt;h1 id=&#34;predictive-models-for-time-series-analysis&#34;&gt;Predictive Models for Time Series Analysis&lt;/h1&gt;
+&lt;p&gt;Time series analysis involves understanding data points collected over time, where the order of observations matters. By modeling the temporal dependencies, we can make forecasts, detect anomalies, cluster similar patterns, and perform classification or regression tasks on sequence data. Below is an extended overview with added details.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;1-introduction-to-time-series-analysis&#34;&gt;1. Introduction to Time Series Analysis&lt;/h2&gt;
+&lt;p&gt;A &lt;strong&gt;time series&lt;/strong&gt; is typically defined as:
+$$
+T = { x_1, x_2, \dots, x_m }
+$$
+where each observation ( x_i ) is recorded at a specific time ( t_i ), usually at uniform intervals.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Topological Data Analysis</title>
       <link>https://ldomenichelli.github.io/posts/post4/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
