@@ -12,6 +12,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language><atom:link href="https://ldomenichelli.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Geometric Deep Learning</title>
+      <link>https://ldomenichelli.github.io/posts/post7/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ldomenichelli.github.io/posts/post7/</guid>
+      <description>some notes on geometric deep learning&amp;#34;</description>
+    </item>
+    
+    <item>
       <title>HPLT &amp; NLPL Winter School</title>
       <link>https://ldomenichelli.github.io/posts/post5/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -66,6 +75,33 @@ Let $ \Theta$ denote the space of its parameters, where each point $ \theta \in 
       
       <guid>https://ldomenichelli.github.io/posts/post1/</guid>
       <description>&lt;p&gt;Understanding the &lt;strong&gt;curse of dimensionality&lt;/strong&gt; requires more than just examining the representational aspect of data. A key insight lies in the concept of &lt;strong&gt;intrinsic dimensionality (ID)&lt;/strong&gt;—the number of degrees of freedom within a data manifold or subspace. This ID is often independent of the dimensionality of the space in which the data is embedded. As a result, ID serves as a foundation for dimensionality reduction, which improves similarity measures and enhances the scalability of machine learning and data mining methods.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Statistical Learning and Large Data</title>
+      <link>https://ldomenichelli.github.io/posts/post8/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ldomenichelli.github.io/posts/post8/</guid>
+      <description>&lt;p&gt;Here are the slides and notes on the course hold by Prof. Chiaromonte at Sant&amp;rsquo;Anna University, Pisa.
+&lt;embed src=&#34;https://ldomenichelli.github.io/SLLD_new.pdf&#34; width=&#34;100%&#34; height=&#34;800px&#34; type=&#34;application/pdf&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Time Series</title>
+      <link>https://ldomenichelli.github.io/posts/post9/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ldomenichelli.github.io/posts/post9/</guid>
+      <description>&lt;h1 id=&#34;predictive-models-for-time-series-analysis&#34;&gt;Predictive Models for Time Series Analysis&lt;/h1&gt;
+&lt;p&gt;Time series analysis involves understanding data points collected over time, where the order of observations matters. By modeling the temporal dependencies, we can make forecasts, detect anomalies, cluster similar patterns, and perform classification or regression tasks on sequence data. Below is an extended overview with added details.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;1-introduction-to-time-series-analysis&#34;&gt;1. Introduction to Time Series Analysis&lt;/h2&gt;
+&lt;p&gt;A &lt;strong&gt;time series&lt;/strong&gt; is typically defined as:
+$$
+T = { x_1, x_2, \dots, x_m }
+$$
+where each observation ( x_i ) is recorded at a specific time ( t_i ), usually at uniform intervals.&lt;/p&gt;</description>
     </item>
     
     <item>
