@@ -48,6 +48,15 @@
     </item>
     
     <item>
+      <title>Datasets</title>
+      <link>https://ldomenichelli.github.io/tags/datasets/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ldomenichelli.github.io/tags/datasets/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Deep Learning</title>
       <link>https://ldomenichelli.github.io/tags/deep-learning/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -120,20 +129,11 @@
     </item>
     
     <item>
-      <title>Mechanistic</title>
-      <link>https://ldomenichelli.github.io/tags/mechanistic/</link>
+      <title>LLMs</title>
+      <link>https://ldomenichelli.github.io/tags/llms/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://ldomenichelli.github.io/tags/mechanistic/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Open Problems</title>
-      <link>https://ldomenichelli.github.io/tags/open-problems/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://ldomenichelli.github.io/tags/open-problems/</guid>
+      <guid>https://ldomenichelli.github.io/tags/llms/</guid>
       <description></description>
     </item>
     
@@ -170,6 +170,15 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ldomenichelli.github.io/tags/tea/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Winter‑school</title>
+      <link>https://ldomenichelli.github.io/tags/winterschool/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ldomenichelli.github.io/tags/winterschool/</guid>
       <description></description>
     </item>
     
