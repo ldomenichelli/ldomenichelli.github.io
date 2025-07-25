@@ -8,6 +8,8 @@
   </url><url>
     <loc>https://ldomenichelli.github.io/random/</loc>
   </url><url>
+    <loc>https://ldomenichelli.github.io/posts/post5/</loc>
+  </url><url>
     <loc>https://ldomenichelli.github.io/tags/1-vs-1/</loc>
   </url><url>
     <loc>https://ldomenichelli.github.io/tags/abalone/</loc>
@@ -28,7 +30,11 @@
   </url><url>
     <loc>https://ldomenichelli.github.io/categories/</loc>
   </url><url>
+    <loc>https://ldomenichelli.github.io/tags/datasets/</loc>
+  </url><url>
     <loc>https://ldomenichelli.github.io/tags/deep-learning/</loc>
+  </url><url>
+    <loc>https://ldomenichelli.github.io/posts/post1/</loc>
   </url><url>
     <loc>https://ldomenichelli.github.io/tags/factuality/</loc>
   </url><url>
@@ -46,15 +52,9 @@
   </url><url>
     <loc>https://ldomenichelli.github.io/tags/homology/</loc>
   </url><url>
-    <loc>https://ldomenichelli.github.io/posts/post5/</loc>
+    <loc>https://ldomenichelli.github.io/tags/llms/</loc>
   </url><url>
     <loc>https://ldomenichelli.github.io/</loc>
-  </url><url>
-    <loc>https://ldomenichelli.github.io/tags/mechanistic/</loc>
-  </url><url>
-    <loc>https://ldomenichelli.github.io/posts/post6/</loc>
-  </url><url>
-    <loc>https://ldomenichelli.github.io/tags/open-problems/</loc>
   </url><url>
     <loc>https://ldomenichelli.github.io/tags/optimal-transport/</loc>
   </url><url>
@@ -70,10 +70,6 @@
   </url><url>
     <loc>https://ldomenichelli.github.io/search/</loc>
   </url><url>
-    <loc>https://ldomenichelli.github.io/posts/post3/</loc>
-  </url><url>
-    <loc>https://ldomenichelli.github.io/posts/post1/</loc>
-  </url><url>
     <loc>https://ldomenichelli.github.io/posts/post8/</loc>
   </url><url>
     <loc>https://ldomenichelli.github.io/tags/</loc>
@@ -83,6 +79,8 @@
     <loc>https://ldomenichelli.github.io/posts/post9/</loc>
   </url><url>
     <loc>https://ldomenichelli.github.io/posts/post4/</loc>
+  </url><url>
+    <loc>https://ldomenichelli.github.io/tags/winterschool/</loc>
   </url><url>
     <loc>https://ldomenichelli.github.io/tags/wsdistance/</loc>
   </url>

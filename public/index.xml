@@ -12,6 +12,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language><atom:link href="https://ldomenichelli.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>❄️ HPLT × NLPL Winter School</title>
+      <link>https://ldomenichelli.github.io/posts/post5/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ldomenichelli.github.io/posts/post5/</guid>
+      <description>Short notes and slide links from the Winter School in Skeikampen, Norway (Feb 10‑14, 2025).</description>
+    </item>
+    
+    <item>
       <title>Abalone</title>
       <link>https://ldomenichelli.github.io/games/abalone/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -66,30 +75,21 @@
     
     
     <item>
+      <title>Embeddings space 𖦹ׂ ₊˚⊹⋆</title>
+      <link>https://ldomenichelli.github.io/posts/post1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ldomenichelli.github.io/posts/post1/</guid>
+      <description>&lt;p&gt;Understanding the &lt;strong&gt;curse of dimensionality&lt;/strong&gt; requires more than just examining the representational aspect of data. A key insight lies in the concept of &lt;strong&gt;intrinsic dimensionality (ID)&lt;/strong&gt;—the number of degrees of freedom within a data manifold or subspace. This ID is often independent of the dimensionality of the space in which the data is embedded. As a result, ID serves as a foundation for dimensionality reduction, which improves similarity measures and enhances the scalability of machine learning and data mining methods.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Geometric Deep Learning</title>
       <link>https://ldomenichelli.github.io/posts/post7/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ldomenichelli.github.io/posts/post7/</guid>
-      <description>some notes on geometric deep learning&amp;#34;</description>
-    </item>
-    
-    <item>
-      <title>HPLT &amp; NLPL Winter School</title>
-      <link>https://ldomenichelli.github.io/posts/post5/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://ldomenichelli.github.io/posts/post5/</guid>
-      <description>On the HPLT &amp;amp; NLPL Winter School</description>
-    </item>
-    
-    <item>
-      <title>Notes on Mechanistic Interpretability</title>
-      <link>https://ldomenichelli.github.io/posts/post6/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://ldomenichelli.github.io/posts/post6/</guid>
-      <description>Notes on the paper &amp;#34;Open Problems in MI&amp;#34;</description>
+      <description>Some notes on geometric deep learning</description>
     </item>
     
     <item>
@@ -130,37 +130,7 @@ Il Tè beve l’uomo, l’erba più amara.&lt;/em&gt;&lt;/p&gt;
     
     
     <item>
-      <title>Simplicity Bias</title>
-      <link>https://ldomenichelli.github.io/posts/post3/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://ldomenichelli.github.io/posts/post3/</guid>
-      <description>&lt;h1 id=&#34;simplicity-bias-in-neural-networks&#34;&gt;Simplicity Bias in Neural Networks&lt;/h1&gt;
-&lt;p&gt;Neural networks (NNs) exhibit a fascinating property often referred to as &lt;strong&gt;simplicity bias&lt;/strong&gt;. As described by Chizat and Bach in their work:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&amp;ldquo;NNs are fundamentally Bayesian: an NN is biased, at initialization, towards simple functions.&amp;rdquo;&lt;br&gt;
-&lt;em&gt;(Chizat &amp;amp; Bach)&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;this-idea-sheds-light-on-why-nns-tend-to-generalize-well-despite-their-enormous-capacity-to-memorize-complex-datasets&#34;&gt;This idea sheds light on why NNs tend to generalize well despite their enormous capacity to memorize complex datasets.&lt;/h2&gt;
-&lt;h2 id=&#34;understanding-simplicity-bias&#34;&gt;Understanding Simplicity Bias&lt;/h2&gt;
-&lt;h3 id=&#34;the-setup&#34;&gt;The Setup&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Fix a Neural Network:&lt;/strong&gt;&lt;br&gt;
-Let $ \Theta$ denote the space of its parameters, where each point $ \theta \in \Theta$ represents a specific configuration of weights and biases of the network.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Space uniformity</title>
-      <link>https://ldomenichelli.github.io/posts/post1/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://ldomenichelli.github.io/posts/post1/</guid>
-      <description>&lt;p&gt;Understanding the &lt;strong&gt;curse of dimensionality&lt;/strong&gt; requires more than just examining the representational aspect of data. A key insight lies in the concept of &lt;strong&gt;intrinsic dimensionality (ID)&lt;/strong&gt;—the number of degrees of freedom within a data manifold or subspace. This ID is often independent of the dimensionality of the space in which the data is embedded. As a result, ID serves as a foundation for dimensionality reduction, which improves similarity measures and enhances the scalability of machine learning and data mining methods.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Statistical Learning and Large Data</title>
+      <title>Statistical Learning and Large Data 📊</title>
       <link>https://ldomenichelli.github.io/posts/post8/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -170,7 +140,7 @@ Let $ \Theta$ denote the space of its parameters, where each point $ \theta \in 
     </item>
     
     <item>
-      <title>Time Series</title>
+      <title>Time Series 📈</title>
       <link>https://ldomenichelli.github.io/posts/post9/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -187,7 +157,7 @@ where each observation ( x_i ) is recorded at a specific time ( t_i ), usually a
     </item>
     
     <item>
-      <title>Topological Data Analysis</title>
+      <title>Topological Data Analysis 🌐</title>
       <link>https://ldomenichelli.github.io/posts/post4/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
