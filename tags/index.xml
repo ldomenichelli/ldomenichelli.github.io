@@ -48,6 +48,24 @@
     </item>
     
     <item>
+      <title>ACL</title>
+      <link>https://ldomenichelli.github.io/tags/acl/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ldomenichelli.github.io/tags/acl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Computational Linguistics</title>
+      <link>https://ldomenichelli.github.io/tags/computational-linguistics/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ldomenichelli.github.io/tags/computational-linguistics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Datasets</title>
       <link>https://ldomenichelli.github.io/tags/datasets/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -134,6 +152,15 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ldomenichelli.github.io/tags/llms/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>NLP</title>
+      <link>https://ldomenichelli.github.io/tags/nlp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ldomenichelli.github.io/tags/nlp/</guid>
       <description></description>
     </item>
     
