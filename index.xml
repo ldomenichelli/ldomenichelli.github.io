@@ -48,12 +48,23 @@
     </item>
     
     <item>
-      <title>ACL Vienna 2025</title>
+      <title>ACL Vienna 2025 🇦🇹</title>
       <link>https://ldomenichelli.github.io/posts/post3/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ldomenichelli.github.io/posts/post3/</guid>
-      <description>How ACL went...</description>
+      <description>&lt;p&gt;Here are the notes from some talks I attented at ACL 2025 in Vienna!&lt;/p&gt;
+&lt;details id=&#34;talk-eye&#34;&gt;
+  &lt;summary&gt;  Eye-tracking &lt;/summary&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Why gaze?&lt;/strong&gt; Eye movements reflect &lt;em&gt;online&lt;/em&gt; processing (not just end products), letting us probe difficulty, attention, and strategies during reading. That’s gold for modeling and evaluation. (&lt;a href=&#34;https://pubmed.ncbi.nlm.nih.gov/9849112/?utm_source=chatgpt.com&#34; title=&#34;Eye movements in reading and information processing - PubMed&#34;&gt;PubMed&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Data is maturing:&lt;/strong&gt; Multilingual, multi‑lab efforts (e.g., &lt;strong&gt;MECO&lt;/strong&gt;, &lt;strong&gt;MultiplEYE&lt;/strong&gt;) + tooling (e.g., &lt;strong&gt;pymovements&lt;/strong&gt;) have made high‑quality datasets and pipelines more accessible. (&lt;a href=&#34;https://meco-read.com/?utm_source=chatgpt.com&#34; title=&#34;MECO Multilingual Eye-movement Corpus&#34;&gt;meco-read.com&lt;/a&gt;, &lt;a href=&#34;https://multipleye.eu/?utm_source=chatgpt.com&#34; title=&#34;MultiplEYE – Enabling multilingual eye-tracking data collection for ...&#34;&gt;multipleye.eu&lt;/a&gt;, &lt;a href=&#34;https://arxiv.org/abs/2304.09859?utm_source=chatgpt.com&#34; title=&#34;pymovements: A Python Package for Eye Movement Data Processing&#34;&gt;arXiv&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Models &amp;amp; evals:&lt;/strong&gt; Gaze can &lt;strong&gt;improve&lt;/strong&gt; certain NLP tasks and also &lt;strong&gt;evaluate&lt;/strong&gt; systems with behavioral signals (e.g., readability, MT, summarization). But gains are often modest unless modeling is careful or data is task‑aligned. &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Open debates:&lt;/strong&gt; How well LLM surprisal predicts human reading times varies with model size, layers, and populations; adding &lt;strong&gt;recency biases&lt;/strong&gt; can help fit human behavior. (&lt;a href=&#34;https://aclanthology.org/2023.tacl-1.20/?utm_source=chatgpt.com&#34; title=&#34;Why Does Surprisal From Larger Transformer-Based Language ...&#34;&gt;ACL Anthology&lt;/a&gt;, &lt;a href=&#34;https://www.dfki.de/fileadmin/user_upload/import/14976_frai-07-1391745.pdf?utm_source=chatgpt.com&#34; title=&#34;[PDF] A review of machine learning in scanpath analysis for passive gaze ...&#34;&gt;dfki.de&lt;/a&gt;, &lt;a href=&#34;https://aclanthology.org/2024.cmcl-1.3/?utm_source=chatgpt.com&#34; title=&#34;Locally Biased Transformers Better Align with Human Reading Times&#34;&gt;ACL Anthology&lt;/a&gt;, &lt;a href=&#34;https://aclanthology.org/2025.coling-main.517/?utm_source=chatgpt.com&#34; title=&#34;Linear Recency Bias During Training Improves Transformers&#39; Fit to ...&#34;&gt;ACL Anthology&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;eyetracking-101-&#34;&gt;Eye‑tracking 101 👁️&lt;/h2&gt;
+&lt;p&gt;Some basic concepts:&lt;/p&gt;</description>
     </item>
     
     <item>
