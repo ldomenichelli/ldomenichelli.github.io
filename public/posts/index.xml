@@ -17,7 +17,22 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ldomenichelli.github.io/posts/post5/</guid>
-      <description>Short notes and slide links from the Winter School in Skeikampen, Norway (Feb 10‑14, 2025).</description>
+      <description>&lt;h1 id=&#34;-day1--monday-10feb2025&#34;&gt;🗓 Day 1 — Monday, 10 Feb 2025&lt;/h1&gt;
+&lt;h3 id=&#34;-what-is-commoncrawl&#34;&gt;🌍 What Is &lt;strong&gt;Common Crawl&lt;/strong&gt;?&lt;/h3&gt;
+&lt;p&gt;Common Crawl is a &lt;strong&gt;huge, free snapshot of the public web&lt;/strong&gt;.&lt;br&gt;
+A non‑profit updates it every month, storing:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Billions of HTML pages&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Their cleaned‑up &lt;strong&gt;text content&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Extra &lt;strong&gt;metadata&lt;/strong&gt; (links, timestamps, MIME types, …)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;why-it-matters&#34;&gt;Why It Matters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Track language change&lt;/strong&gt; – see how words, memes, and topics shift over time.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Map the web’s link network&lt;/strong&gt; – study which sites connect and why.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Train big ML models&lt;/strong&gt; – use real‑world data instead of tiny toy datasets.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Because each release includes both the &lt;strong&gt;raw HTML&lt;/strong&gt; and a parsed text layer, you can analyze:&lt;/p&gt;</description>
     </item>
     
     <item>
