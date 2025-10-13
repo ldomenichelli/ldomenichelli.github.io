@@ -1,0 +1,93 @@
+---
+title: "about this site and me"
+draft: false
+showToc: false
+summary: "who am i?"
+---
+
+{{< rawhtml >}}
+<img style="border-radius:50%;margin-left:auto;margin-right:auto;" width="50%" src="/logo.png" alt="Picture of me">
+<p align="center">me fr fr.</p>
+{{< /rawhtml >}}
+
+Welcome to my study space! I'm Lucia, a first-year PhD  student in [AI](https://phd-ai-society.di.unipi.it/) at [UniPi](https://www.unipi.it). 
+My research interest in mostly about Representation Learning in NLP. 
+
+Outside of research, my main hobbies are learning languages and bouldering 🧗
+>  Here, I collect personal notes on various topics I’m learning. They’re written for me, but might be helpful to others, too. Enjoy reading!
+
+## News           <!-- use ## if the rest of your site uses H2, otherwise keep # -->
+
+<div class="news-block">
+
+
+{{<rawhtml>}}
+
+<blockquote class="twitter-tweet">
+  <p lang="en" dir="ltr">
+    I've completed my first year PhD research report! You can read it here:  
+  </p>
+<p>
+  📖 <a href="/research_proposal_DOMENICHELLI.pdf" target="_blank">Report (PDF)</a>
+</blockquote>
+{{< /rawhtml >}}
+
+
+
+
+{{<rawhtml>}}
+
+<blockquote class="twitter-tweet">
+  <p lang="en" dir="ltr">
+    Our paper “From Human Reading to NLM Understanding: Evaluating the Role of Eye‑Tracking Data in Encoder‑Based Models” was accepted at CLiC-it 2025 🦩
+  </p>
+  &mdash; ItaliaNLP Lab (@ItaliaNLP_Lab)
+  <a href="https://x.com/ItaliaNLP_Lab/status/1947649879959871521">
+    July 22 2025
+  </a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+{{< /rawhtml >}}
+<p>
+<a href="
+</p>
+
+
+{{< rawhtml >}}
+<blockquote class="twitter-tweet">
+  <p lang="en" dir="ltr">
+    I presented a poster at the “Lectures on Computational Linguistics” in Milan!
+  </p>
+  &mdash; ItaliaNLP Lab (@ItaliaNLP_Lab)
+  <a href="https://x.com/ItaliaNLP_Lab/status/1936002875257131434">
+    July 14 2025
+  </a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+{{< /rawhtml >}}
+
+<p>
+  👉 <a href="/poster_lectures_2025.pdf" target="_blank">Poster (PDF)</a>
+  🎞️ <a href="/lectures_on_computational_linguistics_2025.pdf" target="_blank">Slides (PDF)</a>
+</p>
+
+{{< rawhtml >}}
+<blockquote class="twitter-tweet">
+  <p lang="en" dir="ltr">
+    Our paper “From Human Reading to NLM Understanding: Evaluating the Role of Eye‑Tracking Data in Encoder‑Based Models” was accepted at ACL 2025 🎉
+  </p>
+  &mdash; ItaliaNLP Lab (@ItaliaNLP_Lab)
+  <a href="https://x.com/ItaliaNLP_Lab/status/1923371886823473608">
+    July 9 2025
+  </a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+{{< /rawhtml >}}
+
+<p>
+  📄 <a href="https://aclanthology.org/2025.acl-long.870/" target="_blank"> Link to the paper</a> ·
+
+</p>
+
+</div>
+
