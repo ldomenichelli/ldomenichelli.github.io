@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>lucia&#39;s notes</title>
-    <link>https://ldomenichelli.github.io/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content on lucia&#39;s notes</description>
     <image>
       <title>lucia&#39;s notes</title>
-      <url>https://ldomenichelli.github.io/logo.png</url>
-      <link>https://ldomenichelli.github.io/logo.png</link>
+      <url>http://localhost:1313/logo.png</url>
+      <link>http://localhost:1313/logo.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://ldomenichelli.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>❄️ HPLT × NLPL Winter School</title>
-      <link>https://ldomenichelli.github.io/posts/post5/</link>
+      <link>http://localhost:1313/posts/post5/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://ldomenichelli.github.io/posts/post5/</guid>
+      <guid>http://localhost:1313/posts/post5/</guid>
       <description>&lt;h1 id=&#34;-day1--monday-10feb2025&#34;&gt;🗓 Day 1 — Monday, 10 Feb 2025&lt;/h1&gt;
 &lt;h3 id=&#34;-what-is-commoncrawl&#34;&gt;🌍 What Is &lt;strong&gt;Common Crawl&lt;/strong&gt;?&lt;/h3&gt;
 &lt;p&gt;Common Crawl is a &lt;strong&gt;huge, free snapshot of the public web&lt;/strong&gt;.&lt;br&gt;
@@ -37,37 +37,37 @@ A non‑profit updates it every month, storing:&lt;/p&gt;
     
     <item>
       <title>Abalone</title>
-      <link>https://ldomenichelli.github.io/games/abalone/</link>
+      <link>http://localhost:1313/games/abalone/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://ldomenichelli.github.io/games/abalone/</guid>
+      <guid>http://localhost:1313/games/abalone/</guid>
       <description>Introduction to Abalone</description>
     </item>
     
     <item>
       <title>about this site and me</title>
-      <link>https://ldomenichelli.github.io/about/</link>
+      <link>http://localhost:1313/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://ldomenichelli.github.io/about/</guid>
+      <guid>http://localhost:1313/about/</guid>
       <description>who am i?</description>
     </item>
     
     <item>
       <title>Achi</title>
-      <link>https://ldomenichelli.github.io/games/achi/</link>
+      <link>http://localhost:1313/games/achi/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://ldomenichelli.github.io/games/achi/</guid>
+      <guid>http://localhost:1313/games/achi/</guid>
       <description>Introduction to Achi</description>
     </item>
     
     <item>
       <title>ACL Vienna 2025 🇦🇹</title>
-      <link>https://ldomenichelli.github.io/posts/post3/</link>
+      <link>http://localhost:1313/posts/post3/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://ldomenichelli.github.io/posts/post3/</guid>
+      <guid>http://localhost:1313/posts/post3/</guid>
       <description>&lt;p&gt;Here are the notes from some talks I attented at ACL 2025 in Vienna!&lt;/p&gt;
 &lt;details id=&#34;talk-eye&#34;&gt;
   &lt;summary&gt;  Eye-tracking &lt;/summary&gt;
@@ -84,10 +84,10 @@ A non‑profit updates it every month, storing:&lt;/p&gt;
     
     <item>
       <title>Adugo</title>
-      <link>https://ldomenichelli.github.io/games/adugo/</link>
+      <link>http://localhost:1313/games/adugo/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://ldomenichelli.github.io/games/adugo/</guid>
+      <guid>http://localhost:1313/games/adugo/</guid>
       <description>&lt;h1 id=&#34;adugo-the-game-of-the-jaguar-and-dogs&#34;&gt;Adugo: The Game of the Jaguar and Dogs&lt;/h1&gt;
 &lt;p&gt;Adugo, also known as &amp;ldquo;Jaguar and Dogs,&amp;rdquo; is a traditional game played by the &lt;a href=&#34;https://pib.socioambiental.org/en/Povo:Bororo&#34;&gt;Bororo&lt;/a&gt; people in Brazil. This game simulates a hunting scenario and shares similarities with other strategic games from Southeast Asia.&lt;/p&gt;
 &lt;h2 id=&#34;overview-of-the-game&#34;&gt;Overview of the Game&lt;/h2&gt;
@@ -111,37 +111,37 @@ A non‑profit updates it every month, storing:&lt;/p&gt;
     
     <item>
       <title>Embeddings space 𖦹ׂ ₊˚⊹⋆</title>
-      <link>https://ldomenichelli.github.io/posts/post1/</link>
+      <link>http://localhost:1313/posts/post1/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://ldomenichelli.github.io/posts/post1/</guid>
+      <guid>http://localhost:1313/posts/post1/</guid>
       <description>&lt;p&gt;Understanding the &lt;strong&gt;curse of dimensionality&lt;/strong&gt; requires more than just examining the representational aspect of data. A key insight lies in the concept of &lt;strong&gt;intrinsic dimensionality (ID)&lt;/strong&gt;—the number of degrees of freedom within a data manifold or subspace. This ID is often independent of the dimensionality of the space in which the data is embedded. As a result, ID serves as a foundation for dimensionality reduction, which improves similarity measures and enhances the scalability of machine learning and data mining methods.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Geometric Deep Learning</title>
-      <link>https://ldomenichelli.github.io/posts/post7/</link>
+      <link>http://localhost:1313/posts/post7/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://ldomenichelli.github.io/posts/post7/</guid>
+      <guid>http://localhost:1313/posts/post7/</guid>
       <description>Some notes on geometric deep learning</description>
     </item>
     
     <item>
       <title>Optimal Transport 🕷️ and Wasserstein distance</title>
-      <link>https://ldomenichelli.github.io/posts/post2/</link>
+      <link>http://localhost:1313/posts/post2/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://ldomenichelli.github.io/posts/post2/</guid>
+      <guid>http://localhost:1313/posts/post2/</guid>
       <description>Intro to Optimal Transport with spider Cedric (Villani) :) 🕷️</description>
     </item>
     
     <item>
       <title>Pensieri del tè 🍵</title>
-      <link>https://ldomenichelli.github.io/random/tea/</link>
+      <link>http://localhost:1313/random/tea/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://ldomenichelli.github.io/random/tea/</guid>
+      <guid>http://localhost:1313/random/tea/</guid>
       <description>&lt;p&gt;&lt;em&gt;L’uomo beve il Tè perché lo angoscia l’uomo.
 Il Tè beve l’uomo, l’erba più amara.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;-Guido Ceronetti&lt;/em&gt;&lt;/p&gt;
@@ -166,20 +166,20 @@ Il Tè beve l’uomo, l’erba più amara.&lt;/em&gt;&lt;/p&gt;
     
     <item>
       <title>Statistical Learning and Large Data 📊</title>
-      <link>https://ldomenichelli.github.io/posts/post8/</link>
+      <link>http://localhost:1313/posts/post8/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://ldomenichelli.github.io/posts/post8/</guid>
+      <guid>http://localhost:1313/posts/post8/</guid>
       <description>&lt;p&gt;Here are the slides and notes on the course hold by Prof. Chiaromonte at Sant&amp;rsquo;Anna University, Pisa.
-&lt;embed src=&#34;https://ldomenichelli.github.io/SLLD_new.pdf&#34; width=&#34;100%&#34; height=&#34;800px&#34; type=&#34;application/pdf&#34;&gt;&lt;/p&gt;</description>
+&lt;embed src=&#34;http://localhost:1313/SLLD_new.pdf&#34; width=&#34;100%&#34; height=&#34;800px&#34; type=&#34;application/pdf&#34;&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Time Series 📈</title>
-      <link>https://ldomenichelli.github.io/posts/post9/</link>
+      <link>http://localhost:1313/posts/post9/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://ldomenichelli.github.io/posts/post9/</guid>
+      <guid>http://localhost:1313/posts/post9/</guid>
       <description>&lt;h1 id=&#34;predictive-models-for-time-series-analysis&#34;&gt;Predictive Models for Time Series Analysis&lt;/h1&gt;
 &lt;p&gt;Time series analysis involves understanding data points collected over time, where the order of observations matters. By modeling the temporal dependencies, we can make forecasts, detect anomalies, cluster similar patterns, and perform classification or regression tasks on sequence data. Below is an extended overview with added details.&lt;/p&gt;
 &lt;hr&gt;
@@ -193,10 +193,10 @@ where each observation ( x_i ) is recorded at a specific time ( t_i ), usually a
     
     <item>
       <title>Topological Data Analysis 🌐</title>
-      <link>https://ldomenichelli.github.io/posts/post4/</link>
+      <link>http://localhost:1313/posts/post4/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://ldomenichelli.github.io/posts/post4/</guid>
+      <guid>http://localhost:1313/posts/post4/</guid>
       <description>On the HPLT &amp;amp; NLPL Winter School</description>
     </item>
     
