@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en" dir="auto">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+  <meta name="robots" content="index, follow">
+  <title>Intrinsic Dimensionality · ESS | lucia's notes</title>
+  <meta name="description" content="Interactive ESSa(d=1) intrinsic-dimensionality explorer.">
+  <meta name="author" content="Lucia">
+  <link rel="canonical" href="https://ldomenichelli.github.io/projects/intrinsic-dimensionality/ess/">
+  <link crossorigin="anonymous" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css" integrity="sha256-WtmxyqkuTOqD680wiOlzYvI5sH2BREkKrwvB1r2JzRc=" rel="preload stylesheet" as="style">
+  <link rel="icon" href="https://ldomenichelli.github.io/favicon.ico">
+  <style>
+    :root { --bg:#090c14; --panel:#111827; --panel-2:#182236; --text:#e9f1ff; --muted:#b4c3df; --cyan:#58d6ff; --violet:#9b8cff; --border:#334667; --amber:#ffbf66; }
+    body#top.dark { background:var(--bg); color:var(--text); }
+    .main { max-width:1220px; } .post-content { max-width:98ch; line-height:1.68; }
+    .hero,.panel{background:linear-gradient(165deg,var(--panel),var(--panel-2));border:1px solid var(--border);border-radius:16px}
+    .hero{padding:20px;margin:16px 0 18px}.hero h1{margin:0 0 10px;font-size:clamp(1.35rem,3.2vw,2rem)}
+    .badge{display:inline-block;border:1px solid #3f5a80;color:var(--cyan);border-radius:999px;padding:4px 10px;font-size:.82rem;margin-bottom:8px}
+    .algo-switch{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 2px}
+    .algo-pill{text-decoration:none;border:1px solid #3f5a80;border-radius:999px;padding:4px 10px;color:#b4c3df}
+    .algo-pill.active{border-color:var(--cyan);color:var(--cyan)}
+    .layout{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;align-items:start}
+    .panel{padding:16px}.panel h2{margin-top:.1rem;font-size:1.1rem}.subtle{color:var(--muted)}
+    .controls{display:grid;gap:10px;grid-template-columns:repeat(3,minmax(0,1fr));margin-bottom:12px}
+    .control{display:grid;gap:4px}.control label{font-size:.9rem}
+    input[type="range"],input[type="number"],button{width:100%;accent-color:var(--cyan)}
+    input[type="number"],button{background:#0f1523;color:var(--text);border:1px solid #3b4b6e;border-radius:8px;padding:8px}
+    button{cursor:pointer;font-weight:600} button:hover{border-color:var(--cyan)}
+    .demo-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:12px}
+    canvas{width:100%;height:auto;border:1px solid #3b4b6e;border-radius:12px;background:#080d18}
+    .metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+    .metric{border:1px solid #324568;background:rgba(9,15,27,.7);border-radius:10px;padding:8px}
+    .metric .k{display:block;font-size:.77rem;color:var(--muted)} .metric .v{font-size:1rem;font-weight:700}
+    .warning{color:var(--amber)}
+    @media (max-width:1024px){.controls{grid-template-columns:repeat(2,minmax(0,1fr))}.layout,.demo-layout{grid-template-columns:1fr}}
+    @media (max-width:640px){.controls{grid-template-columns:1fr}}
+  </style>
+<script src="/assets/js/analytics.js" async></script></head>
+<body class="dark" id="top">
+<header class="header"><nav class="nav"><div class="logo"><a href="https://ldomenichelli.github.io/" accesskey="h" title="lucia's notes (Alt + H)">lucia's notes</a><div class="logo-switches"><ul class="lang-switch"><li>|</li></ul></div></div><button id="menu-trigger" aria-haspopup="menu" aria-label="Menu Button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><ul class="menu hidden"><li><a href="https://ldomenichelli.github.io/about/" title="about"><span>about</span></a></li><li><a href="https://ldomenichelli.github.io/posts/" title="notes"><span>notes</span></a></li><li><a href="https://ldomenichelli.github.io/projects/" title="projects"><span>projects</span></a></li><li><a href="https://ldomenichelli.github.io/random/" title="hobbies"><span>hobbies</span></a></li></ul></nav></header>
+<main class="main">
+  <article class="post-single">
+    <header class="post-header">
+      <div class="hero">
+        <span class="badge">Intrinsic Dimensionality · ESSa(d=1)</span>
+        <h1>Expected Simplex Skewness (ESS)</h1>
+        <p class="subtle">ESS looks at centroid vectors in a local neighborhood: in higher intrinsic dimensions, random vector pairs are more often close to orthogonal, so average simplex area grows.</p>
+        <div id="algorithmSwitch" class="algo-switch"></div>
+      </div>
+    </header>
+    <div class="post-content layout">
+      <section class="panel">
+        <h2>Interactive local neighborhood explorer</h2>
+        <p class="subtle">Neighborhoods are sampled uniformly from an n-dimensional unit ball, with optional isotropic Gaussian noise. ESS is computed in true dimension; visuals use a 2D projection.</p>
+        <div class="controls">
+          <div class="control"><label>Local points: <span id="nValue"></span></label><input id="nPts" type="range" min="8" max="120" value="36"></div>
+          <div class="control"><label>True dimension: <span id="dValue"></span></label><input id="dim" type="range" min="2" max="12" value="3"></div>
+          <div class="control"><label>Noise σ: <span id="noiseValue"></span></label><input id="noise" type="range" min="0" max="0.30" value="0.02" step="0.005"></div>
+          <div class="control"><label>Random seed</label><input id="seed" type="number" value="42" min="0" max="999999"></div>
+          <div class="control"><label>Selected pair: <span id="pairValue"></span></label><input id="pair" type="range" min="0" max="0" value="0"></div>
+          <div class="control"><label>&nbsp;</label><button id="regen">Regenerate neighborhood</button></div>
+        </div>
+        <div class="demo-layout">
+          <canvas id="scatter" width="680" height="360" aria-label="Projected local neighborhood"></canvas>
+          <div>
+            <h2>Vector-pair inspector</h2>
+            <div class="metrics">
+              <div class="metric"><span class="k">θ (selected pair)</span><span id="theta" class="v">—</span></div>
+              <div class="metric"><span class="k">|vᵢ|</span><span id="ni" class="v">—</span></div>
+              <div class="metric"><span class="k">|vⱼ|</span><span id="nj" class="v">—</span></div>
+              <div class="metric"><span class="k">vᵢ · vⱼ</span><span id="dot" class="v">—</span></div>
+              <div class="metric"><span class="k">|vᵢ ∧ vⱼ|</span><span id="area" class="v">—</span></div>
+              <div class="metric"><span class="k">pair contribution</span><span id="pairContrib" class="v">—</span></div>
+            </div>
+            <p id="projectionNote" class="subtle" style="margin-top:8px;">—</p>
+          </div>
+        </div>
+      </section>
+      <section class="panel">
+        <h2>Live ESS estimator card</h2>
+        <div class="metrics">
+          <div class="metric"><span class="k">Numerator ∑ areaᵢⱼ</span><span id="num" class="v">—</span></div>
+          <div class="metric"><span class="k">Denominator ∑ |vᵢ||vⱼ|</span><span id="den" class="v">—</span></div>
+          <div class="metric"><span class="k">ŝ (ESS statistic)</span><span id="sHat" class="v">—</span></div>
+          <div class="metric"><span class="k">n̂ (interpolated ID)</span><span id="nHat" class="v">—</span></div>
+        </div>
+        <p id="rangeNote" class="subtle" style="margin-top:8px;">Ready.</p>
+        <h2 style="margin-top:14px;">Theoretical curve card</h2>
+        <canvas id="curve" width="560" height="280" aria-label="Theoretical ESS curve"></canvas>
+        <p class="subtle" style="margin-top:8px;">Curve shows precomputed sₙ versus n. The highlighted segment indicates interpolation around current ŝ.</p>
+      </section>
+    </div>
+    <section class="panel" style="margin-top:14px;">
+      <h2>Comparison notes</h2>
+      <p class="subtle">ESS focuses on local angular geometry (simplex skewness), while MLE focuses on local distance-ratio likelihood in k-NN radii. ESS is especially useful when directional structure is informative, but still sensitive to noise, sample size, and mixed local regimes.</p>
+    </section>
+  </article>
+</main>
+<script type="module">
+import { essStatistic, essPairTerms, estimateEssDimension } from '/assets/js/id-estimator.js';
+import { buildAlgorithmSwitch } from '/assets/js/id-algorithms.js';
+
+const state = { nPts: 36, dim: 3, noise: 0.02, seed: 42, points: [], centered: [], proj: [], pairs: [], pairIndex: 0, stats: null, est: null };
+const el = {
+  menuTrigger: document.querySelector('#menu-trigger'), menu: document.querySelector('.menu'),
+  nPts: document.querySelector('#nPts'), dim: document.querySelector('#dim'), noise: document.querySelector('#noise'), seed: document.querySelector('#seed'), pair: document.querySelector('#pair'), regen: document.querySelector('#regen'),
+  nValue: document.querySelector('#nValue'), dValue: document.querySelector('#dValue'), noiseValue: document.querySelector('#noiseValue'), pairValue: document.querySelector('#pairValue'),
+  scatter: document.querySelector('#scatter'), curve: document.querySelector('#curve'),
+  theta: document.querySelector('#theta'), ni: document.querySelector('#ni'), nj: document.querySelector('#nj'), dot: document.querySelector('#dot'), area: document.querySelector('#area'), pairContrib: document.querySelector('#pairContrib'), projectionNote: document.querySelector('#projectionNote'),
+  num: document.querySelector('#num'), den: document.querySelector('#den'), sHat: document.querySelector('#sHat'), nHat: document.querySelector('#nHat'), rangeNote: document.querySelector('#rangeNote')
+};
+const ctx = el.scatter.getContext('2d');
+const curveCtx = el.curve.getContext('2d');
+
+const dot = (a, b) => a.reduce((s, v, i) => s + v * b[i], 0);
+const norm = (a) => Math.sqrt(dot(a, a));
+const normalize = (v) => { const n = norm(v) || 1; return v.map((x) => x / n); };
+
+function mulberry32(seed) {
+  let t = seed >>> 0;
+  return function rand() {
+    t += 0x6D2B79F5;
+    let x = Math.imul(t ^ (t >>> 15), 1 | t);
+    x ^= x + Math.imul(x ^ (x >>> 7), 61 | x);
+    return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function gaussian(rand) {
+  const u = Math.max(1e-12, rand());
+  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * rand());
+}
+
+function sampleUnitBall(rand, dim) {
+  const g = Array.from({ length: dim }, () => gaussian(rand));
+  const unit = normalize(g);
+  const r = Math.pow(rand(), 1 / dim);
+  return unit.map((v) => v * r);
+}
+
+function genPoints() {
+  const rand = mulberry32(state.seed);
+  state.points = Array.from({ length: state.nPts }, () => {
+    const p = sampleUnitBall(rand, state.dim);
+    return p.map((v) => v + gaussian(rand) * state.noise);
+  });
+}
+
+function pca2(centered) {
+  const d = centered[0].length;
+  if (d <= 2) return centered.map((p) => [p[0], p[1] ?? 0]);
+  const cov = Array.from({ length: d }, () => Array(d).fill(0));
+  for (const p of centered) for (let i = 0; i < d; i += 1) for (let j = 0; j < d; j += 1) cov[i][j] += p[i] * p[j];
+  const nInv = 1 / Math.max(1, centered.length - 1);
+  for (let i = 0; i < d; i += 1) for (let j = 0; j < d; j += 1) cov[i][j] *= nInv;
+  let v1 = normalize(Array.from({ length: d }, (_, i) => (i === 0 ? 1 : 0.2 / (i + 1))));
+  for (let t = 0; t < 20; t += 1) v1 = normalize(cov.map((row) => dot(row, v1)));
+  let v2 = normalize(Array.from({ length: d }, (_, i) => (i === 1 ? 1 : 0.2 / (i + 1))));
+  for (let t = 0; t < 20; t += 1) {
+    const mv = cov.map((row) => dot(row, v2));
+    const proj = dot(mv, v1);
+    v2 = normalize(mv.map((x, i) => x - proj * v1[i]));
+  }
+  return centered.map((p) => [dot(p, v1), dot(p, v2)]);
+}
+
+function pairList(n) {
+  const pairs = [];
+  for (let i = 0; i < n; i += 1) for (let j = i + 1; j < n; j += 1) pairs.push([i, j]);
+  return pairs;
+}
+
+function drawScatter() {
+  const w = el.scatter.width; const h = el.scatter.height;
+  ctx.fillStyle = '#080d18'; ctx.fillRect(0, 0, w, h);
+  if (!state.proj.length) return;
+  const xs = state.proj.map((p) => p[0]); const ys = state.proj.map((p) => p[1]);
+  const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
+  const sx = (x) => 30 + ((x - minX) / (maxX - minX + 1e-9)) * (w - 60);
+  const sy = (y) => h - 30 - ((y - minY) / (maxY - minY + 1e-9)) * (h - 60);
+
+  const [i, j] = state.pairs[state.pairIndex] ?? [0, 1];
+  const centerPx = [sx(0), sy(0)];
+  const pi = [sx(state.proj[i][0]), sy(state.proj[i][1])];
+  const pj = [sx(state.proj[j][0]), sy(state.proj[j][1])];
+
+  ctx.strokeStyle = 'rgba(255,191,102,0.9)'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(centerPx[0], centerPx[1]); ctx.lineTo(pi[0], pi[1]); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(centerPx[0], centerPx[1]); ctx.lineTo(pj[0], pj[1]); ctx.stroke();
+
+  ctx.fillStyle = 'rgba(88,214,255,0.95)';
+  for (const p of state.proj) { ctx.beginPath(); ctx.arc(sx(p[0]), sy(p[1]), 3.1, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = 'rgba(255,191,102,1)'; ctx.beginPath(); ctx.arc(centerPx[0], centerPx[1], 4.6, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = 'rgba(155,140,255,1)'; [pi, pj].forEach((q) => { ctx.beginPath(); ctx.arc(q[0], q[1], 4.4, 0, Math.PI * 2); ctx.fill(); });
+}
+
+function drawCurve() {
+  const w = el.curve.width; const h = el.curve.height;
+  curveCtx.fillStyle = '#080d18'; curveCtx.fillRect(0, 0, w, h);
+  const curve = state.est.curve;
+  const minN = curve[0].n, maxN = curve[curve.length - 1].n;
+  const minS = curve[0].s, maxS = curve[curve.length - 1].s;
+  const x = (n) => 34 + ((n - minN) / (maxN - minN)) * (w - 68);
+  const y = (s) => h - 24 - ((s - minS) / (maxS - minS + 1e-9)) * (h - 48);
+
+  curveCtx.strokeStyle = '#9b8cff'; curveCtx.lineWidth = 2; curveCtx.beginPath();
+  curve.forEach((p, idx) => { if (!idx) curveCtx.moveTo(x(p.n), y(p.s)); else curveCtx.lineTo(x(p.n), y(p.s)); });
+  curveCtx.stroke();
+
+  if (state.est.bracket) {
+    const [aN, bN] = state.est.bracket;
+    const a = curve.find((v) => v.n === aN); const b = curve.find((v) => v.n === bN);
+    if (a && b) {
+      curveCtx.strokeStyle = 'rgba(255,191,102,0.95)'; curveCtx.lineWidth = 4;
+      curveCtx.beginPath(); curveCtx.moveTo(x(a.n), y(a.s)); curveCtx.lineTo(x(b.n), y(b.s)); curveCtx.stroke();
+    }
+  }
+
+  if (Number.isFinite(state.stats.sHat)) {
+    curveCtx.strokeStyle = '#58d6ff'; curveCtx.setLineDash([5, 4]);
+    curveCtx.beginPath(); curveCtx.moveTo(30, y(state.stats.sHat)); curveCtx.lineTo(w - 30, y(state.stats.sHat)); curveCtx.stroke();
+    curveCtx.setLineDash([]);
+  }
+  if (Number.isFinite(state.est.nHat) && state.est.status === 'ok') {
+    curveCtx.fillStyle = '#58d6ff'; curveCtx.beginPath(); curveCtx.arc(x(state.est.nHat), y(state.stats.sHat), 4, 0, Math.PI * 2); curveCtx.fill();
+  }
+}
+
+function updatePairPanel() {
+  const [i, j] = state.pairs[state.pairIndex] ?? [0, 1];
+  const terms = essPairTerms(state.stats.centered[i], state.stats.centered[j]);
+  const cos = Math.max(-1, Math.min(1, terms.dot / Math.max(1e-12, terms.denominator)));
+  el.theta.textContent = `${(Math.acos(cos) * 180 / Math.PI).toFixed(2)}°`;
+  el.ni.textContent = terms.ni.toFixed(4);
+  el.nj.textContent = terms.nj.toFixed(4);
+  el.dot.textContent = terms.dot.toFixed(4);
+  el.area.textContent = terms.area.toFixed(4);
+  el.pairContrib.textContent = terms.contribution.toFixed(4);
+  el.pairValue.textContent = `${state.pairIndex + 1}/${state.pairs.length}`;
+}
+
+function refresh() {
+  genPoints();
+  state.stats = essStatistic(state.points);
+  state.proj = pca2(state.stats.centered);
+  state.pairs = pairList(state.nPts);
+  state.pairIndex = Math.min(state.pairIndex, Math.max(0, state.pairs.length - 1));
+  el.pair.max = String(Math.max(0, state.pairs.length - 1));
+
+  state.est = estimateEssDimension(state.stats.sHat, 24);
+  el.num.textContent = state.stats.numerator.toFixed(4);
+  el.den.textContent = state.stats.denominator.toFixed(4);
+  el.sHat.textContent = Number.isFinite(state.stats.sHat) ? state.stats.sHat.toFixed(4) : '—';
+  el.nHat.textContent = Number.isFinite(state.est.nHat) ? state.est.nHat.toFixed(3) : '—';
+
+  if (state.est.status === 'below-range') el.rangeNote.innerHTML = '<span class="warning">ŝ is below s₂: report as approximately 1D (&lt; 2).</span>';
+  else if (state.est.status === 'above-range') el.rangeNote.innerHTML = `<span class="warning">ŝ exceeds precomputed range: clamped to n=${state.est.curve[state.est.curve.length - 1].n}.</span>`;
+  else el.rangeNote.textContent = `Interpolating on segment n=${state.est.bracket[0]}..${state.est.bracket[1]}.`;
+
+  el.projectionNote.textContent = state.dim > 3 ? 'Display uses PCA projection; ESS stays in true synthetic dimension.' : 'Display is direct low-dimensional embedding.';
+  drawScatter();
+  updatePairPanel();
+  drawCurve();
+}
+
+function sync() {
+  el.nValue.textContent = String(state.nPts);
+  el.dValue.textContent = String(state.dim);
+  el.noiseValue.textContent = state.noise.toFixed(3);
+}
+
+el.menuTrigger.addEventListener('click', () => el.menu.classList.toggle('hidden'));
+el.nPts.addEventListener('input', (e) => { state.nPts = Number(e.target.value); sync(); refresh(); });
+el.dim.addEventListener('input', (e) => { state.dim = Number(e.target.value); sync(); refresh(); });
+el.noise.addEventListener('input', (e) => { state.noise = Number(e.target.value); sync(); refresh(); });
+el.seed.addEventListener('change', (e) => { state.seed = Number(e.target.value) || 0; refresh(); });
+el.pair.addEventListener('input', (e) => { state.pairIndex = Number(e.target.value); updatePairPanel(); drawScatter(); });
+el.regen.addEventListener('click', () => { state.seed += 1; el.seed.value = String(state.seed); refresh(); });
+
+buildAlgorithmSwitch(document.querySelector('#algorithmSwitch'), 'ess');
+sync();
+refresh();
+</script>
+</body>
+</html>
