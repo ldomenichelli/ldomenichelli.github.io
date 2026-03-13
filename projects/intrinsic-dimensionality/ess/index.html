@@ -53,7 +53,7 @@
     <div class="post-content layout">
       <section class="panel">
         <h2>Interactive local neighborhood explorer</h2>
-        <p class="subtle">Neighborhoods are sampled uniformly from an n-dimensional unit ball, with optional isotropic Gaussian noise. ESS is computed in true dimension; visuals use a 2D projection.</p>
+        <p class="subtle">Neighborhoods are sampled uniformly from an n-dimensional unit ball, with optional isotropic Gaussian noise. ESS is computed in true dimension, visuals use a 2D projection.</p>
         <div class="controls">
           <div class="control"><label>Local points: <span id="nValue"></span></label><input id="nPts" type="range" min="8" max="120" value="36"></div>
           <div class="control"><label>True dimension: <span id="dValue"></span></label><input id="dim" type="range" min="2" max="12" value="3"></div>
@@ -94,7 +94,7 @@
     </div>
     <section class="panel" style="margin-top:14px;">
       <h2>Comparison notes</h2>
-      <p class="subtle">ESS focuses on local angular geometry (simplex skewness), while MLE focuses on local distance-ratio likelihood in k-NN radii. ESS is especially useful when directional structure is informative, but still sensitive to noise, sample size, and mixed local regimes.</p>
+      <p class="subtle">ESS is especially useful when directional structure is informative, but still sensitive to noise, sample size, and mixed local regimes.</p>
     </section>
   </article>
 </main>
