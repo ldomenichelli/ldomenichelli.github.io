@@ -22,59 +22,109 @@
 </header>
 
 <main class="abalone-wrap">
-  <section class="panel">
-    <h1 class="hero-title">Abalone</h1>
-    <p class="muted">A polished duel on a radius-4 hex board (<span id="cell-count"></span> cells).</p>
-    <div class="meta-row"><span class="meta-pill">2 players</span><span class="meta-pill">Abstract strategy</span><span class="meta-pill">Quick duel</span></div>
-  </section>
-
-  <section class="panel">
-    <h2>How it works</h2>
-    <ul>
-      <li>On your turn, do <strong>one</strong> action with 1–3 of your own aligned marbles.</li>
-      <li>Move one space in any of the 6 hex directions.</li>
-      <li><strong>Inline</strong>: move along the line orientation.</li>
-      <li><strong>Broadside</strong>: shift sideways while keeping the line orientation.</li>
-      <li><strong>Sumito push (inline only)</strong>: legal only with strictly more marbles (2v1, 3v1, 3v2). Equal strength cannot push.</li>
-      <li>A push needs empty space behind opponents, unless that edge is off-board (then a marble is ejected).</li>
-      <li>First player to eject six opposing marbles wins.</li>
-    </ul>
-  </section>
-
-  <section class="panel">
-    <h2>Animated examples</h2>
-    <div class="inline-list">
-      <div data-example="inline"><p class="muted">Inline move</p><svg class="mini-board"></svg></div>
-      <div data-example="broadside"><p class="muted">Broadside move</p><svg class="mini-board"></svg></div>
-      <div data-example="sumito"><p class="muted">Legal sumito (3v2)</p><svg class="mini-board"></svg></div>
-      <div data-example="illegal"><p class="muted">Illegal push (2v2)</p><svg class="mini-board"></svg></div>
+  <section class="panel hero-panel" aria-labelledby="abalone-title">
+    <div>
+      <h1 id="abalone-title" class="hero-title">Abalone</h1>
+      <p class="muted">Premium dark-board duel on a radius-4 hex grid (<span id="cell-count"></span> cells).</p>
     </div>
+    <div class="meta-row"><span class="meta-pill">2 modes</span><span class="meta-pill">Human vs Human</span><span class="meta-pill">Human vs Computer</span></div>
   </section>
 
-  <section class="grid">
+  <section class="play-layout" aria-label="Playable board and controls">
     <div class="panel board-shell">
-      <h2>Play</h2>
-      <p id="turn-indicator" class="stat"></p>
+      <div class="board-header-row">
+        <h2>Board</h2>
+        <p id="thinking-indicator" class="thinking hidden" aria-live="polite">Computer thinking…</p>
+      </div>
+      <p id="turn-indicator" class="stat turn-indicator" aria-live="polite"></p>
       <p id="capture-indicator" class="stat muted"></p>
-      <p id="status-indicator" class="muted"></p>
-      <svg id="abalone-board" class="abalone-board" aria-label="Playable Abalone board"></svg>
-      <div class="ui-row">
-        <button id="undo-move" class="ghost">Undo</button>
-        <button id="reset-game" class="ghost">New game</button>
+      <p id="status-indicator" class="muted status-copy"></p>
+      <div id="game-over-banner" class="game-over hidden" aria-live="assertive"></div>
+      <svg id="abalone-board" class="abalone-board" aria-label="Playable Abalone board" role="application"></svg>
+    </div>
+
+    <aside class="panel side-rail" aria-label="Game controls and history">
+      <div class="rail-section">
+        <h3>Mode</h3>
+        <div class="control-grid">
+          <label for="mode-select">Game mode</label>
+          <select id="mode-select">
+            <option value="hvh">Human vs Human</option>
+            <option value="hvc">Human vs Computer</option>
+          </select>
+
+          <label for="human-side-select">Your side</label>
+          <select id="human-side-select">
+            <option value="B">Black</option>
+            <option value="W">White</option>
+          </select>
+
+          <label for="difficulty-select">Difficulty</label>
+          <select id="difficulty-select">
+            <option value="easy">Easy</option>
+            <option value="medium" selected>Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="rail-section compact-stats">
+        <h3>Live status</h3>
+        <p id="side-status" class="muted tiny"></p>
+        <p id="history-summary" class="muted tiny"></p>
+      </div>
+
+      <div class="rail-section history-shell">
+        <h3>Move history</h3>
+        <ol id="move-history" class="history" aria-live="polite"></ol>
+      </div>
+
+      <div class="rail-section">
+        <h3>Controls</h3>
+        <div class="ui-row">
+          <button id="undo-move" class="ghost">Undo</button>
+          <button id="reset-game" class="ghost">New game</button>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <section class="panel learn-panel" aria-label="Abalone help and examples">
+    <div class="segmented" role="tablist" aria-label="Guide tabs">
+      <button id="tab-rules" class="seg-btn active" data-tab="rules" role="tab" aria-selected="true" aria-controls="panel-rules">How it works</button>
+      <button id="tab-examples" class="seg-btn" data-tab="examples" role="tab" aria-selected="false" aria-controls="panel-examples">Animated examples</button>
+      <button id="tab-strategy" class="seg-btn" data-tab="strategy" role="tab" aria-selected="false" aria-controls="panel-strategy">Strategy notes</button>
+    </div>
+
+    <div id="panel-rules" class="tab-panel" data-panel="rules" role="tabpanel" aria-labelledby="tab-rules">
+      <ul class="rule-list">
+        <li>On your turn, do <strong>one</strong> action with 1–3 of your own aligned marbles.</li>
+        <li>Move one space in any of the 6 hex directions.</li>
+        <li><strong>Inline</strong>: move along the line orientation.</li>
+        <li><strong>Broadside</strong>: shift sideways while keeping the line orientation.</li>
+        <li><strong>Sumito push (inline only)</strong>: legal only with strictly more marbles (2v1, 3v1, 3v2). Equal strength cannot push.</li>
+        <li>A push needs empty space behind opponents, unless that edge is off-board (then a marble is ejected).</li>
+        <li>First player to eject six opposing marbles wins.</li>
+      </ul>
+    </div>
+
+    <div id="panel-examples" class="tab-panel hidden" data-panel="examples" role="tabpanel" aria-labelledby="tab-examples">
+      <div class="inline-list">
+        <div data-example="inline"><p class="muted">Inline move</p><svg class="mini-board"></svg></div>
+        <div data-example="broadside"><p class="muted">Broadside move</p><svg class="mini-board"></svg></div>
+        <div data-example="sumito"><p class="muted">Legal sumito (3v2)</p><svg class="mini-board"></svg></div>
+        <div data-example="illegal"><p class="muted">Illegal push (2v2)</p><svg class="mini-board"></svg></div>
       </div>
     </div>
 
-    <aside class="panel">
-      <h3>Move history</h3>
-      <ol id="move-history" class="history"></ol>
-      <h3>Short strategy notes</h3>
-      <ul>
+    <div id="panel-strategy" class="tab-panel hidden" data-panel="strategy" role="tabpanel" aria-labelledby="tab-strategy">
+      <ul class="rule-list">
         <li>Control center lanes to avoid edge ejections.</li>
-        <li>Build 3-marble spines; they project both threat and defense.</li>
-        <li>Prefer forcing turns where your opponent can only react.</li>
+        <li>Build 3-marble spines; they project threat and defense.</li>
+        <li>Prefer turns that force your opponent to react.</li>
         <li>Keep groups connected—isolated marbles become leverage points.</li>
       </ul>
-    </aside>
+    </div>
   </section>
 </main>
 
