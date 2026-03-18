@@ -12,11 +12,13 @@ import {
   parseKey,
   moveDestinationCell
 } from '/assets/js/abalone-engine.js';
+import { chooseAIMove } from '/assets/js/abalone-ai.js';
 
 const R = 22;
 const GAP = 3;
 const STEP = R * 2 + GAP;
 const SQRT3 = Math.sqrt(3);
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function axialToPixel(cell) {
   return {
@@ -34,6 +36,14 @@ function boardGeometry(cells) {
   const minY = Math.min(...ys) - 40;
   const maxY = Math.max(...ys) + 40;
   return { minX, minY, width: maxX - minX, height: maxY - minY };
+}
+
+function playerName(player) {
+  return player === BLACK ? 'Black' : 'White';
+}
+
+function opponentOf(player) {
+  return player === BLACK ? WHITE : BLACK;
 }
 
 function renderBoard(svg, state, selected, legalTargets, onCellClick) {
@@ -67,7 +77,7 @@ function renderBoard(svg, state, selected, legalTargets, onCellClick) {
       target.setAttribute('cx', p.x);
       target.setAttribute('cy', p.y);
       target.setAttribute('r', R - 3);
-      target.setAttribute('class', 'cell-target');
+      target.setAttribute('class', `cell-target ${legal.ejected ? 'cell-target-capture' : ''}`);
       target.addEventListener('click', () => onCellClick(cell, legal));
       cellGroup.appendChild(target);
     }
@@ -89,6 +99,25 @@ function renderBoard(svg, state, selected, legalTargets, onCellClick) {
   }
 }
 
+function setupTabs() {
+  const buttons = [...document.querySelectorAll('.seg-btn')];
+  const panels = [...document.querySelectorAll('.tab-panel')];
+
+  for (const btn of buttons) {
+    btn.addEventListener('click', () => {
+      const current = btn.dataset.tab;
+      for (const b of buttons) {
+        const active = b === btn;
+        b.classList.toggle('active', active);
+        b.setAttribute('aria-selected', String(active));
+      }
+      for (const panel of panels) {
+        panel.classList.toggle('hidden', panel.dataset.panel !== current);
+      }
+    });
+  }
+}
+
 function setupPlayableBoard() {
   const board = document.getElementById('abalone-board');
   const turn = document.getElementById('turn-indicator');
@@ -97,23 +126,96 @@ function setupPlayableBoard() {
   const historyEl = document.getElementById('move-history');
   const resetBtn = document.getElementById('reset-game');
   const undoBtn = document.getElementById('undo-move');
+  const modeSelect = document.getElementById('mode-select');
+  const sideSelect = document.getElementById('human-side-select');
+  const difficultySelect = document.getElementById('difficulty-select');
+  const sideStatus = document.getElementById('side-status');
+  const historySummary = document.getElementById('history-summary');
+  const thinking = document.getElementById('thinking-indicator');
+  const gameOverBanner = document.getElementById('game-over-banner');
 
   let state = initialState();
   let selected = [];
+  let aiThinking = false;
 
-  const redraw = () => {
+  const settings = {
+    mode: 'hvh',
+    humanSide: BLACK,
+    difficulty: 'medium'
+  };
+
+  function isHumanTurn() {
+    if (settings.mode === 'hvh') return true;
+    return state.turn === settings.humanSide;
+  }
+
+  function aiSide() {
+    return opponentOf(settings.humanSide);
+  }
+
+  function lockControls(locked) {
+    board.classList.toggle('disabled-board', locked);
+    thinking.classList.toggle('hidden', !locked);
+  }
+
+  function applyHumanMove(legal) {
+    board.classList.add('move-flash');
+    setTimeout(() => board.classList.remove('move-flash'), 160);
+    state = applyMove(state, { selection: selected, direction: legal.direction });
+    selected = [];
+  }
+
+  function attemptAIMove() {
+    if (settings.mode !== 'hvc' || state.winner || isHumanTurn()) {
+      aiThinking = false;
+      lockControls(false);
+      redraw();
+      return;
+    }
+
+    aiThinking = true;
+    lockControls(true);
+    redraw();
+
+    window.setTimeout(() => {
+      const move = chooseAIMove(state, aiSide(), settings.difficulty);
+      if (move) state = applyMove(state, move);
+      aiThinking = false;
+      lockControls(false);
+      redraw();
+    }, prefersReducedMotion ? 100 : 260);
+  }
+
+  function renderHistory() {
+    historyEl.innerHTML = '';
+    if (!state.history.length) {
+      const li = document.createElement('li');
+      li.className = 'history-empty';
+      li.textContent = 'No moves yet.';
+      historyEl.appendChild(li);
+      return;
+    }
+
+    state.history.slice().reverse().forEach((h, idx) => {
+      const li = document.createElement('li');
+      const actor = settings.mode === 'hvc' && h.player !== settings.humanSide ? 'Computer' : playerName(h.player);
+      const ejected = h.ejected ? ` · ejected ${h.ejected}` : '';
+      li.textContent = `${state.history.length - idx}. ${actor}: ${h.text}${ejected}`;
+      historyEl.appendChild(li);
+    });
+  }
+
+  function redraw() {
     const moves = selected.length ? getLegalMovesForSelection(state, selected) : [];
     const legalTargets = moves.map((m) => ({ ...m, target: moveDestinationCell(m) }));
 
     renderBoard(board, state, selected, legalTargets, (cell, legal) => {
-      if (state.winner) return;
+      if (state.winner || aiThinking || !isHumanTurn()) return;
 
       if (legal) {
-        board.classList.add('move-flash');
-        setTimeout(() => board.classList.remove('move-flash'), 180);
-        state = applyMove(state, { selection: selected, direction: legal.direction });
-        selected = [];
+        applyHumanMove(legal);
         redraw();
+        attemptAIMove();
         return;
       }
 
@@ -132,33 +234,84 @@ function setupPlayableBoard() {
       redraw();
     });
 
+    const roleTurn = settings.mode === 'hvc' && state.turn !== settings.humanSide ? 'Computer' : playerName(state.turn);
     turn.textContent = state.winner
-      ? `Winner: ${state.winner === BLACK ? 'Black' : 'White'}`
-      : `Turn: ${state.turn === BLACK ? 'Black' : 'White'}${selected.length ? ` · selected ${selected.length}` : ''}`;
+      ? `Winner: ${playerName(state.winner)}`
+      : `Turn: ${roleTurn}${selected.length ? ` · selected ${selected.length}` : ''}`;
+
     score.textContent = `Captured — Black: ${state.captured[BLACK]} · White: ${state.captured[WHITE]}`;
-    status.textContent = selected.length ? `${moves.length} legal move(s) highlighted.` : 'Select 1–3 aligned marbles to see legal moves.';
 
-    historyEl.innerHTML = '';
-    state.history.slice().reverse().forEach((h, idx) => {
-      const li = document.createElement('li');
-      li.textContent = `${state.history.length - idx}. ${h.player === BLACK ? 'Black' : 'White'}: ${h.text}${h.ejected ? ` · ejected ${h.ejected}` : ''}`;
-      historyEl.appendChild(li);
-    });
-  };
+    if (state.winner) {
+      const winnerRole = settings.mode === 'hvc' && state.winner !== settings.humanSide ? 'Computer' : 'Human';
+      const detail = settings.mode === 'hvc' ? `${winnerRole} (${playerName(state.winner)}) wins by 6 captures.` : `${playerName(state.winner)} wins by 6 captures.`;
+      status.textContent = detail;
+      gameOverBanner.textContent = detail;
+      gameOverBanner.classList.remove('hidden');
+    } else if (aiThinking) {
+      status.textContent = 'Computer is evaluating legal responses…';
+      gameOverBanner.classList.add('hidden');
+    } else if (!isHumanTurn()) {
+      status.textContent = 'Computer turn: input is locked until move resolves.';
+      gameOverBanner.classList.add('hidden');
+    } else {
+      status.textContent = selected.length ? `${moves.length} legal move(s) highlighted.` : 'Select 1–3 aligned marbles to see legal moves.';
+      gameOverBanner.classList.add('hidden');
+    }
 
-  resetBtn.addEventListener('click', () => {
+    sideSelect.disabled = settings.mode !== 'hvc' || aiThinking;
+    difficultySelect.disabled = settings.mode !== 'hvc' || aiThinking;
+    sideStatus.textContent = settings.mode === 'hvc'
+      ? `You are ${playerName(settings.humanSide)} · Computer is ${playerName(aiSide())}`
+      : 'Both sides are human-controlled.';
+    historySummary.textContent = `Moves played: ${state.history.length}`;
+
+    renderHistory();
+  }
+
+  function resetGame() {
     state = initialState();
     selected = [];
+    aiThinking = false;
+    lockControls(false);
     redraw();
+    attemptAIMove();
+  }
+
+  modeSelect.addEventListener('change', () => {
+    settings.mode = modeSelect.value;
+    resetGame();
+  });
+
+  sideSelect.addEventListener('change', () => {
+    settings.humanSide = sideSelect.value === WHITE ? WHITE : BLACK;
+    if (settings.mode === 'hvc') resetGame();
+    else redraw();
+  });
+
+  difficultySelect.addEventListener('change', () => {
+    settings.difficulty = difficultySelect.value;
+    redraw();
+  });
+
+  resetBtn.addEventListener('click', () => {
+    resetGame();
   });
 
   undoBtn.addEventListener('click', () => {
-    state = undoMove(state);
+    if (aiThinking) return;
+    if (settings.mode === 'hvc') {
+      state = undoMove(state);
+      if (state.history.length && state.turn !== settings.humanSide) {
+        state = undoMove(state);
+      }
+    } else {
+      state = undoMove(state);
+    }
     selected = [];
     redraw();
   });
 
-  redraw();
+  resetGame();
 }
 
 function setupExamples() {
@@ -194,30 +347,38 @@ function setupExamples() {
       svg.innerHTML = '';
       for (const d of dots) {
         const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        c.setAttribute('cx', d.p.x); c.setAttribute('cy', d.p.y); c.setAttribute('r', R - 2);
-        c.setAttribute('fill', '#15151a'); c.setAttribute('stroke', '#30303a');
+        c.setAttribute('cx', d.p.x);
+        c.setAttribute('cy', d.p.y);
+        c.setAttribute('r', R - 2);
+        c.setAttribute('fill', '#15151a');
+        c.setAttribute('stroke', '#30303a');
         svg.appendChild(c);
       }
       for (const m of frames[type][idx]) {
         const p = axialToPixel(m);
         const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        c.setAttribute('cx', p.x); c.setAttribute('cy', p.y); c.setAttribute('r', R - 5);
+        c.setAttribute('cx', p.x);
+        c.setAttribute('cy', p.y);
+        c.setAttribute('r', R - 5);
         c.setAttribute('fill', m.v === BLACK ? '#1f2937' : '#f3f4f6');
         c.setAttribute('stroke', m.v === BLACK ? '#9ca3af' : '#52525b');
         svg.appendChild(c);
       }
       idx = (idx + 1) % frames[type].length;
     };
+
     draw();
-    setInterval(draw, 1000);
+    if (!prefersReducedMotion) {
+      setInterval(draw, 1000);
+    }
   }
 }
 
+setupTabs();
 setupPlayableBoard();
 setupExamples();
 
 const keyHints = document.getElementById('cell-count');
 if (keyHints) keyHints.textContent = `${allCells().length}`;
 
-// expose for debugging
 window.abaloneDebug = { DIRECTIONS, parseKey };
