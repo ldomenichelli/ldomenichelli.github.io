@@ -1,163 +1,164 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="auto">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+  <meta name="robots" content="index, follow">
   <title>Adugo | lucia's notes</title>
-  <meta name="description" content="Play Adugo (Jaguar and Dogs) online: human vs human or human vs computer with selectable difficulty." />
-  <link rel="stylesheet" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css" />
-  <link rel="stylesheet" href="/assets/css/adugo.css" />
+  <meta name="description" content="Playable Adugo (Jaguar and Dogs): human vs human or human vs computer with selectable difficulty.">
+  <link crossorigin="anonymous" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css" rel="preload stylesheet" as="style">
+  <link rel="stylesheet" href="/assets/css/adugo.css">
 </head>
-<body class="dark" id="top">
-  <header class="header">
-    <nav class="nav">
-      <div class="logo"><a href="/" title="lucia's notes">lucia's notes</a></div>
-      <ul class="menu">
-        <li><a href="/about/">about</a></li>
-        <li><a href="/posts/">notes</a></li>
-        <li><a href="/games/">games</a></li>
-      </ul>
-    </nav>
-  </header>
+<body class="page dark" id="top">
+<header class="header">
+  <nav class="nav">
+    <div class="logo"><a href="/" accesskey="h">lucia's notes</a><div class="logo-switches"><ul class="lang-switch"><li>|</li></ul></div></div>
+    <button id="menu-trigger" aria-haspopup="menu" aria-label="Menu Button">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <ul class="menu hidden"><li><a href="/projects/"><span>projects</span></a></li><li><a href="/games/"><span>games</span></a></li></ul>
+  </nav>
+</header>
 
-  <main class="main">
-    <article class="post-single">
-      <header class="post-header">
-        <div class="breadcrumbs"><a href="/">Home</a> » <a href="/games/">games</a></div>
-        <h1 class="post-title">Adugo — Jaguar and Dogs</h1>
-        <div class="post-meta">Playable online • Human vs Human / Human vs Computer</div>
-      </header>
+<main class="main">
+  <article class="post-single">
+    <header class="post-header">
+      <h1 class="post-title">Adugo — Jaguar and Dogs</h1>
+      <div class="post-meta">Playable online • Human vs Human • Human vs Computer</div>
+    </header>
 
-      <div class="post-content">
-        <section class="adugo-shell" aria-label="Adugo game area">
-          <header class="adugo-header">
-            <div>
-              <h2>Adugo Arena</h2>
-              <p class="adugo-subtitle">Asymmetrical hunt game on a line-based graph board.</p>
-            </div>
-            <p class="adugo-subtitle">Jaguar starts first</p>
-          </header>
-
-          <div class="adugo-role-strip" aria-label="Roles and objective summary">
-            <section class="adugo-role adugo-role-jaguar">
-              <p class="adugo-role-title">Jaguar</p>
-              <p class="adugo-role-text">Mobile hunter. Capture dogs by jumping.</p>
-            </section>
-            <section class="adugo-role adugo-role-dogs">
-              <p class="adugo-role-title">Dogs</p>
-              <p class="adugo-role-text">Pack defenders. Trap the jaguar.</p>
-            </section>
-            <section class="adugo-role adugo-role-objective">
-              <p class="adugo-role-title">Capture objective</p>
-              <div class="adugo-progress-wrap">
-                <div class="adugo-progress" data-capture-progress></div>
-              </div>
-              <p class="adugo-role-text" data-capture-remaining>Remaining captures: 14</p>
-            </section>
+    <div class="post-content">
+      <section class="adugo-shell" aria-label="Adugo game area">
+        <header class="adugo-header">
+          <div>
+            <h2>Adugo Arena</h2>
+            <p class="adugo-subtitle">Asymmetrical hunt game on a line-based graph board.</p>
           </div>
+          <p class="adugo-subtitle">Jaguar starts first</p>
+        </header>
 
-          <p class="adugo-win-banner" data-win-banner hidden></p>
+        <div class="adugo-role-strip" aria-label="Roles and objective summary">
+          <section class="adugo-role adugo-role-jaguar">
+            <p class="adugo-role-title">Jaguar</p>
+            <p class="adugo-role-text">Mobile hunter. Capture dogs by jumping.</p>
+          </section>
+          <section class="adugo-role adugo-role-dogs">
+            <p class="adugo-role-title">Dogs</p>
+            <p class="adugo-role-text">Pack defenders. Trap the jaguar.</p>
+          </section>
+          <section class="adugo-role adugo-role-objective">
+            <p class="adugo-role-title">Capture objective</p>
+            <div class="adugo-progress-wrap">
+              <div class="adugo-progress" data-capture-progress></div>
+            </div>
+            <p class="adugo-role-text" data-capture-remaining>Remaining captures: 14</p>
+          </section>
+        </div>
 
-          <div class="adugo-main">
-            <section class="adugo-board-wrap" aria-label="Board section">
-              <div class="adugo-board" data-adugo-board role="grid" aria-label="Adugo board"></div>
+        <p class="adugo-win-banner" data-win-banner hidden></p>
 
-              <div class="adugo-tabs">
-                <ul class="adugo-tab-list" role="tablist" aria-label="Adugo information tabs">
-                  <li><button class="adugo-tab" role="tab" aria-selected="true" data-tab-button="rules">Rules</button></li>
-                  <li><button class="adugo-tab" role="tab" aria-selected="false" data-tab-button="play">How to play</button></li>
-                  <li><button class="adugo-tab" role="tab" aria-selected="false" data-tab-button="tips">Strategy tips</button></li>
+        <div class="adugo-main">
+          <section class="adugo-board-wrap" aria-label="Board section">
+            <div class="adugo-board" data-adugo-board role="grid" aria-label="Adugo board"></div>
+
+            <div class="adugo-tabs">
+              <ul class="adugo-tab-list" role="tablist" aria-label="Adugo information tabs">
+                <li><button class="adugo-tab" role="tab" aria-selected="true" data-tab-button="rules">Rules</button></li>
+                <li><button class="adugo-tab" role="tab" aria-selected="false" data-tab-button="play">How to play</button></li>
+                <li><button class="adugo-tab" role="tab" aria-selected="false" data-tab-button="tips">Strategy tips</button></li>
+              </ul>
+
+              <section class="adugo-tab-panel" data-tab-panel="rules" role="tabpanel">
+                <ul>
+                  <li>Board is a graph: pieces move only along connected lines.</li>
+                  <li>Jaguar moves one step, or captures by jumping over an adjacent dog to an empty connected landing node.</li>
+                  <li>Dogs cannot capture; they win by trapping the jaguar so it has no legal moves.</li>
+                  <li>Jaguar continues a capture chain in the same turn when additional captures are available.</li>
+                  <li>Current variant: jaguar wins by capturing all 14 dogs.</li>
                 </ul>
+              </section>
 
-                <section class="adugo-tab-panel" data-tab-panel="rules" role="tabpanel">
-                  <ul>
-                    <li>Board is a graph: pieces move only along connected lines.</li>
-                    <li>Jaguar moves one step, or captures by jumping over an adjacent dog to an empty connected landing node.</li>
-                    <li>Dogs cannot capture; they win by trapping the jaguar so it has no legal moves.</li>
-                    <li>Jaguar continues a capture chain in the same turn when additional captures are available.</li>
-                    <li>Current variant: jaguar wins by capturing all 14 dogs.</li>
-                  </ul>
-                </section>
+              <section class="adugo-tab-panel" data-tab-panel="play" role="tabpanel" hidden>
+                <ol>
+                  <li>Select one of your pieces (matching the current turn).</li>
+                  <li>Legal destinations glow in blue (capture landings in red).</li>
+                  <li>In Human vs Computer mode, input is locked while the AI is thinking.</li>
+                  <li>Undo in Human vs Computer mode reverts one full pair (human + AI) when possible.</li>
+                </ol>
+              </section>
 
-                <section class="adugo-tab-panel" data-tab-panel="play" role="tabpanel" hidden>
-                  <ol>
-                    <li>Select one of your pieces (matching the current turn).</li>
-                    <li>Legal destinations glow in blue (capture landings in red).</li>
-                    <li>In Human vs Computer mode, input is locked while the AI is thinking.</li>
-                    <li>Undo in Human vs Computer mode reverts one full pair (human + AI) when possible.</li>
-                  </ol>
-                </section>
+              <section class="adugo-tab-panel" data-tab-panel="tips" role="tabpanel" hidden>
+                <p><strong>Jaguar:</strong> maximize mobility, keep central lanes open, and chain captures when possible.</p>
+                <p><strong>Dogs:</strong> create a compact net, deny escape lanes, and avoid isolated dogs that can be jumped.</p>
+              </section>
+            </div>
+          </section>
 
-                <section class="adugo-tab-panel" data-tab-panel="tips" role="tabpanel" hidden>
-                  <p><strong>Jaguar:</strong> maximize mobility, keep central lanes open, and chain captures when possible.</p>
-                  <p><strong>Dogs:</strong> create a compact net, deny escape lanes, and avoid isolated dogs that can be jumped.</p>
-                </section>
-              </div>
-            </section>
-
-            <aside class="adugo-side" aria-label="Game controls and status">
-              <section class="adugo-card">
-                <p class="adugo-label">Mode & setup</p>
-                <div class="adugo-grid2">
-                  <div class="adugo-field">
-                    <label for="adugo-mode">Mode</label>
-                    <select id="adugo-mode" class="adugo-select" data-mode>
-                      <option value="HUMAN_VS_HUMAN">Human vs Human</option>
-                      <option value="HUMAN_VS_COMPUTER">Human vs Computer</option>
-                    </select>
-                  </div>
-                  <div class="adugo-field">
-                    <label for="adugo-side">Play as</label>
-                    <select id="adugo-side" class="adugo-select" data-side>
-                      <option value="JAGUAR">Jaguar</option>
-                      <option value="DOGS">Dogs</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="adugo-field adugo-field-stack">
-                  <label for="adugo-difficulty">Difficulty</label>
-                  <select id="adugo-difficulty" class="adugo-select" data-difficulty>
-                    <option value="Easy">Easy</option>
-                    <option value="Medium" selected>Medium</option>
-                    <option value="Hard">Hard</option>
+          <aside class="adugo-side" aria-label="Game controls and status">
+            <section class="adugo-card">
+              <p class="adugo-label">Mode &amp; setup</p>
+              <div class="adugo-grid2">
+                <div class="adugo-field">
+                  <label for="adugo-mode">Mode</label>
+                  <select id="adugo-mode" class="adugo-select" data-mode>
+                    <option value="HUMAN_VS_HUMAN">Human vs Human</option>
+                    <option value="HUMAN_VS_COMPUTER">Human vs Computer</option>
                   </select>
                 </div>
-              </section>
-
-              <section class="adugo-card">
-                <p class="adugo-label">Status</p>
-                <div class="adugo-stat"><span>Turn</span><strong data-turn>Jaguar</strong></div>
-                <div class="adugo-stat"><span>Dogs captured</span><strong data-captured>0</strong></div>
-                <div class="adugo-stat"><span>Need to win (Jaguar)</span><strong data-remaining>14</strong></div>
-                <p class="adugo-status" data-status aria-live="polite">Jaguar to move.</p>
-                <p class="adugo-thinking" data-thinking aria-live="polite" hidden>Computer thinking…</p>
-                <p class="adugo-status" data-objective></p>
-              </section>
-
-              <section class="adugo-card">
-                <p class="adugo-label">Move history</p>
-                <ol class="adugo-history" data-history></ol>
-              </section>
-
-              <section class="adugo-card">
-                <p class="adugo-label">Controls</p>
-                <div class="adugo-grid2">
-                  <button class="adugo-button" data-new-game>New game</button>
-                  <button class="adugo-button" data-undo>Undo</button>
+                <div class="adugo-field">
+                  <label for="adugo-side">Play as</label>
+                  <select id="adugo-side" class="adugo-select" data-side>
+                    <option value="JAGUAR">Jaguar</option>
+                    <option value="DOGS">Dogs</option>
+                  </select>
                 </div>
-              </section>
-            </aside>
-          </div>
-        </section>
-      </div>
-    </article>
-  </main>
+              </div>
 
-  <footer class="footer" style="padding-top:18px;padding-bottom:18px">
-    <span>© 2026 <a href="/">lucia's notes</a></span>
-  </footer>
+              <div class="adugo-field adugo-field-stack">
+                <label for="adugo-difficulty">Difficulty</label>
+                <select id="adugo-difficulty" class="adugo-select" data-difficulty>
+                  <option value="Easy">Easy</option>
+                  <option value="Medium" selected>Medium</option>
+                  <option value="Hard">Hard</option>
+                </select>
+              </div>
+            </section>
 
-  <script type="module" src="/assets/js/adugo-page.js"></script>
+            <section class="adugo-card">
+              <p class="adugo-label">Status</p>
+              <div class="adugo-stat"><span>Turn</span><strong data-turn>Jaguar</strong></div>
+              <div class="adugo-stat"><span>Dogs captured</span><strong data-captured>0</strong></div>
+              <div class="adugo-stat"><span>Need to win (Jaguar)</span><strong data-remaining>14</strong></div>
+              <p class="adugo-status" data-status aria-live="polite">Jaguar to move.</p>
+              <p class="adugo-thinking" data-thinking aria-live="polite" hidden>Computer thinking…</p>
+              <p class="adugo-status" data-objective></p>
+            </section>
+
+            <section class="adugo-card">
+              <p class="adugo-label">Move history</p>
+              <ol class="adugo-history" data-history></ol>
+            </section>
+
+            <section class="adugo-card">
+              <p class="adugo-label">Controls</p>
+              <div class="adugo-grid2">
+                <button class="adugo-button" data-new-game>New game</button>
+                <button class="adugo-button" data-undo>Undo</button>
+              </div>
+            </section>
+          </aside>
+        </div>
+      </section>
+    </div>
+  </article>
+</main>
+
+<script>
+  let b=document.querySelector('#menu-trigger'),m=document.querySelector('.menu');
+  b.addEventListener('click',()=>m.classList.toggle('hidden'));
+  document.body.addEventListener('click',e=>{if(!b.contains(e.target))m.classList.add('hidden')});
+</script>
+<script type="module" src="/assets/js/adugo-page.js"></script>
 </body>
 </html>
