@@ -1,81 +1,141 @@
 :root {
-  --adugo-bg: #0f1116;
-  --adugo-panel: #171a23;
-  --adugo-panel-alt: #1d2230;
-  --adugo-border: #2f374d;
-  --adugo-text: #e9edf7;
-  --adugo-muted: #b3bfd9;
-  --adugo-accent: #83a4ff;
-  --adugo-accent-soft: rgba(131, 164, 255, 0.18);
-  --adugo-danger: #ff7b7b;
+  --adugo-bg: #0e1118;
+  --adugo-panel: #171c28;
+  --adugo-panel-alt: #1c2331;
+  --adugo-panel-soft: #212b3e;
+  --adugo-border: #33405b;
+  --adugo-text: #e9edf8;
+  --adugo-muted: #b4c0d9;
+  --adugo-accent: #7fa5ff;
+  --adugo-accent-soft: rgba(127, 165, 255, 0.22);
   --adugo-jaguar: #e8b43f;
   --adugo-dog: #d7dde8;
 }
 
 .adugo-shell {
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
   border: 1px solid var(--adugo-border);
   border-radius: 18px;
-  background: linear-gradient(175deg, #121521 0%, #0f1116 100%);
+  background: linear-gradient(170deg, #111623 0%, #0d1018 100%);
   color: var(--adugo-text);
-  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.33);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
   overflow: hidden;
 }
 
 .adugo-header {
   display: flex;
-  align-items: baseline;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 0.9rem 1.1rem;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.8rem 0.95rem;
   border-bottom: 1px solid var(--adugo-border);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
 }
 
 .adugo-header h2 {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1.02rem;
   letter-spacing: 0.02em;
 }
 
 .adugo-subtitle {
   margin: 0;
   color: var(--adugo-muted);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+}
+
+.adugo-role-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+  padding: 0.7rem 0.9rem 0;
+}
+
+.adugo-role {
+  border: 1px solid var(--adugo-border);
+  border-radius: 12px;
+  background: var(--adugo-panel);
+  padding: 0.55rem 0.65rem;
+  text-align: left;
+}
+
+.adugo-role-jaguar {
+  box-shadow: inset 0 0 0 1px rgba(232, 180, 63, 0.25);
+}
+
+.adugo-role-dogs {
+  box-shadow: inset 0 0 0 1px rgba(210, 220, 240, 0.15);
+}
+
+
+.adugo-shell[data-turn='JAGUAR'] .adugo-role-jaguar,
+.adugo-shell[data-turn='DOGS'] .adugo-role-dogs {
+  border-color: #6a8ff4;
+  box-shadow: 0 0 0 1px rgba(106, 143, 244, 0.4), inset 0 0 0 1px rgba(106, 143, 244, 0.2);
+}
+
+.adugo-role-title {
+  margin: 0;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #bfcbed;
+}
+
+.adugo-role-text {
+  margin: 0.3rem 0 0;
+  color: #d7def0;
+  font-size: 0.82rem;
+}
+
+.adugo-progress-wrap {
+  margin-top: 0.35rem;
+  height: 7px;
+  border-radius: 999px;
+  background: #121827;
+  border: 1px solid #3a4865;
+  overflow: hidden;
+}
+
+.adugo-progress {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #f6d47e, #d7922a);
+  transition: width 180ms ease;
 }
 
 .adugo-win-banner {
-  margin: 0.75rem 1rem 0;
+  margin: 0.7rem 0.9rem 0;
   padding: 0.55rem 0.8rem;
   border-radius: 10px;
-  border: 1px solid rgba(232, 180, 63, 0.5);
-  background: rgba(232, 180, 63, 0.12);
+  border: 1px solid rgba(232, 180, 63, 0.52);
+  background: rgba(232, 180, 63, 0.14);
   color: #ffe8ae;
-  font-weight: 600;
+  font-weight: 650;
 }
 
 .adugo-main {
   display: grid;
-  grid-template-columns: 1.5fr minmax(260px, 340px);
-  gap: 0.9rem;
-  padding: 0.9rem;
+  grid-template-columns: minmax(0, 1.7fr) minmax(270px, 320px);
+  gap: 0.7rem;
+  padding: 0.75rem 0.9rem 0.9rem;
 }
 
 .adugo-board-wrap {
   background: var(--adugo-panel);
   border: 1px solid var(--adugo-border);
   border-radius: 16px;
-  padding: 0.9rem;
+  padding: 0.75rem;
 }
 
 .adugo-board {
   position: relative;
   aspect-ratio: 1 / 1;
-  width: min(100%, 690px);
+  width: min(100%, 760px);
   margin: 0 auto;
-  background: radial-gradient(circle at top left, #2d3244 0%, #1f2432 35%, #171a23 100%);
+  background: radial-gradient(circle at top left, #323b53 0%, #21283a 34%, #171c28 100%);
   border-radius: 14px;
-  border: 1px solid #3a4562;
+  border: 1px solid #45567b;
   overflow: hidden;
 }
 
@@ -89,22 +149,22 @@
   position: absolute;
   transform-origin: 0 0;
   height: 2px;
-  background: linear-gradient(90deg, #4f5873, #5f6a8a);
-  opacity: 0.7;
+  background: linear-gradient(90deg, #5b6988, #7384ad);
+  opacity: 0.75;
 }
 
 .adugo-node {
   position: absolute;
-  width: clamp(34px, 6.4vw, 54px);
-  height: clamp(34px, 6.4vw, 54px);
-  margin-left: calc(clamp(34px, 6.4vw, 54px) * -0.5);
-  margin-top: calc(clamp(34px, 6.4vw, 54px) * -0.5);
+  width: clamp(34px, 5.4vw, 56px);
+  height: clamp(34px, 5.4vw, 56px);
+  margin-left: calc(clamp(34px, 5.4vw, 56px) * -0.5);
+  margin-top: calc(clamp(34px, 5.4vw, 56px) * -0.5);
   border-radius: 999px;
-  border: 2px solid #8fa0cc33;
-  background: #151928;
+  border: 2px solid #98a9d533;
+  background: #151b2b;
   z-index: 2;
   cursor: pointer;
-  transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+  transition: transform 130ms ease, box-shadow 130ms ease, border-color 130ms ease;
 }
 
 .adugo-node:hover,
@@ -116,77 +176,83 @@
 }
 
 .adugo-node.is-selected {
-  border-color: #8ec5ff;
-  box-shadow: 0 0 0 4px rgba(142, 197, 255, 0.2);
+  border-color: #99c9ff;
+  box-shadow: 0 0 0 4px rgba(153, 201, 255, 0.2);
 }
 
 .adugo-node.is-legal::after {
   content: '';
   position: absolute;
-  inset: 8px;
+  inset: 9px;
   border-radius: 50%;
-  background: rgba(131, 164, 255, 0.5);
+  background: rgba(127, 165, 255, 0.54);
 }
 
 .adugo-node.is-chain::after {
-  background: rgba(255, 123, 123, 0.75);
+  background: rgba(255, 131, 131, 0.82);
 }
 
 .piece {
   position: absolute;
-  inset: 5px;
+  inset: 4px;
   border-radius: 50%;
   z-index: 3;
 }
 
 .piece.jaguar {
-  background: radial-gradient(circle at 30% 26%, #ffde8c 0%, #e8b43f 62%, #9e6f00 100%);
-  box-shadow: inset 0 -3px 8px rgba(63, 38, 0, 0.45);
+  background: radial-gradient(circle at 30% 26%, #ffde8c 0%, #e8b43f 60%, #9b6f00 100%);
+  box-shadow: inset 0 -4px 8px rgba(63, 38, 0, 0.42);
 }
 
 .piece.dog {
-  background: radial-gradient(circle at 30% 26%, #f6f8fd 0%, #d7dde8 60%, #8a95ad 100%);
-  box-shadow: inset 0 -2px 8px rgba(30, 40, 65, 0.35);
+  background: radial-gradient(circle at 30% 26%, #f6f8fd 0%, #d7dde8 58%, #8e9db8 100%);
+  box-shadow: inset 0 -2px 8px rgba(31, 42, 69, 0.35);
 }
 
 .adugo-side {
   display: grid;
-  gap: 0.7rem;
+  gap: 0.55rem;
+  align-content: start;
 }
 
 .adugo-card {
   background: var(--adugo-panel-alt);
   border: 1px solid var(--adugo-border);
   border-radius: 12px;
-  padding: 0.75rem;
+  padding: 0.68rem;
 }
 
 .adugo-grid2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
+  gap: 0.45rem;
 }
 
 .adugo-field {
   display: grid;
-  gap: 0.35rem;
+  gap: 0.32rem;
   text-align: left;
+}
+
+.adugo-field-stack {
+  margin-top: 0.55rem;
 }
 
 .adugo-field label,
 .adugo-label {
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   color: var(--adugo-muted);
+  margin: 0;
 }
 
 .adugo-select,
 .adugo-button {
   font: inherit;
   color: var(--adugo-text);
-  background: #111624;
-  border: 1px solid #34405d;
-  border-radius: 10px;
-  padding: 0.42rem 0.55rem;
+  background: #111728;
+  border: 1px solid #3a4970;
+  border-radius: 9px;
+  padding: 0.4rem 0.52rem;
 }
 
 .adugo-button {
@@ -210,9 +276,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px dashed #3b4663;
-  padding: 0.35rem 0;
-  font-size: 0.93rem;
+  border-bottom: 1px dashed #425174;
+  padding: 0.3rem 0;
+  font-size: 0.9rem;
 }
 
 .adugo-stat:last-child {
@@ -220,101 +286,120 @@
 }
 
 .adugo-status {
-  margin: 0.3rem 0 0;
-  color: #d5ddf2;
-  font-size: 0.9rem;
+  margin: 0.35rem 0 0;
+  color: #d7deef;
+  font-size: 0.86rem;
 }
 
 .adugo-thinking {
-  margin: 0.4rem 0 0;
-  font-size: 0.85rem;
-  color: #9eb4ff;
+  margin: 0.32rem 0 0;
+  font-size: 0.83rem;
+  color: #a8bcff;
 }
 
 .adugo-history {
   list-style: none;
   margin: 0;
   padding: 0;
-  max-height: 170px;
+  max-height: 220px;
   overflow: auto;
   display: grid;
-  gap: 0.25rem;
+  gap: 0.24rem;
 }
 
 .adugo-history-item {
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   color: #d7ddf0;
-  background: #121826;
-  border: 1px solid #2f3850;
+  background: #121a2b;
+  border: 1px solid #344361;
   border-radius: 8px;
-  padding: 0.3rem 0.45rem;
+  padding: 0.26rem 0.42rem;
 }
 
 .adugo-empty-history {
   color: var(--adugo-muted);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
 }
 
 .adugo-tabs {
-  margin-top: 0.7rem;
+  margin-top: 0.62rem;
   border-top: 1px solid var(--adugo-border);
 }
 
 .adugo-tab-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.45rem;
+  gap: 0.4rem;
   margin: 0;
-  padding: 0.75rem 0 0;
+  padding: 0.62rem 0 0;
   list-style: none;
 }
 
 .adugo-tab {
-  border: 1px solid #36425f;
-  background: #13182a;
+  border: 1px solid #3b4a6c;
+  background: #131a2d;
   color: var(--adugo-muted);
   border-radius: 999px;
-  padding: 0.33rem 0.7rem;
+  padding: 0.28rem 0.62rem;
   cursor: pointer;
-  font-size: 0.82rem;
+  font-size: 0.79rem;
 }
 
 .adugo-tab[aria-selected='true'] {
   color: var(--adugo-text);
-  border-color: #6385e7;
-  background: #1a2340;
+  border-color: #6a8ff4;
+  background: #1b2544;
 }
 
 .adugo-tab-panel {
-  margin-top: 0.7rem;
-  background: var(--adugo-panel);
+  margin-top: 0.58rem;
+  background: var(--adugo-panel-soft);
   border: 1px solid var(--adugo-border);
-  border-radius: 12px;
-  padding: 0.75rem;
+  border-radius: 11px;
+  padding: 0.66rem;
   color: #d5deef;
-  font-size: 0.92rem;
+  font-size: 0.89rem;
 }
 
 .adugo-tab-panel p,
 .adugo-tab-panel ul,
 .adugo-tab-panel ol {
-  margin: 0.35rem 0;
+  margin: 0.3rem 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .adugo-node,
   .adugo-button,
-  .adugo-select {
+  .adugo-select,
+  .adugo-progress {
     transition: none;
   }
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1024px) {
   .adugo-main {
     grid-template-columns: 1fr;
   }
 
   .adugo-board {
-    width: min(100%, 580px);
+    width: min(100%, 680px);
+  }
+
+  .adugo-history {
+    max-height: 180px;
+  }
+}
+
+@media (max-width: 780px) {
+  .adugo-role-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .adugo-grid2 {
+    grid-template-columns: 1fr;
+  }
+
+  .adugo-board {
+    width: min(100%, 600px);
   }
 }

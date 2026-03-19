@@ -35,6 +35,13 @@ test('graph adjacency is symmetric and non-empty', () => {
   }
 });
 
+
+test('configured variant starts with 14 dogs and jaguar target matches full capture', () => {
+  const initial = createInitialState();
+  assert.equal(initial.dogs.length, 14);
+  assert.equal(GAME_CONFIG.jaguarCaptureTarget, 14);
+});
+
 test('dogs have only step moves and cannot capture', () => {
   const state = makeState({
     turn: SIDES.DOGS,

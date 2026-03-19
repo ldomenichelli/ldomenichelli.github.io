@@ -4,16 +4,11 @@ import {
   createInitialState,
   applyMove,
   getLegalMoves,
-  getLegalJaguarCaptures,
   indexToCoord,
   ADJACENCY
 } from './adugo-engine.js';
 import { thinkAndPickAIMove, opposite } from './adugo-ai.js';
-
-const MODE = {
-  HVH: 'HUMAN_VS_HUMAN',
-  HVC: 'HUMAN_VS_COMPUTER'
-};
+import { MODE, computeUndoResult } from './adugo-session.js';
 
 const state = {
   game: createInitialState(),
@@ -26,8 +21,12 @@ const state = {
 };
 
 const boardEl = document.querySelector('[data-adugo-board]');
+const shellEl = document.querySelector('.adugo-shell');
 const turnEl = document.querySelector('[data-turn]');
 const capturedEl = document.querySelector('[data-captured]');
+const remainingEl = document.querySelector('[data-remaining]');
+const captureProgressEl = document.querySelector('[data-capture-progress]');
+const captureRemainingEl = document.querySelector('[data-capture-remaining]');
 const objectiveEl = document.querySelector('[data-objective]');
 const statusEl = document.querySelector('[data-status]');
 const thinkingEl = document.querySelector('[data-thinking]');
@@ -46,17 +45,12 @@ function isHumanTurn() {
 }
 
 function canUndoPair() {
-  if (state.snapshots.length === 0) return false;
-  return true;
+  return state.snapshots.length > 0;
 }
 
 function pushSnapshot() {
   state.snapshots.push(structuredClone(state.game));
   if (state.snapshots.length > 200) state.snapshots.shift();
-}
-
-function popSnapshot() {
-  return state.snapshots.pop() ?? null;
 }
 
 function prettySide(side) {
@@ -123,11 +117,13 @@ function annotateHistory() {
     return;
   }
 
-  const items = state.game.history.slice(-200).map((h, idx) => {
+  const recentHistory = state.game.history.slice(-220);
+  const items = recentHistory.map((h, idx) => {
     const li = document.createElement('li');
     li.className = 'adugo-history-item';
     const capture = h.move.type === 'capture' ? ' ×' : '';
-    li.textContent = `${idx + 1}. ${prettySide(h.actorSide)} ${h.move.from + 1}→${h.move.to + 1}${capture}`;
+    const moveNo = state.game.history.length - recentHistory.length + idx + 1;
+    li.textContent = `${moveNo}. ${prettySide(h.actorSide)} ${h.move.from + 1}→${h.move.to + 1}${capture}`;
     return li;
   });
 
@@ -136,8 +132,7 @@ function annotateHistory() {
 }
 
 function currentObjectiveText() {
-  const needed = Math.max(0, GAME_CONFIG.jaguarCaptureTarget - state.game.capturedDogs);
-  return `Jaguar wins by capturing ${GAME_CONFIG.jaguarCaptureTarget} dogs. Remaining: ${needed}. Dogs win by trapping the jaguar.`;
+  return `Jaguar objective: capture ${GAME_CONFIG.jaguarCaptureTarget} total dogs. Dogs objective: trap the jaguar (0 legal moves).`;
 }
 
 function highlightLegalTargets() {
@@ -175,9 +170,17 @@ function highlightLegalTargets() {
 }
 
 function updateStatusPanel() {
+  const remaining = Math.max(0, GAME_CONFIG.jaguarCaptureTarget - state.game.capturedDogs);
+  const progressPct = (Math.min(state.game.capturedDogs, GAME_CONFIG.jaguarCaptureTarget) / GAME_CONFIG.jaguarCaptureTarget) * 100;
+
   turnEl.textContent = prettySide(state.game.turn);
   capturedEl.textContent = String(state.game.capturedDogs);
+  remainingEl.textContent = String(remaining);
+  captureRemainingEl.textContent = `Remaining captures: ${remaining}`;
+  captureProgressEl.style.width = `${progressPct}%`;
   objectiveEl.textContent = currentObjectiveText();
+
+  shellEl.dataset.turn = state.game.turn;
 
   if (state.game.winner) {
     statusEl.textContent = `${prettySide(state.game.winner)} win!`;
@@ -236,11 +239,7 @@ function selectNode(index) {
     return;
   }
 
-  if (occ === state.game.turn) {
-    state.selected = index;
-  } else {
-    state.selected = null;
-  }
+  state.selected = occ === state.game.turn ? index : null;
   render();
 }
 
@@ -279,19 +278,15 @@ function executeMove(move, opts = { triggerAI: true }) {
 function undoMove() {
   if (!canUndoPair()) return;
 
-  if (state.mode === MODE.HVC) {
-    const aiSide = opposite(state.humanSide);
-    let popped = popSnapshot();
-    if (!popped) return;
+  const result = computeUndoResult({
+    mode: state.mode,
+    humanSide: state.humanSide,
+    snapshots: state.snapshots,
+    currentGame: state.game
+  });
 
-    state.game = popped;
-    if (state.game.turn === aiSide && state.snapshots.length > 0) {
-      state.game = popSnapshot() ?? state.game;
-    }
-  } else {
-    state.game = popSnapshot() ?? state.game;
-  }
-
+  state.game = result.game;
+  state.snapshots = result.snapshots;
   state.selected = null;
   state.isThinking = false;
   render();
