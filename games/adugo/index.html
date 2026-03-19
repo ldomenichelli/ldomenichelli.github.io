@@ -38,6 +38,24 @@
             <p class="adugo-subtitle">Jaguar starts first</p>
           </header>
 
+          <div class="adugo-role-strip" aria-label="Roles and objective summary">
+            <section class="adugo-role adugo-role-jaguar">
+              <p class="adugo-role-title">Jaguar</p>
+              <p class="adugo-role-text">Mobile hunter. Capture dogs by jumping.</p>
+            </section>
+            <section class="adugo-role adugo-role-dogs">
+              <p class="adugo-role-title">Dogs</p>
+              <p class="adugo-role-text">Pack defenders. Trap the jaguar.</p>
+            </section>
+            <section class="adugo-role adugo-role-objective">
+              <p class="adugo-role-title">Capture objective</p>
+              <div class="adugo-progress-wrap">
+                <div class="adugo-progress" data-capture-progress></div>
+              </div>
+              <p class="adugo-role-text" data-capture-remaining>Remaining captures: 14</p>
+            </section>
+          </div>
+
           <p class="adugo-win-banner" data-win-banner hidden></p>
 
           <div class="adugo-main">
@@ -57,20 +75,22 @@
                     <li>Jaguar moves one step, or captures by jumping over an adjacent dog to an empty connected landing node.</li>
                     <li>Dogs cannot capture; they win by trapping the jaguar so it has no legal moves.</li>
                     <li>Jaguar continues a capture chain in the same turn when additional captures are available.</li>
+                    <li>Current variant: jaguar wins by capturing all 14 dogs.</li>
                   </ul>
                 </section>
 
                 <section class="adugo-tab-panel" data-tab-panel="play" role="tabpanel" hidden>
                   <ol>
-                    <li>Select one of your pieces (highlighted by turn).</li>
+                    <li>Select one of your pieces (matching the current turn).</li>
                     <li>Legal destinations glow in blue (capture landings in red).</li>
                     <li>In Human vs Computer mode, input is locked while the AI is thinking.</li>
+                    <li>Undo in Human vs Computer mode reverts one full pair (human + AI) when possible.</li>
                   </ol>
                 </section>
 
                 <section class="adugo-tab-panel" data-tab-panel="tips" role="tabpanel" hidden>
-                  <p><strong>Jaguar:</strong> stay mobile, keep central lanes open, and chain captures when possible.</p>
-                  <p><strong>Dogs:</strong> build a net, avoid isolated dogs, and close diagonals around the jaguar.</p>
+                  <p><strong>Jaguar:</strong> maximize mobility, keep central lanes open, and chain captures when possible.</p>
+                  <p><strong>Dogs:</strong> create a compact net, deny escape lanes, and avoid isolated dogs that can be jumped.</p>
                 </section>
               </div>
             </section>
@@ -95,7 +115,7 @@
                   </div>
                 </div>
 
-                <div class="adugo-field" style="margin-top: .55rem;">
+                <div class="adugo-field adugo-field-stack">
                   <label for="adugo-difficulty">Difficulty</label>
                   <select id="adugo-difficulty" class="adugo-select" data-difficulty>
                     <option value="Easy">Easy</option>
@@ -109,8 +129,9 @@
                 <p class="adugo-label">Status</p>
                 <div class="adugo-stat"><span>Turn</span><strong data-turn>Jaguar</strong></div>
                 <div class="adugo-stat"><span>Dogs captured</span><strong data-captured>0</strong></div>
-                <p class="adugo-status" data-status>Jaguar to move.</p>
-                <p class="adugo-thinking" data-thinking hidden>Computer thinking…</p>
+                <div class="adugo-stat"><span>Need to win (Jaguar)</span><strong data-remaining>14</strong></div>
+                <p class="adugo-status" data-status aria-live="polite">Jaguar to move.</p>
+                <p class="adugo-thinking" data-thinking aria-live="polite" hidden>Computer thinking…</p>
                 <p class="adugo-status" data-objective></p>
               </section>
 
