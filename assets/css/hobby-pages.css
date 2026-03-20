@@ -1,0 +1,499 @@
+body.hobby-tea {
+  --tea-bg: #101714;
+  --tea-bg-soft: #16211c;
+  --tea-surface: rgba(20, 31, 27, 0.84);
+  --tea-surface-strong: rgba(28, 42, 36, 0.96);
+  --tea-border: rgba(190, 221, 193, 0.14);
+  --tea-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+  --tea-text: #edf4eb;
+  --tea-text-soft: #bfd0c2;
+  --tea-accent: #9ccf89;
+  --tea-accent-strong: #d8be7e;
+  --tea-accent-faint: rgba(156, 207, 137, 0.16);
+  background:
+    radial-gradient(circle at 18% 16%, rgba(156, 207, 137, 0.18), transparent 28%),
+    radial-gradient(circle at 84% 14%, rgba(216, 190, 126, 0.14), transparent 24%),
+    linear-gradient(180deg, #111916 0%, #0f1614 28%, #0d1312 100%);
+  color: var(--tea-text);
+}
+
+body.hobby-tea::before,
+body.hobby-tea::after {
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: fixed;
+  z-index: -2;
+}
+
+body.hobby-tea::before {
+  background:
+    radial-gradient(circle at 22% 22%, rgba(156, 207, 137, 0.11), transparent 18%),
+    radial-gradient(circle at 76% 18%, rgba(216, 190, 126, 0.08), transparent 20%),
+    radial-gradient(circle at 54% 62%, rgba(106, 145, 117, 0.12), transparent 28%);
+  filter: blur(14px);
+  transform: translateY(calc(var(--tea-scroll, 0) * -24px));
+}
+
+body.hobby-tea::after {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-position: 0 0, 0 0;
+  background-size: 32px 32px, 32px 32px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.5), transparent 82%);
+  opacity: 0.22;
+}
+
+body.hobby-tea .main {
+  max-width: 1180px;
+  padding-top: 1rem;
+}
+
+body.hobby-tea .post-single {
+  position: relative;
+}
+
+body.hobby-tea .post-header {
+  margin-bottom: 1.25rem;
+}
+
+body.hobby-tea .post-header .post-title,
+body.hobby-tea .post-header .post-meta {
+  display: none;
+}
+
+body.hobby-tea .post-header .breadcrumbs {
+  color: var(--tea-text-soft);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+body.hobby-tea .toc.side.left {
+  display: none;
+}
+
+.hobby-progress {
+  background: rgba(12, 18, 16, 0.82);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  inset: 0 0 auto;
+  position: fixed;
+  z-index: 40;
+}
+
+.hobby-progress-bar {
+  background: linear-gradient(90deg, var(--tea-accent), var(--tea-accent-strong));
+  display: block;
+  height: 3px;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+.hobby-hero {
+  backdrop-filter: blur(20px);
+  background:
+    linear-gradient(135deg, rgba(31, 49, 42, 0.95), rgba(17, 24, 21, 0.88)),
+    linear-gradient(180deg, rgba(156, 207, 137, 0.08), transparent);
+  border: 1px solid var(--tea-border);
+  border-radius: 32px;
+  box-shadow: var(--tea-shadow);
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.85fr);
+  margin: 0 0 1.5rem;
+  overflow: hidden;
+  padding: 2rem;
+  position: relative;
+}
+
+.hobby-hero::before {
+  background:
+    radial-gradient(circle at top right, rgba(216, 190, 126, 0.16), transparent 28%),
+    radial-gradient(circle at bottom left, rgba(156, 207, 137, 0.16), transparent 26%);
+  content: "";
+  inset: 0;
+  position: absolute;
+}
+
+.hobby-hero-copy,
+.hobby-hero-art {
+  position: relative;
+  z-index: 1;
+}
+
+.hobby-kicker {
+  color: var(--tea-accent);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  margin: 0 0 0.9rem;
+  text-transform: uppercase;
+}
+
+.hobby-display {
+  font-size: clamp(2.5rem, 6vw, 4.9rem);
+  letter-spacing: -0.03em;
+  line-height: 0.96;
+  margin: 0;
+  max-width: 10ch;
+}
+
+.hobby-meta-line {
+  color: var(--tea-text-soft);
+  font-size: 0.92rem;
+  margin: 1rem 0 0;
+}
+
+.hobby-quote {
+  color: var(--tea-text);
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  line-height: 1.65;
+  margin: 1.4rem 0 0;
+  max-width: 36rem;
+}
+
+.hobby-attribution {
+  color: var(--tea-accent-strong);
+  font-size: 0.92rem;
+  letter-spacing: 0.06em;
+  margin: 0.65rem 0 0;
+  text-transform: uppercase;
+}
+
+.hobby-intro {
+  color: var(--tea-text-soft);
+  font-size: 1rem;
+  line-height: 1.85;
+  margin-top: 1.35rem;
+  max-width: 44rem;
+}
+
+.hobby-intro p {
+  margin: 0;
+}
+
+.hobby-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1.4rem;
+}
+
+.hobby-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  color: var(--tea-text);
+  display: inline-flex;
+  gap: 0.45rem;
+  padding: 0.65rem 0.95rem;
+  text-decoration: none;
+}
+
+.hobby-pill:hover {
+  background: rgba(156, 207, 137, 0.12);
+  border-color: rgba(156, 207, 137, 0.24);
+}
+
+.hobby-pill-index {
+  color: var(--tea-accent);
+}
+
+.hobby-hero-art {
+  align-content: center;
+  display: grid;
+  gap: 1rem;
+}
+
+.tea-bowl {
+  aspect-ratio: 1;
+  background:
+    radial-gradient(circle at 50% 44%, rgba(230, 238, 226, 0.82) 0 14%, transparent 14.4%),
+    radial-gradient(circle at 50% 56%, rgba(121, 167, 94, 0.55) 0 28%, rgba(20, 36, 27, 0.15) 29%, transparent 30%),
+    radial-gradient(circle at 50% 56%, rgba(248, 238, 217, 0.9) 0 44%, rgba(113, 83, 50, 0.5) 44.5%, rgba(21, 27, 24, 0.95) 56%, transparent 56.5%),
+    radial-gradient(circle at 50% 62%, rgba(0, 0, 0, 0.36), transparent 64%);
+  border-radius: 50%;
+  justify-self: center;
+  max-width: 300px;
+  position: relative;
+  width: 100%;
+}
+
+.tea-bowl::before,
+.tea-bowl::after {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  content: "";
+  position: absolute;
+}
+
+.tea-bowl::before {
+  height: 1px;
+  inset: 24% 10% auto;
+}
+
+.tea-bowl::after {
+  filter: blur(18px);
+  height: 14%;
+  inset: auto 18% 8%;
+}
+
+.tea-stat-grid {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.tea-stat-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  padding: 1rem;
+}
+
+.tea-stat-value {
+  color: var(--tea-text);
+  display: block;
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.tea-stat-label {
+  color: var(--tea-text-soft);
+  display: block;
+  font-size: 0.82rem;
+  margin-top: 0.55rem;
+}
+
+.hobby-rail {
+  display: grid;
+  gap: 1rem;
+  grid-auto-columns: minmax(240px, 1fr);
+  grid-auto-flow: column;
+  margin: 0 0 1.2rem;
+  overflow-x: auto;
+  padding-bottom: 0.4rem;
+  scroll-snap-type: x proximity;
+}
+
+.hobby-rail-card {
+  background: var(--tea-surface);
+  border: 1px solid var(--tea-border);
+  border-radius: 24px;
+  color: inherit;
+  min-height: 160px;
+  padding: 1.2rem;
+  scroll-snap-align: start;
+  text-decoration: none;
+}
+
+.hobby-rail-card:hover,
+.hobby-rail-card.is-active {
+  border-color: rgba(156, 207, 137, 0.3);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
+  transform: translateY(-2px);
+}
+
+.hobby-rail-step {
+  color: var(--tea-accent);
+  display: inline-block;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  margin-bottom: 0.55rem;
+  text-transform: uppercase;
+}
+
+.hobby-rail-title {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 0.65rem;
+}
+
+.hobby-rail-copy {
+  color: var(--tea-text-soft);
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+
+.hobby-chapters {
+  backdrop-filter: blur(16px);
+  background: rgba(15, 22, 20, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 999px;
+  display: flex;
+  gap: 0.55rem;
+  margin: 0 0 1.7rem;
+  overflow-x: auto;
+  padding: 0.65rem;
+  position: sticky;
+  top: 4.7rem;
+  z-index: 15;
+}
+
+.hobby-chapters a {
+  border-radius: 999px;
+  color: var(--tea-text-soft);
+  padding: 0.7rem 0.95rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.hobby-chapters a:hover,
+.hobby-chapters a.is-active {
+  background: var(--tea-accent-faint);
+  color: var(--tea-text);
+}
+
+body.hobby-tea .post-content {
+  background: rgba(15, 22, 19, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 28px;
+  padding: 1.25rem;
+}
+
+body.hobby-tea .post-content > :is(h3, h4, p, ul, ol, blockquote, .hobby-table-wrap) {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 880px;
+}
+
+body.hobby-tea .post-content h3,
+body.hobby-tea .post-content h4 {
+  scroll-margin-top: 7rem;
+}
+
+body.hobby-tea .post-content h3 {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  margin-top: 2.3rem;
+  padding-top: 2rem;
+}
+
+body.hobby-tea .post-content h4 {
+  color: var(--tea-accent-strong);
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  margin-top: 1.6rem;
+  text-transform: uppercase;
+}
+
+body.hobby-tea .post-content p,
+body.hobby-tea .post-content li {
+  color: var(--tea-text-soft);
+  line-height: 1.85;
+}
+
+body.hobby-tea .post-content strong {
+  color: var(--tea-text);
+}
+
+body.hobby-tea .post-content em {
+  color: #d6e3d5;
+}
+
+body.hobby-tea .post-content .hobby-table-wrap {
+  overflow-x: auto;
+  padding-bottom: 0.3rem;
+}
+
+body.hobby-tea .post-content table {
+  background: var(--tea-surface-strong);
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--tea-border);
+  border-radius: 22px;
+  min-width: 720px;
+  overflow: hidden;
+}
+
+body.hobby-tea .post-content th,
+body.hobby-tea .post-content td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 0.95rem 1rem;
+}
+
+body.hobby-tea .post-content tr:last-child td {
+  border-bottom: 0;
+}
+
+body.hobby-tea .post-content thead {
+  background: rgba(156, 207, 137, 0.08);
+}
+
+body.hobby-tea .post-content .hobby-source-intro,
+body.hobby-tea .post-content input#zoomCheck-a3854,
+body.hobby-tea .post-content label[for="zoomCheck-a3854"],
+body.hobby-tea .post-content label[for="zoomCheck-a3854"] + em {
+  display: none !important;
+}
+
+body.hobby-tea .post-content .hobby-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 600ms ease,
+    transform 600ms ease;
+}
+
+body.hobby-tea .post-content .hobby-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+body.hobby-tea .post-footer {
+  margin-top: 1.6rem;
+}
+
+body.hobby-tea .post-tags a {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 999px;
+  padding: 0.4rem 0.85rem;
+}
+
+@media (max-width: 940px) {
+  .hobby-hero {
+    grid-template-columns: 1fr;
+    padding: 1.4rem;
+  }
+
+  .hobby-display {
+    max-width: none;
+  }
+
+  .tea-stat-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  body.hobby-tea .main {
+    padding-top: 0.5rem;
+  }
+
+  .hobby-hero,
+  body.hobby-tea .post-content {
+    border-radius: 24px;
+  }
+
+  .tea-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hobby-chapters {
+    border-radius: 22px;
+    top: 4.1rem;
+  }
+
+  body.hobby-tea .post-content {
+    padding: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.hobby-tea::before,
+  body.hobby-tea .hobby-reveal,
+  .hobby-rail-card {
+    transform: none !important;
+    transition: none !important;
+  }
+}
