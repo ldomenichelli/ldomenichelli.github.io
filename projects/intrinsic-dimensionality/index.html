@@ -12,33 +12,29 @@
   <link crossorigin="anonymous" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css" integrity="sha256-WtmxyqkuTOqD680wiOlzYvI5sH2BREkKrwvB1r2JzRc=" rel="preload stylesheet" as="style">
   <link rel="icon" href="https://ldomenichelli.github.io/favicon.ico">
   <style>
-    :root { --bg:#090c14; --panel:#111827; --panel-2:#182236; --text:#e9f1ff; --muted:#b4c3df; --cyan:#58d6ff; --border:#334667; }
-    body.page { background:var(--bg); color:var(--text); }
     .main { max-width:1080px; }
-    .hero,.card{background:linear-gradient(165deg,var(--panel),var(--panel-2));border:1px solid var(--border);border-radius:16px}
-    .hero{padding:20px;margin:16px 0}
-    .hero h1{margin:.1rem 0 .5rem}
-    .hero p{color:var(--muted);margin:.35rem 0}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .card{padding:16px}.card h2{margin:.1rem 0 .4rem;color:var(--cyan)}.card p{color:var(--muted)}
-    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-    .btn{display:inline-block;padding:9px 14px;border-radius:9px;border:1px solid #3b4b6e;text-decoration:none;color:var(--text);font-weight:600;background:#0f1523}
-    .btn:hover{border-color:var(--cyan)}
-    .btn.secondary{border-color:#4f4a7b;color:#d8d2ff}
-    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+    .project-lab .hero { margin:16px 0; }
+    .project-lab .hero h1 { margin:.1rem 0 .5rem; }
+    .project-lab .hero p { margin:.35rem 0; }
+    .project-lab .project-links { grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); }
   </style>
-<script src="/assets/js/analytics.js" async></script></head>
-<body class="page" id="top">
+<script src="/assets/js/analytics.js" async></script><link rel="stylesheet" href="/assets/css/site-theme.css"></head>
+<body class="page dark" id="top">
 <header class="header"><nav class="nav"><div class="logo"><a href="https://ldomenichelli.github.io/" accesskey="h" title="lucia's notes (Alt + H)">lucia's notes</a><div class="logo-switches"><ul class="lang-switch"><li>|</li></ul></div></div><button id="menu-trigger" aria-haspopup="menu" aria-label="Menu Button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><ul class="menu hidden"><li><a href="https://ldomenichelli.github.io/about/" title="about"><span>about</span></a></li><li><a href="https://ldomenichelli.github.io/posts/" title="notes"><span>notes</span></a></li><li><a href="https://ldomenichelli.github.io/projects/" title="projects"><span>projects</span></a></li><li><a href="https://ldomenichelli.github.io/random/" title="hobbies"><span>hobbies</span></a></li></ul></nav></header>
 <main class="main">
-  <article class="post-single">
+  <article class="post-single project-lab">
     <header class="post-header hero">
       <h1 class="post-title">Intrinsic Dimensionality Algorithms</h1>
       <p>Choose an interactive estimator. MLE focuses on local distance-ratio likelihood, while ESSa(d=1) focuses on local angular simplex skewness.</p>
     </header>
-    <div id="algorithmGrid" class="post-content grid"></div>
+    <div id="algorithmGrid" class="post-content project-links"></div>
   </article>
 </main>
+<footer class="footer" style="padding-top:18px;padding-bottom:18px">
+<span>&copy; 2025 <a href="https://ldomenichelli.github.io/">lucia's notes</a></span>
+<span>•
+<a href="/privacy">Privacy Policy</a></span>
+</footer>
 <script type="module">
   import { buildChooserCards } from '/assets/js/id-algorithms.js';
   const trigger = document.querySelector('#menu-trigger');

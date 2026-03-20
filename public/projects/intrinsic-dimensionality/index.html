@@ -5,321 +5,42 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
   <meta name="robots" content="index, follow">
-  <title>Levina–Bickel MLE Intrinsic Dimensionality | lucia's notes</title>
-  <meta name="description" content="Interactive explainer for Levina–Bickel MLE intrinsic dimensionality with local and aggregate k-NN views.">
+  <title>Intrinsic Dimensionality Algorithms | lucia's notes</title>
+  <meta name="description" content="Choose and compare interactive intrinsic-dimensionality estimators: MLE and ESS.">
   <meta name="author" content="Lucia">
   <link rel="canonical" href="https://ldomenichelli.github.io/projects/intrinsic-dimensionality/">
   <link crossorigin="anonymous" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css" integrity="sha256-WtmxyqkuTOqD680wiOlzYvI5sH2BREkKrwvB1r2JzRc=" rel="preload stylesheet" as="style">
   <link rel="icon" href="https://ldomenichelli.github.io/favicon.ico">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous" onload='renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:true},{left:"$",right:"$",display:false}]})'></script>
   <style>
-    :root { --bg:#090c14; --panel:#111827; --panel-2:#182236; --text:#e9f1ff; --muted:#b4c3df; --cyan:#58d6ff; --violet:#9b8cff; --border:#334667; --focus:#7de6ff; --amber:#ffbf66; }
-    body#top.dark { background:var(--bg); color:var(--text); }
-    .main { max-width:1220px; } .post-content { max-width:98ch; line-height:1.68; }
-    .hero,.panel{background:linear-gradient(165deg,var(--panel),var(--panel-2));border:1px solid var(--border);border-radius:16px}
-    .hero{padding:20px;margin:16px 0 18px}.hero h1{margin:0 0 10px;font-size:clamp(1.35rem,3.2vw,2rem)}
-    .badge{display:inline-block;border:1px solid #3f5a80;color:var(--cyan);border-radius:999px;padding:4px 10px;font-size:.82rem;margin-bottom:8px}
-    .layout{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;align-items:start}
-    .panel{padding:16px}.panel h2{margin-top:.1rem;font-size:1.1rem}.subtle{color:var(--muted)}
-    .formula{border:1px solid #3a4d74;background:rgba(12,20,33,.75);border-radius:12px;padding:10px;overflow:auto}
-
-    .controls{display:grid;gap:10px;grid-template-columns:repeat(3,minmax(0,1fr));margin-bottom:12px}
-    .control{display:grid;gap:4px}.control label{font-size:.9rem}
-    input[type="range"],select,button{width:100%;accent-color:var(--cyan)}
-    select,button{background:#0f1523;color:var(--text);border:1px solid #3b4b6e;border-radius:8px;padding:8px}
-    button{cursor:pointer;font-weight:600}
-    button:hover{border-color:var(--cyan)}
-
-    .demo-layout{display:grid;grid-template-columns:1.05fr .95fr;gap:12px}
-    canvas{width:100%;height:auto;border:1px solid #3b4b6e;border-radius:12px;background:#080d18}
-    .metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-    .metric{border:1px solid #324568;background:rgba(9,15,27,.7);border-radius:10px;padding:8px}
-    .metric .k{display:block;font-size:.77rem;color:var(--muted)} .metric .v{font-size:1rem;font-weight:700}
-    .terms{max-height:220px;overflow:auto;border:1px solid #2f4368;border-radius:10px}
-    table{width:100%;border-collapse:collapse;font-size:.86rem} th,td{padding:6px;border-bottom:1px solid #2b3d61;text-align:left}
-
-    .aggregate-layout{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-    .hist-wrap{border:1px solid #2f4368;border-radius:10px;padding:8px;background:rgba(8,14,25,.7)}
-    .warning{color:var(--amber);font-size:.88rem}
-
-    a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,canvas:focus-visible{outline:2px solid var(--focus);outline-offset:2px;box-shadow:0 0 0 3px rgba(125,230,255,.28)}
-    @media (max-width:1024px){.controls{grid-template-columns:repeat(2,minmax(0,1fr))}.layout,.demo-layout,.aggregate-layout{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media (max-width:640px){.controls,.metrics{grid-template-columns:1fr}}
+    .main { max-width:1080px; }
+    .project-lab .hero { margin:16px 0; }
+    .project-lab .hero h1 { margin:.1rem 0 .5rem; }
+    .project-lab .hero p { margin:.35rem 0; }
+    .project-lab .project-links { grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); }
   </style>
-<script src="/assets/js/analytics.js" async></script></head>
-<body class="dark" id="top">
+<script src="/assets/js/analytics.js" async></script><link rel="stylesheet" href="/assets/css/site-theme.css"></head>
+<body class="page dark" id="top">
 <header class="header"><nav class="nav"><div class="logo"><a href="https://ldomenichelli.github.io/" accesskey="h" title="lucia's notes (Alt + H)">lucia's notes</a><div class="logo-switches"><ul class="lang-switch"><li>|</li></ul></div></div><button id="menu-trigger" aria-haspopup="menu" aria-label="Menu Button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><ul class="menu hidden"><li><a href="https://ldomenichelli.github.io/about/" title="about"><span>about</span></a></li><li><a href="https://ldomenichelli.github.io/posts/" title="notes"><span>notes</span></a></li><li><a href="https://ldomenichelli.github.io/projects/" title="projects"><span>projects</span></a></li><li><a href="https://ldomenichelli.github.io/random/" title="hobbies"><span>hobbies</span></a></li></ul></nav></header>
 <main class="main">
-  <article class="post-single cinematic-wrap">
-    <header class="post-header">
-      <div class="hero">
-        <span class="badge">Intrinsic Dimensionality · Levina–Bickel MLE</span>
-        <h1 class="post-title">Estimating manifold dimension from local distance ratios</h1>
-        <p class="subtle">All estimator math below is shown in LaTeX, and the values are computed from the currently displayed neighborhood.</p>
-      </div>
+  <article class="post-single project-lab">
+    <header class="post-header hero">
+      <h1 class="post-title">Intrinsic Dimensionality Algorithms</h1>
+      <p>Choose an interactive estimator. MLE focuses on local distance-ratio likelihood, while ESSa(d=1) focuses on local angular simplex skewness.</p>
     </header>
-    <div class="post-content">
-      <div class="layout">
-        <section class="panel" aria-labelledby="what-is-id">
-          <h2 id="what-is-id">Local estimator</h2>
-          <div class="formula">$$\hat{m}_k(x)=\left[\frac{1}{k-1}\sum_{j=1}^{k-1}\log\frac{T_k(x)}{T_j(x)}\right]^{-1}$$</div>
-          <p>Here $T_j(x)$ is the $j$-th nearest-neighbor distance from $x$. The point inspector computes every term in the sum and updates $\hat{m}_k(x)$ live.</p>
-          <div class="formula">$$\hat{m}_{\text{global}}(k)=\frac{1}{N}\sum_{i=1}^{N}\hat{m}_k(x_i)$$</div>
-          <p>The aggregate panel estimates a dataset-level dimension, and reports an interquartile spread to show instability.</p>
-        </section>
-        <aside class="panel" aria-labelledby="failure-modes">
-          <h2 id="failure-modes">Failure-mode controls</h2>
-          <p class="subtle">Use sliders to stress the assumptions behind local Poisson-like neighbor behavior.</p>
-          <ul>
-            <li><strong>Boundary clipping:</strong> clips point coordinates to $[\beta,1-\beta]^2$, increasing boundary bias.</li>
-            <li><strong>Outliers:</strong> replaces a fraction of points with uniform noise in the ambient square.</li>
-            <li><strong>Noise:</strong> adds isotropic Gaussian perturbations.</li>
-          </ul>
-          <p class="warning">Interpret estimates as local summaries, not a single “true” number across all scales.</p>
-        </aside>
-      </div>
-
-      <section class="panel" aria-labelledby="m3-title" style="margin-top:16px;">
-        <h2 id="m3-title">Milestone 3 · Local + aggregate views</h2>
-        <div class="controls" aria-label="Generator controls">
-          <div class="control"><label for="manifoldType">Manifold type</label><select id="manifoldType"><option value="line">Line (1D)</option><option value="circle">Circle (1D)</option><option value="plane">Plane (2D)</option></select></div>
-          <div class="control"><label for="sampleSize">Sample size: <span id="sampleSizeValue">180</span></label><input id="sampleSize" type="range" min="80" max="480" step="20" value="180"></div>
-          <div class="control"><label for="kNeighbors">$k$: <span id="kNeighborsValue">12</span></label><input id="kNeighbors" type="range" min="3" max="48" step="1" value="12"></div>
-          <div class="control"><label for="noise">Noise $\sigma$: <span id="noiseValue">0.020</span></label><input id="noise" type="range" min="0" max="0.12" step="0.005" value="0.02"></div>
-          <div class="control"><label for="boundary">Boundary clip $\beta$: <span id="boundaryValue">0.000</span></label><input id="boundary" type="range" min="0" max="0.18" step="0.01" value="0"></div>
-          <div class="control"><label for="outliers">Outlier fraction: <span id="outlierValue">0.00</span></label><input id="outliers" type="range" min="0" max="0.40" step="0.01" value="0"></div>
-          <div class="control"><button id="regenerate" type="button">Regenerate sample</button></div>
-        </div>
-
-        <div class="demo-layout">
-          <div>
-            <canvas id="manifoldCanvas" width="700" height="500" tabindex="0" aria-label="Toy manifold points and selected neighborhood"></canvas>
-            <p class="subtle">Click to inspect a point. Keyboard: Arrow keys move selection; Home/End jump to first/last point.</p>
-          </div>
-          <div>
-            <div class="metrics">
-              <div class="metric"><span class="k">Selected point</span><span id="selectedLabel" class="v">#1</span></div>
-              <div class="metric"><span class="k">Local $\hat{m}_k(x)$</span><span id="localMleValue" class="v">—</span></div>
-              <div class="metric"><span class="k">$T_k(x)$</span><span id="tkValue" class="v">—</span></div>
-              <div class="metric"><span class="k">Global mean</span><span id="globalMean" class="v">—</span></div>
-              <div class="metric"><span class="k">Global median</span><span id="globalMedian" class="v">—</span></div>
-              <div class="metric"><span class="k">IQR</span><span id="globalIqr" class="v">—</span></div>
-            </div>
-            <div class="terms" style="margin-top:10px;"><table><thead><tr><th>$j$</th><th>$T_j(x)$</th><th>$\log(T_k/T_j)$</th></tr></thead><tbody id="termsBody"></tbody></table></div>
-          </div>
-        </div>
-
-        <div class="aggregate-layout">
-          <div class="hist-wrap">
-            <h3 style="margin:.1rem 0 .4rem;">Aggregate estimate distribution</h3>
-            <canvas id="histCanvas" width="600" height="260" aria-label="Histogram of local intrinsic-dimension estimates"></canvas>
-          </div>
-          <div class="hist-wrap">
-            <h3 style="margin:.1rem 0 .4rem;">Live status</h3>
-            <p id="statusText" aria-live="polite" class="subtle">Ready.</p>
-            <div class="formula">$$\text{IQR}=Q_{0.75}(\hat{m}_k)-Q_{0.25}(\hat{m}_k)$$</div>
-            <p class="subtle">Large IQR values indicate unstable local scaling or mixed regimes.</p>
-          </div>
-        </div>
-      </section>
-    </div>
+    <div id="algorithmGrid" class="post-content project-links"></div>
   </article>
 </main>
+<footer class="footer" style="padding-top:18px;padding-bottom:18px">
+<span>&copy; 2025 <a href="https://ldomenichelli.github.io/">lucia's notes</a></span>
+<span>•
+<a href="/privacy">Privacy Policy</a></span>
+</footer>
 <script type="module">
-  import { localMleFromSortedDistances } from '/assets/js/id-estimator.js';
-
-  // Minimal app state: one object, no hidden globals.
-  const state = { manifoldType: 'line', sampleSize: 180, k: 12, noise: 0.02, boundary: 0, outliers: 0, points: [], neighbors: [], selectedIndex: 0 };
-
-  const el = {
-    menuTrigger: document.querySelector('#menu-trigger'), menu: document.querySelector('.menu'),
-    manifoldType: document.querySelector('#manifoldType'), sampleSize: document.querySelector('#sampleSize'), sampleSizeValue: document.querySelector('#sampleSizeValue'),
-    kNeighbors: document.querySelector('#kNeighbors'), kNeighborsValue: document.querySelector('#kNeighborsValue'), noise: document.querySelector('#noise'), noiseValue: document.querySelector('#noiseValue'),
-    boundary: document.querySelector('#boundary'), boundaryValue: document.querySelector('#boundaryValue'), outliers: document.querySelector('#outliers'), outlierValue: document.querySelector('#outlierValue'), regenerate: document.querySelector('#regenerate'),
-    canvas: document.querySelector('#manifoldCanvas'), histCanvas: document.querySelector('#histCanvas'), termsBody: document.querySelector('#termsBody'),
-    selectedLabel: document.querySelector('#selectedLabel'), localMleValue: document.querySelector('#localMleValue'), tkValue: document.querySelector('#tkValue'),
-    globalMean: document.querySelector('#globalMean'), globalMedian: document.querySelector('#globalMedian'), globalIqr: document.querySelector('#globalIqr'), statusText: document.querySelector('#statusText')
-  };
-  const ctx = el.canvas.getContext('2d');
-  const histCtx = el.histCanvas.getContext('2d');
-
-  const randn = () => { const u = Math.max(1e-12, Math.random()); const v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
-
-  function clamp01(v, margin = 0) { return Math.min(1 - margin, Math.max(margin, v)); }
-
-  function sortedNeighborsFor(i, pts) {
-    const p = pts[i];
-    const arr = [];
-    for (let j = 0; j < pts.length; j += 1) {
-      if (i === j) continue;
-      arr.push({ j, d: Math.hypot(p.x - pts[j].x, p.y - pts[j].y) });
-    }
-    arr.sort((a, b) => a.d - b.d);
-    return arr;
-  }
-
-  function makeBasePoint(i, n) {
-    const t = i / Math.max(1, n - 1);
-    if (state.manifoldType === 'line') return { x: 0.12 + 0.76 * t, y: 0.5 };
-    if (state.manifoldType === 'circle') { const a = 2 * Math.PI * t; return { x: 0.5 + 0.30 * Math.cos(a), y: 0.5 + 0.30 * Math.sin(a) }; }
-    return { x: 0.1 + 0.8 * Math.random(), y: 0.1 + 0.8 * Math.random() };
-  }
-
-  function rebuildDataset() {
-    const pts = [];
-    for (let i = 0; i < state.sampleSize; i += 1) {
-      let p = makeBasePoint(i, state.sampleSize);
-      p = { x: p.x + randn() * state.noise, y: p.y + randn() * state.noise };
-      p = { x: clamp01(p.x, state.boundary), y: clamp01(p.y, state.boundary) };
-      if (Math.random() < state.outliers) p = { x: 0.02 + 0.96 * Math.random(), y: 0.02 + 0.96 * Math.random() };
-      pts.push(p);
-    }
-    state.points = pts;
-    state.neighbors = pts.map((_, i) => sortedNeighborsFor(i, pts));
-    state.selectedIndex = Math.min(state.selectedIndex, Math.max(0, pts.length - 1));
-    syncControls();
-    drawMain();
-    refreshAllMetrics();
-  }
-
-  function syncControls() {
-    el.sampleSizeValue.textContent = String(state.sampleSize);
-    el.kNeighborsValue.textContent = String(state.k);
-    el.noiseValue.textContent = state.noise.toFixed(3);
-    el.boundaryValue.textContent = state.boundary.toFixed(3);
-    el.outlierValue.textContent = state.outliers.toFixed(2);
-  }
-
-  function drawMain() {
-    const w = el.canvas.width; const h = el.canvas.height;
-    ctx.clearRect(0, 0, w, h);
-    ctx.fillStyle = '#080d18'; ctx.fillRect(0, 0, w, h);
-    const idx = state.selectedIndex;
-    const p = state.points[idx];
-    if (!p) return;
-    const k = Math.min(state.k, state.neighbors[idx].length);
-
-    ctx.fillStyle = 'rgba(88,214,255,0.9)';
-    for (const q of state.points) { ctx.beginPath(); ctx.arc(q.x * w, q.y * h, 2.8, 0, Math.PI * 2); ctx.fill(); }
-
-    for (let i = 0; i < k; i += 1) {
-      const r = state.neighbors[idx][i].d * Math.min(w, h);
-      ctx.strokeStyle = i === k - 1 ? 'rgba(255,191,102,0.9)' : 'rgba(155,140,255,0.58)';
-      ctx.lineWidth = i === k - 1 ? 2.8 : 1.5;
-      ctx.beginPath(); ctx.arc(p.x * w, p.y * h, r, 0, Math.PI * 2); ctx.stroke();
-    }
-
-    for (let i = 0; i < k; i += 1) {
-      const q = state.points[state.neighbors[idx][i].j];
-      ctx.fillStyle = 'rgba(155,140,255,1)'; ctx.beginPath(); ctx.arc(q.x * w, q.y * h, 4, 0, Math.PI * 2); ctx.fill();
-    }
-
-    ctx.fillStyle = 'rgba(255,191,102,1)'; ctx.beginPath(); ctx.arc(p.x * w, p.y * h, 5.2, 0, Math.PI * 2); ctx.fill();
-  }
-
-  function summarize(values) {
-    const v = values.filter(Number.isFinite).sort((a, b) => a - b);
-    if (!v.length) return { mean: NaN, median: NaN, iqr: NaN, arr: [] };
-    const q = (p) => v[Math.floor((v.length - 1) * p)];
-    const mean = v.reduce((a, b) => a + b, 0) / v.length;
-    return { mean, median: q(0.5), iqr: q(0.75) - q(0.25), arr: v };
-  }
-
-  function drawHistogram(vals) {
-    const w = el.histCanvas.width; const h = el.histCanvas.height;
-    histCtx.clearRect(0, 0, w, h);
-    histCtx.fillStyle = '#080d18'; histCtx.fillRect(0, 0, w, h);
-    const clean = vals.filter(Number.isFinite);
-    if (!clean.length) return;
-    const min = Math.max(0, Math.min(...clean));
-    const max = Math.max(...clean, min + 1e-6);
-    const bins = 16;
-    const counts = new Array(bins).fill(0);
-    for (const x of clean) {
-      const bi = Math.min(bins - 1, Math.floor(((x - min) / (max - min)) * bins));
-      counts[bi] += 1;
-    }
-    const maxC = Math.max(...counts, 1);
-    const bw = (w - 46) / bins;
-    histCtx.strokeStyle = 'rgba(61,84,122,0.9)'; histCtx.strokeRect(30, 16, w - 44, h - 34);
-    for (let i = 0; i < bins; i += 1) {
-      const barH = (counts[i] / maxC) * (h - 50);
-      histCtx.fillStyle = 'rgba(88,214,255,0.75)';
-      histCtx.fillRect(32 + i * bw, h - 20 - barH, bw - 2, barH);
-    }
-  }
-
-  function refreshAllMetrics() {
-    const idx = state.selectedIndex;
-    const nei = state.neighbors[idx] || [];
-    const distances = nei.map((x) => x.d);
-    const k = Math.min(state.k, distances.length);
-    const local = localMleFromSortedDistances(distances, k);
-
-    el.selectedLabel.textContent = `#${idx + 1}`;
-    el.localMleValue.textContent = Number.isFinite(local) ? local.toFixed(4) : '—';
-    el.tkValue.textContent = k > 0 ? distances[k - 1].toFixed(4) : '—';
-
-    el.termsBody.innerHTML = '';
-    if (k >= 2) {
-      const Tk = distances[k - 1];
-      for (let j = 0; j < k - 1; j += 1) {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${j + 1}</td><td>${distances[j].toFixed(5)}</td><td>${Math.log(Tk / distances[j]).toFixed(6)}</td>`;
-        el.termsBody.appendChild(tr);
-      }
-    }
-
-    const localVals = state.neighbors.map((arr) => localMleFromSortedDistances(arr.map((x) => x.d), k));
-    const summary = summarize(localVals);
-    el.globalMean.textContent = Number.isFinite(summary.mean) ? summary.mean.toFixed(4) : '—';
-    el.globalMedian.textContent = Number.isFinite(summary.median) ? summary.median.toFixed(4) : '—';
-    el.globalIqr.textContent = Number.isFinite(summary.iqr) ? summary.iqr.toFixed(4) : '—';
-
-    drawHistogram(localVals);
-    el.statusText.textContent = `n=${state.sampleSize}, manifold=${state.manifoldType}, k=${state.k}, noise=${state.noise.toFixed(3)}, boundary=${state.boundary.toFixed(3)}, outliers=${state.outliers.toFixed(2)}.`;
-  }
-
-  function pickPoint(clientX, clientY) {
-    const r = el.canvas.getBoundingClientRect();
-    const x = (clientX - r.left) / r.width;
-    const y = (clientY - r.top) / r.height;
-    let best = 0; let bestDist = Infinity;
-    for (let i = 0; i < state.points.length; i += 1) {
-      const d = Math.hypot(state.points[i].x - x, state.points[i].y - y);
-      if (d < bestDist) { bestDist = d; best = i; }
-    }
-    state.selectedIndex = best;
-    drawMain();
-    refreshAllMetrics();
-  }
-
-  el.manifoldType.addEventListener('change', () => { state.manifoldType = el.manifoldType.value; rebuildDataset(); });
-  el.sampleSize.addEventListener('input', () => { state.sampleSize = Number(el.sampleSize.value); rebuildDataset(); });
-  el.kNeighbors.addEventListener('input', () => { state.k = Number(el.kNeighbors.value); syncControls(); drawMain(); refreshAllMetrics(); });
-  el.noise.addEventListener('input', () => { state.noise = Number(el.noise.value); rebuildDataset(); });
-  el.boundary.addEventListener('input', () => { state.boundary = Number(el.boundary.value); rebuildDataset(); });
-  el.outliers.addEventListener('input', () => { state.outliers = Number(el.outliers.value); rebuildDataset(); });
-  el.regenerate.addEventListener('click', rebuildDataset);
-
-  el.canvas.addEventListener('click', (e) => pickPoint(e.clientX, e.clientY));
-  el.canvas.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') state.selectedIndex = (state.selectedIndex + 1) % state.points.length;
-    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') state.selectedIndex = (state.selectedIndex - 1 + state.points.length) % state.points.length;
-    else if (e.key === 'Home') state.selectedIndex = 0;
-    else if (e.key === 'End') state.selectedIndex = state.points.length - 1;
-    else return;
-    e.preventDefault();
-    drawMain();
-    refreshAllMetrics();
-  });
-
-  el.menuTrigger.addEventListener('click', () => el.menu.classList.toggle('hidden'));
-  document.body.addEventListener('click', (e) => { if (!el.menuTrigger.contains(e.target)) el.menu.classList.add('hidden'); });
-
-  rebuildDataset();
+  import { buildChooserCards } from '/assets/js/id-algorithms.js';
+  const trigger = document.querySelector('#menu-trigger');
+  const menu = document.querySelector('.menu');
+  if (trigger && menu) trigger.addEventListener('click', () => menu.classList.toggle('hidden'));
+  buildChooserCards(document.querySelector('#algorithmGrid'));
 </script>
 </body>
 </html>

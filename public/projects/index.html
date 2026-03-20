@@ -13,8 +13,8 @@
   <link rel="icon" href="https://ldomenichelli.github.io/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="https://ldomenichelli.github.io/favicon-16x16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://ldomenichelli.github.io/favicon-32x32.png">
-<script src="/assets/js/analytics.js" async></script></head>
-<body class="page">
+<script src="/assets/js/analytics.js" async></script><link rel="stylesheet" href="/assets/css/site-theme.css"></head>
+<body class="page dark" id="top">
 <header class="header">
 <nav class="nav">
 <div class="logo">
@@ -40,29 +40,23 @@
 <h1 class="post-title">Projects</h1>
 </header>
 <div class="post-content">
-<style>
-  body.page {
-    background: #000;
-    color: #fff;
-  }
-  .post-content p, .post-content li, .post-content a, .post-title {
-    color: #fff;
-  }
-  .project-button {
-    display: inline-block;
-    margin-top: 12px;
-    padding: 12px 22px;
-    border-radius: 8px;
-    border: 1px solid #fff;
-    background: #111;
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-  }
-</style>
-<p><a class="project-button" href="/projects/intrinsic-dimensionality/">Intriisic Dimnsionality</a></p>
+<div class="project-links">
+<a class="project-link-card" href="/projects/intrinsic-dimensionality/"><strong>Intrinsic Dimensionality Algorithms</strong><small>Interactive estimators for comparing local manifold-dimension methods.</small></a>
+<a class="project-link-card" href="/projects/strange-attractors/"><strong>Strange Attractors</strong><small>A small nonlinear-systems notebook for chaotic dynamics and visual experiments.</small></a>
+<a class="project-link-card" href="/games/"><strong>Abstract Board Games</strong><small>Playful strategy pages and playable board-game experiments.</small></a>
+</div>
 </div>
 </article>
 </main>
+<footer class="footer" style="padding-top:18px;padding-bottom:18px">
+<span>&copy; 2025 <a href="https://ldomenichelli.github.io/">lucia's notes</a></span>
+<span>•
+<a href="/privacy">Privacy Policy</a></span>
+</footer>
+<script>
+  let b=document.querySelector('#menu-trigger'),m=document.querySelector('.menu');
+  b.addEventListener('click',()=>m.classList.toggle('hidden'));
+  document.body.addEventListener('click',e=>{if(!b.contains(e.target))m.classList.add('hidden')});
+</script>
 </body>
 </html>
