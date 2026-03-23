@@ -47,6 +47,22 @@ test('HVC undo degrades gracefully with limited snapshots', () => {
   assert.equal(result.snapshots.length, 0);
 });
 
+test('HVC undo restores pre-AI opening state when human plays dogs', () => {
+  const initial = makeGame({ turn: SIDES.JAGUAR, moveNumber: 1 });
+  const afterOpening = makeGame({ turn: SIDES.DOGS, moveNumber: 2 });
+
+  const result = computeUndoResult({
+    mode: MODE.HVC,
+    humanSide: SIDES.DOGS,
+    snapshots: [initial],
+    currentGame: afterOpening
+  });
+
+  assert.equal(result.game.turn, SIDES.JAGUAR);
+  assert.equal(result.game.moveNumber, 1);
+  assert.equal(result.snapshots.length, 0);
+});
+
 test('HVH undo pops exactly one snapshot', () => {
   const s0 = makeGame({ moveNumber: 1 });
   const s1 = makeGame({ moveNumber: 2 });

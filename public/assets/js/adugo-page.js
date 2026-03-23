@@ -2,6 +2,7 @@ import {
   SIDES,
   GAME_CONFIG,
   createInitialState,
+  cloneState,
   applyMove,
   getLegalMoves,
   indexToCoord,
@@ -17,8 +18,14 @@ const state = {
   humanSide: SIDES.JAGUAR,
   difficulty: 'Medium',
   isThinking: false,
-  snapshots: []
+  snapshots: [],
+  aiRequestId: 0
 };
+
+const BOARD_LAYOUT = Object.freeze({
+  insetPct: 9,
+  spanPct: 82
+});
 
 const boardEl = document.querySelector('[data-adugo-board]');
 const shellEl = document.querySelector('.adugo-shell');
@@ -49,12 +56,21 @@ function canUndoPair() {
 }
 
 function pushSnapshot() {
-  state.snapshots.push(structuredClone(state.game));
+  state.snapshots.push(cloneState(state.game));
   if (state.snapshots.length > 200) state.snapshots.shift();
 }
 
 function prettySide(side) {
   return side === SIDES.JAGUAR ? 'Jaguar' : 'Dogs';
+}
+
+function boardPercentAt(coord) {
+  return BOARD_LAYOUT.insetPct + (coord / (GAME_CONFIG.size - 1)) * BOARD_LAYOUT.spanPct;
+}
+
+function cancelPendingAI() {
+  state.aiRequestId += 1;
+  state.isThinking = false;
 }
 
 function buildBoard() {
@@ -70,8 +86,8 @@ function buildBoard() {
 
   for (let i = 0; i < GAME_CONFIG.size * GAME_CONFIG.size; i += 1) {
     const { x, y } = indexToCoord(i);
-    const left = `${(x / (GAME_CONFIG.size - 1)) * 100}%`;
-    const top = `${(y / (GAME_CONFIG.size - 1)) * 100}%`;
+    const left = `${boardPercentAt(x)}%`;
+    const top = `${boardPercentAt(y)}%`;
     const node = boardEl.querySelector(`[data-index="${i}"]`);
     node.style.left = left;
     node.style.top = top;
@@ -92,10 +108,10 @@ function buildBoard() {
       const line = document.createElement('span');
       line.className = 'adugo-line';
 
-      const x1 = (from.x / (GAME_CONFIG.size - 1)) * 100;
-      const y1 = (from.y / (GAME_CONFIG.size - 1)) * 100;
-      const x2 = (to.x / (GAME_CONFIG.size - 1)) * 100;
-      const y2 = (to.y / (GAME_CONFIG.size - 1)) * 100;
+      const x1 = boardPercentAt(from.x);
+      const y1 = boardPercentAt(from.y);
+      const x2 = boardPercentAt(to.x);
+      const y2 = boardPercentAt(to.y);
       const dx = x2 - x1;
       const dy = y2 - y1;
       const length = Math.sqrt(dx * dx + dy * dy);
@@ -248,17 +264,45 @@ async function maybeAIMove() {
   const aiSide = opposite(state.humanSide);
   if (state.game.turn !== aiSide) return;
 
+  const requestId = state.aiRequestId + 1;
+  state.aiRequestId = requestId;
   state.isThinking = true;
   state.selected = null;
   render();
 
-  const move = await thinkAndPickAIMove(state.game, aiSide, state.difficulty);
-  state.isThinking = false;
-  if (move) {
-    executeMove(move, { triggerAI: false });
-  } else {
+  const snapshot = cloneState(state.game);
+  let move = null;
+
+  try {
+    move = await thinkAndPickAIMove(snapshot, aiSide, state.difficulty);
+  } catch (error) {
+    if (requestId !== state.aiRequestId) return;
+    state.isThinking = false;
     render();
+    console.error('Adugo AI move failed.', error);
+    return;
   }
+
+  if (requestId !== state.aiRequestId) return;
+
+  state.isThinking = false;
+
+  if (state.mode !== MODE.HVC || state.game.winner || state.game.turn !== aiSide) {
+    render();
+    return;
+  }
+
+  if (move && getLegalMoves(state.game, aiSide).some((candidate) =>
+    candidate.from === move.from &&
+    candidate.to === move.to &&
+    candidate.type === move.type &&
+    (candidate.over ?? null) === (move.over ?? null)
+  )) {
+    executeMove(move, { triggerAI: false });
+    return;
+  }
+
+  render();
 }
 
 function executeMove(move, opts = { triggerAI: true }) {
@@ -278,6 +322,7 @@ function executeMove(move, opts = { triggerAI: true }) {
 function undoMove() {
   if (!canUndoPair()) return;
 
+  cancelPendingAI();
   const result = computeUndoResult({
     mode: state.mode,
     humanSide: state.humanSide,
@@ -288,15 +333,14 @@ function undoMove() {
   state.game = result.game;
   state.snapshots = result.snapshots;
   state.selected = null;
-  state.isThinking = false;
   render();
 }
 
 function resetGame() {
+  cancelPendingAI();
   state.game = createInitialState();
   state.selected = null;
   state.snapshots = [];
-  state.isThinking = false;
   render();
   maybeAIMove();
 }

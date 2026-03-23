@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Adugo Page Smoke Test</title>
+  <style>
+    body {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      background: #111;
+      color: #f5f5f5;
+      margin: 0;
+      padding: 16px;
+    }
+
+    iframe {
+      width: 1440px;
+      height: 2200px;
+      border: 0;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      margin: 0 0 16px;
+      line-height: 1.45;
+    }
+  </style>
+</head>
+<body>
+  <pre id="log">Running...</pre>
+  <iframe id="frame" src="/games/adugo/"></iframe>
+  <script>
+    const logEl = document.getElementById('log');
+    const frame = document.getElementById('frame');
+    const results = [];
+    const params = new URLSearchParams(window.location.search);
+    const frameWidth = Number(params.get('width') || '1440');
+    frame.style.width = `${frameWidth}px`;
+
+    function log(message) {
+      results.push(message);
+      logEl.textContent = results.join('\n');
+    }
+
+    function assert(condition, message) {
+      if (!condition) {
+        throw new Error(message);
+      }
+      log(`PASS ${message}`);
+    }
+
+    function sleep(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    function changeSelect(select, value) {
+      select.value = value;
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    frame.addEventListener('load', () => {
+      run().catch((error) => {
+        log(`FAIL ${error.message}`);
+        document.body.dataset.testStatus = 'FAIL';
+      });
+    });
+
+    async function run() {
+      const doc = frame.contentDocument;
+      const win = frame.contentWindow;
+      const runtimeErrors = [];
+
+      win.addEventListener('error', (event) => {
+        runtimeErrors.push(`error:${event.message}`);
+      });
+
+      win.addEventListener('unhandledrejection', (event) => {
+        runtimeErrors.push(`rejection:${event.reason?.message || event.reason}`);
+      });
+
+      const board = doc.querySelector('[data-adugo-board]');
+      const status = doc.querySelector('[data-status]');
+      const history = doc.querySelector('[data-history]');
+      const mode = doc.querySelector('[data-mode]');
+      const side = doc.querySelector('[data-side]');
+      const difficulty = doc.querySelector('[data-difficulty]');
+      const thinking = doc.querySelector('[data-thinking]');
+      const newGame = doc.querySelector('[data-new-game]');
+      const undo = doc.querySelector('[data-undo]');
+      const node12 = doc.querySelector('[data-index="12"]');
+      const node13 = doc.querySelector('[data-index="13"]');
+
+      assert(Boolean(board && status && history && mode && side && difficulty && thinking && newGame && undo && node12 && node13), 'page renders board, controls, and key nodes');
+
+      const boardRect = board.getBoundingClientRect();
+      log(`INFO board ${Math.round(boardRect.width)}x${Math.round(boardRect.height)} in frame ${frameWidth}`);
+      if (frameWidth <= 480) {
+        assert(boardRect.width >= 260 && boardRect.height >= 260, 'board stays comfortably readable on mobile');
+        assert(boardRect.width <= frameWidth - 24 && boardRect.height <= frameWidth - 24, 'board stays within a bounded mobile size');
+      } else {
+        assert(boardRect.width >= 320 && boardRect.height >= 320, 'board stays comfortably readable');
+        assert(boardRect.width <= 560 && boardRect.height <= 560, 'board stays within a bounded desktop size');
+      }
+
+      newGame.scrollIntoView({ block: 'center' });
+      await sleep(20);
+      const buttonRect = newGame.getBoundingClientRect();
+      const topAtButton = doc.elementFromPoint(buttonRect.left + buttonRect.width / 2, buttonRect.top + buttonRect.height / 2);
+      assert(topAtButton === newGame || newGame.contains(topAtButton), 'new game button is not covered by an overlay');
+
+      assert(status.textContent.trim() === 'Jaguar to move.', 'initial status is correct');
+      assert(thinking.hidden === true, 'thinking indicator is hidden on initial load');
+
+      node12.click();
+      await sleep(20);
+      node13.click();
+      await sleep(20);
+      assert(status.textContent.trim() === 'Dogs to move.', 'board interactions advance the turn in human vs human mode');
+      assert(history.textContent.includes('Jaguar'), 'move history records the first move');
+      assert(undo.disabled === false, 'undo enables after a move');
+
+      undo.click();
+      await sleep(20);
+      assert(status.textContent.trim() === 'Jaguar to move.', 'undo reverts the human vs human move');
+
+      newGame.click();
+      await sleep(20);
+      assert(history.textContent.includes('No moves yet.'), 'new game resets the move history');
+
+      changeSelect(mode, 'HUMAN_VS_COMPUTER');
+      await sleep(20);
+      assert(mode.value === 'HUMAN_VS_COMPUTER', 'mode switch updates to human vs computer');
+      assert(side.disabled === false && difficulty.disabled === false, 'side and difficulty become editable in human vs computer mode');
+
+      changeSelect(difficulty, 'Hard');
+      await sleep(20);
+      assert(difficulty.value === 'Hard', 'difficulty control updates correctly');
+
+      changeSelect(side, 'DOGS');
+      await sleep(20);
+      assert(side.value === 'DOGS', 'side control updates correctly');
+      assert(thinking.hidden === false, 'thinking indicator appears only while the AI is moving');
+
+      newGame.click();
+      await sleep(450);
+      assert(runtimeErrors.length === 0, 'resetting during an AI turn does not trigger runtime errors');
+      assert(status.textContent.trim() === 'Dogs to move.', 'new game restarts correctly when the AI plays first');
+      assert(thinking.hidden === true, 'thinking indicator clears after the AI move completes');
+
+      undo.click();
+      await sleep(20);
+      assert(status.textContent.trim() === 'Jaguar to move.', 'undo reverts the AI opening move for a dogs player');
+
+      changeSelect(mode, 'HUMAN_VS_HUMAN');
+      await sleep(20);
+      assert(side.disabled === true && difficulty.disabled === true, 'setup controls lock again in human vs human mode');
+      assert(runtimeErrors.length === 0, 'initial load and first interactions stay free of runtime errors');
+
+      log('PASS smoke test completed');
+      document.body.dataset.testStatus = 'PASS';
+    }
+  </script>
+</body>
+</html>
