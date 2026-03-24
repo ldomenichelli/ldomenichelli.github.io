@@ -87,10 +87,17 @@
       const thinking = doc.querySelector('[data-thinking]');
       const newGame = doc.querySelector('[data-new-game]');
       const undo = doc.querySelector('[data-undo]');
+      const tabRules = doc.querySelector('[data-tab-button="rules"]');
+      const tabPlay = doc.querySelector('[data-tab-button="play"]');
+      const tabTips = doc.querySelector('[data-tab-button="tips"]');
+      const panelRules = doc.querySelector('[data-tab-panel="rules"]');
+      const panelPlay = doc.querySelector('[data-tab-panel="play"]');
+      const panelTips = doc.querySelector('[data-tab-panel="tips"]');
+      const node0 = doc.querySelector('[data-index="0"]');
       const node12 = doc.querySelector('[data-index="12"]');
       const node13 = doc.querySelector('[data-index="13"]');
 
-      assert(Boolean(board && status && history && mode && side && difficulty && thinking && newGame && undo && node12 && node13), 'page renders board, controls, and key nodes');
+      assert(Boolean(board && status && history && mode && side && difficulty && thinking && newGame && undo && tabRules && tabPlay && tabTips && panelRules && panelPlay && panelTips && node0 && node12 && node13), 'page renders board, controls, tabs, and key nodes');
 
       const boardRect = board.getBoundingClientRect();
       log(`INFO board ${Math.round(boardRect.width)}x${Math.round(boardRect.height)} in frame ${frameWidth}`);
@@ -108,8 +115,26 @@
       const topAtButton = doc.elementFromPoint(buttonRect.left + buttonRect.width / 2, buttonRect.top + buttonRect.height / 2);
       assert(topAtButton === newGame || newGame.contains(topAtButton), 'new game button is not covered by an overlay');
 
+      node0.scrollIntoView({ block: 'center' });
+      await sleep(20);
+      const node0Rect = node0.getBoundingClientRect();
+      const topAtNode0 = doc.elementFromPoint(node0Rect.left + node0Rect.width / 2, node0Rect.top + node0Rect.height / 2);
+      assert(topAtNode0 === node0 || node0.contains(topAtNode0), 'left edge board node stays visible and clickable');
+
       assert(status.textContent.trim() === 'Jaguar to move.', 'initial status is correct');
       assert(thinking.hidden === true, 'thinking indicator is hidden on initial load');
+
+      tabPlay.click();
+      await sleep(20);
+      assert(panelPlay.hidden === false && panelRules.hidden === true && panelTips.hidden === true, 'how to play tab shows its panel');
+
+      tabTips.click();
+      await sleep(20);
+      assert(panelTips.hidden === false && panelRules.hidden === true && panelPlay.hidden === true, 'strategy tips tab shows its panel');
+
+      tabRules.click();
+      await sleep(20);
+      assert(panelRules.hidden === false && panelPlay.hidden === true && panelTips.hidden === true, 'rules tab restores its panel');
 
       node12.click();
       await sleep(20);

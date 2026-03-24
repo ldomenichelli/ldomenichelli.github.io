@@ -383,13 +383,22 @@ function wireEvents() {
 function setupHelpTabs() {
   const buttons = document.querySelectorAll('[data-tab-button]');
   const panels = document.querySelectorAll('[data-tab-panel]');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   buttons.forEach((btn) => {
     btn.addEventListener('click', () => {
       const tab = btn.dataset.tabButton;
+      let activePanel = null;
       buttons.forEach((b) => b.setAttribute('aria-selected', String(b === btn)));
       panels.forEach((panel) => {
-        panel.hidden = panel.dataset.tabPanel !== tab;
+        const isActive = panel.dataset.tabPanel === tab;
+        panel.hidden = !isActive;
+        if (isActive) activePanel = panel;
+      });
+
+      activePanel?.scrollIntoView({
+        block: 'nearest',
+        behavior: reducedMotion ? 'auto' : 'smooth'
       });
     });
   });
