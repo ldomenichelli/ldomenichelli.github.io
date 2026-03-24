@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Achi Page Smoke Test</title>
+  <style>
+    body {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      background: #111;
+      color: #f5f5f5;
+      margin: 0;
+      padding: 16px;
+    }
+
+    iframe {
+      width: 1440px;
+      height: 2200px;
+      border: 0;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      margin: 0 0 16px;
+      line-height: 1.45;
+    }
+  </style>
+</head>
+<body>
+  <pre id="log">Running...</pre>
+  <iframe id="frame" src="/games/achi/"></iframe>
+  <script>
+    const logEl = document.getElementById('log');
+    const frame = document.getElementById('frame');
+    const results = [];
+    const params = new URLSearchParams(window.location.search);
+    const frameWidth = Number(params.get('width') || '1440');
+    frame.style.width = `${frameWidth}px`;
+
+    function log(message) {
+      results.push(message);
+      logEl.textContent = results.join('\n');
+    }
+
+    function assert(condition, message) {
+      if (!condition) {
+        throw new Error(message);
+      }
+      log(`PASS ${message}`);
+    }
+
+    function sleep(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    function changeSelect(select, value) {
+      select.value = value;
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    frame.addEventListener('load', () => {
+      run().catch((error) => {
+        log(`FAIL ${error.message}`);
+        document.body.dataset.testStatus = 'FAIL';
+      });
+    });
+
+    async function run() {
+      const doc = frame.contentDocument;
+      const win = frame.contentWindow;
+      const runtimeErrors = [];
+
+      win.addEventListener('error', (event) => {
+        runtimeErrors.push(`error:${event.message}`);
+      });
+
+      win.addEventListener('unhandledrejection', (event) => {
+        runtimeErrors.push(`rejection:${event.reason?.message || event.reason}`);
+      });
+
+      const board = doc.querySelector('[data-achi-board]');
+      const status = doc.querySelector('[data-status]');
+      const history = doc.querySelector('[data-history]');
+      const phase = doc.querySelector('[data-phase]');
+      const mode = doc.querySelector('[data-mode]');
+      const side = doc.querySelector('[data-side]');
+      const difficulty = doc.querySelector('[data-difficulty]');
+      const thinking = doc.querySelector('[data-thinking]');
+      const newGame = doc.querySelector('[data-new-game]');
+      const undo = doc.querySelector('[data-undo]');
+      const tabRules = doc.querySelector('[data-tab-button="rules"]');
+      const tabPlay = doc.querySelector('[data-tab-button="play"]');
+      const tabTips = doc.querySelector('[data-tab-button="tips"]');
+      const panelRules = doc.querySelector('[data-tab-panel="rules"]');
+      const panelPlay = doc.querySelector('[data-tab-panel="play"]');
+      const panelTips = doc.querySelector('[data-tab-panel="tips"]');
+      const node0 = doc.querySelector('[data-index="0"]');
+      const node4 = doc.querySelector('[data-index="4"]');
+      const node5 = doc.querySelector('[data-index="5"]');
+      const sidebar = doc.querySelector('.achi-side');
+      const setupGrid = doc.querySelector('.achi-setup-grid');
+      const modeField = mode.closest('.achi-field');
+      const sideField = side.closest('.achi-field');
+
+      assert(Boolean(board && status && history && phase && mode && side && difficulty && thinking && newGame && undo && tabRules && tabPlay && tabTips && panelRules && panelPlay && panelTips && node0 && node4 && node5 && sidebar && setupGrid && modeField && sideField), 'page renders board, controls, tabs, and key nodes');
+
+      const boardRect = board.getBoundingClientRect();
+      log(`INFO board ${Math.round(boardRect.width)}x${Math.round(boardRect.height)} in frame ${frameWidth}`);
+      if (frameWidth <= 480) {
+        assert(boardRect.width >= 250 && boardRect.height >= 250, 'board stays comfortably readable on mobile');
+        assert(boardRect.width <= frameWidth - 28 && boardRect.height <= frameWidth - 28, 'board stays within a bounded mobile size');
+      } else {
+        assert(boardRect.width >= 320 && boardRect.height >= 320, 'board stays comfortably readable');
+        assert(boardRect.width <= 500 && boardRect.height <= 500, 'board stays within a bounded desktop size');
+      }
+
+      if (frameWidth > 480) {
+        const sidebarRect = sidebar.getBoundingClientRect();
+        assert(sidebarRect.width >= 285, 'sidebar keeps a comfortable desktop width');
+
+        const modeFieldRect = modeField.getBoundingClientRect();
+        const sideFieldRect = sideField.getBoundingClientRect();
+        assert(sideFieldRect.top > modeFieldRect.bottom - 2, 'setup controls stack cleanly instead of feeling cramped');
+      }
+
+      newGame.scrollIntoView({ block: 'center' });
+      await sleep(20);
+      const buttonRect = newGame.getBoundingClientRect();
+      const topAtButton = doc.elementFromPoint(buttonRect.left + buttonRect.width / 2, buttonRect.top + buttonRect.height / 2);
+      assert(topAtButton === newGame || newGame.contains(topAtButton), 'new game button is not covered by an overlay');
+
+      node0.scrollIntoView({ block: 'center' });
+      await sleep(20);
+      const node0Rect = node0.getBoundingClientRect();
+      const topAtNode0 = doc.elementFromPoint(node0Rect.left + node0Rect.width / 2, node0Rect.top + node0Rect.height / 2);
+      assert(topAtNode0 === node0 || node0.contains(topAtNode0), 'top-left board node stays visible and clickable');
+
+      assert(status.textContent.trim() === 'White to place a piece.', 'initial status is correct');
+      assert(thinking.hidden === true, 'thinking indicator is hidden on initial load');
+
+      tabPlay.click();
+      await sleep(20);
+      assert(panelPlay.hidden === false && panelRules.hidden === true && panelTips.hidden === true, 'how to play tab shows its panel');
+
+      tabTips.click();
+      await sleep(20);
+      assert(panelTips.hidden === false && panelRules.hidden === true && panelPlay.hidden === true, 'strategy tips tab shows its panel');
+
+      tabRules.click();
+      await sleep(20);
+      assert(panelRules.hidden === false && panelPlay.hidden === true && panelTips.hidden === true, 'rules tab restores its panel');
+
+      for (const index of [0, 1, 2, 3, 5, 6, 7, 8]) {
+        doc.querySelector(`[data-index="${index}"]`).click();
+        await sleep(20);
+      }
+
+      assert(phase.textContent.trim() === 'Movement', 'movement phase begins only after all pieces are placed');
+      assert(status.textContent.trim() === 'White to move.', 'status updates when the movement phase starts');
+
+      node5.click();
+      await sleep(20);
+      assert(node5.classList.contains('is-selected'), 'selecting a movable piece updates its selected state');
+      assert(node4.classList.contains('is-legal'), 'movement highlights legal adjacent destinations');
+
+      node4.click();
+      await sleep(20);
+      assert(status.textContent.trim() === 'Black to move.', 'movement interaction advances the turn');
+      assert(history.textContent.includes('White C2→B2'), 'move history records movement turns');
+      assert(undo.disabled === false, 'undo enables after moves');
+
+      undo.click();
+      await sleep(20);
+      assert(status.textContent.trim() === 'White to move.', 'undo reverts the latest movement move');
+
+      newGame.click();
+      await sleep(20);
+      assert(status.textContent.trim() === 'White to place a piece.', 'new game resets to the placement phase');
+      assert(history.textContent.includes('No moves yet.'), 'new game resets the move history');
+
+      changeSelect(mode, 'HUMAN_VS_COMPUTER');
+      await sleep(20);
+      assert(mode.value === 'HUMAN_VS_COMPUTER', 'mode switch updates to human vs computer');
+      assert(side.disabled === false && difficulty.disabled === false, 'side and difficulty become editable in human vs computer mode');
+
+      changeSelect(difficulty, 'Hard');
+      await sleep(20);
+      assert(difficulty.value === 'Hard', 'difficulty control updates correctly');
+
+      changeSelect(side, 'BLACK');
+      await sleep(20);
+      assert(side.value === 'BLACK', 'side control updates correctly');
+      assert(thinking.hidden === false, 'thinking indicator appears while the AI opens for black');
+
+      await sleep(450);
+      assert(status.textContent.trim() === 'Black to place a piece.', 'AI opening move hands the turn back to the human side');
+      assert(thinking.hidden === true, 'thinking indicator clears after the AI move completes');
+      assert(history.textContent.includes('White place'), 'AI move is recorded in move history');
+
+      undo.click();
+      await sleep(20);
+      assert(status.textContent.trim() === 'White to place a piece.', 'undo reverts the AI opening move for a black player');
+
+      changeSelect(mode, 'HUMAN_VS_HUMAN');
+      await sleep(20);
+      assert(side.disabled === true && difficulty.disabled === true, 'setup controls lock again in human vs human mode');
+      assert(runtimeErrors.length === 0, 'initial load and first interactions stay free of runtime errors');
+
+      log('PASS smoke test completed');
+      document.body.dataset.testStatus = 'PASS';
+    }
+  </script>
+</body>
+</html>
