@@ -96,8 +96,12 @@
       const node0 = doc.querySelector('[data-index="0"]');
       const node12 = doc.querySelector('[data-index="12"]');
       const node13 = doc.querySelector('[data-index="13"]');
+      const sidebar = doc.querySelector('.adugo-side');
+      const setupGrid = doc.querySelector('.adugo-setup-grid');
+      const modeField = mode.closest('.adugo-field');
+      const sideField = side.closest('.adugo-field');
 
-      assert(Boolean(board && status && history && mode && side && difficulty && thinking && newGame && undo && tabRules && tabPlay && tabTips && panelRules && panelPlay && panelTips && node0 && node12 && node13), 'page renders board, controls, tabs, and key nodes');
+      assert(Boolean(board && status && history && mode && side && difficulty && thinking && newGame && undo && tabRules && tabPlay && tabTips && panelRules && panelPlay && panelTips && node0 && node12 && node13 && sidebar && setupGrid && modeField && sideField), 'page renders board, controls, tabs, and key nodes');
 
       const boardRect = board.getBoundingClientRect();
       log(`INFO board ${Math.round(boardRect.width)}x${Math.round(boardRect.height)} in frame ${frameWidth}`);
@@ -108,6 +112,13 @@
         assert(boardRect.width >= 320 && boardRect.height >= 320, 'board stays comfortably readable');
         assert(boardRect.width <= 560 && boardRect.height <= 560, 'board stays within a bounded desktop size');
       }
+
+      const sidebarRect = sidebar.getBoundingClientRect();
+      assert(sidebarRect.width >= 280, 'sidebar keeps a comfortable desktop width');
+
+      const modeFieldRect = modeField.getBoundingClientRect();
+      const sideFieldRect = sideField.getBoundingClientRect();
+      assert(sideFieldRect.top > modeFieldRect.bottom - 2, 'setup controls stack cleanly instead of feeling cramped');
 
       newGame.scrollIntoView({ block: 'center' });
       await sleep(20);

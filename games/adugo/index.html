@@ -96,9 +96,9 @@
           </section>
 
           <aside class="adugo-side" aria-label="Game controls and status">
-            <section class="adugo-card">
+            <section class="adugo-card adugo-card-setup">
               <p class="adugo-label">Mode &amp; setup</p>
-              <div class="adugo-grid2">
+              <div class="adugo-grid2 adugo-setup-grid">
                 <div class="adugo-field">
                   <label for="adugo-mode">Mode</label>
                   <select id="adugo-mode" class="adugo-select" data-mode>
@@ -125,24 +125,24 @@
               </div>
             </section>
 
-            <section class="adugo-card">
+            <section class="adugo-card adugo-card-status">
               <p class="adugo-label">Status</p>
               <div class="adugo-stat"><span>Turn</span><strong data-turn>Jaguar</strong></div>
               <div class="adugo-stat"><span>Dogs captured</span><strong data-captured>0</strong></div>
               <div class="adugo-stat"><span>Need to win (Jaguar)</span><strong data-remaining>14</strong></div>
               <p class="adugo-status" data-status aria-live="polite">Jaguar to move.</p>
               <p class="adugo-thinking" data-thinking aria-live="polite" hidden>Computer thinking…</p>
-              <p class="adugo-status" data-objective></p>
+              <p class="adugo-status adugo-status-note" data-objective></p>
             </section>
 
-            <section class="adugo-card">
+            <section class="adugo-card adugo-card-history">
               <p class="adugo-label">Move history</p>
               <ol class="adugo-history" data-history></ol>
             </section>
 
-            <section class="adugo-card">
+            <section class="adugo-card adugo-card-controls">
               <p class="adugo-label">Controls</p>
-              <div class="adugo-grid2">
+              <div class="adugo-grid2 adugo-controls-grid">
                 <button class="adugo-button" data-new-game>New game</button>
                 <button class="adugo-button" data-undo>Undo</button>
               </div>
