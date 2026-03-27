@@ -1,6 +1,5 @@
 import { getAnimatedPaper } from './animated-papers-data.js';
 import {
-  animatedPaperHref,
   getPublicationBySlug,
   publicationDetailHref
 } from './publications-data.js';
@@ -41,13 +40,15 @@ function setDocumentMeta(title, description) {
 
 function createSectionTitle(title, body) {
   const header = document.createDocumentFragment();
-  header.append(el('h2', '', title), el('p', '', body));
+  header.appendChild(el('h2', '', title));
+  if (body) header.appendChild(el('p', 'section-note', body));
   return header;
 }
 
 function createHorizontalBarChart({ title, subtitle, data, maxValue, formatter, valueSuffix = '' }) {
   const block = el('article', 'chart-block');
-  block.append(el('h3', '', title), el('p', '', subtitle));
+  block.appendChild(el('h3', '', title));
+  if (subtitle) block.appendChild(el('p', '', subtitle));
 
   const svg = svgEl('svg', {
     class: 'chart-svg',
@@ -119,8 +120,17 @@ function createHorizontalBarChart({ title, subtitle, data, maxValue, formatter, 
   });
 
   block.appendChild(svg);
-  block.appendChild(el('div', 'chart-caption', 'Hover or focus a bar for the exact value.'));
   return block;
+}
+
+function createHeroHighlights(items) {
+  const grid = el('div', 'hero-highlight-grid');
+  items.forEach((item) => {
+    const card = el('div', 'hero-highlight');
+    card.append(el('strong', '', item.label), el('small', '', item.body));
+    grid.appendChild(card);
+  });
+  return grid;
 }
 
 function createQuestionGrid(items) {
@@ -149,7 +159,7 @@ function createSetupGrid(setup) {
   return wrapper;
 }
 
-function createMetricGrid(paper) {
+function createMetricGrid() {
   const grid = el('div', 'stats-grid');
   const chips = [
     { value: '12', label: 'readers after exclusions' },
@@ -171,11 +181,12 @@ function createStrategyExplorer(data) {
   const controlsPanel = el('div', 'strategy-copy');
   const figurePanel = el('div', 'flow-diagram');
 
-  const intro = el('p', '', data.intro);
   const segmented = el('div', 'segmented-control');
   segmented.setAttribute('role', 'group');
   segmented.setAttribute('aria-label', 'Injection strategies');
-  controlsPanel.append(intro, segmented);
+  controlsPanel.append(segmented);
+
+  if (data.intro) controlsPanel.appendChild(el('p', 'subtle-note', data.intro));
 
   const name = el('strong', '', '');
   const description = el('p', '', '');
@@ -260,8 +271,7 @@ function createResultsExplorer(paper) {
     panel.appendChild(
       createHorizontalBarChart({
         title: 'Average downstream performance',
-        subtitle:
-          'DST-ONLY is the downstream-only baseline. Transfer strategies can be compared directly against it.',
+        subtitle: 'Baseline in gold.',
         data: results.performance,
         maxValue: 0.9,
         formatter: (value) => value.toFixed(2)
@@ -277,7 +287,7 @@ function createResultsExplorer(paper) {
     grid.appendChild(
       createHorizontalBarChart({
         title: 'Average attention correlation',
-        subtitle: 'A compact summary of BASE versus EYE-ONLY alignment across layers.',
+        subtitle: 'BASE vs EYE-ONLY.',
         data: results.attentionSummary,
         maxValue: 0.3,
         formatter: (value) => value.toFixed(2)
@@ -286,7 +296,7 @@ function createResultsExplorer(paper) {
     grid.appendChild(
       createHorizontalBarChart({
         title: 'Last-layer attention correlation by strategy',
-        subtitle: 'Partial fine-tuning variants keep some of the strongest human-alignment in the last layer.',
+        subtitle: 'Best alignment comes from partial fine-tuning.',
         data: results.attentionLastLayer,
         maxValue: 0.32,
         formatter: (value) => value.toFixed(2)
@@ -303,7 +313,7 @@ function createResultsExplorer(paper) {
     grid.appendChild(
       createHorizontalBarChart({
         title: 'Linear ID average',
-        subtitle: 'Lower values suggest a more compressed representation space.',
+        subtitle: 'Lower is more compressed.',
         data: results.linearId,
         maxValue: 320,
         formatter: (value) => value.toFixed(0)
@@ -312,7 +322,7 @@ function createResultsExplorer(paper) {
     grid.appendChild(
       createHorizontalBarChart({
         title: 'IsoScore average (x10^-3)',
-        subtitle: 'Lower IsoScore here accompanies stronger compression and anisotropy.',
+        subtitle: 'Lower means stronger compression here.',
         data: results.isoScore,
         maxValue: 30,
         formatter: (value) => value.toFixed(2)
@@ -388,11 +398,11 @@ export function renderAnimatedPaper(container, slug) {
 
   const meta = el('div', 'explorable-meta');
   meta.append(el('span', '', publication.venue || 'Publication'), el('span', '', publication.year));
-  hero.append(meta, createMetricGrid(paper));
+  hero.append(meta, createMetricGrid());
+  if (paper.heroHighlights?.length) hero.appendChild(createHeroHighlights(paper.heroHighlights));
 
   const actions = el('div', 'explorable-actions');
   if (paper.links?.pdf) actions.appendChild(createAction('Read PDF', paper.links.pdf, 'primary', true));
-  actions.appendChild(createAction('Animated paper', animatedPaperHref(publication), 'accent'));
   actions.appendChild(createAction('Paper page', publicationDetailHref(publication), 'secondary'));
   if (publication.links?.code) {
     actions.appendChild(createAction('Code', publication.links.code, 'secondary', true));
@@ -402,43 +412,43 @@ export function renderAnimatedPaper(container, slug) {
 
   appendSection(
     stack,
-    'Why This Question Matters',
-    'The contribution is not only about benchmark scores. It asks whether a language model can absorb signals from human reading and become more interpretable without giving up practical usefulness.',
+    'Why This Matters',
+    null,
     () => createQuestionGrid(paper.questions)
   );
 
   appendSection(
     stack,
-    'How ET Is Injected',
-    'Each strategy changes how the model sees the eye-tracking objective and how that signal is transferred into downstream learning.',
+    'ET Injection',
+    null,
     () => createStrategyExplorer(paper.strategyFigure)
   );
 
   appendSection(
     stack,
-    'Experimental Setup',
-    'The setup stays compact: one encoder backbone, one eye-tracking corpus, a fixed feature set, and downstream evaluations that let the cognitive signal be compared against a strong task baseline.',
+    'Setup',
+    null,
     () => createSetupGrid(paper.setup)
   );
 
   appendSection(
     stack,
-    'Results Explorer',
-    'Switch between performance, attention, and embedding-space views. The aim is to make the central pattern visible quickly: ET supervision mostly preserves performance while changing how the model attends and organizes its internal space.',
+    'Results',
+    null,
     () => createResultsExplorer(paper)
   );
 
   appendSection(
     stack,
-    'Main Takeaways',
-    'The strongest story is not that eye-tracking magically boosts every metric. It is that cognitive supervision reshapes the model in interpretable ways while keeping downstream quality competitive.',
+    'Takeaways',
+    null,
     () => createTakeaways(paper.takeaways)
   );
 
   appendSection(
     stack,
-    'Limitations And Next Steps',
-    'The evidence is promising, but the paper is careful about scope. The findings should be read as a solid case study rather than a universal law about cognitive supervision.',
+    'Limitations',
+    null,
     () => createLimitations(paper.limitations)
   );
 }

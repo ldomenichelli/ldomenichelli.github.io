@@ -4,32 +4,33 @@ export const ANIMATED_PAPERS = {
     title:
       'From Human Reading to NLM Understanding: Evaluating the Role of Eye-Tracking Data in Encoder-Based Models',
     dek:
-      'An explorable summary of how eye-tracking supervision changes task performance, attention alignment, and representation geometry in RoBERTa-base.',
+      'Eye-tracking supervision keeps RoBERTa-base strong on tasks while shifting attention and geometry in more human-like directions.',
     abstract:
-      'The paper asks whether cognitive signals from human reading can be injected into encoder-based language models without sacrificing task performance. Using eye-tracking features from GECO, the authors compare several transfer strategies and show that eye-tracking supervision improves attention alignment with human attention and compresses the representation space, while preserving strong downstream results overall.',
+      'GECO eye-tracking features improve attention alignment and compress the representation space, while downstream performance stays close to the task-only baseline.',
+    heroHighlights: [
+      { label: 'Performance', body: 'Mostly preserved' },
+      { label: 'Attention', body: 'More human-aligned' },
+      { label: 'Geometry', body: 'More compressed' }
+    ],
     links: {
       pdf: 'https://aclanthology.org/2025.acl-long.870/'
     },
     questions: [
       {
         title: 'Downstream performance',
-        body:
-          'If the model is asked to learn from eye movements, does it still hold up on downstream benchmarks like COMP and GLUE?'
+        body: 'Does ET transfer keep task scores strong?'
       },
       {
         title: 'Attention alignment',
-        body:
-          'Does eye-tracking supervision make model attention maps more correlated with where people actually look while reading?'
+        body: 'Does attention move closer to human reading?'
       },
       {
         title: 'Embedding geometry',
-        body:
-          'Does adding eye-tracking signals reshape the representation space, for example by making it more compressed or anisotropic?'
+        body: 'Does the representation space compress?'
       }
     ],
     strategyFigure: {
-      intro:
-        'The paper compares four ways of transferring eye-tracking supervision into the model. Switch strategies to see how the training signal moves through the pipeline.',
+      intro: 'Switch strategy.',
       strategies: [
         {
           key: 'int',
@@ -41,9 +42,8 @@ export const ANIMATED_PAPERS = {
             { label: 'DST', state: 'active' }
           ],
           connectors: ['active', 'active'],
-          emphasis: 'Full intermediate fine-tuning is especially strong for retaining performance while compressing the learned space.',
-          description:
-            'The base model is first adapted on the eye-tracking objective and only then fine-tuned on downstream tasks. The paper also compares partial variants such as INT-LAST3, INT-LAST2, and INT-CLF.'
+          emphasis: 'Strong performance + strong compression.',
+          description: 'PT -> EYE -> DST. Includes INT-FULL, LAST3, LAST2, and CLF variants.'
         },
         {
           key: 'lora',
@@ -55,9 +55,8 @@ export const ANIMATED_PAPERS = {
             { label: 'DST', state: 'active' }
           ],
           connectors: ['active', 'soft'],
-          emphasis: 'LoRA offers a lighter-weight transfer path, but the geometry shift is weaker than with full intermediate tuning.',
-          description:
-            'Instead of fully updating the model during the eye-tracking phase, low-rank adapters carry the transfer. It is a parameter-efficient route from cognitive supervision to downstream adaptation.'
+          emphasis: 'Lighter transfer, weaker geometry shift.',
+          description: 'Adapters carry ET transfer instead of full model updates.'
         },
         {
           key: 'mt-il',
@@ -69,9 +68,8 @@ export const ANIMATED_PAPERS = {
             { label: 'DST', state: 'split' }
           ],
           connectors: ['dual', 'dual'],
-          emphasis: 'Interleaving keeps downstream performance close to the baseline while still improving alignment.',
-          description:
-            'Eye-tracking and downstream updates are interleaved during fine-tuning. Rather than staging the objectives, the model learns from both signals within the same training period.'
+          emphasis: 'Near-baseline performance, better alignment.',
+          description: 'EYE and DST batches are interleaved during fine-tuning.'
         },
         {
           key: 'mt-silv',
@@ -83,20 +81,19 @@ export const ANIMATED_PAPERS = {
             { label: 'DST', state: 'active' }
           ],
           connectors: ['active', 'active'],
-          emphasis: 'Silver labels expand where eye-like supervision can be applied, but the alignment and geometry gains are less extreme than the best ET-first variants.',
-          description:
-            'The multi-task setup is extended with silver eye-tracking labels so the model can learn an eye-inspired signal on more data than the original human annotations alone.'
+          emphasis: 'Broader supervision, milder gains.',
+          description: 'Silver ET labels extend the multi-task setup beyond human annotations.'
         }
       ]
     },
     setup: {
       cards: [
-        { label: 'Model', value: 'RoBERTa-base', note: 'Encoder backbone used in every condition.' },
-        { label: 'Readers', value: '12', note: 'Two incomplete readers are excluded from the analysis.' },
-        { label: 'Corpus', value: 'GECO', note: '56,410 words across 588 sentences.' },
-        { label: 'ET features', value: '5', note: 'FFD, GD, FRNF, TRT, and TNF.' },
-        { label: 'Transfer families', value: '4', note: 'INT, LORA, MT-IL, and MT-SILV.' },
-        { label: 'Downstream eval', value: 'COMP + GLUE', note: 'Task performance is tracked alongside interpretability-oriented analyses.' }
+        { label: 'Model', value: 'RoBERTa-base', note: 'Single encoder backbone.' },
+        { label: 'Readers', value: '12', note: 'After excluding 2 incomplete readers.' },
+        { label: 'Corpus', value: 'GECO', note: '56,410 words, 588 sentences.' },
+        { label: 'ET features', value: '5', note: 'FFD, GD, FRNF, TRT, TNF.' },
+        { label: 'Transfer families', value: '4', note: 'INT, LORA, MT-IL, MT-SILV.' },
+        { label: 'Downstream eval', value: 'COMP + GLUE', note: 'Task quality tracked alongside interpretability.' }
       ],
       featureLabels: ['FFD', 'GD', 'FRNF', 'TRT', 'TNF']
     },
@@ -151,39 +148,35 @@ export const ANIMATED_PAPERS = {
       ],
       interpretations: {
         performance:
-          'Most transfer strategies stay reasonably close to the downstream-only baseline, which supports the central claim that ET supervision is not obviously trading away task quality.',
+          'ET transfer mostly preserves task quality.',
         attention:
-          'Eye-tracking supervision raises average attention correlation, and the strongest last-layer alignment comes from partial fine-tuning after ET training rather than from the baseline.',
+          'ET transfer makes attention more human-aligned.',
         embedding:
-          'Lower Linear ID and lower IsoScore indicate a more compressed, more anisotropic space. Full intermediate fine-tuning stands out as a particularly strong compression regime while preserving performance.'
+          'ET transfer compresses the embedding space; INT-FULL stands out.'
       }
     },
     takeaways: [
       {
-        title: 'Interpretability without obvious collapse',
-        body:
-          'Injecting ET signals does not materially hurt downstream task performance overall, so cognitive supervision can be explored without immediately sacrificing usefulness.'
+        title: 'Task scores stay strong',
+        body: 'Most variants stay close to DST-ONLY.'
       },
       {
-        title: 'Attention gets closer to human reading',
-        body:
-          'Across layers and especially in several last-layer transfer variants, attention becomes more aligned with human fixation patterns than in the downstream-only baseline.'
+        title: 'Attention gets closer to readers',
+        body: 'ET supervision improves correlation with human attention.'
       },
       {
-        title: 'Representations become more compressed',
-        body:
-          'Both Linear ID and IsoScore shift downward, suggesting that ET supervision encourages a tighter and more anisotropic embedding geometry.'
+        title: 'Representations compress',
+        body: 'Linear ID and IsoScore both move downward.'
       },
       {
-        title: 'Strategy choice changes the trade-off',
-        body:
-          'INT-FULL is especially strong for preserving performance and compressing representations, while partial ET-to-DST fine-tuning tends to preserve the strongest attention alignment.'
+        title: 'Strategy choice matters',
+        body: 'INT-FULL favors compression; partial tuning favors alignment.'
       }
     ],
     limitations: [
-      'Only RoBERTa-base is evaluated, so the results do not yet tell us whether larger encoders or decoder-heavy architectures behave the same way.',
-      'The eye-tracking signal comes only from GECO, which limits how broadly the cognitive findings can be generalized across reading settings and populations.',
-      'The paper shows promising alignment and geometry effects, but those gains should not be overgeneralized to every architecture, task family, or ET corpus.'
+      'Only RoBERTa-base is tested.',
+      'Only GECO provides the cognitive signal.',
+      'The pattern may not transfer to other architectures or corpora.'
     ]
   }
 };
