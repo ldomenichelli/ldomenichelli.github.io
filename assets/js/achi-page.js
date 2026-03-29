@@ -18,6 +18,7 @@ import {
 } from './achi-engine.js';
 import { thinkAndPickAIMove } from './achi-ai.js';
 import { MODE, computeUndoResult } from './achi-session.js';
+import { setupTabs } from './game-tabs.js';
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -398,7 +399,8 @@ function undoMove() {
     mode: state.mode,
     humanSide: state.humanSide,
     snapshots: state.snapshots,
-    currentGame: state.game
+    currentGame: state.game,
+    getOpponentSide: opposite
   });
 
   state.game = result.game;
@@ -417,25 +419,17 @@ function resetGame() {
 }
 
 function setupHelpTabs() {
-  const buttons = document.querySelectorAll('[data-tab-button]');
-  const panels = document.querySelectorAll('[data-tab-panel]');
-
-  buttons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const tab = button.dataset.tabButton;
-      let activePanel = null;
-      buttons.forEach((candidate) => candidate.setAttribute('aria-selected', String(candidate === button)));
-      panels.forEach((panel) => {
-        const active = panel.dataset.tabPanel === tab;
-        panel.hidden = !active;
-        if (active) activePanel = panel;
-      });
-
-      activePanel?.scrollIntoView({
-        block: 'nearest',
-        behavior: prefersReducedMotion ? 'auto' : 'smooth'
-      });
-    });
+  setupTabs({
+    buttonSelector: '[data-tab-button]',
+    panelSelector: '[data-tab-panel]',
+    buttonKey: 'tabButton',
+    panelKey: 'tabPanel',
+    setButtonState(button, active) {
+      button.setAttribute('aria-selected', String(active));
+    },
+    setPanelState(panel, active) {
+      panel.hidden = !active;
+    }
   });
 }
 

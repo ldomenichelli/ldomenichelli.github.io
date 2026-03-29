@@ -13,6 +13,7 @@ import {
   moveDestinationCell
 } from '/assets/js/abalone-engine.js';
 import { chooseAIMove } from '/assets/js/abalone-ai.js';
+import { setupTabs } from '/assets/js/game-tabs.js';
 
 const R = 22;
 const GAP = 3;
@@ -96,25 +97,6 @@ function renderBoard(svg, state, selected, legalTargets, onCellClick) {
     }
 
     svg.appendChild(cellGroup);
-  }
-}
-
-function setupTabs() {
-  const buttons = [...document.querySelectorAll('.seg-btn')];
-  const panels = [...document.querySelectorAll('.tab-panel')];
-
-  for (const btn of buttons) {
-    btn.addEventListener('click', () => {
-      const current = btn.dataset.tab;
-      for (const b of buttons) {
-        const active = b === btn;
-        b.classList.toggle('active', active);
-        b.setAttribute('aria-selected', String(active));
-      }
-      for (const panel of panels) {
-        panel.classList.toggle('hidden', panel.dataset.panel !== current);
-      }
-    });
   }
 }
 
@@ -374,7 +356,20 @@ function setupExamples() {
   }
 }
 
-setupTabs();
+setupTabs({
+  buttonSelector: '.seg-btn',
+  panelSelector: '.tab-panel',
+  buttonKey: 'tab',
+  panelKey: 'panel',
+  scrollPanel: false,
+  setButtonState(button, active) {
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-selected', String(active));
+  },
+  setPanelState(panel, active) {
+    panel.classList.toggle('hidden', !active);
+  }
+});
 setupPlayableBoard();
 setupExamples();
 

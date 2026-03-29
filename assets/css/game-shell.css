@@ -1,0 +1,344 @@
+:root {
+  --game-shell-panel: var(--site-surface);
+  --game-shell-panel-strong: var(--site-surface-strong);
+  --game-shell-panel-soft: var(--site-surface-alt);
+  --game-shell-border: var(--site-border);
+  --game-shell-border-strong: var(--site-border-strong);
+  --game-shell-text: var(--site-text);
+  --game-shell-muted: var(--site-text-muted);
+  --game-shell-accent: var(--site-accent);
+  --game-shell-accent-strong: var(--site-accent-strong);
+}
+
+.game-shell-wrap,
+.abalone-wrap {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 18px 16px 36px;
+  display: grid;
+  gap: 14px;
+}
+
+.game-shell-panel,
+.panel {
+  padding: 14px;
+}
+
+.game-shell-hero,
+.hero-panel {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.hero-title {
+  font-size: clamp(1.7rem, 3vw, 2.35rem);
+  margin: 0 0 4px;
+  line-height: 1.08;
+}
+
+.muted {
+  color: var(--game-shell-muted);
+}
+
+.meta-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.meta-pill {
+  border: 1px solid var(--game-shell-border-strong);
+  background: var(--game-shell-panel-strong);
+  color: var(--game-shell-text);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.game-shell-play,
+.play-layout {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
+  align-items: start;
+}
+
+.game-shell-board-panel,
+.board-shell {
+  padding: 14px;
+}
+
+.game-shell-board-header,
+.board-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.game-shell-turn,
+.turn-indicator {
+  color: var(--game-shell-text);
+  font-weight: 600;
+}
+
+.game-shell-status-copy,
+.status-copy {
+  margin-bottom: 8px;
+}
+
+.game-shell-banner,
+.game-over {
+  border: 1px solid rgba(242, 182, 168, 0.45);
+  background: rgba(242, 182, 168, 0.12);
+  color: var(--game-shell-text);
+  border-radius: 10px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+}
+
+.game-shell-thinking,
+.thinking {
+  color: var(--game-shell-accent-strong);
+  font-size: 0.9rem;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.game-shell-side,
+.side-rail {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+}
+
+.game-shell-section,
+.rail-section {
+  border: 1px solid var(--game-shell-border);
+  border-radius: 12px;
+  padding: 10px;
+  background: rgba(23, 32, 28, 0.75);
+}
+
+.game-shell-section h3,
+.rail-section h3 {
+  margin: 0 0 8px;
+  font-size: 0.96rem;
+}
+
+.game-shell-control-grid,
+.control-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+
+.game-shell-control-grid label,
+.control-grid label {
+  font-size: 0.82rem;
+  color: var(--game-shell-muted);
+}
+
+.game-shell-control-grid select,
+.game-shell-section button,
+.control-grid select,
+button.ghost {
+  background: var(--game-shell-panel-strong);
+  border: 1px solid var(--game-shell-border-strong);
+  color: var(--game-shell-text);
+  border-radius: 9px;
+  padding: 7px 10px;
+  min-height: 34px;
+}
+
+.game-shell-control-grid select:focus-visible,
+.game-shell-section button:focus-visible,
+.control-grid select:focus-visible,
+button.ghost:focus-visible,
+.game-shell-tab:focus-visible,
+.seg-btn:focus-visible {
+  outline: 2px solid var(--game-shell-accent);
+  outline-offset: 2px;
+}
+
+.game-shell-control-grid select:hover,
+.game-shell-section button:hover,
+.control-grid select:hover,
+button.ghost:hover,
+.game-shell-tab:hover,
+.seg-btn:hover {
+  border-color: var(--game-shell-border-strong);
+}
+
+.compact-stats .tiny {
+  margin: 0 0 4px;
+  font-size: 0.88rem;
+}
+
+.history-shell {
+  min-height: 260px;
+}
+
+.game-shell-history,
+.history {
+  max-height: 290px;
+  min-height: 220px;
+  overflow: auto;
+  border: 1px solid var(--game-shell-border);
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: var(--site-bg-soft);
+  margin: 0;
+}
+
+.game-shell-history li,
+.history li {
+  margin: 0 0 5px;
+  color: var(--game-shell-muted);
+  font-size: 0.9rem;
+}
+
+.history-empty,
+.game-shell-history-empty {
+  list-style: none;
+  color: var(--game-shell-muted);
+}
+
+.game-shell-button-row,
+.ui-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.game-shell-learn,
+.learn-panel {
+  padding: 12px;
+}
+
+.game-shell-tabs,
+.segmented {
+  display: inline-flex;
+  border: 1px solid var(--game-shell-border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.game-shell-tab,
+.seg-btn {
+  background: var(--game-shell-panel-strong);
+  border: 0;
+  color: var(--game-shell-muted);
+  padding: 8px 11px;
+  cursor: pointer;
+  border-right: 1px solid var(--game-shell-border);
+  font-size: 0.86rem;
+}
+
+.game-shell-tab:last-child,
+.seg-btn:last-child {
+  border-right: 0;
+}
+
+.game-shell-tab.is-active,
+.seg-btn.active {
+  background: var(--game-shell-panel-soft);
+  color: var(--game-shell-text);
+}
+
+.game-shell-tab-panel,
+.tab-panel {
+  margin-top: 4px;
+}
+
+.rule-list {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 6px;
+}
+
+h2,
+h3,
+p.stat {
+  margin-top: 0;
+  margin-bottom: 6px;
+}
+
+.game-card {
+  padding: 16px;
+}
+
+.game-link {
+  display: inline-block;
+  margin-top: 10px;
+}
+
+@media (max-width: 1080px) {
+  .game-shell-play,
+  .play-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .game-shell-history,
+  .history {
+    max-height: 220px;
+    min-height: 180px;
+  }
+}
+
+@media (max-width: 760px) {
+  .game-shell-wrap,
+  .abalone-wrap {
+    padding: 14px 10px 24px;
+    gap: 10px;
+  }
+
+  .game-shell-panel,
+  .panel {
+    padding: 11px;
+  }
+
+  .game-shell-hero,
+  .hero-panel {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .game-shell-tabs,
+  .segmented {
+    display: grid;
+    width: 100%;
+  }
+
+  .game-shell-tab,
+  .seg-btn {
+    border-right: 0;
+    border-bottom: 1px solid var(--game-shell-border);
+  }
+
+  .game-shell-tab:last-child,
+  .seg-btn:last-child {
+    border-bottom: 0;
+  }
+
+  .game-shell-button-row,
+  .ui-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

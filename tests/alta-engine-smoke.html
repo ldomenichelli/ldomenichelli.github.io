@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alta Engine Smoke Test</title>
+  <style>
+    body {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      background: #111;
+      color: #f5f5f5;
+      margin: 0;
+      padding: 16px;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      line-height: 1.45;
+      margin: 0;
+    }
+  </style>
+</head>
+<body data-test-status="RUNNING">
+  <pre id="log">Running...</pre>
+  <script type="module">
+    import {
+      PLAYERS,
+      ORIENTATIONS,
+      MOVE_TYPES,
+      createInitialState,
+      getBoardVariant,
+      getLegalPlacements,
+      getLegalToggles,
+      getLegalMoves,
+      isMoveLegal,
+      detectWinner,
+      applyMove
+    } from '/assets/js/alta-engine.js';
+    import { chooseAIMove } from '/assets/js/alta-ai.js';
+    import { MODE, computeUndoResult } from '/assets/js/alta-session.js';
+
+    const logEl = document.getElementById('log');
+    const messages = [];
+
+    function log(message) {
+      messages.push(message);
+      logEl.textContent = messages.join('\n');
+    }
+
+    function assert(condition, message) {
+      if (!condition) throw new Error(message);
+      log(`PASS ${message}`);
+    }
+
+    function makeState(placements = [], turn = PLAYERS.BLUE) {
+      const state = createInitialState();
+      state.turn = turn;
+      state.board = new Map(placements.map((placement) => [placement.cell, {
+        owner: placement.owner,
+        orientation: placement.orientation
+      }]));
+      state.history = [];
+      state.moveNumber = 1;
+      state.winner = null;
+      state.winningPath = [];
+      state.lastMove = null;
+      return state;
+    }
+
+    const bluePath = [
+      { cell: 'd9', owner: PLAYERS.BLUE, orientation: ORIENTATIONS.FW },
+      { cell: 'd8', owner: PLAYERS.RED, orientation: ORIENTATIONS.BW },
+      { cell: 'd7', owner: PLAYERS.BLUE, orientation: ORIENTATIONS.FW },
+      { cell: 'd6', owner: PLAYERS.RED, orientation: ORIENTATIONS.BW },
+      { cell: 'd5', owner: PLAYERS.BLUE, orientation: ORIENTATIONS.FW },
+      { cell: 'd4', owner: PLAYERS.RED, orientation: ORIENTATIONS.BW },
+      { cell: 'd3', owner: PLAYERS.BLUE, orientation: ORIENTATIONS.FW },
+      { cell: 'd2', owner: PLAYERS.RED, orientation: ORIENTATIONS.BW },
+      { cell: 'd1', owner: PLAYERS.BLUE, orientation: ORIENTATIONS.FW }
+    ];
+
+    const redPath = [
+      { cell: 'a5', owner: PLAYERS.RED, orientation: ORIENTATIONS.BW },
+      { cell: 'b5', owner: PLAYERS.BLUE, orientation: ORIENTATIONS.FW },
+      { cell: 'c5', owner: PLAYERS.RED, orientation: ORIENTATIONS.BW },
+      { cell: 'd5', owner: PLAYERS.BLUE, orientation: ORIENTATIONS.FW },
+      { cell: 'e5', owner: PLAYERS.RED, orientation: ORIENTATIONS.BW },
+      { cell: 'f5', owner: PLAYERS.BLUE, orientation: ORIENTATIONS.FW },
+      { cell: 'g5', owner: PLAYERS.RED, orientation: ORIENTATIONS.BW },
+      { cell: 'h5', owner: PLAYERS.BLUE, orientation: ORIENTATIONS.FW },
+      { cell: 'i5', owner: PLAYERS.RED, orientation: ORIENTATIONS.BW }
+    ];
+
+    try {
+      const variant = getBoardVariant();
+      const initial = createInitialState();
+      const bluePlacements = getLegalPlacements(initial, PLAYERS.BLUE);
+      const redPlacements = getLegalPlacements({ ...initial, turn: PLAYERS.RED }, PLAYERS.RED);
+
+      assert(variant.playableCellCount === 57, 'base Alta board exposes 57 playable cells');
+      assert(variant.squareCount === 61, 'base Alta board counts the 4 colored goal squares for a 61-square board');
+      assert(bluePlacements.length === 102 && redPlacements.length === 102, 'initial placement generation respects the official six-cell forbidden zones');
+      assert(getLegalToggles(initial).length === 0, 'initial state has no legal toggles');
+
+      const toggleState = makeState([
+        { cell: 'd9', owner: PLAYERS.BLUE, orientation: ORIENTATIONS.FW },
+        { cell: 'a5', owner: PLAYERS.RED, orientation: ORIENTATIONS.BW }
+      ], PLAYERS.RED);
+
+      const redToggles = getLegalToggles(toggleState, PLAYERS.RED);
+      assert(redToggles.length === 1 && redToggles[0].cell === 'a5', 'toggle generation only includes the current player’s switches');
+      assert(!isMoveLegal(toggleState, {
+        type: MOVE_TYPES.TOGGLE,
+        cell: 'd9',
+        orientation: ORIENTATIONS.BW
+      }, PLAYERS.RED), 'toggling an opponent switch is illegal');
+
+      const mixedBlueWin = makeState(bluePath, PLAYERS.RED);
+      const blueWinResult = detectWinner(mixedBlueWin);
+      assert(blueWinResult.winner === PLAYERS.BLUE, 'connection detection finds a blue win');
+      assert(blueWinResult.winningPath.length >= 5, 'winning path extraction returns the cells used by the connection');
+
+      const mixedColorPath = makeState(bluePath, PLAYERS.BLUE);
+      assert(detectWinner(mixedColorPath).winner === PLAYERS.BLUE, 'blue winning paths may use switches owned by both players');
+
+      const simultaneousBase = makeState([
+        ...bluePath.filter((piece) => piece.cell !== 'd5'),
+        ...redPath.filter((piece) => piece.cell !== 'd5')
+      ], PLAYERS.RED);
+
+      const simultaneous = applyMove(simultaneousBase, {
+        type: MOVE_TYPES.PLACE,
+        cell: 'd5',
+        orientation: ORIENTATIONS.FW
+      });
+      assert(simultaneous.winner === PLAYERS.RED, 'moving player wins if one move completes both goal connections');
+
+      for (const difficulty of ['Easy', 'Medium', 'Hard']) {
+        const blueMove = chooseAIMove(createInitialState(), PLAYERS.BLUE, difficulty);
+        const redMove = chooseAIMove(makeState([], PLAYERS.RED), PLAYERS.RED, difficulty);
+        assert(Boolean(blueMove) && isMoveLegal(createInitialState(), blueMove, PLAYERS.BLUE), `AI chooses a legal blue move on ${difficulty}`);
+        assert(Boolean(redMove) && isMoveLegal(makeState([], PLAYERS.RED), redMove, PLAYERS.RED), `AI chooses a legal red move on ${difficulty}`);
+      }
+
+      const forcedWin = chooseAIMove(simultaneousBase, PLAYERS.RED, 'Hard');
+      assert(Boolean(forcedWin) && applyMove(simultaneousBase, forcedWin).winner === PLAYERS.RED, 'AI prioritizes an immediate winning move');
+
+      const s0 = makeState([], PLAYERS.BLUE);
+      const s1 = makeState([{ cell: 'd9', owner: PLAYERS.BLUE, orientation: ORIENTATIONS.FW }], PLAYERS.RED);
+      const s2 = makeState([
+        { cell: 'd9', owner: PLAYERS.BLUE, orientation: ORIENTATIONS.FW },
+        { cell: 'a5', owner: PLAYERS.RED, orientation: ORIENTATIONS.BW }
+      ], PLAYERS.BLUE);
+
+      const hvcUndo = computeUndoResult({
+        mode: MODE.HVC,
+        humanSide: PLAYERS.BLUE,
+        snapshots: [s0, s1, s2],
+        currentGame: makeState([
+          { cell: 'd9', owner: PLAYERS.BLUE, orientation: ORIENTATIONS.FW },
+          { cell: 'a5', owner: PLAYERS.RED, orientation: ORIENTATIONS.BW },
+          { cell: 'd8', owner: PLAYERS.BLUE, orientation: ORIENTATIONS.BW }
+        ], PLAYERS.RED)
+      });
+      assert(hvcUndo.game.turn === PLAYERS.BLUE, 'HVC undo rewinds to the latest human turn when possible');
+
+      const hvhUndo = computeUndoResult({
+        mode: MODE.HVH,
+        humanSide: PLAYERS.BLUE,
+        snapshots: [s0, s1],
+        currentGame: s2
+      });
+      assert(hvhUndo.game.turn === PLAYERS.RED && hvhUndo.snapshots.length === 1, 'HVH undo pops exactly one snapshot');
+
+      log('PASS engine smoke test completed');
+      document.body.dataset.testStatus = 'PASS';
+    } catch (error) {
+      log(`FAIL ${error.message}`);
+      document.body.dataset.testStatus = 'FAIL';
+    }
+  </script>
+</body>
+</html>

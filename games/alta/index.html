@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en" dir="auto">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+  <meta name="robots" content="index, follow">
+  <title>Alta | lucia's notes</title>
+  <meta name="description" content="Playable Alta: human vs human or human vs computer with selectable side and difficulty.">
+  <link crossorigin="anonymous" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css" rel="preload stylesheet" as="style">
+  <link rel="stylesheet" href="/assets/css/game-shell.css">
+  <link rel="stylesheet" href="/assets/css/alta.css">
+  <link rel="stylesheet" href="/assets/css/site-theme.css">
+</head>
+<body class="page dark alta-page">
+<header class="header">
+  <nav class="nav">
+    <div class="logo"><a href="/" accesskey="h">lucia's notes</a><div class="logo-switches"><ul class="lang-switch"><li>|</li></ul></div></div>
+    <button id="menu-trigger" aria-haspopup="menu" aria-label="Menu Button">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <ul class="menu hidden"><li><a href="/about/" title="about"><span>about</span></a></li><li><a href="/posts/" title="notes"><span>notes</span></a></li><li><a href="/projects/" title="projects"><span>projects</span></a></li><li><a href="/random/" title="hobbies"><span>hobbies</span></a></li></ul>
+  </nav>
+</header>
+
+<main class="game-shell-wrap">
+  <section class="panel game-shell-hero" aria-labelledby="alta-title">
+    <div>
+      <h1 id="alta-title" class="hero-title">Alta</h1>
+      <p class="muted">W. D. Troyka's switch-based connection duel on the official 61-square board.</p>
+    </div>
+    <div class="meta-row"><span class="meta-pill">2 modes</span><span class="meta-pill">Human vs Human</span><span class="meta-pill">Human vs Computer</span></div>
+  </section>
+
+  <section class="game-shell-play" aria-label="Playable board and controls">
+    <div class="panel game-shell-board-panel alta-board-panel">
+      <div class="game-shell-board-header">
+        <div>
+          <h2>Board</h2>
+          <p class="stat game-shell-turn" data-turn></p>
+        </div>
+        <p class="game-shell-thinking hidden" data-thinking aria-live="polite">Computer thinking…</p>
+      </div>
+      <p class="muted game-shell-status-copy" data-status aria-live="polite"></p>
+      <p class="alta-status-note muted" data-side-status></p>
+      <div class="game-shell-banner hidden" data-banner aria-live="assertive"></div>
+      <div class="alta-board-stage" data-alta-stage data-turn="BLUE" data-winner="">
+        <div class="alta-goal alta-goal-top" data-goal="top"><span>Blue</span></div>
+        <div class="alta-goal alta-goal-bottom" data-goal="bottom"><span>Blue</span></div>
+        <div class="alta-goal alta-goal-left" data-goal="left"><span>Red</span></div>
+        <div class="alta-goal alta-goal-right" data-goal="right"><span>Red</span></div>
+        <div class="alta-board" data-alta-board role="group" aria-label="Playable Alta board"></div>
+      </div>
+    </div>
+
+    <aside class="panel game-shell-side" aria-label="Game controls and history">
+      <div class="game-shell-section">
+        <h3>Mode</h3>
+        <div class="game-shell-control-grid">
+          <label for="alta-mode">Game mode</label>
+          <select id="alta-mode" data-mode>
+            <option value="HUMAN_VS_HUMAN">Human vs Human</option>
+            <option value="HUMAN_VS_COMPUTER">Human vs Computer</option>
+          </select>
+
+          <label for="alta-side">Your side</label>
+          <select id="alta-side" data-side>
+            <option value="BLUE">Blue</option>
+            <option value="RED">Red</option>
+          </select>
+
+          <label for="alta-difficulty">Difficulty</label>
+          <select id="alta-difficulty" data-difficulty>
+            <option value="Easy">Easy</option>
+            <option value="Medium" selected>Medium</option>
+            <option value="Hard">Hard</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="game-shell-section compact-stats">
+        <h3>Live status</h3>
+        <p class="muted tiny" data-turn-summary></p>
+        <p class="muted tiny" data-history-summary></p>
+        <div class="alta-stat-grid">
+          <div class="alta-stat"><span>Red switches</span><strong data-red-count>0</strong></div>
+          <div class="alta-stat"><span>Blue switches</span><strong data-blue-count>0</strong></div>
+          <div class="alta-stat"><span>Legal moves</span><strong data-legal-count>0</strong></div>
+          <div class="alta-stat"><span>Board</span><strong>61 squares</strong></div>
+        </div>
+      </div>
+
+      <div class="game-shell-section">
+        <h3>Controls</h3>
+        <p class="muted tiny" data-placement-help>Click an empty square to choose one of the two diagonals.</p>
+        <div class="game-shell-button-row">
+          <button id="alta-undo" class="ghost" data-undo>Undo</button>
+          <button id="alta-new-game" class="ghost" data-new-game>New game</button>
+        </div>
+      </div>
+
+      <div class="game-shell-section history-shell">
+        <h3>Move history</h3>
+        <ol class="game-shell-history alta-history" data-history aria-live="polite"></ol>
+      </div>
+    </aside>
+  </section>
+
+  <section class="panel game-shell-learn alta-help" aria-label="Alta guide">
+    <div class="game-shell-tabs" role="tablist" aria-label="Alta guide tabs">
+      <button class="game-shell-tab is-active" data-tab-button="rules" role="tab" aria-selected="true">Rules</button>
+      <button class="game-shell-tab" data-tab-button="play" role="tab" aria-selected="false">How to play</button>
+      <button class="game-shell-tab" data-tab-button="tips" role="tab" aria-selected="false">Strategy tips</button>
+    </div>
+
+    <section class="game-shell-tab-panel" data-tab-panel="rules" role="tabpanel">
+      <ul class="rule-list">
+        <li>Alta uses the official 61-square board from the original W. D. Troyka package.</li>
+        <li>On each turn, place a new diagonal switch of your color or toggle one of your own switches to the opposite diagonal.</li>
+        <li>Blue connects top to bottom; Red connects left to right.</li>
+        <li>Winning connections may use switches of either color, not only your own.</li>
+        <li>You may not place a switch in the three spaces next to each enemy goal node.</li>
+        <li>If one move creates both winning connections, the moving player wins immediately.</li>
+      </ul>
+    </section>
+
+    <section class="game-shell-tab-panel hidden" data-tab-panel="play" role="tabpanel">
+      <ol class="rule-list">
+        <li>Click any legal empty square, then choose `/` or `\` inside that square.</li>
+        <li>Click one of your own switches to toggle it to the opposite diagonal.</li>
+        <li>In Human vs Computer mode, input locks while the AI is thinking.</li>
+        <li>Undo in Human vs Computer mode rewinds a full pair of moves when possible.</li>
+      </ol>
+    </section>
+
+    <section class="game-shell-tab-panel hidden" data-tab-panel="tips" role="tabpanel">
+      <ul class="rule-list">
+        <li>Build threats in both circuits so a single enemy toggle cannot stop everything.</li>
+        <li>Central cells matter because they can pivot your path between diagonal and orthogonal control lines.</li>
+        <li>Enemy switches are still useful material: exploit them instead of treating them like dead blockers.</li>
+        <li>Toggling is strongest when it changes a quiet support switch into an immediate connection or block.</li>
+      </ul>
+    </section>
+  </section>
+</main>
+
+<footer class="footer" style="padding-top:18px;padding-bottom:18px">
+  <span>&copy; 2025 <a href="https://ldomenichelli.github.io/">lucia's notes</a></span>
+  <span>•
+  <a href="/privacy">Privacy Policy</a></span>
+</footer>
+
+<script>
+  let b=document.querySelector('#menu-trigger'),m=document.querySelector('.menu');
+  b.addEventListener('click',()=>m.classList.toggle('hidden'));
+  document.body.addEventListener('click',e=>{if(!b.contains(e.target))m.classList.add('hidden')});
+</script>
+<script type="module" src="/assets/js/alta-page.js"></script>
+</body>
+</html>

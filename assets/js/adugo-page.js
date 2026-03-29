@@ -10,6 +10,7 @@ import {
 } from './adugo-engine.js';
 import { thinkAndPickAIMove, opposite } from './adugo-ai.js';
 import { MODE, computeUndoResult } from './adugo-session.js';
+import { setupTabs } from './game-tabs.js';
 
 const state = {
   game: createInitialState(),
@@ -327,7 +328,8 @@ function undoMove() {
     mode: state.mode,
     humanSide: state.humanSide,
     snapshots: state.snapshots,
-    currentGame: state.game
+    currentGame: state.game,
+    getOpponentSide: opposite
   });
 
   state.game = result.game;
@@ -381,26 +383,17 @@ function wireEvents() {
 }
 
 function setupHelpTabs() {
-  const buttons = document.querySelectorAll('[data-tab-button]');
-  const panels = document.querySelectorAll('[data-tab-panel]');
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  buttons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const tab = btn.dataset.tabButton;
-      let activePanel = null;
-      buttons.forEach((b) => b.setAttribute('aria-selected', String(b === btn)));
-      panels.forEach((panel) => {
-        const isActive = panel.dataset.tabPanel === tab;
-        panel.hidden = !isActive;
-        if (isActive) activePanel = panel;
-      });
-
-      activePanel?.scrollIntoView({
-        block: 'nearest',
-        behavior: reducedMotion ? 'auto' : 'smooth'
-      });
-    });
+  setupTabs({
+    buttonSelector: '[data-tab-button]',
+    panelSelector: '[data-tab-panel]',
+    buttonKey: 'tabButton',
+    panelKey: 'tabPanel',
+    setButtonState(button, active) {
+      button.setAttribute('aria-selected', String(active));
+    },
+    setPanelState(panel, active) {
+      panel.hidden = !active;
+    }
   });
 }
 
