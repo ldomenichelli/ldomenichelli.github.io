@@ -15,18 +15,16 @@
 .explorable-panel,
 .takeaway-card,
 .setup-card {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0)),
-    var(--site-surface-strong);
+  background: rgba(23, 31, 27, 0.72);
   border: 1px solid var(--site-border);
   border-radius: var(--site-radius-xl);
-  box-shadow: var(--site-shadow);
+  box-shadow: none;
 }
 
 .explorable-panel,
 .takeaway-card,
 .setup-card {
-  box-shadow: var(--site-shadow-soft);
+  box-shadow: none;
 }
 
 .explorable-hero {
@@ -37,9 +35,7 @@
 
 .explorable-hero::before,
 .explorable-hero::after {
-  content: '';
-  pointer-events: none;
-  position: absolute;
+  display: none;
 }
 
 .explorable-hero::before {
@@ -103,7 +99,7 @@
 }
 
 .hero-highlight {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(23, 31, 27, 0.54);
   border: 1px solid var(--site-border);
   border-radius: var(--site-radius-lg);
   padding: 0.8rem 0.85rem;
@@ -134,24 +130,24 @@
 
 .explorable-action {
   align-items: center;
-  background: var(--site-surface);
+  background: rgba(23, 31, 27, 0.72);
   border: 1px solid var(--site-border);
   border-radius: 999px;
   color: var(--site-text);
   display: inline-flex;
   gap: 0.4rem;
-  padding: 0.68rem 1rem;
+  padding: 0.58rem 0.92rem;
   text-decoration: none;
 }
 
 .explorable-action.primary {
-  background: rgba(216, 196, 142, 0.14);
-  border-color: rgba(216, 196, 142, 0.25);
+  background: rgba(169, 196, 178, 0.08);
+  border-color: rgba(169, 196, 178, 0.18);
 }
 
 .explorable-action.accent {
-  background: rgba(184, 214, 156, 0.12);
-  border-color: rgba(184, 214, 156, 0.28);
+  background: rgba(169, 196, 178, 0.08);
+  border-color: rgba(169, 196, 178, 0.18);
 }
 
 .explorable-action:hover {
@@ -211,7 +207,7 @@
 .takeaway-card,
 .setup-card,
 .metric-chip {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(23, 31, 27, 0.48);
   border: 1px solid var(--site-border);
   border-radius: var(--site-radius-lg);
   padding: 0.95rem;

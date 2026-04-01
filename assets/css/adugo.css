@@ -16,9 +16,9 @@
   margin-top: 0.5rem;
   border: 1px solid var(--adugo-border);
   border-radius: var(--site-radius-xl);
-  background: linear-gradient(170deg, var(--adugo-panel) 0%, var(--adugo-panel-alt) 100%);
+  background: rgba(19, 25, 22, 0.82);
   color: var(--adugo-text);
-  box-shadow: var(--site-shadow);
+  box-shadow: none;
   overflow: hidden;
 }
 
@@ -27,9 +27,9 @@
   justify-content: space-between;
   align-items: baseline;
   gap: 0.75rem;
-  padding: 0.8rem 0.95rem;
+  padding: 0.85rem 1rem;
   border-bottom: 1px solid var(--adugo-border);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
+  background: transparent;
 }
 
 .adugo-header h2 {
@@ -48,13 +48,13 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.6rem;
-  padding: 0.7rem 0.9rem 0;
+  padding: 0.8rem 1rem 0;
 }
 
 .adugo-role {
   border: 1px solid var(--adugo-border);
-  border-radius: 12px;
-  background: var(--adugo-panel);
+  border-radius: var(--site-radius-md);
+  background: rgba(23, 31, 27, 0.48);
   padding: 0.55rem 0.65rem;
   text-align: left;
 }
@@ -71,7 +71,7 @@
 .adugo-shell[data-turn='JAGUAR'] .adugo-role-jaguar,
 .adugo-shell[data-turn='DOGS'] .adugo-role-dogs {
   border-color: var(--adugo-accent);
-  box-shadow: 0 0 0 1px rgba(184, 214, 156, 0.34), inset 0 0 0 1px rgba(184, 214, 156, 0.18);
+  box-shadow: 0 0 0 1px rgba(169, 196, 178, 0.18);
 }
 
 .adugo-role-title {
@@ -93,23 +93,24 @@
   height: 7px;
   border-radius: 999px;
   background: var(--site-bg-soft);
-  border: 1px solid var(--adugo-border-strong);
+  border: 1px solid var(--adugo-border);
   overflow: hidden;
 }
 
 .adugo-progress {
   height: 100%;
   width: 0;
-  background: linear-gradient(90deg, var(--adugo-jaguar), var(--adugo-accent));
+  background: linear-gradient(90deg, rgba(202, 218, 207, 0.85), var(--adugo-accent));
   transition: width 180ms ease;
 }
 
 .adugo-win-banner {
-  margin: 0.7rem 0.9rem 0;
+  margin: 0.75rem 1rem 0;
   padding: 0.55rem 0.8rem;
-  border-radius: 10px;
-  border: 1px solid rgba(216, 196, 142, 0.42);
-  background: rgba(216, 196, 142, 0.12);
+  border-radius: var(--site-radius-md);
+  border: 1px solid rgba(169, 196, 178, 0.2);
+  border-left-width: 3px;
+  background: rgba(169, 196, 178, 0.08);
   color: var(--adugo-text);
   font-weight: 650;
 }
@@ -117,18 +118,18 @@
 .adugo-main {
   display: grid;
   grid-template-columns: minmax(0, 1.18fr) minmax(285px, 330px);
-  gap: 0.9rem;
+  gap: 1rem;
   align-items: start;
-  padding: 0.75rem 0.9rem 0.9rem;
+  padding: 0.8rem 1rem 1rem;
 }
 
 .adugo-board-wrap {
   display: grid;
-  gap: 0.72rem;
-  background: var(--adugo-panel);
-  border: 1px solid var(--adugo-border);
-  border-radius: 16px;
-  padding: 0.75rem;
+  gap: 0.9rem;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
 }
 
 .adugo-board {
@@ -137,9 +138,9 @@
   aspect-ratio: 1 / 1;
   width: min(100%, 540px);
   margin: 0 auto;
-  background: radial-gradient(circle at top left, rgba(184, 214, 156, 0.16) 0%, var(--adugo-panel-soft) 34%, var(--adugo-panel) 100%);
-  border-radius: 14px;
-  border: 1px solid var(--adugo-border-strong);
+  background: radial-gradient(circle at top left, rgba(169, 196, 178, 0.08) 0%, rgba(24, 32, 28, 0.92) 38%, rgba(24, 32, 28, 0.92) 100%);
+  border-radius: 12px;
+  border: 1px solid var(--adugo-border);
   overflow: hidden;
 }
 
@@ -153,7 +154,7 @@
   position: absolute;
   transform-origin: 0 0;
   height: 2px;
-  background: linear-gradient(90deg, rgba(184, 214, 156, 0.26), rgba(216, 196, 142, 0.4));
+  background: rgba(169, 196, 178, 0.28);
   opacity: 0.75;
 }
 
@@ -164,9 +165,9 @@
   margin-left: calc(var(--adugo-node-size) * -0.5);
   margin-top: calc(var(--adugo-node-size) * -0.5);
   border-radius: 999px;
-  border: 2px solid rgba(184, 214, 156, 0.2);
-  background: radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.04) 26%, var(--adugo-panel-alt) 100%);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05), 0 10px 20px rgba(0, 0, 0, 0.12);
+  border: 2px solid rgba(169, 196, 178, 0.18);
+  background: rgba(24, 32, 28, 0.96);
+  box-shadow: none;
   z-index: 2;
   cursor: pointer;
   transition: transform 130ms ease, box-shadow 130ms ease, border-color 130ms ease;
@@ -180,7 +181,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: rgba(184, 214, 156, 0.52);
+  background: rgba(169, 196, 178, 0.48);
   transform: translate(-50%, -50%);
 }
 
@@ -193,13 +194,13 @@
 .adugo-node:focus-visible {
   transform: translateY(-1px);
   border-color: var(--adugo-accent);
-  box-shadow: 0 0 0 3px var(--adugo-accent-soft);
+  box-shadow: 0 0 0 2px var(--adugo-accent-soft);
   outline: none;
 }
 
 .adugo-node.is-selected {
   border-color: var(--adugo-accent);
-  box-shadow: 0 0 0 4px rgba(184, 214, 156, 0.18);
+  box-shadow: 0 0 0 2px rgba(169, 196, 178, 0.16);
 }
 
 .adugo-node.is-legal::after {
@@ -223,25 +224,31 @@
 
 .piece.jaguar {
   background: radial-gradient(circle at 30% 26%, #ffde8c 0%, #e8b43f 60%, #9b6f00 100%);
-  box-shadow: inset 0 -4px 8px rgba(63, 38, 0, 0.42);
+  box-shadow: inset 0 -3px 7px rgba(63, 38, 0, 0.34);
 }
 
 .piece.dog {
   background: radial-gradient(circle at 30% 26%, #f6f8fd 0%, #d7dde8 58%, #8e9db8 100%);
-  box-shadow: inset 0 -2px 8px rgba(31, 42, 69, 0.35);
+  box-shadow: inset 0 -2px 6px rgba(31, 42, 69, 0.28);
 }
 
 .adugo-side {
   display: grid;
-  gap: 0.62rem;
+  gap: 0.95rem;
   align-content: start;
 }
 
 .adugo-card {
-  background: var(--adugo-panel-alt);
-  border: 1px solid var(--adugo-border);
-  border-radius: 12px;
-  padding: 0.72rem;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid rgba(238, 243, 239, 0.08);
+  border-radius: 0;
+  padding: 0.95rem 0 0;
+}
+
+.adugo-side > :first-child {
+  border-top: 0;
+  padding-top: 0;
 }
 
 .adugo-grid2 {
@@ -270,19 +277,21 @@
 
 .adugo-field label,
 .adugo-label {
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: var(--adugo-muted);
   margin: 0;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .adugo-select,
 .adugo-button {
   font: inherit;
   color: var(--adugo-text);
-  background: var(--adugo-panel-soft);
-  border: 1px solid var(--adugo-border-strong);
-  border-radius: 9px;
-  padding: 0.4rem 0.52rem;
+  background: rgba(23, 31, 27, 0.72);
+  border: 1px solid var(--adugo-border);
+  border-radius: var(--site-radius-md);
+  padding: 0.5rem 0.72rem;
   width: 100%;
   min-width: 0;
 }
@@ -295,7 +304,7 @@
 .adugo-button:focus-visible,
 .adugo-select:focus-visible {
   border-color: var(--adugo-accent);
-  box-shadow: 0 0 0 3px var(--adugo-accent-soft);
+  box-shadow: 0 0 0 2px var(--adugo-accent-soft);
   outline: none;
 }
 
@@ -309,7 +318,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 0.9rem;
-  border-bottom: 1px dashed var(--adugo-border-strong);
+  border-bottom: 1px solid rgba(238, 243, 239, 0.06);
   padding: 0.34rem 0;
   font-size: 0.86rem;
   line-height: 1.35;
@@ -328,13 +337,13 @@
 .adugo-thinking {
   margin: 0.32rem 0 0;
   font-size: 0.83rem;
-  color: var(--adugo-accent);
+  color: var(--adugo-muted);
 }
 
 .adugo-status-note {
   margin-top: 0.5rem;
   padding-top: 0.5rem;
-  border-top: 1px dashed var(--adugo-border-strong);
+  border-top: 1px solid rgba(238, 243, 239, 0.06);
   color: var(--adugo-muted);
   font-size: 0.8rem;
   line-height: 1.45;
@@ -347,16 +356,14 @@
   max-height: 180px;
   overflow: auto;
   display: grid;
-  gap: 0.24rem;
+  gap: 0;
 }
 
 .adugo-history-item {
   font-size: 0.82rem;
   color: var(--adugo-text);
-  background: var(--adugo-panel);
-  border: 1px solid var(--adugo-border);
-  border-radius: 8px;
-  padding: 0.26rem 0.42rem;
+  border-top: 1px solid rgba(238, 243, 239, 0.06);
+  padding: 0.42rem 0;
 }
 
 .adugo-empty-history {
@@ -365,41 +372,42 @@
 }
 
 .adugo-tabs {
-  margin-top: 0.62rem;
-  border-top: 1px solid var(--adugo-border);
+  margin-top: 0.1rem;
 }
 
 .adugo-tab-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 1rem;
   margin: 0;
-  padding: 0.62rem 0 0;
+  padding: 0 0 0.2rem;
   list-style: none;
+  border-bottom: 1px solid var(--adugo-border);
 }
 
 .adugo-tab {
-  border: 1px solid var(--adugo-border);
-  background: var(--adugo-panel);
+  border: 0;
+  background: transparent;
   color: var(--adugo-muted);
-  border-radius: 999px;
-  padding: 0.28rem 0.62rem;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  padding: 0 0 0.7rem;
   cursor: pointer;
   font-size: 0.79rem;
+  letter-spacing: 0.03em;
 }
 
 .adugo-tab[aria-selected='true'] {
   color: var(--adugo-text);
-  border-color: var(--adugo-accent);
-  background: var(--adugo-panel-soft);
+  border-bottom-color: var(--adugo-accent);
 }
 
 .adugo-tab-panel {
   margin-top: 0.58rem;
-  background: var(--adugo-panel-soft);
-  border: 1px solid var(--adugo-border);
-  border-radius: 11px;
-  padding: 0.66rem;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
   color: var(--adugo-text);
   font-size: 0.89rem;
 }
@@ -445,13 +453,13 @@
   }
 
   .adugo-role-strip {
-    padding: 0.6rem 0.75rem 0;
+    padding: 0.6rem 0.85rem 0;
     grid-template-columns: 1fr;
   }
 
   .adugo-main {
     gap: 0.65rem;
-    padding: 0.65rem 0.58rem 0.72rem;
+    padding: 0.7rem 0.8rem 0.85rem;
   }
 
   .adugo-grid2 {
@@ -460,11 +468,6 @@
 
   .adugo-controls-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .adugo-board-wrap,
-  .adugo-card {
-    padding: 0.56rem;
   }
 
   .adugo-board {

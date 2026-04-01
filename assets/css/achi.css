@@ -21,9 +21,9 @@ body.achi-page {
   margin-top: 0.5rem;
   border: 1px solid var(--achi-border);
   border-radius: var(--site-radius-xl);
-  background: linear-gradient(170deg, var(--achi-panel) 0%, var(--achi-panel-alt) 100%);
+  background: rgba(19, 25, 22, 0.82);
   color: var(--achi-text);
-  box-shadow: var(--site-shadow);
+  box-shadow: none;
   overflow: hidden;
 }
 
@@ -32,9 +32,9 @@ body.achi-page {
   justify-content: space-between;
   align-items: baseline;
   gap: 0.75rem;
-  padding: 0.8rem 0.95rem;
+  padding: 0.85rem 1rem;
   border-bottom: 1px solid var(--achi-border);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
+  background: transparent;
 }
 
 .achi-header h2 {
@@ -53,13 +53,13 @@ body.achi-page {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.6rem;
-  padding: 0.7rem 0.9rem 0;
+  padding: 0.8rem 1rem 0;
 }
 
 .achi-role {
   border: 1px solid var(--achi-border);
-  border-radius: 12px;
-  background: var(--achi-panel);
+  border-radius: var(--site-radius-md);
+  background: rgba(23, 31, 27, 0.48);
   padding: 0.55rem 0.65rem;
   text-align: left;
 }
@@ -76,7 +76,7 @@ body.achi-page {
 .achi-shell[data-active-turn='BLACK'] .achi-role-black,
 .achi-shell[data-active-phase='PLACEMENT'] .achi-role-objective {
   border-color: var(--achi-accent);
-  box-shadow: 0 0 0 1px rgba(184, 214, 156, 0.34), inset 0 0 0 1px rgba(184, 214, 156, 0.16);
+  box-shadow: 0 0 0 1px rgba(169, 196, 178, 0.18);
 }
 
 .achi-role-title {
@@ -98,23 +98,24 @@ body.achi-page {
   height: 7px;
   border-radius: 999px;
   background: var(--site-bg-soft);
-  border: 1px solid var(--achi-border-strong);
+  border: 1px solid var(--achi-border);
   overflow: hidden;
 }
 
 .achi-progress {
   height: 100%;
   width: 0;
-  background: linear-gradient(90deg, var(--achi-accent-strong), var(--achi-accent));
+  background: linear-gradient(90deg, rgba(169, 196, 178, 0.85), var(--achi-accent));
   transition: width 180ms ease;
 }
 
 .achi-win-banner {
-  margin: 0.7rem 0.9rem 0;
+  margin: 0.75rem 1rem 0;
   padding: 0.55rem 0.8rem;
-  border-radius: 10px;
-  border: 1px solid rgba(216, 196, 142, 0.42);
-  background: rgba(216, 196, 142, 0.12);
+  border-radius: var(--site-radius-md);
+  border: 1px solid rgba(169, 196, 178, 0.2);
+  border-left-width: 3px;
+  background: rgba(169, 196, 178, 0.08);
   color: var(--achi-text);
   font-weight: 650;
 }
@@ -122,18 +123,18 @@ body.achi-page {
 .achi-main {
   display: grid;
   grid-template-columns: minmax(0, 1.14fr) minmax(285px, 328px);
-  gap: 0.9rem;
+  gap: 1rem;
   align-items: start;
-  padding: 0.75rem 0.9rem 0.9rem;
+  padding: 0.8rem 1rem 1rem;
 }
 
 .achi-board-wrap {
   display: grid;
-  gap: 0.72rem;
-  background: var(--achi-panel);
-  border: 1px solid var(--achi-border);
-  border-radius: 16px;
-  padding: 0.75rem;
+  gap: 0.9rem;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
 }
 
 .achi-board {
@@ -143,12 +144,10 @@ body.achi-page {
   width: min(100%, 470px);
   margin: 0 auto;
   background:
-    radial-gradient(circle at 50% 28%, rgba(216, 196, 142, 0.14), transparent 34%),
-    radial-gradient(circle at 20% 18%, rgba(184, 214, 156, 0.12), transparent 28%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0)),
-    var(--achi-panel-soft);
-  border-radius: 14px;
-  border: 1px solid var(--achi-border-strong);
+    radial-gradient(circle at 50% 24%, rgba(169, 196, 178, 0.08), transparent 32%),
+    rgba(24, 32, 28, 0.92);
+  border-radius: 12px;
+  border: 1px solid var(--achi-border);
   overflow: hidden;
 }
 
@@ -171,15 +170,15 @@ body.achi-page {
 
 .achi-line {
   height: 2px;
-  background: linear-gradient(90deg, rgba(184, 214, 156, 0.26), rgba(216, 196, 142, 0.44));
+  background: rgba(169, 196, 178, 0.28);
   opacity: 0.82;
 }
 
 .achi-win-line {
   height: 4px;
   border-radius: 999px;
-  background: linear-gradient(90deg, rgba(216, 196, 142, 0.96), rgba(184, 214, 156, 0.92));
-  box-shadow: 0 0 0 1px rgba(16, 21, 18, 0.26), 0 0 24px rgba(216, 196, 142, 0.34);
+  background: linear-gradient(90deg, rgba(202, 218, 207, 0.96), rgba(169, 196, 178, 0.92));
+  box-shadow: 0 0 0 1px rgba(16, 21, 18, 0.18);
   z-index: 1;
 }
 
@@ -190,9 +189,9 @@ body.achi-page {
   margin-left: calc(var(--achi-node-size) * -0.5);
   margin-top: calc(var(--achi-node-size) * -0.5);
   border-radius: 999px;
-  border: 2px solid rgba(184, 214, 156, 0.28);
-  background: radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.05) 26%, var(--achi-panel-alt) 100%);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05), 0 10px 20px rgba(0, 0, 0, 0.12);
+  border: 2px solid rgba(169, 196, 178, 0.18);
+  background: rgba(24, 32, 28, 0.96);
+  box-shadow: none;
   cursor: pointer;
   z-index: 2;
   transition: transform 130ms ease, box-shadow 130ms ease, border-color 130ms ease, background-color 130ms ease;
@@ -206,8 +205,7 @@ body.achi-page {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(184, 214, 156, 0.72);
-  box-shadow: 0 0 0 5px rgba(184, 214, 156, 0.08);
+  background: rgba(169, 196, 178, 0.58);
   transform: translate(-50%, -50%);
 }
 
@@ -220,18 +218,18 @@ body.achi-page {
 .achi-node:focus-visible {
   transform: translateY(-1px);
   border-color: var(--achi-accent);
-  box-shadow: 0 0 0 3px var(--achi-accent-soft);
+  box-shadow: 0 0 0 2px var(--achi-accent-soft);
   outline: none;
 }
 
 .achi-node.is-source {
-  border-color: rgba(216, 196, 142, 0.76);
-  box-shadow: 0 0 0 4px rgba(216, 196, 142, 0.14);
+  border-color: rgba(202, 218, 207, 0.76);
+  box-shadow: 0 0 0 2px rgba(202, 218, 207, 0.16);
 }
 
 .achi-node.is-selected {
   border-color: var(--achi-accent);
-  box-shadow: 0 0 0 4px rgba(184, 214, 156, 0.18);
+  box-shadow: 0 0 0 2px rgba(169, 196, 178, 0.16);
 }
 
 .achi-node.is-legal::after {
@@ -243,8 +241,8 @@ body.achi-page {
 }
 
 .achi-node.is-winning {
-  border-color: rgba(216, 196, 142, 0.9);
-  box-shadow: 0 0 0 4px rgba(216, 196, 142, 0.16);
+  border-color: rgba(202, 218, 207, 0.9);
+  box-shadow: 0 0 0 2px rgba(202, 218, 207, 0.16);
 }
 
 .piece {
@@ -256,25 +254,31 @@ body.achi-page {
 
 .piece.white {
   background: radial-gradient(circle at 32% 28%, #ffffff 0%, #edf3ee 48%, #b9c6bc 100%);
-  box-shadow: inset 0 -4px 8px rgba(98, 108, 101, 0.25);
+  box-shadow: inset 0 -3px 7px rgba(98, 108, 101, 0.2);
 }
 
 .piece.black {
   background: radial-gradient(circle at 32% 28%, #536057 0%, #27322d 50%, #111714 100%);
-  box-shadow: inset 0 -4px 10px rgba(0, 0, 0, 0.44);
+  box-shadow: inset 0 -3px 8px rgba(0, 0, 0, 0.34);
 }
 
 .achi-side {
   display: grid;
-  gap: 0.62rem;
+  gap: 0.95rem;
   align-content: start;
 }
 
 .achi-card {
-  background: var(--achi-panel-alt);
-  border: 1px solid var(--achi-border);
-  border-radius: 12px;
-  padding: 0.72rem;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid rgba(238, 243, 239, 0.08);
+  border-radius: 0;
+  padding: 0.95rem 0 0;
+}
+
+.achi-side > :first-child {
+  border-top: 0;
+  padding-top: 0;
 }
 
 .achi-grid2 {
@@ -303,19 +307,21 @@ body.achi-page {
 
 .achi-field label,
 .achi-label {
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: var(--achi-muted);
   margin: 0;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .achi-select,
 .achi-button {
   font: inherit;
   color: var(--achi-text);
-  background: var(--achi-panel-soft);
-  border: 1px solid var(--achi-border-strong);
-  border-radius: 9px;
-  padding: 0.42rem 0.56rem;
+  background: rgba(23, 31, 27, 0.72);
+  border: 1px solid var(--achi-border);
+  border-radius: var(--site-radius-md);
+  padding: 0.5rem 0.72rem;
   width: 100%;
   min-width: 0;
 }
@@ -329,7 +335,7 @@ body.achi-page {
 .achi-select:focus-visible,
 .achi-tab:focus-visible {
   border-color: var(--achi-accent);
-  box-shadow: 0 0 0 3px var(--achi-accent-soft);
+  box-shadow: 0 0 0 2px var(--achi-accent-soft);
   outline: none;
 }
 
@@ -344,7 +350,7 @@ body.achi-page {
   justify-content: space-between;
   align-items: center;
   gap: 0.9rem;
-  border-bottom: 1px dashed var(--achi-border-strong);
+  border-bottom: 1px solid rgba(238, 243, 239, 0.06);
   padding: 0.34rem 0;
   font-size: 0.86rem;
   line-height: 1.35;
@@ -363,13 +369,13 @@ body.achi-page {
 .achi-thinking {
   margin: 0.32rem 0 0;
   font-size: 0.83rem;
-  color: var(--achi-accent);
+  color: var(--achi-muted);
 }
 
 .achi-status-note {
   margin-top: 0.5rem;
   padding-top: 0.5rem;
-  border-top: 1px dashed var(--achi-border-strong);
+  border-top: 1px solid rgba(238, 243, 239, 0.06);
   color: var(--achi-muted);
   font-size: 0.8rem;
   line-height: 1.45;
@@ -382,16 +388,14 @@ body.achi-page {
   max-height: 180px;
   overflow: auto;
   display: grid;
-  gap: 0.24rem;
+  gap: 0;
 }
 
 .achi-history-item {
   font-size: 0.82rem;
   color: var(--achi-text);
-  background: var(--achi-panel);
-  border: 1px solid var(--achi-border);
-  border-radius: 8px;
-  padding: 0.26rem 0.42rem;
+  border-top: 1px solid rgba(238, 243, 239, 0.06);
+  padding: 0.42rem 0;
 }
 
 .achi-empty-history {
@@ -400,41 +404,42 @@ body.achi-page {
 }
 
 .achi-tabs {
-  margin-top: 0.62rem;
-  border-top: 1px solid var(--achi-border);
+  margin-top: 0.1rem;
 }
 
 .achi-tab-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 1rem;
   margin: 0;
-  padding: 0.62rem 0 0;
+  padding: 0 0 0.2rem;
   list-style: none;
+  border-bottom: 1px solid var(--achi-border);
 }
 
 .achi-tab {
-  border: 1px solid var(--achi-border);
-  background: var(--achi-panel);
+  border: 0;
+  background: transparent;
   color: var(--achi-muted);
-  border-radius: 999px;
-  padding: 0.28rem 0.62rem;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  padding: 0 0 0.7rem;
   cursor: pointer;
   font-size: 0.79rem;
+  letter-spacing: 0.03em;
 }
 
 .achi-tab[aria-selected='true'] {
   color: var(--achi-text);
-  border-color: var(--achi-accent);
-  background: var(--achi-panel-soft);
+  border-bottom-color: var(--achi-accent);
 }
 
 .achi-tab-panel {
   margin-top: 0.58rem;
-  background: var(--achi-panel-soft);
-  border: 1px solid var(--achi-border);
-  border-radius: 11px;
-  padding: 0.66rem;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
   color: var(--achi-text);
   font-size: 0.89rem;
 }
@@ -485,13 +490,13 @@ body.achi-page {
   }
 
   .achi-role-strip {
-    padding: 0.6rem 0.75rem 0;
+    padding: 0.6rem 0.85rem 0;
     grid-template-columns: 1fr;
   }
 
   .achi-main {
     gap: 0.65rem;
-    padding: 0.65rem 0.58rem 0.72rem;
+    padding: 0.7rem 0.8rem 0.85rem;
   }
 
   .achi-grid2 {
@@ -500,11 +505,6 @@ body.achi-page {
 
   .achi-controls-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .achi-board-wrap,
-  .achi-card {
-    padding: 0.56rem;
   }
 
   .achi-board {
