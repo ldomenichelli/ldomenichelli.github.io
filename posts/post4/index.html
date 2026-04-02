@@ -190,50 +190,17 @@
                 questions come first, and only then do the simplicial and homological foundations unfold.
               </p>
               <p class="tda-hero-meta">
-                Seven lecture sheets, January 2025, rebuilt from the scanned notes rather than rewritten as a
-                generic chapter.
+                Seven lecture sheets from January 2025, reconstructed from the scanned notes and kept inside the
+                existing note page rather than split into a separate microsite.
               </p>
               <div class="tda-hero-actions">
-                <a class="tda-button is-primary" href="/tdafull.pdf" target="_blank" rel="noopener">
-                  NotesDownloadLink
-                  <span>Open original PDF</span>
-                </a>
+                <a class="tda-button is-primary" href="/tdafull.pdf" target="_blank" rel="noopener">Open original PDF</a>
                 <a class="tda-button" href="#lecture-1">Start with lecture 1</a>
-                <a class="tda-button" href="#source-notes">See source drawer</a>
-              </div>
-              <div class="tda-chip-row">
-                <span class="tda-chip"><strong>Format</strong> digital notebook, not slides</span>
-                <span class="tda-chip"><strong>Math</strong> KaTeX-rendered formulas</span>
-                <span class="tda-chip"><strong>Diagrams</strong> SVG + lightweight interaction</span>
               </div>
               <p class="tda-hero-note">
                 Review markers appear only where the scan was too ambiguous to justify filling in missing
                 mathematical detail.
               </p>
-            </div>
-
-            <div class="tda-hero-aside">
-              <article class="tda-hero-card">
-                <p class="tda-sidebar-label">Notebook Map</p>
-                <ul>
-                  <li>Lecture 1: persistence intuition, diagrams, natural pseudodistance, and the first GENEO idea</li>
-                  <li>Lectures 2 and 3: geometric and abstract simplicial complexes, realizations, nerves, Cech and Vietoris-Rips</li>
-                  <li>Lecture 4: chain complexes, boundary maps, homology groups, Betti numbers, reduced homology, Euler-Poincare</li>
-                  <li>Lectures 5 to 7: group actions, filtering functions, persistent homology, diagram distances, stability, and GENEOs</li>
-                </ul>
-              </article>
-
-              <article class="tda-hero-card">
-                <p class="tda-sidebar-label">Faithfulness</p>
-                <p>
-                  The connective prose is new, but the conceptual flow, main formulas, highlighted definitions,
-                  and lecture emphasis come from the scanned notes.
-                </p>
-                <p>
-                  The page preserves the notebook’s visual spirit through restrained graph-paper structure,
-                  accent highlights, and compact diagram-first explanations.
-                </p>
-              </article>
             </div>
           </section>
 
@@ -250,20 +217,10 @@
                   <button class="tda-mini-button" type="button" data-proof-action="expand">Expand all proofs</button>
                   <button class="tda-mini-button" type="button" data-proof-action="collapse">Collapse all proofs</button>
                 </div>
-                <p class="tda-legend">
-                  Definitions, theorems, examples, remarks, and intuition boxes share one visual system so the
-                  lecture page stays readable even as the material gets more algebraic.
-                </p>
               </div>
             </aside>
 
             <div class="tda-main">
-              <div class="tda-note-toolbar">
-                <a class="tda-chip" href="/tdafull.pdf" target="_blank" rel="noopener"><strong>Source</strong> handwritten PDF</a>
-                <span class="tda-chip"><strong>Rendering</strong> semantic HTML, CSS, and vanilla JS modules</span>
-                <span class="tda-chip"><strong>Spirit</strong> digital mathematical notebook</span>
-              </div>
-
               <section class="tda-section" id="lecture-1" data-tda-section data-tda-label="1. Persistence First">
                 <header class="tda-section-header">
                   <p class="tda-lecture-meta">Lecture 1 • Motivation before foundations</p>
@@ -335,10 +292,31 @@
                 <section>
                   <h3>Persistence diagrams appear immediately</h3>
                   <p>
-                    As connected components merge, each class contributes a birth-death pair. Long-lived classes
-                    sit far from the diagonal; short-lived classes stay close to it. That geometric picture is
-                    already present on the first handwritten sheet.
+                    As the scalar threshold rises, new connected components can appear and existing ones can merge
+                    or become filled in. Each event is recorded by a birth-death pair. Long-lived classes sit far
+                    from the diagonal; short-lived classes stay close to it.
                   </p>
+                  <div class="tda-grid-two">
+                    <article class="tda-callout is-definition">
+                      <p class="tda-callout-label">DefinitionBox</p>
+                      <strong class="tda-callout-title">Birth from a scalar function</strong>
+                      <p>
+                        For the filtration \(E_t=\{x\in E:\varphi(x)\le t\}\), a class is born at the first
+                        threshold \(b\) where it appears in the topology of \(E_t\). In the opening pages this is
+                        first visualized for connected components.
+                      </p>
+                    </article>
+
+                    <article class="tda-callout is-definition">
+                      <p class="tda-callout-label">DefinitionBox</p>
+                      <strong class="tda-callout-title">Death from a scalar function</strong>
+                      <p>
+                        A class dies at the threshold \(d\) where it merges into an older class or becomes a
+                        boundary. The interval \((b,d)\) is the lifetime later encoded as a point
+                        \((b,d)\) in the diagram.
+                      </p>
+                    </article>
+                  </div>
                   <div class="tda-callout is-example">
                     <p class="tda-callout-label">ExampleBox</p>
                     <strong class="tda-callout-title">Reading a component trace</strong>
@@ -639,9 +617,12 @@
                   <p class="tda-callout-label">TheoremBox</p>
                   <strong class="tda-callout-title">Vietoris-Rips lemma</strong>
                   <p>
-                    The handwritten statement records the standard inclusions
+                    The handwritten statement records the exact inclusions
                     $$ \check{C}(S,\alpha)\subseteq VR(S,\alpha)\subseteq \check{C}(S,\sqrt{2}\alpha). $$
                     The first inclusion is easy to visualize: common intersection implies pairwise intersection.
+                    The second is the key approximation step in the notes: if all vertices are pairwise
+                    \(\alpha\)-close, then one can place a larger common ball and recover a Cech simplex at scale
+                    \(\sqrt{2}\alpha\).
                   </p>
                 </article>
 
@@ -703,12 +684,22 @@
                     <p class="tda-callout-label">DefinitionBox</p>
                     <strong class="tda-callout-title">Chain groups</strong>
                     <p>
-                      The \(p\)-chains \(C_p\) are formal linear combinations of \(p\)-simplices. The notes first
-                      treat coefficients in \(\mathbb{Z}_2\), then explicitly discuss quotient spaces and
-                      homology as algebra.
+                      The \(p\)-chains \(C_p\) are formal linear combinations of \(p\)-simplices,
+                      $$ C_p(K;\mathbb{K})=\left\{\sum_i a_i\sigma_i : a_i\in\mathbb{K},\ \sigma_i\text{ a }p\text{-simplex}\right\}. $$
+                      In the notebook the first computations use \(\mathbb{Z}_2\), so adding a simplex twice
+                      cancels it.
                     </p>
                   </article>
                 </div>
+
+                <article class="tda-callout is-remark">
+                  <p class="tda-callout-label">RemarkBox</p>
+                  <strong class="tda-callout-title">Formal linear combinations are bookkeeping devices</strong>
+                  <p>
+                    The handwritten note explicitly pauses on this point: a chain is not a new geometric simplex,
+                    but a formal sum that lets us add, compare, and cancel simplices algebraically.
+                  </p>
+                </article>
 
                 <article class="tda-callout is-definition">
                   <p class="tda-callout-label">FormulaBlock</p>
@@ -739,8 +730,9 @@
                     <p class="tda-callout-label">DefinitionBox</p>
                     <strong class="tda-callout-title">Quotient space</strong>
                     <p>
-                      The notes pause to recall the quotient \(V/W\) for a subspace \(W\subseteq V\). Homology is
-                      built exactly this way: cycles modulo boundaries.
+                      For a subspace \(W\subseteq V\), the quotient \(V/W\) consists of equivalence classes
+                      \([v]\) where \(v\sim v'\) if \(v-v'\in W\). Homology is built exactly this way: cycles
+                      modulo boundaries.
                     </p>
                   </article>
 
@@ -808,8 +800,10 @@
                     <p class="tda-callout-label">RemarkBox</p>
                     <strong class="tda-callout-title">Reduced versus classical simplicial homology</strong>
                     <p>
-                      Reduced homology shifts the degree-zero picture by adjoining the empty simplex. In practice
-                      it removes the “one always present” connected component and makes formulas cleaner.
+                      Reduced homology shifts the degree-zero picture by adjoining the empty simplex and an
+                      augmentation map in degree \(0\). In practice this replaces
+                      \(\beta_0\) with \(\widetilde{\beta}_0=\beta_0-1\), removing the always-present connected
+                      component and making formulas cleaner.
                     </p>
                   </article>
                 </div>
@@ -891,6 +885,17 @@
                   </article>
                 </div>
 
+                <article class="tda-callout is-intuition">
+                  <p class="tda-callout-label">KeyIdea / IntuitionBox</p>
+                  <strong class="tda-callout-title">Perception pair</strong>
+                  <p>
+                    The later notebook viewpoint is never just “data”. It is always data together with the
+                    observer allowed to compare it. Concretely, one works with a function space \(\Phi\) and a
+                    symmetry group \(G\) acting on it by composition: this pair organizes what differences count
+                    and what differences are ignored.
+                  </p>
+                </article>
+
                 <section>
                   <h3>Directional filtering functions on simplicial complexes</h3>
                   <p>
@@ -910,6 +915,42 @@
                     and the ambient sup norm on the function space \(\Phi\). Those metrics organize the later
                     comparison theorems.
                   </p>
+                  <div class="tda-grid-three">
+                    <article class="tda-callout is-definition">
+                      <p class="tda-callout-label">FormulaBlock</p>
+                      <strong class="tda-callout-title">Vertex pseudometric \(D_V\)</strong>
+                      <div class="tda-formula">
+                        <p>$$ D_V(v_1,v_2)=\sup_{\varphi\in\Phi}\lvert \varphi(v_1)-\varphi(v_2)\rvert. $$</p>
+                      </div>
+                      <p>
+                        This compares vertices only through the values seen by the admissible filtering functions.
+                      </p>
+                    </article>
+
+                    <article class="tda-callout is-definition">
+                      <p class="tda-callout-label">FormulaBlock</p>
+                      <strong class="tda-callout-title">Group pseudometric \(D_G\)</strong>
+                      <div class="tda-formula">
+                        <p>$$ D_G(g_1,g_2)=\sup_{\varphi\in\Phi}\lVert \varphi\circ g_1-\varphi\circ g_2\rVert_\infty. $$</p>
+                      </div>
+                      <p>
+                        Two symmetries are close when every admissible observer sees them as producing similar
+                        pullbacks.
+                      </p>
+                    </article>
+
+                    <article class="tda-callout is-definition">
+                      <p class="tda-callout-label">FormulaBlock</p>
+                      <strong class="tda-callout-title">Function-space metric \(D_\Phi\)</strong>
+                      <div class="tda-formula">
+                        <p>$$ D_\Phi(\varphi,\psi)=\lVert\varphi-\psi\rVert_\infty. $$</p>
+                      </div>
+                      <p>
+                        In the simplicial examples this is just the maximum difference of function values on the
+                        vertices.
+                      </p>
+                    </article>
+                  </div>
                 </section>
 
                 <article class="tda-callout is-theorem">
@@ -920,6 +961,16 @@
                     after composing with an admissible symmetry:
                     $$ d_G(\varphi,\psi)=\min_{g\in G}\lVert \varphi-\psi\circ g\rVert_\infty. $$
                     The notes also remark that enlarging the group can only make this quantity smaller.
+                  </p>
+                </article>
+
+                <article class="tda-callout is-remark">
+                  <p class="tda-callout-label">RemarkBox</p>
+                  <strong class="tda-callout-title">Why it is a pseudodistance</strong>
+                  <p>
+                    Distinct functions may become indistinguishable after optimal alignment by \(G\). That is why
+                    the quantity satisfies the triangle-type properties of a metric but can vanish on genuinely
+                    different representatives of the same observed shape.
                   </p>
                 </article>
               </section>
@@ -954,7 +1005,7 @@
                     <p class="tda-callout-label">DefinitionBox</p>
                     <strong class="tda-callout-title">Persistent homology group</strong>
                     <p>
-                      If \(K^u\subseteq K^v\), the induced map on homology yields
+                      If \(K^u=\{r\in K:\varphi(r)\le u\}\subseteq K^v\), the induced map on homology yields
                       $$ H_p^\varphi(u,v)=\operatorname{im}\, i_*^{u,v}. $$
                       It records the \(p\)-classes already present at \(u\) that are still alive at \(v\).
                     </p>
@@ -962,7 +1013,7 @@
 
                   <article class="tda-callout is-definition">
                     <p class="tda-callout-label">DefinitionBox</p>
-                    <strong class="tda-callout-title">Persistent Betti number</strong>
+                    <strong class="tda-callout-title">Persistent Betti number function / rank invariant</strong>
                     <p>
                       The notes define the rank invariant by
                       $$ \beta_p^\varphi(u,v)=\dim H_p^\varphi(u,v). $$
@@ -971,13 +1022,30 @@
                   </article>
                 </div>
 
+                <article class="tda-callout is-definition">
+                  <p class="tda-callout-label">DefinitionBox</p>
+                  <strong class="tda-callout-title">Cornerpoint multiplicity</strong>
+                  <p>
+                    Around a corner \((u,v)\), the notes extract multiplicity from a small rectangle by
+                    inclusion-exclusion:
+                  </p>
+                  <div class="tda-formula">
+                    <p>$$ \mu_p^\varphi(u,v)=\beta_p^\varphi(u+\varepsilon,v-\varepsilon)-\beta_p^\varphi(u-\varepsilon,v-\varepsilon)-\beta_p^\varphi(u+\varepsilon,v+\varepsilon)+\beta_p^\varphi(u-\varepsilon,v+\varepsilon), $$</p>
+                  </div>
+                  <p>
+                    for \(\varepsilon\) small enough that the rectangle isolates the jump. Positive multiplicity
+                    means a genuine cornerpoint is present.
+                  </p>
+                </article>
+
                 <article class="tda-callout is-remark">
                   <p class="tda-callout-label">RemarkBox</p>
-                  <strong class="tda-callout-title">Multiplicity and the persistence diagram</strong>
+                  <strong class="tda-callout-title">Discontinuities and the diagram derived from \(\beta\)</strong>
                   <p>
-                    Around a corner \((u,v)\), the notebook extracts multiplicity from a tiny rectangle by
-                    inclusion-exclusion of persistent Betti numbers. Points with positive multiplicity become the
-                    persistence diagram.
+                    The notebook sketches the discontinuity pattern of \(\beta_p^\varphi\): jumps propagate along
+                    horizontal and vertical directions rather than diagonally, and cornerpoints occur where those
+                    jumps meet. The persistence diagram is then reconstructed from the positive-multiplicity
+                    cornerpoints together with points at infinity for classes that never die.
                   </p>
                 </article>
 
@@ -986,7 +1054,8 @@
                   <strong class="tda-callout-title">What the diagram keeps</strong>
                   <p>
                     The persistence diagram forgets the specific cycle representative and keeps only the lifetime of
-                    the class. This is exactly the abstraction already suggested by the first lecture’s picture.
+                    the class. In the notes this is presented as a direct passage from the rank invariant
+                    \(\beta_p^\varphi\) to a multiset of birth-death points.
                   </p>
                 </article>
               </section>
@@ -1012,6 +1081,11 @@
                     The notes allow every point in one persistence diagram either to match a point in the other
                     diagram or to be sent to the diagonal. Matching to the diagonal is the price of deleting a
                     short-lived class.
+                  </p>
+                  <p>
+                    A bijection is therefore scored by its worst or total transport cost, depending on whether one
+                    wants the bottleneck or Wasserstein viewpoint. The diagonal acts as a reservoir for features of
+                    low persistence.
                   </p>
                 </section>
 
@@ -1067,10 +1141,19 @@
                 <section>
                   <h3>GENEOs</h3>
                   <p>
-                    The last pages define a GENEO as a group-equivariant, non-expansive operator between function
-                    spaces. In the notes the operator is always tied to a homomorphism \(T:G\to H\) between the
-                    symmetry groups.
+                    The last pages define the full operator pipeline. One first has a perception pair
+                    \((\Phi,G)\), another pair \((\Psi,H)\), and a homomorphism \(T:G\to H\) transporting
+                    symmetries from the source observer to the target one.
                   </p>
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">GEO</strong>
+                    <p>
+                      A pair \((F,T)\) is a <em>group equivariant operator</em> when \(T:G\to H\) is a group
+                      homomorphism and
+                      $$ F(\varphi\circ g)=F(\varphi)\circ T(g)\qquad\text{for all }\varphi\in\Phi,\ g\in G. $$
+                    </p>
+                  </article>
                   <article class="tda-callout is-definition">
                     <p class="tda-callout-label">DefinitionBox</p>
                     <strong class="tda-callout-title">GENEO</strong>
@@ -1079,20 +1162,36 @@
                     </p>
                     <ul>
                       <li>for every \(\varphi\in\Phi\) and \(g\in G\), $$F(\varphi\circ g)=F(\varphi)\circ T(g);$$</li>
-                      <li>for every \(\varphi_1,\varphi_2\in\Phi\), $$D_\Psi(F(\varphi_1),F(\varphi_2))\le D_\Phi(\varphi_1,\varphi_2).$$</li>
+                        <li>for every \(\varphi_1,\varphi_2\in\Phi\), $$D_\Psi(F(\varphi_1),F(\varphi_2))\le D_\Phi(\varphi_1,\varphi_2).$$</li>
                     </ul>
                   </article>
                 </section>
 
-                <aside class="tda-callout is-review">
-                  <p class="tda-callout-label">Review Marker</p>
-                  <strong class="tda-callout-title">Compactness statement needs a manual check against the scan</strong>
+                <article class="tda-callout is-theorem">
+                  <p class="tda-callout-label">TheoremBox</p>
+                  <strong class="tda-callout-title">Compactness and convexity of operator families</strong>
                   <p>
-                    The last handwritten page includes a compactness theorem for sets of GENEOs under assumptions
-                    on the function spaces, but some of the surrounding notation is not sharp enough in the scan to
-                    digitize every hypothesis with complete certainty.
+                    The handwritten page equips a family of admissible GENEOs with the sup metric
+                    $$ D_{\mathrm{GENEO}}(F_1,F_2)=\sup_{\varphi\in\Phi} D_\Psi(F_1(\varphi),F_2(\varphi)). $$
+                    Under compactness assumptions on the spaces involved, that family is itself compact; and if
+                    \((F_i,T)\) share the same equivariance map \(T\), then combinations
+                    $$ \sum_i a_i F_i \qquad\text{with}\qquad \sum_i |a_i|\le 1 $$
+                    remain GENEOs. This is the convexity statement highlighted in the notes.
                   </p>
-                </aside>
+                </article>
+
+                <article class="tda-callout is-theorem">
+                  <p class="tda-callout-label">TheoremBox</p>
+                  <strong class="tda-callout-title">Induced matching-distance stability</strong>
+                  <p>
+                    For a collection \(\mathcal{F}\) of GENEOs, the notes define
+                    $$ D_{\mathcal{F},\Phi}(\varphi_1,\varphi_2)=\sup_{F\in\mathcal{F}}\lVert F(\varphi_1)-F(\varphi_2)\rVert_\infty $$
+                    and, in degree \(k\),
+                    $$ D_{\mathrm{match}}^{\mathcal{F},k}(\varphi_1,\varphi_2)=\sup_{F\in\mathcal{F}} d_{\mathrm{match}}\bigl(\mathrm{Dgm}_k(F(\varphi_1)),\mathrm{Dgm}_k(F(\varphi_2))\bigr). $$
+                    The resulting stability inequality is
+                    $$ D_{\mathrm{match}}^{\mathcal{F},k}\le D_{\mathcal{F},\Phi}. $$
+                  </p>
+                </article>
 
                 <section class="tda-widget" data-widget="geneo-intuition">
                   <div class="tda-widget-head">
