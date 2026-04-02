@@ -12,7 +12,7 @@
   >
   <meta
     name="description"
-    content="A digital mathematical notebook version of handwritten Topological Data Analysis lecture notes on simplicial complexes, homology, persistence, natural pseudodistance, and GENEOs."
+    content="A digital mathematical notebook on simplicial complexes, homology, persistence, natural pseudodistance, and GENEOs in Topological Data Analysis."
   >
   <meta name="author" content="Lucia">
   <link
@@ -61,7 +61,7 @@
   <meta property="og:title" content="Topological Data Analysis 🌐">
   <meta
     property="og:description"
-    content="A digital mathematical notebook version of handwritten Topological Data Analysis lecture notes on simplicial complexes, homology, persistence, natural pseudodistance, and GENEOs."
+    content="A digital mathematical notebook on simplicial complexes, homology, persistence, natural pseudodistance, and GENEOs in Topological Data Analysis."
   >
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://ldomenichelli.github.io/posts/post4/">
@@ -73,7 +73,7 @@
   <meta name="twitter:title" content="Topological Data Analysis 🌐">
   <meta
     name="twitter:description"
-    content="A digital mathematical notebook version of handwritten Topological Data Analysis lecture notes on simplicial complexes, homology, persistence, natural pseudodistance, and GENEOs."
+    content="A digital mathematical notebook on simplicial complexes, homology, persistence, natural pseudodistance, and GENEOs in Topological Data Analysis."
   >
   <script type="application/ld+json">
     {
@@ -101,9 +101,9 @@
       "@type": "BlogPosting",
       "headline": "Topological Data Analysis 🌐",
       "name": "Topological Data Analysis 🌐",
-      "description": "A digital mathematical notebook version of handwritten Topological Data Analysis lecture notes on simplicial complexes, homology, persistence, natural pseudodistance, and GENEOs.",
+      "description": "A digital mathematical notebook on simplicial complexes, homology, persistence, natural pseudodistance, and GENEOs in Topological Data Analysis.",
       "keywords": ["homology", "GENEO", "persistent homology", "simplicial complexes"],
-      "articleBody": "These pages digitize the handwritten Topological Data Analysis lecture notes from Prof. Patrizio Frosini at UniPi. The lecture order of the notebook is preserved: persistence intuition appears first, then simplicial complexes, homology, natural pseudodistance, persistent homology, distances on diagrams, and GENEOs.",
+      "articleBody": "Topological Data Analysis studies simplicial complexes, homology, persistent homology, distances on persistence diagrams, natural pseudodistance, and GENEOs, with persistence intuition appearing first and algebraic foundations following afterward.",
       "wordCount": "2600",
       "inLanguage": "en",
       "datePublished": "0001-01-01T00:00:00Z",
@@ -185,21 +185,20 @@
               <p class="tda-kicker">Digital Mathematical Notebook</p>
               <h1 class="tda-display">Topological Data Analysis</h1>
               <p class="tda-hero-intro">
-                These pages reconstruct my handwritten TDA notes from Prof. Patrizio Frosini’s lectures at
-                UniPi. The order is intentionally faithful to the notebook itself: persistence and comparison
-                questions come first, and only then do the simplicial and homological foundations unfold.
+                Topological Data Analysis studies how the shape of data changes across scales. This page begins
+                with persistence and comparison questions, then develops the simplicial and homological
+                foundations that make those ideas precise.
               </p>
               <p class="tda-hero-meta">
-                Seven lecture sheets from January 2025, reconstructed from the scanned notes and kept inside the
-                existing note page rather than split into a separate microsite.
+                Seven lectures from January 2025, organized here as one continuous page with formulas, diagrams,
+                and lightweight interactive explanations.
               </p>
               <div class="tda-hero-actions">
                 <a class="tda-button is-primary" href="/tdafull.pdf" target="_blank" rel="noopener">Open original PDF</a>
-                <a class="tda-button" href="#lecture-1">Start with lecture 1</a>
               </div>
               <p class="tda-hero-note">
-                Review markers appear only where the scan was too ambiguous to justify filling in missing
-                mathematical detail.
+                Review markers appear only where a formula or label is too ambiguous in the scan to transcribe
+                with confidence.
               </p>
             </div>
           </section>
@@ -213,10 +212,6 @@
                   <p class="tda-sidebar-label">Lecture Map</p>
                   <div class="tda-toc-links" data-tda-toc></div>
                 </div>
-                <div class="tda-proof-toolbar">
-                  <button class="tda-mini-button" type="button" data-proof-action="expand">Expand all proofs</button>
-                  <button class="tda-mini-button" type="button" data-proof-action="collapse">Collapse all proofs</button>
-                </div>
               </div>
             </aside>
 
@@ -226,19 +221,17 @@
                   <p class="tda-lecture-meta">Lecture 1 • Motivation before foundations</p>
                   <h2>Why the shape of data matters</h2>
                   <p class="tda-section-intro">
-                    The notes begin with a question rather than a definition: what is the shape of data? The
-                    first answer is not “a simplex” but “a topological feature that appears and disappears as a
-                    threshold moves”.
+                    The starting question is not “what is a simplex?” but “which topological feature appears and
+                    disappears as a threshold moves?”
                   </p>
                 </header>
 
                 <article class="tda-callout is-intuition">
                   <p class="tda-callout-label">KeyIdea / IntuitionBox</p>
-                  <strong class="tda-callout-title">Persistence comes before algebra in the notebook</strong>
+                  <strong class="tda-callout-title">Persistence before algebra</strong>
                   <p>
-                    This is one of the most distinctive features of the handwritten notes. Instead of building
-                    from topology upward, the notebook starts by watching a filtering function change and asking
-                    which connected components survive for a long time.
+                    Begin by watching a filtering function change and asking which connected components survive for
+                    a long time. Algebra enters only after that geometric picture is clear.
                   </p>
                 </article>
 
@@ -283,9 +276,8 @@
                     <text x="20" y="24" class="tda-svg-small-label">varphi(x)</text>
                   </svg>
                   <figcaption>
-                    The opening sketch in the notes treats a function as the lens through which topology is read:
-                    moving the horizontal threshold changes which regions of the graph have entered the sublevel
-                    set.
+                    A filtering function acts as the lens through which topology is read: moving the horizontal
+                    threshold changes which regions of the graph have entered the sublevel set.
                   </figcaption>
                 </figure>
 
@@ -321,9 +313,9 @@
                     <p class="tda-callout-label">ExampleBox</p>
                     <strong class="tda-callout-title">Reading a component trace</strong>
                     <p>
-                      The notes trace several connected components through threshold values \(t=0\), \(t=0.2\),
-                      and beyond, then encode the information in a persistent diagram whose horizontal axis is
-                      birth time and vertical axis is death time.
+                      Tracking connected components through threshold values \(t=0\), \(t=0.2\), and beyond
+                      leads to a persistence diagram whose horizontal axis is birth time and whose vertical axis is
+                      death time.
                     </p>
                   </div>
                 </section>
@@ -331,8 +323,8 @@
                 <section>
                   <h3>Natural pseudodistance</h3>
                   <p>
-                    The notebook then asks a comparison question: once we allow an admissible group of
-                    transformations, how close can two measuring functions become after the best alignment?
+                    Once an admissible group of transformations is fixed, the comparison question is: how close can
+                    two measuring functions become after the best alignment?
                   </p>
                   <div class="tda-formula">
                     <p>$$ d_G(\varphi,\psi)=\min_{g\in G}\lVert \varphi-\psi\circ g\rVert_\infty $$</p>
@@ -341,9 +333,8 @@
                     <p class="tda-callout-label">Review Marker</p>
                     <strong class="tda-callout-title">Example labels in the scan are partly ambiguous</strong>
                     <p>
-                      The handwritten page sketches a time-series-style example to motivate the pseudodistance, but
-                      some of the axis labels are not sharp enough in the scan to reproduce verbatim with
-                      confidence.
+                      This motivating time-series-style example is partly ambiguous in the scan: some axis labels
+                      are not sharp enough to reproduce verbatim with confidence.
                     </p>
                   </aside>
                 </section>
@@ -351,9 +342,9 @@
                 <section>
                   <h3>The first GENEO intuition</h3>
                   <p>
-                    Before the full definition arrives, the notes already point toward operators that do two jobs:
-                    they respect the chosen symmetry action and they do not increase distances. That is the seed
-                    of the GENEO perspective developed later.
+                    Before the full definition arrives, the essential idea is already present: operators should
+                    respect the chosen symmetry action and should not increase distances. That is the seed of the
+                    GENEO perspective developed later.
                   </p>
                 </section>
 
@@ -381,8 +372,8 @@
                   <p class="tda-lecture-meta">Lecture 2 • The geometric foundations</p>
                   <h2>Geometric simplicial complexes</h2>
                   <p class="tda-section-intro">
-                    Only after the persistence motivation does the notebook turn to the geometric language needed
-                    to formalize those topological changes.
+                    After the persistence motivation, geometry supplies the language needed to formalize those
+                    topological changes.
                   </p>
                 </header>
 
@@ -402,8 +393,8 @@
                     <strong class="tda-callout-title">Affine independence</strong>
                     <p>
                       Points \(u_0,\dots,u_k\) are affinely independent when the representation of an affine
-                      combination is unique. The notes stress that not all points are in general position, so this
-                      hypothesis matters.
+                      combination is unique. This hypothesis matters because points need not be in general
+                      position.
                     </p>
                   </article>
                 </div>
@@ -423,8 +414,8 @@
                     <p class="tda-callout-label">DefinitionBox</p>
                     <strong class="tda-callout-title">Compact set</strong>
                     <p>
-                      In \(\mathbb{R}^n\) the notes use the standard criterion: compact sets are closed and
-                      bounded, and every open cover admits a finite subcover.
+                      In \(\mathbb{R}^n\), compact sets are closed and bounded; equivalently, every open cover
+                      admits a finite subcover.
                     </p>
                   </article>
 
@@ -521,8 +512,7 @@
                     <strong class="tda-callout-title">What gets forgotten</strong>
                     <p>
                       Passing from a geometric complex to an abstract one forgets metric information and keeps only
-                      incidence. The notebook explicitly marks this loss: there is no distance left in the abstract
-                      complex itself.
+                      incidence. No distance remains in the abstract complex itself.
                     </p>
                   </article>
                 </div>
@@ -562,8 +552,8 @@
                     <circle cx="532" cy="118" r="6" class="tda-svg-point is-green"></circle>
                   </svg>
                   <figcaption>
-                    The realization theorem in the notes reconnects the abstract complex to a geometric one:
-                    combinatorial data becomes an actual simplicial object in Euclidean space.
+                    Geometric realization reconnects an abstract complex to an actual simplicial object in
+                    Euclidean space.
                   </figcaption>
                 </figure>
 
@@ -572,8 +562,8 @@
                   <strong class="tda-callout-title">Geometric realization theorem</strong>
                   <p>
                     Every finite abstract simplicial complex of dimension \(d\) can be realized as a geometric
-                    simplicial complex in \(\mathbb{R}^{2d+1}\). The notes illustrate this by contrasting
-                    realizable complexes with planar obstructions such as \(K_5\) and \(K_{3,3}\).
+                    simplicial complex in \(\mathbb{R}^{2d+1}\). Planar obstructions such as \(K_5\) and
+                    \(K_{3,3}\) show why low-dimensional realizations can fail.
                   </p>
                 </article>
 
@@ -607,8 +597,7 @@
                     <strong class="tda-callout-title">Vietoris-Rips complex</strong>
                     <p>
                       The Vietoris-Rips complex keeps a simplex whenever all of its vertices are pairwise within
-                      the chosen threshold. In the notes it is presented as the computationally lighter companion
-                      to Cech.
+                      the chosen threshold. It is the computationally lighter companion to Cech.
                     </p>
                   </article>
                 </div>
@@ -617,12 +606,11 @@
                   <p class="tda-callout-label">TheoremBox</p>
                   <strong class="tda-callout-title">Vietoris-Rips lemma</strong>
                   <p>
-                    The handwritten statement records the exact inclusions
+                    The exact inclusions are
                     $$ \check{C}(S,\alpha)\subseteq VR(S,\alpha)\subseteq \check{C}(S,\sqrt{2}\alpha). $$
                     The first inclusion is easy to visualize: common intersection implies pairwise intersection.
-                    The second is the key approximation step in the notes: if all vertices are pairwise
-                    \(\alpha\)-close, then one can place a larger common ball and recover a Cech simplex at scale
-                    \(\sqrt{2}\alpha\).
+                    The second is the key approximation step: if all vertices are pairwise \(\alpha\)-close, then
+                    one can place a larger common ball and recover a Cech simplex at scale \(\sqrt{2}\alpha\).
                   </p>
                 </article>
 
@@ -664,8 +652,8 @@
                   <p class="tda-lecture-meta">Lecture 4 • Algebraic topology enters</p>
                   <h2>Chain complexes, boundary maps, homology groups, and Betti numbers</h2>
                   <p class="tda-section-intro">
-                    Once simplicial complexes are available, the notes build the algebraic machinery that counts
-                    holes: chain groups, boundaries, cycles, and the quotient that identifies true holes.
+                    Once simplicial complexes are available, algebraic topology counts holes through chain groups,
+                    boundaries, cycles, and the quotient that identifies genuine holes.
                   </p>
                 </header>
 
@@ -686,8 +674,7 @@
                     <p>
                       The \(p\)-chains \(C_p\) are formal linear combinations of \(p\)-simplices,
                       $$ C_p(K;\mathbb{K})=\left\{\sum_i a_i\sigma_i : a_i\in\mathbb{K},\ \sigma_i\text{ a }p\text{-simplex}\right\}. $$
-                      In the notebook the first computations use \(\mathbb{Z}_2\), so adding a simplex twice
-                      cancels it.
+                      The first computations use \(\mathbb{Z}_2\), so adding a simplex twice cancels it.
                     </p>
                   </article>
                 </div>
@@ -696,8 +683,8 @@
                   <p class="tda-callout-label">RemarkBox</p>
                   <strong class="tda-callout-title">Formal linear combinations are bookkeeping devices</strong>
                   <p>
-                    The handwritten note explicitly pauses on this point: a chain is not a new geometric simplex,
-                    but a formal sum that lets us add, compare, and cancel simplices algebraically.
+                    A chain is not a new geometric simplex, but a formal sum that lets us add, compare, and cancel
+                    simplices algebraically.
                   </p>
                 </article>
 
@@ -708,8 +695,8 @@
                     <p>$$ \partial_p\langle u_0,\dots,u_p\rangle = \sum_{i=0}^p (-1)^i \langle u_0,\dots,\widehat{u_i},\dots,u_p\rangle $$</p>
                   </div>
                   <p>
-                    The alternating sign is the key detail. In the notes it is first tested on triangles and then
-                    pushed to the general proof that \(\partial^2=0\).
+                    The alternating sign is the key detail. Check it first on triangles, then extend it to the
+                    general proof that \(\partial^2=0\).
                   </p>
                 </article>
 
@@ -717,10 +704,10 @@
                   <summary>ProofToggle • Why \(\partial^2=0\)</summary>
                   <div class="tda-proof-body">
                     <p>
-                      The handwritten proof expands \(\partial_{p-1}(\partial_p\sigma)\) and groups the resulting
-                      \((p-2)\)-faces into cancelling pairs. Each face appears twice with opposite signs because
-                      omitting \(u_i\) and then \(u_j\) is the same face as omitting \(u_j\) and then \(u_i\), but
-                      with opposite parity.
+                      Expand \(\partial_{p-1}(\partial_p\sigma)\) and group the resulting \((p-2)\)-faces into
+                      cancelling pairs. Each face appears twice with opposite signs because omitting \(u_i\) and
+                      then \(u_j\) is the same face as omitting \(u_j\) and then \(u_i\), but with opposite
+                      parity.
                     </p>
                   </div>
                 </details>
@@ -759,9 +746,9 @@
                   <p class="tda-callout-label">ExampleBox</p>
                   <strong class="tda-callout-title">A cycle is not automatically a hole</strong>
                   <p>
-                    The notes repeatedly contrast the boundary of an empty triangle with the boundary of a filled
-                    triangle. In the first case the loop gives a non-trivial \(H_1\) class; in the second it
-                    becomes a boundary and disappears in homology.
+                    Contrast the boundary of an empty triangle with the boundary of a filled triangle. In the
+                    first case the loop gives a non-trivial \(H_1\) class; in the second it becomes a boundary and
+                    disappears in homology.
                   </p>
                 </article>
 
@@ -789,9 +776,9 @@
                     <p class="tda-callout-label">DefinitionBox</p>
                     <strong class="tda-callout-title">Betti numbers</strong>
                     <p>
-                      The notes use
+                      Define
                       $$ \beta_p = \dim H_p $$
-                      and then relate \(\beta_p\) to the ranks of the boundary maps through simple dimension
+                      and relate \(\beta_p\) to the ranks of the boundary maps through simple dimension
                       bookkeeping.
                     </p>
                   </article>
@@ -812,7 +799,7 @@
                   <p class="tda-callout-label">TheoremBox</p>
                   <strong class="tda-callout-title">Euler-Poincare</strong>
                   <p>
-                    The notebook defines the Euler characteristic by simplex counts,
+                    Define the Euler characteristic by simplex counts,
                     $$ \chi(K)=\sum_{i\ge 0}(-1)^i n_i, $$
                     and proves the matching homological formula
                     $$ \chi(K)=\sum_{i\ge 0}(-1)^i \beta_i. $$
@@ -820,7 +807,7 @@
                 </article>
 
                 <details class="tda-proof">
-                  <summary>ProofToggle • Euler-Poincare sketch from the notes</summary>
+                  <summary>ProofToggle • Euler-Poincare sketch</summary>
                   <div class="tda-proof-body">
                     <p>
                       The proof substitutes the rank-nullity identities for the boundary maps into the alternating
@@ -834,8 +821,8 @@
                   <p class="tda-callout-label">TheoremBox</p>
                   <strong class="tda-callout-title">Elementary collapse preserves homology</strong>
                   <p>
-                    If \(L\) is obtained from \(K\) by an elementary collapse, then the handwritten theorem states
-                    that \(H_p(L)\cong H_p(K)\) for every \(p\in\mathbb{Z}\).
+                    If \(L\) is obtained from \(K\) by an elementary collapse, then \(H_p(L)\cong H_p(K)\) for
+                    every \(p\in\mathbb{Z}\).
                   </p>
                 </article>
               </section>
@@ -850,9 +837,8 @@
                   <p class="tda-lecture-meta">Lecture 5 • Symmetries and filtering functions</p>
                   <h2>Groups, group actions, filtering functions, and natural pseudodistance</h2>
                   <p class="tda-section-intro">
-                    The notebook now revisits comparison in a more systematic way: first basic group language,
-                    then actions on spaces and function spaces, and finally the pseudodistance induced by the
-                    admissible transformations.
+                    Comparison becomes more systematic here: first basic group language, then actions on spaces and
+                    function spaces, and finally the pseudodistance induced by admissible transformations.
                   </p>
                 </header>
 
@@ -862,7 +848,7 @@
                     <strong class="tda-callout-title">Group</strong>
                     <p>
                       A set \(G\) with a binary operation is a group when it has an identity, every element has an
-                      inverse, and the operation is associative. The notes also highlight the abelian case.
+                      inverse, and the operation is associative. The abelian case is especially useful.
                     </p>
                   </article>
 
@@ -889,19 +875,18 @@
                   <p class="tda-callout-label">KeyIdea / IntuitionBox</p>
                   <strong class="tda-callout-title">Perception pair</strong>
                   <p>
-                    The later notebook viewpoint is never just “data”. It is always data together with the
-                    observer allowed to compare it. Concretely, one works with a function space \(\Phi\) and a
-                    symmetry group \(G\) acting on it by composition: this pair organizes what differences count
-                    and what differences are ignored.
+                    Work not only with data, but also with the observer allowed to compare it. Concretely, use a
+                    function space \(\Phi\) together with a symmetry group \(G\) acting on it by composition:
+                    this pair organizes what differences count and what differences are ignored.
                   </p>
                 </article>
 
                 <section>
                   <h3>Directional filtering functions on simplicial complexes</h3>
                   <p>
-                    One of the notebook examples starts with a function on the vertices and extends it to a simplex
-                    by taking the maximum value on its vertices. This turns a discrete assignment into a bona fide
-                    filtering function on the whole complex.
+                    Start with a function on the vertices and extend it to a simplex by taking the maximum value on
+                    its vertices. This turns a discrete assignment into a bona fide filtering function on the whole
+                    complex.
                   </p>
                   <div class="tda-formula">
                     <p>$$ \varphi'(\sigma)=\max\{\varphi'(u_0),\dots,\varphi'(u_m)\}\qquad\text{for }\sigma=\langle u_0,\dots,u_m\rangle. $$</p>
@@ -911,9 +896,9 @@
                 <section>
                   <h3>Metrics induced by a function space</h3>
                   <p>
-                    The notes introduce several sup-type distances: one on vertices, one on the symmetry group,
-                    and the ambient sup norm on the function space \(\Phi\). Those metrics organize the later
-                    comparison theorems.
+                    Several sup-type distances are useful: one on vertices, one on the symmetry group, and the
+                    ambient sup norm on the function space \(\Phi\). These metrics organize the comparison
+                    theorems.
                   </p>
                   <div class="tda-grid-three">
                     <article class="tda-callout is-definition">
@@ -960,7 +945,7 @@
                     For \(\varphi,\psi\in\Phi\), the natural pseudodistance measures the smallest sup-norm mismatch
                     after composing with an admissible symmetry:
                     $$ d_G(\varphi,\psi)=\min_{g\in G}\lVert \varphi-\psi\circ g\rVert_\infty. $$
-                    The notes also remark that enlarging the group can only make this quantity smaller.
+                    Enlarging the group can only make this quantity smaller.
                   </p>
                 </article>
 
@@ -985,8 +970,8 @@
                   <p class="tda-lecture-meta">Lecture 6 • Formal persistent homology</p>
                   <h2>Persistent modules, persistent homology groups, persistent Betti numbers, and diagrams</h2>
                   <p class="tda-section-intro">
-                    After the earlier intuition, the sixth lecture formalizes persistence with inclusions,
-                    induced maps, and invariants indexed by pairs of threshold values.
+                    Persistent homology formalizes the earlier intuition with inclusions, induced maps, and
+                    invariants indexed by pairs of threshold values.
                   </p>
                 </header>
 
@@ -1015,7 +1000,7 @@
                     <p class="tda-callout-label">DefinitionBox</p>
                     <strong class="tda-callout-title">Persistent Betti number function / rank invariant</strong>
                     <p>
-                      The notes define the rank invariant by
+                      Define the rank invariant by
                       $$ \beta_p^\varphi(u,v)=\dim H_p^\varphi(u,v). $$
                       It is right-continuous in both variables, non-increasing in \(v\), and non-decreasing in \(u\).
                     </p>
@@ -1026,7 +1011,7 @@
                   <p class="tda-callout-label">DefinitionBox</p>
                   <strong class="tda-callout-title">Cornerpoint multiplicity</strong>
                   <p>
-                    Around a corner \((u,v)\), the notes extract multiplicity from a small rectangle by
+                    Around a corner \((u,v)\), extract multiplicity from a small rectangle by
                     inclusion-exclusion:
                   </p>
                   <div class="tda-formula">
@@ -1042,10 +1027,10 @@
                   <p class="tda-callout-label">RemarkBox</p>
                   <strong class="tda-callout-title">Discontinuities and the diagram derived from \(\beta\)</strong>
                   <p>
-                    The notebook sketches the discontinuity pattern of \(\beta_p^\varphi\): jumps propagate along
-                    horizontal and vertical directions rather than diagonally, and cornerpoints occur where those
-                    jumps meet. The persistence diagram is then reconstructed from the positive-multiplicity
-                    cornerpoints together with points at infinity for classes that never die.
+                    The function \(\beta_p^\varphi\) has discontinuities that propagate along horizontal and
+                    vertical directions rather than diagonally, and cornerpoints occur where those jumps meet. The
+                    persistence diagram is then reconstructed from the positive-multiplicity cornerpoints together
+                    with points at infinity for classes that never die.
                   </p>
                 </article>
 
@@ -1054,8 +1039,8 @@
                   <strong class="tda-callout-title">What the diagram keeps</strong>
                   <p>
                     The persistence diagram forgets the specific cycle representative and keeps only the lifetime of
-                    the class. In the notes this is presented as a direct passage from the rank invariant
-                    \(\beta_p^\varphi\) to a multiset of birth-death points.
+                    the class. In this way the rank invariant \(\beta_p^\varphi\) becomes a multiset of
+                    birth-death points.
                   </p>
                 </article>
               </section>
@@ -1078,9 +1063,8 @@
                 <section>
                   <h3>Matching to the diagonal</h3>
                   <p>
-                    The notes allow every point in one persistence diagram either to match a point in the other
-                    diagram or to be sent to the diagonal. Matching to the diagonal is the price of deleting a
-                    short-lived class.
+                    Every point in one persistence diagram may either match a point in the other diagram or be sent
+                    to the diagonal. Matching to the diagonal is the price of deleting a short-lived class.
                   </p>
                   <p>
                     A bijection is therefore scored by its worst or total transport cost, depending on whether one
@@ -1111,9 +1095,8 @@
                   <p class="tda-callout-label">TheoremBox</p>
                   <strong class="tda-callout-title">Stability idea</strong>
                   <p>
-                    The notes explicitly connect diagram distances to the natural pseudodistance: the matching
-                    distance between persistence diagrams is bounded by the sup-norm discrepancy after optimal
-                    alignment,
+                    The matching distance between persistence diagrams is bounded by the sup-norm discrepancy after
+                    optimal alignment,
                     $$ d_B(\mathrm{Dgm}(\varphi),\mathrm{Dgm}(\psi)) \le d_G(\varphi,\psi). $$
                     Small perturbations in the data therefore create only small perturbations in the diagram.
                   </p>
@@ -1141,9 +1124,9 @@
                 <section>
                   <h3>GENEOs</h3>
                   <p>
-                    The last pages define the full operator pipeline. One first has a perception pair
-                    \((\Phi,G)\), another pair \((\Psi,H)\), and a homomorphism \(T:G\to H\) transporting
-                    symmetries from the source observer to the target one.
+                    The full operator pipeline starts with a perception pair \((\Phi,G)\), another pair
+                    \((\Psi,H)\), and a homomorphism \(T:G\to H\) transporting symmetries from the source observer
+                    to the target one.
                   </p>
                   <article class="tda-callout is-definition">
                     <p class="tda-callout-label">DefinitionBox</p>
@@ -1171,12 +1154,12 @@
                   <p class="tda-callout-label">TheoremBox</p>
                   <strong class="tda-callout-title">Compactness and convexity of operator families</strong>
                   <p>
-                    The handwritten page equips a family of admissible GENEOs with the sup metric
+                    Equip a family of admissible GENEOs with the sup metric
                     $$ D_{\mathrm{GENEO}}(F_1,F_2)=\sup_{\varphi\in\Phi} D_\Psi(F_1(\varphi),F_2(\varphi)). $$
                     Under compactness assumptions on the spaces involved, that family is itself compact; and if
                     \((F_i,T)\) share the same equivariance map \(T\), then combinations
                     $$ \sum_i a_i F_i \qquad\text{with}\qquad \sum_i |a_i|\le 1 $$
-                    remain GENEOs. This is the convexity statement highlighted in the notes.
+                    remain GENEOs. This is the convexity statement.
                   </p>
                 </article>
 
@@ -1184,7 +1167,7 @@
                   <p class="tda-callout-label">TheoremBox</p>
                   <strong class="tda-callout-title">Induced matching-distance stability</strong>
                   <p>
-                    For a collection \(\mathcal{F}\) of GENEOs, the notes define
+                    For a collection \(\mathcal{F}\) of GENEOs, define
                     $$ D_{\mathcal{F},\Phi}(\varphi_1,\varphi_2)=\sup_{F\in\mathcal{F}}\lVert F(\varphi_1)-F(\varphi_2)\rVert_\infty $$
                     and, in degree \(k\),
                     $$ D_{\mathrm{match}}^{\mathcal{F},k}(\varphi_1,\varphi_2)=\sup_{F\in\mathcal{F}} d_{\mathrm{match}}\bigl(\mathrm{Dgm}_k(F(\varphi_1)),\mathrm{Dgm}_k(F(\varphi_2))\bigr). $$
@@ -1213,7 +1196,7 @@
               </section>
 
               <details class="tda-source-drawer" id="source-notes">
-                <summary>Source notes drawer</summary>
+                <summary>Source PDF</summary>
                 <div class="tda-source-embed">
                   <embed src="/tdafull.pdf" type="application/pdf">
                 </div>

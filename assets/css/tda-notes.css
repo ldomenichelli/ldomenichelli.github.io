@@ -131,7 +131,6 @@ body.tda-notes-page .post-content {
 }
 
 .tda-hero-actions,
-.tda-proof-toolbar,
 .tda-widget-controls {
   display: flex;
   flex-wrap: wrap;
@@ -245,10 +244,6 @@ body.tda-notes-page .post-content {
 .tda-main {
   display: grid;
   gap: 1.2rem;
-}
-
-.tda-proof-toolbar {
-  align-items: center;
 }
 
 .tda-mini-button {
