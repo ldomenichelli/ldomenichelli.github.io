@@ -1,0 +1,321 @@
+body.ot-notes-page {
+  --tda-yellow: #e7ca6e;
+  --tda-orange: #f0a26a;
+  --tda-green: #90c889;
+  --tda-blue: #8ab8e0;
+  --tda-pink: #e49ac0;
+}
+
+body.ot-notes-page .tda-notebook::before {
+  opacity: 0.08;
+}
+
+body.ot-notes-page .tda-display {
+  max-width: 12ch;
+}
+
+body.ot-notes-page .tda-callout-label,
+body.ot-notes-page .tda-figure-kicker,
+body.ot-notes-page .tda-widget-kicker {
+  display: none;
+}
+
+body.ot-notes-page .tda-callout,
+body.ot-notes-page .tda-widget,
+body.ot-notes-page .tda-source-drawer,
+body.ot-notes-page .tda-figure,
+body.ot-notes-page .tda-toc-card {
+  background: rgba(14, 19, 17, 0.28);
+}
+
+body.ot-notes-page .tda-button,
+body.ot-notes-page .tda-widget-button {
+  background: rgba(20, 27, 23, 0.22);
+}
+
+body.ot-notes-page .tda-button.is-primary {
+  background: rgba(169, 196, 178, 0.07);
+}
+
+.ot-hero-grid {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.82fr);
+}
+
+.ot-hero-diagram {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 14px;
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.7rem;
+}
+
+.ot-hero-diagram svg {
+  background: rgba(12, 17, 15, 0.18);
+  border-radius: 12px;
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.ot-strip-label {
+  color: var(--tda-ink-faint);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.ot-why-grid,
+.ot-reference-grid,
+.ot-application-grid {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.ot-why-grid {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  padding-top: 0.85rem;
+}
+
+.ot-reference-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ot-application-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ot-why-item,
+.ot-reference-card {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.ot-why-item {
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0 1rem;
+}
+
+.ot-why-item:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.ot-reference-card {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.7rem 0 0;
+}
+
+.ot-why-item strong,
+.ot-reference-card strong {
+  color: var(--tda-ink);
+  font-size: 0.92rem;
+}
+
+.ot-why-item p,
+.ot-reference-card p {
+  color: var(--tda-ink-soft);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.ot-widget-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.92fr);
+}
+
+.ot-widget-grid.is-equal {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ot-control-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ot-slider-group {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0;
+  display: grid;
+  gap: 0.7rem;
+  padding: 0.65rem 0 0;
+}
+
+.ot-slider-group h4 {
+  color: var(--tda-ink);
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.ot-slider-row {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.ot-slider-row label {
+  align-items: baseline;
+  color: var(--tda-ink-soft);
+  display: flex;
+  font-size: 0.84rem;
+  justify-content: space-between;
+  gap: 0.85rem;
+}
+
+.ot-inline-note {
+  color: var(--tda-ink-faint);
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+.ot-heat-cell,
+.ot-mass-bar,
+.ot-particle {
+  stroke-width: 1.3;
+}
+
+.ot-heat-cell,
+.ot-mass-bar.is-blue,
+.ot-particle.is-blue {
+  fill: rgba(138, 184, 224, 0.26);
+  stroke: rgba(138, 184, 224, 0.95);
+}
+
+.ot-mass-bar.is-yellow,
+.ot-particle.is-yellow {
+  fill: rgba(231, 202, 110, 0.22);
+  stroke: rgba(231, 202, 110, 0.96);
+}
+
+.ot-particle.is-green {
+  fill: rgba(144, 200, 137, 0.24);
+  stroke: rgba(144, 200, 137, 0.96);
+}
+
+.ot-flow-line {
+  fill: none;
+  stroke: rgba(169, 196, 178, 0.72);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ot-heat-mass,
+.ot-heat-cost {
+  fill: var(--tda-ink);
+  font-family: var(--site-font-stack);
+}
+
+.ot-heat-mass {
+  font-size: 11px;
+}
+
+.ot-heat-cost {
+  fill: var(--tda-ink-soft);
+  font-size: 9.5px;
+}
+
+.ot-step-line,
+.ot-density-line {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.ot-step-line.is-blue,
+.ot-density-line.is-blue {
+  stroke: rgba(138, 184, 224, 0.96);
+}
+
+.ot-step-line.is-yellow,
+.ot-density-line.is-yellow {
+  stroke: rgba(231, 202, 110, 0.96);
+}
+
+.ot-step-line.is-green,
+.ot-density-line.is-green {
+  stroke: rgba(144, 200, 137, 0.96);
+}
+
+.ot-density-fill {
+  stroke-width: 1.4;
+}
+
+.ot-density-fill.is-blue {
+  fill: rgba(138, 184, 224, 0.12);
+  stroke: rgba(138, 184, 224, 0.78);
+}
+
+.ot-density-fill.is-yellow {
+  fill: rgba(231, 202, 110, 0.1);
+  stroke: rgba(231, 202, 110, 0.78);
+}
+
+.ot-density-fill.is-green {
+  fill: rgba(144, 200, 137, 0.16);
+  stroke: rgba(144, 200, 137, 0.9);
+}
+
+.ot-link-card {
+  align-items: center;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0;
+  color: var(--tda-ink);
+  display: flex;
+  justify-content: space-between;
+  padding: 0.9rem 0;
+  text-decoration: none;
+}
+
+.ot-link-card:hover {
+  border-top-color: rgba(169, 196, 178, 0.24);
+  border-bottom-color: rgba(169, 196, 178, 0.24);
+}
+
+.ot-link-card span {
+  color: var(--tda-ink-soft);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 1080px) {
+  .ot-hero-grid,
+  .ot-why-grid,
+  .ot-reference-grid,
+  .ot-application-grid,
+  .ot-widget-grid,
+  .ot-widget-grid.is-equal {
+    grid-template-columns: 1fr;
+  }
+
+  .ot-why-grid {
+    gap: 0.8rem;
+  }
+
+  .ot-why-item,
+  .ot-why-item:first-child {
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.75rem 0 0;
+  }
+}
+
+@media (max-width: 840px) {
+  .ot-control-grid {
+    grid-template-columns: 1fr;
+  }
+}
