@@ -1,11 +1,1269 @@
-<!doctype html><html lang=en dir=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Topological Data Analysis 🌐 | lucia's notes</title>
-<meta name=keywords content="homology,GENEO"><meta name=description content="On the HPLT & NLPL Winter School"><meta name=author content="Lucia"><link rel=canonical href=https://ldomenichelli.github.io/posts/post4/><link crossorigin=anonymous href=/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css integrity="sha256-WtmxyqkuTOqD680wiOlzYvI5sH2BREkKrwvB1r2JzRc=" rel="preload stylesheet" as=style><link rel=icon href=https://ldomenichelli.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://ldomenichelli.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://ldomenichelli.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://ldomenichelli.github.io/apple-touch-icon.png><link rel=mask-icon href=https://ldomenichelli.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=en href=https://ldomenichelli.github.io/posts/post4/><noscript><style>#theme-toggle,.top-link{display:none}</style></noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X crossorigin=anonymous><script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin=anonymous></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin=anonymous onload='renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})'></script><style>@media screen and (min-width:769px){.post-content input[type=checkbox]:checked~label>img{transform:scale(1.6);cursor:zoom-out;position:relative;z-index:999}.post-content img.zoomCheck{transition:transform .15s ease;z-index:999;cursor:zoom-in}}</style><meta property="og:title" content="Topological Data Analysis 🌐"><meta property="og:description" content="On the HPLT & NLPL Winter School"><meta property="og:type" content="article"><meta property="og:url" content="https://ldomenichelli.github.io/posts/post4/"><meta property="og:image" content="https://ldomenichelli.github.io/logo.png"><meta property="article:section" content="posts"><meta property="og:site_name" content="lucia's notes"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://ldomenichelli.github.io/logo.png"><meta name=twitter:title content="Topological Data Analysis 🌐"><meta name=twitter:description content="On the HPLT & NLPL Winter School"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"","item":"https://ldomenichelli.github.io/posts/"},{"@type":"ListItem","position":2,"name":"Topological Data Analysis 🌐","item":"https://ldomenichelli.github.io/posts/post4/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Topological Data Analysis 🌐","name":"Topological Data Analysis 🌐","description":"On the HPLT \u0026 NLPL Winter School","keywords":["homology","GENEO"],"articleBody":"Here are my notes from the lectures on “Topological Data Analysis” that was held from <a href="https://www.dm.unibo.it/~frosini/index.shtml" Prof. Patrizio Frosini </a> at UniPi in Jan 2025.\n","wordCount":"23","inLanguage":"en","datePublished":"0001-01-01T00:00:00Z","dateModified":"0001-01-01T00:00:00Z","author":{"@type":"Person","name":"Lucia"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ldomenichelli.github.io/posts/post4/"},"publisher":{"@type":"Organization","name":"lucia's notes","logo":{"@type":"ImageObject","url":"https://ldomenichelli.github.io/favicon.ico"}}}</script><link rel="stylesheet" href="/assets/css/site-theme.css"></head><body class=dark id=top><header class=header><nav class=nav><div class=logo><a href=https://ldomenichelli.github.io/ accesskey=h title="lucia's notes (Alt + H)">lucia's notes</a><div class=logo-switches><ul class=lang-switch><li>|</li></ul></div></div><button id=menu-trigger aria-haspopup=menu aria-label="Menu Button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><ul class="menu hidden"><li><a href=https://ldomenichelli.github.io/about/ title=about><span>about</span></a></li><li><a href=https://ldomenichelli.github.io/posts/ title=notes><span>notes</span></a></li><li><a href=https://ldomenichelli.github.io/random/ title=hobbies><span>hobbies</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><div class=breadcrumbs><a href=https://ldomenichelli.github.io/>Home</a>&nbsp;»&nbsp;<a href=https://ldomenichelli.github.io/posts/></a></div><h1 class=post-title>Topological Data Analysis 🌐</h1><div class=post-description>On the HPLT & NLPL Winter School</div><div class=post-meta>Lucia</div></header><div class=post-content><p>Here are my notes from the lectures on &ldquo;Topological Data Analysis&rdquo; that was held from Prof. Patrizio Frosini at UniPi in Jan 2025.</p><embed src=/tdafull.pdf width=100% height=800px type=application/pdf></div><footer class=post-footer><ul class=post-tags><li><a href=https://ldomenichelli.github.io/tags/homology/>Homology</a></li><li><a href=https://ldomenichelli.github.io/tags/geneo/>GENEO</a></li></ul><nav class=paginav><a class=prev href=https://ldomenichelli.github.io/posts/post9/><span class=title>« Prev</span><br><span>Time Series 📈</span></a></nav></footer></article></main><footer class=footer style=padding-top:18px;padding-bottom:18px><div class=social-icons style=padding-bottom:0><a style=border-bottom:none href=https://x.com/workerplacemint rel=me title=Twitter><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9.0 01-3.14 1.53 4.48 4.48.0 00-7.86 3v1A10.66 10.66.0 013 4s-4 9 5 13a11.64 11.64.0 01-7 2c9 5 20 0 20-11.5a4.5 4.5.0 00-.08-.83A7.72 7.72.0 0023 3z"/></svg>
-</a><a style=border-bottom:none href=https://github.com/ldomenichelli rel=me title=Github><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg>
-</a><a style=border-bottom:none href=mailto:ldomenichelli2@gmail.com rel=me title=Email><svg viewBox="0 0 24 21" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1.0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1.0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a></div><span>&copy; 2025 <a href=https://ldomenichelli.github.io/>lucia's notes</a></span>
-<span>•
-Powered by
-<a href=https://gohugo.io/>Hugo</a> &
-        <a href=https://github.com/adityatelange/hugo-PaperMod/>PaperMod</a>
-</span><span>•
-<a href=/privacy>Privacy Policy</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
-</a><script>let b=document.querySelector("#menu-trigger"),m=document.querySelector(".menu");b.addEventListener("click",function(){m.classList.toggle("hidden")}),document.body.addEventListener("click",function(e){b.contains(e.target)||m.classList.add("hidden")})</script><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="copy";function s(){t.innerHTML="copied!",setTimeout(()=>{t.innerHTML="copy"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>
+<!doctype html>
+<html lang="en" dir="auto">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+  <meta name="robots" content="index, follow">
+  <title>Topological Data Analysis 🌐 | lucia's notes</title>
+  <meta
+    name="keywords"
+    content="topological data analysis, homology, persistence, simplicial complexes, GENEOs"
+  >
+  <meta
+    name="description"
+    content="A digital mathematical notebook version of handwritten Topological Data Analysis lecture notes on simplicial complexes, homology, persistence, natural pseudodistance, and GENEOs."
+  >
+  <meta name="author" content="Lucia">
+  <link
+    crossorigin="anonymous"
+    href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css"
+    integrity="sha256-WtmxyqkuTOqD680wiOlzYvI5sH2BREkKrwvB1r2JzRc="
+    rel="preload stylesheet"
+    as="style"
+  >
+  <link rel="canonical" href="https://ldomenichelli.github.io/posts/post4/">
+  <link rel="icon" href="https://ldomenichelli.github.io/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ldomenichelli.github.io/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ldomenichelli.github.io/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="https://ldomenichelli.github.io/apple-touch-icon.png">
+  <link rel="mask-icon" href="https://ldomenichelli.github.io/safari-pinned-tab.svg">
+  <meta name="theme-color" content="#2e2e33">
+  <meta name="msapplication-TileColor" content="#2e2e33">
+  <link rel="alternate" hreflang="en" href="https://ldomenichelli.github.io/posts/post4/">
+  <noscript>
+    <style>
+      #theme-toggle,
+      .top-link {
+        display: none;
+      }
+    </style>
+  </noscript>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+    integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X"
+    crossorigin="anonymous"
+  >
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"
+    integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+    integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"
+    crossorigin="anonymous"
+    onload='renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:true},{left:"$",right:"$",display:false},{left:"\\(",right:"\\)",display:false},{left:"\\[",right:"\\]",display:true}]})'
+  ></script>
+  <meta property="og:title" content="Topological Data Analysis 🌐">
+  <meta
+    property="og:description"
+    content="A digital mathematical notebook version of handwritten Topological Data Analysis lecture notes on simplicial complexes, homology, persistence, natural pseudodistance, and GENEOs."
+  >
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ldomenichelli.github.io/posts/post4/">
+  <meta property="og:image" content="https://ldomenichelli.github.io/logo.png">
+  <meta property="article:section" content="posts">
+  <meta property="og:site_name" content="lucia's notes">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ldomenichelli.github.io/logo.png">
+  <meta name="twitter:title" content="Topological Data Analysis 🌐">
+  <meta
+    name="twitter:description"
+    content="A digital mathematical notebook version of handwritten Topological Data Analysis lecture notes on simplicial complexes, homology, persistence, natural pseudodistance, and GENEOs."
+  >
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "",
+          "item": "https://ldomenichelli.github.io/posts/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Topological Data Analysis 🌐",
+          "item": "https://ldomenichelli.github.io/posts/post4/"
+        }
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Topological Data Analysis 🌐",
+      "name": "Topological Data Analysis 🌐",
+      "description": "A digital mathematical notebook version of handwritten Topological Data Analysis lecture notes on simplicial complexes, homology, persistence, natural pseudodistance, and GENEOs.",
+      "keywords": ["homology", "GENEO", "persistent homology", "simplicial complexes"],
+      "articleBody": "These pages digitize the handwritten Topological Data Analysis lecture notes from Prof. Patrizio Frosini at UniPi. The lecture order of the notebook is preserved: persistence intuition appears first, then simplicial complexes, homology, natural pseudodistance, persistent homology, distances on diagrams, and GENEOs.",
+      "wordCount": "2600",
+      "inLanguage": "en",
+      "datePublished": "0001-01-01T00:00:00Z",
+      "dateModified": "0001-01-01T00:00:00Z",
+      "author": {
+        "@type": "Person",
+        "name": "Lucia"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ldomenichelli.github.io/posts/post4/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "lucia's notes",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://ldomenichelli.github.io/favicon.ico"
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="/assets/css/site-theme.css">
+  <link rel="stylesheet" href="/assets/css/tda-notes.css">
+</head>
+<body class="dark tda-notes-page" id="top">
+  <header class="header">
+    <nav class="nav">
+      <div class="logo">
+        <a href="https://ldomenichelli.github.io/" accesskey="h" title="lucia's notes (Alt + H)">
+          lucia's notes
+        </a>
+        <div class="logo-switches">
+          <ul class="lang-switch">
+            <li>|</li>
+          </ul>
+        </div>
+      </div>
+      <button id="menu-trigger" aria-haspopup="menu" aria-label="Menu Button">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentcolor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-menu"
+        >
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+      <ul class="menu hidden">
+        <li><a href="https://ldomenichelli.github.io/about/" title="about"><span>about</span></a></li>
+        <li><a href="https://ldomenichelli.github.io/posts/" title="notes"><span>notes</span></a></li>
+        <li><a href="https://ldomenichelli.github.io/random/" title="hobbies"><span>hobbies</span></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main">
+    <article class="post-single">
+      <header class="post-header">
+        <div class="breadcrumbs">
+          <a href="https://ldomenichelli.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://ldomenichelli.github.io/posts/"></a>
+        </div>
+        <h1 class="post-title">Topological Data Analysis 🌐</h1>
+        <div class="post-description">On the HPLT &amp; NLPL Winter School</div>
+        <div class="post-meta">Lucia</div>
+      </header>
+
+      <div class="post-content">
+        <div class="tda-notebook" data-tda-page>
+          <section class="tda-hero">
+            <div class="tda-hero-copy">
+              <p class="tda-kicker">Digital Mathematical Notebook</p>
+              <h1 class="tda-display">Topological Data Analysis</h1>
+              <p class="tda-hero-intro">
+                These pages reconstruct my handwritten TDA notes from Prof. Patrizio Frosini’s lectures at
+                UniPi. The order is intentionally faithful to the notebook itself: persistence and comparison
+                questions come first, and only then do the simplicial and homological foundations unfold.
+              </p>
+              <p class="tda-hero-meta">
+                Seven lecture sheets, January 2025, rebuilt from the scanned notes rather than rewritten as a
+                generic chapter.
+              </p>
+              <div class="tda-hero-actions">
+                <a class="tda-button is-primary" href="/tdafull.pdf" target="_blank" rel="noopener">
+                  NotesDownloadLink
+                  <span>Open original PDF</span>
+                </a>
+                <a class="tda-button" href="#lecture-1">Start with lecture 1</a>
+                <a class="tda-button" href="#source-notes">See source drawer</a>
+              </div>
+              <div class="tda-chip-row">
+                <span class="tda-chip"><strong>Format</strong> digital notebook, not slides</span>
+                <span class="tda-chip"><strong>Math</strong> KaTeX-rendered formulas</span>
+                <span class="tda-chip"><strong>Diagrams</strong> SVG + lightweight interaction</span>
+              </div>
+              <p class="tda-hero-note">
+                Review markers appear only where the scan was too ambiguous to justify filling in missing
+                mathematical detail.
+              </p>
+            </div>
+
+            <div class="tda-hero-aside">
+              <article class="tda-hero-card">
+                <p class="tda-sidebar-label">Notebook Map</p>
+                <ul>
+                  <li>Lecture 1: persistence intuition, diagrams, natural pseudodistance, and the first GENEO idea</li>
+                  <li>Lectures 2 and 3: geometric and abstract simplicial complexes, realizations, nerves, Cech and Vietoris-Rips</li>
+                  <li>Lecture 4: chain complexes, boundary maps, homology groups, Betti numbers, reduced homology, Euler-Poincare</li>
+                  <li>Lectures 5 to 7: group actions, filtering functions, persistent homology, diagram distances, stability, and GENEOs</li>
+                </ul>
+              </article>
+
+              <article class="tda-hero-card">
+                <p class="tda-sidebar-label">Faithfulness</p>
+                <p>
+                  The connective prose is new, but the conceptual flow, main formulas, highlighted definitions,
+                  and lecture emphasis come from the scanned notes.
+                </p>
+                <p>
+                  The page preserves the notebook’s visual spirit through restrained graph-paper structure,
+                  accent highlights, and compact diagram-first explanations.
+                </p>
+              </article>
+            </div>
+          </section>
+
+          <div class="tda-jump" data-tda-jump></div>
+
+          <div class="tda-layout">
+            <aside class="tda-sidebar">
+              <div class="tda-toc-card">
+                <div>
+                  <p class="tda-sidebar-label">Lecture Map</p>
+                  <div class="tda-toc-links" data-tda-toc></div>
+                </div>
+                <div class="tda-proof-toolbar">
+                  <button class="tda-mini-button" type="button" data-proof-action="expand">Expand all proofs</button>
+                  <button class="tda-mini-button" type="button" data-proof-action="collapse">Collapse all proofs</button>
+                </div>
+                <p class="tda-legend">
+                  Definitions, theorems, examples, remarks, and intuition boxes share one visual system so the
+                  lecture page stays readable even as the material gets more algebraic.
+                </p>
+              </div>
+            </aside>
+
+            <div class="tda-main">
+              <div class="tda-note-toolbar">
+                <a class="tda-chip" href="/tdafull.pdf" target="_blank" rel="noopener"><strong>Source</strong> handwritten PDF</a>
+                <span class="tda-chip"><strong>Rendering</strong> semantic HTML, CSS, and vanilla JS modules</span>
+                <span class="tda-chip"><strong>Spirit</strong> digital mathematical notebook</span>
+              </div>
+
+              <section class="tda-section" id="lecture-1" data-tda-section data-tda-label="1. Persistence First">
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Lecture 1 • Motivation before foundations</p>
+                  <h2>Why the shape of data matters</h2>
+                  <p class="tda-section-intro">
+                    The notes begin with a question rather than a definition: what is the shape of data? The
+                    first answer is not “a simplex” but “a topological feature that appears and disappears as a
+                    threshold moves”.
+                  </p>
+                </header>
+
+                <article class="tda-callout is-intuition">
+                  <p class="tda-callout-label">KeyIdea / IntuitionBox</p>
+                  <strong class="tda-callout-title">Persistence comes before algebra in the notebook</strong>
+                  <p>
+                    This is one of the most distinctive features of the handwritten notes. Instead of building
+                    from topology upward, the notebook starts by watching a filtering function change and asking
+                    which connected components survive for a long time.
+                  </p>
+                </article>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Filtering viewpoint</strong>
+                    <p>
+                      Given a measuring function $$\varphi:E\to[0,1]$$ or more generally
+                      $$\varphi:E\to[a,b]\subseteq\mathbb{R},$$ we study the topology of its sublevel sets
+                      $$\{x\in E:\varphi(x)\le t\}$$ as the threshold \(t\) varies.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-remark">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">Why this matters</strong>
+                    <p>
+                      A single threshold can be misleading. Persistence keeps the full story of when features are
+                      born and when they die, so short-lived fluctuations can be separated from robust structure.
+                    </p>
+                  </article>
+                </div>
+
+                <figure class="tda-figure">
+                  <p class="tda-figure-kicker">FigureWithCaption</p>
+                  <svg viewBox="0 0 360 220" role="img" aria-label="Filtering function sketch">
+                    <line x1="36" y1="186" x2="324" y2="186" class="tda-axis-line"></line>
+                    <line x1="36" y1="186" x2="36" y2="26" class="tda-axis-line"></line>
+                    <line x1="36" y1="132" x2="324" y2="132" class="tda-diagonal-line"></line>
+                    <line x1="36" y1="92" x2="324" y2="92" class="tda-diagonal-line"></line>
+                    <path
+                      d="M48 170 L94 118 L132 152 L176 78 L220 126 L266 54 L314 176"
+                      class="tda-svg-edge is-orange"
+                    ></path>
+                    <circle cx="94" cy="118" r="6" class="tda-svg-point is-yellow"></circle>
+                    <circle cx="176" cy="78" r="6" class="tda-svg-point is-yellow"></circle>
+                    <circle cx="266" cy="54" r="6" class="tda-svg-point is-yellow"></circle>
+                    <text x="18" y="98" class="tda-svg-small-label">t_2</text>
+                    <text x="18" y="138" class="tda-svg-small-label">t_1</text>
+                    <text x="334" y="192" class="tda-svg-small-label">x</text>
+                    <text x="20" y="24" class="tda-svg-small-label">varphi(x)</text>
+                  </svg>
+                  <figcaption>
+                    The opening sketch in the notes treats a function as the lens through which topology is read:
+                    moving the horizontal threshold changes which regions of the graph have entered the sublevel
+                    set.
+                  </figcaption>
+                </figure>
+
+                <section>
+                  <h3>Persistence diagrams appear immediately</h3>
+                  <p>
+                    As connected components merge, each class contributes a birth-death pair. Long-lived classes
+                    sit far from the diagonal; short-lived classes stay close to it. That geometric picture is
+                    already present on the first handwritten sheet.
+                  </p>
+                  <div class="tda-callout is-example">
+                    <p class="tda-callout-label">ExampleBox</p>
+                    <strong class="tda-callout-title">Reading a component trace</strong>
+                    <p>
+                      The notes trace several connected components through threshold values \(t=0\), \(t=0.2\),
+                      and beyond, then encode the information in a persistent diagram whose horizontal axis is
+                      birth time and vertical axis is death time.
+                    </p>
+                  </div>
+                </section>
+
+                <section>
+                  <h3>Natural pseudodistance</h3>
+                  <p>
+                    The notebook then asks a comparison question: once we allow an admissible group of
+                    transformations, how close can two measuring functions become after the best alignment?
+                  </p>
+                  <div class="tda-formula">
+                    <p>$$ d_G(\varphi,\psi)=\min_{g\in G}\lVert \varphi-\psi\circ g\rVert_\infty $$</p>
+                  </div>
+                  <aside class="tda-callout is-review">
+                    <p class="tda-callout-label">Review Marker</p>
+                    <strong class="tda-callout-title">Example labels in the scan are partly ambiguous</strong>
+                    <p>
+                      The handwritten page sketches a time-series-style example to motivate the pseudodistance, but
+                      some of the axis labels are not sharp enough in the scan to reproduce verbatim with
+                      confidence.
+                    </p>
+                  </aside>
+                </section>
+
+                <section>
+                  <h3>The first GENEO intuition</h3>
+                  <p>
+                    Before the full definition arrives, the notes already point toward operators that do two jobs:
+                    they respect the chosen symmetry action and they do not increase distances. That is the seed
+                    of the GENEO perspective developed later.
+                  </p>
+                </section>
+
+                <section class="tda-widget" data-widget="persistence-explorer">
+                  <div class="tda-widget-head">
+                    <div>
+                      <p class="tda-widget-kicker">Interactive</p>
+                      <h3>Filtration / Persistence Explainer</h3>
+                    </div>
+                    <div class="tda-slider-wrap">
+                      <label for="tdaStage">threshold</label>
+                      <input id="tdaStage" class="tda-slider" type="range" min="0" max="5" value="0" data-stage>
+                      <span data-stage-label>t0</span>
+                    </div>
+                  </div>
+                  <div class="tda-widget-shell">
+                    <div class="tda-widget-canvas" data-canvas></div>
+                    <p class="tda-widget-summary" data-summary></p>
+                  </div>
+                </section>
+              </section>
+
+              <section class="tda-section" id="lecture-2" data-tda-section data-tda-label="2. Geometric Complexes">
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Lecture 2 • The geometric foundations</p>
+                  <h2>Geometric simplicial complexes</h2>
+                  <p class="tda-section-intro">
+                    Only after the persistence motivation does the notebook turn to the geometric language needed
+                    to formalize those topological changes.
+                  </p>
+                </header>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Affine combination and affine hull</strong>
+                    <p>
+                      An affine combination of vectors \(u_0,\dots,u_k\in\mathbb{R}^n\) has the form
+                      $$\sum_{i=0}^k \lambda_i u_i\qquad\text{with}\qquad \sum_{i=0}^k \lambda_i = 1.$$
+                      The set of all such affine combinations is the affine hull.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Affine independence</strong>
+                    <p>
+                      Points \(u_0,\dots,u_k\) are affinely independent when the representation of an affine
+                      combination is unique. The notes stress that not all points are in general position, so this
+                      hypothesis matters.
+                    </p>
+                  </article>
+                </div>
+
+                <div class="tda-grid-three">
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Convex set</strong>
+                    <p>
+                      A set \(S\subseteq\mathbb{R}^n\) is convex if for every \(x_1,x_2\in S\) and every
+                      \(t\in[0,1]\) we also have
+                      $$ (1-t)x_1 + tx_2\in S. $$
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Compact set</strong>
+                    <p>
+                      In \(\mathbb{R}^n\) the notes use the standard criterion: compact sets are closed and
+                      bounded, and every open cover admits a finite subcover.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Convex combination</strong>
+                    <p>
+                      A convex combination is an affine combination with non-negative coefficients. The convex hull
+                      is built from all such combinations.
+                    </p>
+                  </article>
+                </div>
+
+                <article class="tda-callout is-theorem">
+                  <p class="tda-callout-label">TheoremBox</p>
+                  <strong class="tda-callout-title">k-simplex</strong>
+                  <p>
+                    The convex hull of \(k+1\) affinely independent points is a \(k\)-simplex. The empty set plays
+                    the role of a \((-1)\)-simplex, which becomes relevant later for reduced homology.
+                  </p>
+                </article>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Geometric simplicial complex</strong>
+                    <p>
+                      A collection \(K\) of simplices in \(\mathbb{R}^n\) is a geometric simplicial complex when
+                      every face of every simplex lies in \(K\) and the intersection of two simplices is either
+                      empty or a common face.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-example">
+                    <p class="tda-callout-label">ExampleBox</p>
+                    <strong class="tda-callout-title">Body, subcomplexes, and skeletons</strong>
+                    <p>
+                      The body is
+                      $$ |K|=\bigcup_{\sigma\in K}\sigma. $$
+                      A subcomplex \(L\subseteq K\) is closed under faces, while the \(j\)-skeleton keeps only the
+                      simplices of dimension at most \(j\).
+                    </p>
+                  </article>
+                </div>
+
+                <section class="tda-widget" data-widget="simplicial-builder">
+                  <div class="tda-widget-head">
+                    <div>
+                      <p class="tda-widget-kicker">Interactive</p>
+                      <h3>Simplicial Complex Builder</h3>
+                    </div>
+                    <div class="tda-widget-controls">
+                      <button class="tda-widget-button is-active" type="button" data-mode="simplex">simplex</button>
+                      <button class="tda-widget-button" type="button" data-mode="faces">faces</button>
+                      <button class="tda-widget-button" type="button" data-mode="skeleton">1-skeleton</button>
+                      <button class="tda-widget-button" type="button" data-mode="subcomplex">subcomplex</button>
+                    </div>
+                  </div>
+                  <div class="tda-widget-shell">
+                    <div class="tda-widget-canvas" data-canvas></div>
+                    <p class="tda-widget-caption" data-caption></p>
+                  </div>
+                </section>
+              </section>
+
+              <section
+                class="tda-section"
+                id="lecture-3"
+                data-tda-section
+                data-tda-label="3. Abstract Complexes & Nerves"
+              >
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Lecture 3 • From combinatorics back to geometry</p>
+                  <h2>Abstract simplicial complexes, geometric realization, and point clouds</h2>
+                  <p class="tda-section-intro">
+                    The next step is to separate combinatorics from embedding. An abstract simplicial complex keeps
+                    only the face relation; geometry can be recovered later through realization.
+                  </p>
+                </header>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Abstract simplicial complex</strong>
+                    <p>
+                      A finite collection \(\mathcal{A}\) of finite subsets of a vertex set is an abstract
+                      simplicial complex when every non-empty subset of a simplex in \(\mathcal{A}\) also belongs
+                      to \(\mathcal{A}\).
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-remark">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">What gets forgotten</strong>
+                    <p>
+                      Passing from a geometric complex to an abstract one forgets metric information and keeps only
+                      incidence. The notebook explicitly marks this loss: there is no distance left in the abstract
+                      complex itself.
+                    </p>
+                  </article>
+                </div>
+
+                <article class="tda-callout is-definition">
+                  <p class="tda-callout-label">DefinitionBox</p>
+                  <strong class="tda-callout-title">Isomorphism of abstract complexes</strong>
+                  <p>
+                    A bijection on vertices induces an isomorphism when it preserves simplices and their inverses do
+                    the same. This is the combinatorial notion of “same shape”.
+                  </p>
+                </article>
+
+                <figure class="tda-figure">
+                  <p class="tda-figure-kicker">FigureWithCaption</p>
+                  <svg viewBox="0 0 560 220" role="img" aria-label="Abstract versus geometric realization">
+                    <text x="30" y="28" class="tda-svg-small-label">abstract complex</text>
+                    <circle cx="68" cy="154" r="6" class="tda-svg-point is-yellow"></circle>
+                    <circle cx="122" cy="74" r="6" class="tda-svg-point is-yellow"></circle>
+                    <circle cx="178" cy="154" r="6" class="tda-svg-point is-yellow"></circle>
+                    <line x1="68" y1="154" x2="122" y2="74" class="tda-svg-edge is-yellow"></line>
+                    <line x1="122" y1="74" x2="178" y2="154" class="tda-svg-edge is-yellow"></line>
+                    <line x1="68" y1="154" x2="178" y2="154" class="tda-svg-edge is-yellow"></line>
+                    <circle cx="178" cy="154" r="6" class="tda-svg-point is-blue"></circle>
+                    <circle cx="238" cy="114" r="6" class="tda-svg-point is-blue"></circle>
+                    <line x1="178" y1="154" x2="238" y2="114" class="tda-svg-edge is-blue"></line>
+                    <text x="256" y="118" class="tda-svg-title">→</text>
+                    <text x="308" y="28" class="tda-svg-small-label">geometric realization</text>
+                    <path d="M348 154 L418 72 L498 154 Z" class="tda-svg-face is-blue"></path>
+                    <line x1="348" y1="154" x2="418" y2="72" class="tda-svg-edge is-blue"></line>
+                    <line x1="418" y1="72" x2="498" y2="154" class="tda-svg-edge is-blue"></line>
+                    <line x1="348" y1="154" x2="498" y2="154" class="tda-svg-edge is-blue"></line>
+                    <line x1="498" y1="154" x2="532" y2="118" class="tda-svg-edge is-green"></line>
+                    <circle cx="348" cy="154" r="6" class="tda-svg-point is-blue"></circle>
+                    <circle cx="418" cy="72" r="6" class="tda-svg-point is-blue"></circle>
+                    <circle cx="498" cy="154" r="6" class="tda-svg-point is-blue"></circle>
+                    <circle cx="532" cy="118" r="6" class="tda-svg-point is-green"></circle>
+                  </svg>
+                  <figcaption>
+                    The realization theorem in the notes reconnects the abstract complex to a geometric one:
+                    combinatorial data becomes an actual simplicial object in Euclidean space.
+                  </figcaption>
+                </figure>
+
+                <article class="tda-callout is-theorem">
+                  <p class="tda-callout-label">TheoremBox</p>
+                  <strong class="tda-callout-title">Geometric realization theorem</strong>
+                  <p>
+                    Every finite abstract simplicial complex of dimension \(d\) can be realized as a geometric
+                    simplicial complex in \(\mathbb{R}^{2d+1}\). The notes illustrate this by contrasting
+                    realizable complexes with planar obstructions such as \(K_5\) and \(K_{3,3}\).
+                  </p>
+                </article>
+
+                <section>
+                  <h3>Nerve of a cover</h3>
+                  <p>
+                    If \(\mathcal{F}=\{U_i\}_{i\in I}\) is a finite family of sets, its nerve records which finite
+                    intersections are non-empty.
+                  </p>
+                  <div class="tda-formula">
+                    <p>$$ \operatorname{Nrv}(\mathcal{F})=\{J\subseteq I:\bigcap_{j\in J}U_j\neq\varnothing\} $$</p>
+                  </div>
+                  <p>
+                    This provides the bridge from point clouds to combinatorial models: cover the points by balls
+                    and look at the nerve.
+                  </p>
+                </section>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Cech complex</strong>
+                    <p>
+                      For a point cloud \(S\subseteq\mathbb{R}^n\) and radius \(\alpha\), the Cech complex is the
+                      nerve of the ball cover \(\{B(x,\alpha)\}_{x\in S}\).
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Vietoris-Rips complex</strong>
+                    <p>
+                      The Vietoris-Rips complex keeps a simplex whenever all of its vertices are pairwise within
+                      the chosen threshold. In the notes it is presented as the computationally lighter companion
+                      to Cech.
+                    </p>
+                  </article>
+                </div>
+
+                <article class="tda-callout is-theorem">
+                  <p class="tda-callout-label">TheoremBox</p>
+                  <strong class="tda-callout-title">Vietoris-Rips lemma</strong>
+                  <p>
+                    The handwritten statement records the standard inclusions
+                    $$ \check{C}(S,\alpha)\subseteq VR(S,\alpha)\subseteq \check{C}(S,\sqrt{2}\alpha). $$
+                    The first inclusion is easy to visualize: common intersection implies pairwise intersection.
+                  </p>
+                </article>
+
+                <article class="tda-callout is-example">
+                  <p class="tda-callout-label">ExampleBox</p>
+                  <strong class="tda-callout-title">Collapsibility</strong>
+                  <p>
+                    An elementary collapse removes a simplex together with one free coface. A complex is
+                    collapsible if a sequence of elementary collapses reduces it to a point.
+                  </p>
+                </article>
+
+                <section class="tda-widget" data-widget="nerve-explorer">
+                  <div class="tda-widget-head">
+                    <div>
+                      <p class="tda-widget-kicker">Interactive</p>
+                      <h3>Nerve / Cech / Vietoris-Rips Explainer</h3>
+                    </div>
+                    <div class="tda-widget-controls">
+                      <button class="tda-widget-button" type="button" data-view="cech">Cech</button>
+                      <button class="tda-widget-button" type="button" data-view="vr">Vietoris-Rips</button>
+                      <button class="tda-widget-button is-active" type="button" data-view="both">both</button>
+                    </div>
+                  </div>
+                  <div class="tda-slider-wrap">
+                    <label for="tdaRadius">radius</label>
+                    <input id="tdaRadius" class="tda-slider" type="range" min="42" max="90" value="72" data-radius>
+                    <span data-radius-value>0.72</span>
+                  </div>
+                  <div class="tda-widget-shell">
+                    <div class="tda-widget-canvas" data-canvas></div>
+                    <p class="tda-widget-summary" data-summary></p>
+                  </div>
+                </section>
+              </section>
+
+              <section class="tda-section" id="lecture-4" data-tda-section data-tda-label="4. Chains & Homology">
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Lecture 4 • Algebraic topology enters</p>
+                  <h2>Chain complexes, boundary maps, homology groups, and Betti numbers</h2>
+                  <p class="tda-section-intro">
+                    Once simplicial complexes are available, the notes build the algebraic machinery that counts
+                    holes: chain groups, boundaries, cycles, and the quotient that identifies true holes.
+                  </p>
+                </header>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Chain complex</strong>
+                    <p>
+                      A chain complex is a sequence of vector spaces \(V_p\) together with maps
+                      \(\partial_p:V_p\to V_{p-1}\) such that
+                      $$\partial_p\circ\partial_{p+1}=0.$$
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Chain groups</strong>
+                    <p>
+                      The \(p\)-chains \(C_p\) are formal linear combinations of \(p\)-simplices. The notes first
+                      treat coefficients in \(\mathbb{Z}_2\), then explicitly discuss quotient spaces and
+                      homology as algebra.
+                    </p>
+                  </article>
+                </div>
+
+                <article class="tda-callout is-definition">
+                  <p class="tda-callout-label">FormulaBlock</p>
+                  <strong class="tda-callout-title">Boundary operator</strong>
+                  <div class="tda-formula">
+                    <p>$$ \partial_p\langle u_0,\dots,u_p\rangle = \sum_{i=0}^p (-1)^i \langle u_0,\dots,\widehat{u_i},\dots,u_p\rangle $$</p>
+                  </div>
+                  <p>
+                    The alternating sign is the key detail. In the notes it is first tested on triangles and then
+                    pushed to the general proof that \(\partial^2=0\).
+                  </p>
+                </article>
+
+                <details class="tda-proof">
+                  <summary>ProofToggle • Why \(\partial^2=0\)</summary>
+                  <div class="tda-proof-body">
+                    <p>
+                      The handwritten proof expands \(\partial_{p-1}(\partial_p\sigma)\) and groups the resulting
+                      \((p-2)\)-faces into cancelling pairs. Each face appears twice with opposite signs because
+                      omitting \(u_i\) and then \(u_j\) is the same face as omitting \(u_j\) and then \(u_i\), but
+                      with opposite parity.
+                    </p>
+                  </div>
+                </details>
+
+                <div class="tda-grid-three">
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Quotient space</strong>
+                    <p>
+                      The notes pause to recall the quotient \(V/W\) for a subspace \(W\subseteq V\). Homology is
+                      built exactly this way: cycles modulo boundaries.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Cycles</strong>
+                    <p>$$ Z_p=\ker \partial_p $$ A \(p\)-cycle has empty boundary.</p>
+                  </article>
+
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Boundaries</strong>
+                    <p>$$ B_p=\operatorname{im}\partial_{p+1} $$ A \(p\)-boundary already bounds a higher-dimensional chain.</p>
+                  </article>
+
+                  <article class="tda-callout is-theorem">
+                    <p class="tda-callout-label">TheoremBox</p>
+                    <strong class="tda-callout-title">Homology group</strong>
+                    <p>$$ H_p(K)=Z_p/B_p=\ker\partial_p\big/\operatorname{im}\partial_{p+1}. $$</p>
+                  </article>
+                </div>
+
+                <article class="tda-callout is-example">
+                  <p class="tda-callout-label">ExampleBox</p>
+                  <strong class="tda-callout-title">A cycle is not automatically a hole</strong>
+                  <p>
+                    The notes repeatedly contrast the boundary of an empty triangle with the boundary of a filled
+                    triangle. In the first case the loop gives a non-trivial \(H_1\) class; in the second it
+                    becomes a boundary and disappears in homology.
+                  </p>
+                </article>
+
+                <section class="tda-widget" data-widget="homology-intuition">
+                  <div class="tda-widget-head">
+                    <div>
+                      <p class="tda-widget-kicker">Interactive</p>
+                      <h3>Homology Intuition Visual</h3>
+                    </div>
+                    <div class="tda-widget-controls">
+                      <button class="tda-widget-button" type="button" data-scene="disconnected">components</button>
+                      <button class="tda-widget-button is-active" type="button" data-scene="cycle">cycle</button>
+                      <button class="tda-widget-button" type="button" data-scene="filled">boundary</button>
+                      <button class="tda-widget-button" type="button" data-scene="cavity">cavity</button>
+                    </div>
+                  </div>
+                  <div class="tda-widget-shell">
+                    <div class="tda-widget-canvas" data-canvas></div>
+                    <p class="tda-widget-summary" data-summary></p>
+                  </div>
+                </section>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Betti numbers</strong>
+                    <p>
+                      The notes use
+                      $$ \beta_p = \dim H_p $$
+                      and then relate \(\beta_p\) to the ranks of the boundary maps through simple dimension
+                      bookkeeping.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-remark">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">Reduced versus classical simplicial homology</strong>
+                    <p>
+                      Reduced homology shifts the degree-zero picture by adjoining the empty simplex. In practice
+                      it removes the “one always present” connected component and makes formulas cleaner.
+                    </p>
+                  </article>
+                </div>
+
+                <article class="tda-callout is-theorem">
+                  <p class="tda-callout-label">TheoremBox</p>
+                  <strong class="tda-callout-title">Euler-Poincare</strong>
+                  <p>
+                    The notebook defines the Euler characteristic by simplex counts,
+                    $$ \chi(K)=\sum_{i\ge 0}(-1)^i n_i, $$
+                    and proves the matching homological formula
+                    $$ \chi(K)=\sum_{i\ge 0}(-1)^i \beta_i. $$
+                  </p>
+                </article>
+
+                <details class="tda-proof">
+                  <summary>ProofToggle • Euler-Poincare sketch from the notes</summary>
+                  <div class="tda-proof-body">
+                    <p>
+                      The proof substitutes the rank-nullity identities for the boundary maps into the alternating
+                      sum of simplex counts. After the \(b_i\) terms telescope, the surviving contribution is
+                      precisely the alternating sum of Betti numbers.
+                    </p>
+                  </div>
+                </details>
+
+                <article class="tda-callout is-theorem">
+                  <p class="tda-callout-label">TheoremBox</p>
+                  <strong class="tda-callout-title">Elementary collapse preserves homology</strong>
+                  <p>
+                    If \(L\) is obtained from \(K\) by an elementary collapse, then the handwritten theorem states
+                    that \(H_p(L)\cong H_p(K)\) for every \(p\in\mathbb{Z}\).
+                  </p>
+                </article>
+              </section>
+
+              <section
+                class="tda-section"
+                id="lecture-5"
+                data-tda-section
+                data-tda-label="5. Group Actions & Pseudodistance"
+              >
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Lecture 5 • Symmetries and filtering functions</p>
+                  <h2>Groups, group actions, filtering functions, and natural pseudodistance</h2>
+                  <p class="tda-section-intro">
+                    The notebook now revisits comparison in a more systematic way: first basic group language,
+                    then actions on spaces and function spaces, and finally the pseudodistance induced by the
+                    admissible transformations.
+                  </p>
+                </header>
+
+                <div class="tda-grid-three">
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Group</strong>
+                    <p>
+                      A set \(G\) with a binary operation is a group when it has an identity, every element has an
+                      inverse, and the operation is associative. The notes also highlight the abelian case.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Pseudometric</strong>
+                    <p>
+                      A pseudometric satisfies all the metric axioms except that \(d(x,y)=0\) need not imply
+                      \(x=y\). This flexibility is useful once symmetries identify different objects.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Group action</strong>
+                    <p>
+                      A left action is a map \(G\times X\to X\) satisfying \(e\cdot x=x\) and
+                      \(g_2\cdot(g_1\cdot x)=(g_2g_1)\cdot x\).
+                    </p>
+                  </article>
+                </div>
+
+                <section>
+                  <h3>Directional filtering functions on simplicial complexes</h3>
+                  <p>
+                    One of the notebook examples starts with a function on the vertices and extends it to a simplex
+                    by taking the maximum value on its vertices. This turns a discrete assignment into a bona fide
+                    filtering function on the whole complex.
+                  </p>
+                  <div class="tda-formula">
+                    <p>$$ \varphi'(\sigma)=\max\{\varphi'(u_0),\dots,\varphi'(u_m)\}\qquad\text{for }\sigma=\langle u_0,\dots,u_m\rangle. $$</p>
+                  </div>
+                </section>
+
+                <section>
+                  <h3>Metrics induced by a function space</h3>
+                  <p>
+                    The notes introduce several sup-type distances: one on vertices, one on the symmetry group,
+                    and the ambient sup norm on the function space \(\Phi\). Those metrics organize the later
+                    comparison theorems.
+                  </p>
+                </section>
+
+                <article class="tda-callout is-theorem">
+                  <p class="tda-callout-label">TheoremBox</p>
+                  <strong class="tda-callout-title">Natural pseudodistance revisited</strong>
+                  <p>
+                    For \(\varphi,\psi\in\Phi\), the natural pseudodistance measures the smallest sup-norm mismatch
+                    after composing with an admissible symmetry:
+                    $$ d_G(\varphi,\psi)=\min_{g\in G}\lVert \varphi-\psi\circ g\rVert_\infty. $$
+                    The notes also remark that enlarging the group can only make this quantity smaller.
+                  </p>
+                </article>
+              </section>
+
+              <section
+                class="tda-section"
+                id="lecture-6"
+                data-tda-section
+                data-tda-label="6. Persistent Homology"
+              >
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Lecture 6 • Formal persistent homology</p>
+                  <h2>Persistent modules, persistent homology groups, persistent Betti numbers, and diagrams</h2>
+                  <p class="tda-section-intro">
+                    After the earlier intuition, the sixth lecture formalizes persistence with inclusions,
+                    induced maps, and invariants indexed by pairs of threshold values.
+                  </p>
+                </header>
+
+                <article class="tda-callout is-definition">
+                  <p class="tda-callout-label">DefinitionBox</p>
+                  <strong class="tda-callout-title">Persistent module</strong>
+                  <p>
+                    A persistent module is a collection of vector spaces \(\{V_t\}_{t\in\mathbb{R}}\) with maps
+                    \(i_t^s:V_s\to V_t\) for \(s\le t\), satisfying identity and functoriality:
+                    $$ i_t^s\circ i_s^r = i_t^r,\qquad i_t^t=\mathrm{id}_{V_t}. $$
+                  </p>
+                </article>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Persistent homology group</strong>
+                    <p>
+                      If \(K^u\subseteq K^v\), the induced map on homology yields
+                      $$ H_p^\varphi(u,v)=\operatorname{im}\, i_*^{u,v}. $$
+                      It records the \(p\)-classes already present at \(u\) that are still alive at \(v\).
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Persistent Betti number</strong>
+                    <p>
+                      The notes define the rank invariant by
+                      $$ \beta_p^\varphi(u,v)=\dim H_p^\varphi(u,v). $$
+                      It is right-continuous in both variables, non-increasing in \(v\), and non-decreasing in \(u\).
+                    </p>
+                  </article>
+                </div>
+
+                <article class="tda-callout is-remark">
+                  <p class="tda-callout-label">RemarkBox</p>
+                  <strong class="tda-callout-title">Multiplicity and the persistence diagram</strong>
+                  <p>
+                    Around a corner \((u,v)\), the notebook extracts multiplicity from a tiny rectangle by
+                    inclusion-exclusion of persistent Betti numbers. Points with positive multiplicity become the
+                    persistence diagram.
+                  </p>
+                </article>
+
+                <article class="tda-callout is-example">
+                  <p class="tda-callout-label">ExampleBox</p>
+                  <strong class="tda-callout-title">What the diagram keeps</strong>
+                  <p>
+                    The persistence diagram forgets the specific cycle representative and keeps only the lifetime of
+                    the class. This is exactly the abstraction already suggested by the first lecture’s picture.
+                  </p>
+                </article>
+              </section>
+
+              <section
+                class="tda-section"
+                id="lecture-7"
+                data-tda-section
+                data-tda-label="7. Diagram Distances & GENEOs"
+              >
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Lecture 7 • Stability and equivariant operators</p>
+                  <h2>Matching distance, bottleneck and Wasserstein metrics, stability, and GENEOs</h2>
+                  <p class="tda-section-intro">
+                    The final lecture turns persistence diagrams into objects that can themselves be compared, then
+                    folds the whole story back into the GENEO framework.
+                  </p>
+                </header>
+
+                <section>
+                  <h3>Matching to the diagonal</h3>
+                  <p>
+                    The notes allow every point in one persistence diagram either to match a point in the other
+                    diagram or to be sent to the diagonal. Matching to the diagonal is the price of deleting a
+                    short-lived class.
+                  </p>
+                </section>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">FormulaBlock</p>
+                    <strong class="tda-callout-title">Wasserstein distance</strong>
+                    <div class="tda-formula">
+                      <p>$$ W_q(X,Y)=\inf_{\eta:X\to Y}\left[\sum_{x\in X}\lVert x-\eta(x)\rVert_\infty^q\right]^{1/q}. $$</p>
+                    </div>
+                  </article>
+
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">FormulaBlock</p>
+                    <strong class="tda-callout-title">Bottleneck distance</strong>
+                    <div class="tda-formula">
+                      <p>$$ W_\infty(X,Y)=\inf_{\eta:X\to Y}\sup_{x\in X}\lVert x-\eta(x)\rVert_\infty. $$</p>
+                    </div>
+                  </article>
+                </div>
+
+                <article class="tda-callout is-theorem">
+                  <p class="tda-callout-label">TheoremBox</p>
+                  <strong class="tda-callout-title">Stability idea</strong>
+                  <p>
+                    The notes explicitly connect diagram distances to the natural pseudodistance: the matching
+                    distance between persistence diagrams is bounded by the sup-norm discrepancy after optimal
+                    alignment,
+                    $$ d_B(\mathrm{Dgm}(\varphi),\mathrm{Dgm}(\psi)) \le d_G(\varphi,\psi). $$
+                    Small perturbations in the data therefore create only small perturbations in the diagram.
+                  </p>
+                </article>
+
+                <section class="tda-widget" data-widget="diagram-distance">
+                  <div class="tda-widget-head">
+                    <div>
+                      <p class="tda-widget-kicker">Interactive</p>
+                      <h3>Diagram Distance Intuition</h3>
+                    </div>
+                    <div class="tda-widget-controls">
+                      <button class="tda-widget-button is-active" type="button" data-matching="bottleneck">
+                        near-optimal
+                      </button>
+                      <button class="tda-widget-button" type="button" data-matching="loose">looser</button>
+                    </div>
+                  </div>
+                  <div class="tda-widget-shell">
+                    <div class="tda-widget-canvas" data-canvas></div>
+                    <p class="tda-widget-summary" data-summary></p>
+                  </div>
+                </section>
+
+                <section>
+                  <h3>GENEOs</h3>
+                  <p>
+                    The last pages define a GENEO as a group-equivariant, non-expansive operator between function
+                    spaces. In the notes the operator is always tied to a homomorphism \(T:G\to H\) between the
+                    symmetry groups.
+                  </p>
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">GENEO</strong>
+                    <p>
+                      A map \(F:\Phi\to\Psi\) is a <em>group equivariant non-expansive operator</em> when:
+                    </p>
+                    <ul>
+                      <li>for every \(\varphi\in\Phi\) and \(g\in G\), $$F(\varphi\circ g)=F(\varphi)\circ T(g);$$</li>
+                      <li>for every \(\varphi_1,\varphi_2\in\Phi\), $$D_\Psi(F(\varphi_1),F(\varphi_2))\le D_\Phi(\varphi_1,\varphi_2).$$</li>
+                    </ul>
+                  </article>
+                </section>
+
+                <aside class="tda-callout is-review">
+                  <p class="tda-callout-label">Review Marker</p>
+                  <strong class="tda-callout-title">Compactness statement needs a manual check against the scan</strong>
+                  <p>
+                    The last handwritten page includes a compactness theorem for sets of GENEOs under assumptions
+                    on the function spaces, but some of the surrounding notation is not sharp enough in the scan to
+                    digitize every hypothesis with complete certainty.
+                  </p>
+                </aside>
+
+                <section class="tda-widget" data-widget="geneo-intuition">
+                  <div class="tda-widget-head">
+                    <div>
+                      <p class="tda-widget-kicker">Interactive</p>
+                      <h3>GENEO Intuition Section</h3>
+                    </div>
+                    <div class="tda-slider-wrap">
+                      <label for="tdaShift">rotation step</label>
+                      <input id="tdaShift" class="tda-slider" type="range" min="0" max="5" value="0" data-shift>
+                      <span data-shift-value>0</span>
+                    </div>
+                  </div>
+                  <div class="tda-widget-shell">
+                    <div class="tda-widget-canvas" data-canvas></div>
+                    <p class="tda-widget-summary" data-summary></p>
+                  </div>
+                </section>
+              </section>
+
+              <details class="tda-source-drawer" id="source-notes">
+                <summary>Source notes drawer</summary>
+                <div class="tda-source-embed">
+                  <embed src="/tdafull.pdf" type="application/pdf">
+                </div>
+              </details>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="post-footer">
+        <ul class="post-tags">
+          <li><a href="https://ldomenichelli.github.io/tags/homology/">Homology</a></li>
+          <li><a href="https://ldomenichelli.github.io/tags/geneo/">GENEO</a></li>
+        </ul>
+        <nav class="paginav">
+          <a class="prev" href="https://ldomenichelli.github.io/posts/post9/">
+            <span class="title">« Prev</span><br><span>Time Series 📈</span>
+          </a>
+        </nav>
+      </footer>
+    </article>
+  </main>
+
+  <footer class="footer" style="padding-top:18px;padding-bottom:18px">
+    <div class="social-icons" style="padding-bottom:0">
+      <a style="border-bottom:none" href="https://x.com/workerplacemint" rel="me" title="Twitter">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentcolor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+        </svg>
+      </a>
+      <a style="border-bottom:none" href="https://github.com/ldomenichelli" rel="me" title="Github">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentcolor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77 5.44 5.44 0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path>
+        </svg>
+      </a>
+      <a style="border-bottom:none" href="mailto:ldomenichelli2@gmail.com" rel="me" title="Email">
+        <svg
+          viewBox="0 0 24 21"
+          fill="none"
+          stroke="currentcolor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+          <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+      </a>
+    </div>
+    <span>&copy; 2025 <a href="https://ldomenichelli.github.io/">lucia's notes</a></span>
+    <span>• Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/adityatelange/hugo-PaperMod/">PaperMod</a></span>
+    <span>• <a href="/privacy">Privacy Policy</a></span>
+  </footer>
+
+  <a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"></path></svg>
+  </a>
+
+  <script>
+    let b = document.querySelector("#menu-trigger"),
+      m = document.querySelector(".menu");
+    b.addEventListener("click", function () {
+      m.classList.toggle("hidden");
+    }),
+      document.body.addEventListener("click", function (e) {
+        b.contains(e.target) || m.classList.add("hidden");
+      });
+  </script>
+  <script>
+    let menu = document.getElementById("menu");
+    menu &&
+      ((menu.scrollLeft = localStorage.getItem("menu-scroll-position")),
+      (menu.onscroll = function () {
+        localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+      })),
+      document.querySelectorAll('a[href^="#"]').forEach((e) => {
+        e.addEventListener("click", function (event) {
+          event.preventDefault();
+          const target = this.getAttribute("href").substr(1);
+          const destination = document.querySelector(`[id='${decodeURIComponent(target)}']`);
+          if (!destination) {
+            return;
+          }
+          destination.scrollIntoView(
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches ? {} : { behavior: "smooth" }
+          );
+          target === "top" ? history.replaceState(null, null, " ") : history.pushState(null, null, `#${target}`);
+        });
+      });
+  </script>
+  <script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+      document.body.scrollTop > 800 || document.documentElement.scrollTop > 800
+        ? ((mybutton.style.visibility = "visible"), (mybutton.style.opacity = "1"))
+        : ((mybutton.style.visibility = "hidden"), (mybutton.style.opacity = "0"));
+    };
+  </script>
+  <script type="module">
+    import { enhanceTdaNotesPage } from "/assets/js/tda-notes.js";
+
+    enhanceTdaNotesPage();
+  </script>
+  <script>
+    document.querySelectorAll("pre > code").forEach((e) => {
+      const n = e.parentNode.parentNode,
+        t = document.createElement("button");
+      t.classList.add("copy-code"), (t.innerHTML = "copy");
+      function s() {
+        (t.innerHTML = "copied!"),
+          setTimeout(() => {
+            t.innerHTML = "copy";
+          }, 2e3);
+      }
+      t.addEventListener("click", () => {
+        if ("clipboard" in navigator) {
+          navigator.clipboard.writeText(e.textContent), s();
+          return;
+        }
+        const n = document.createRange();
+        n.selectNodeContents(e);
+        const o = window.getSelection();
+        o.removeAllRanges(), o.addRange(n);
+        try {
+          document.execCommand("copy"), s();
+        } catch {}
+        o.removeRange(n);
+      }),
+        n.classList.contains("highlight")
+          ? n.appendChild(t)
+          : n.parentNode.firstChild == n ||
+            (e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE"
+              ? e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t)
+              : e.parentNode.appendChild(t));
+    });
+  </script>
+</body>
+</html>
