@@ -1,15 +1,1360 @@
-<!doctype html><html lang=en dir=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Geometric Deep Learning | lucia's notes</title>
-<meta name=keywords content="geometric,deep learning"><meta name=description content="Some notes on geometric deep learning"><meta name=author content="Lucia"><link rel=canonical href=https://ldomenichelli.github.io/posts/post7/><link crossorigin=anonymous href=/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css integrity="sha256-WtmxyqkuTOqD680wiOlzYvI5sH2BREkKrwvB1r2JzRc=" rel="preload stylesheet" as=style><link rel=icon href=https://ldomenichelli.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://ldomenichelli.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://ldomenichelli.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://ldomenichelli.github.io/apple-touch-icon.png><link rel=mask-icon href=https://ldomenichelli.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=en href=https://ldomenichelli.github.io/posts/post7/><noscript><style>#theme-toggle,.top-link{display:none}</style></noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X crossorigin=anonymous><script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin=anonymous></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin=anonymous onload='renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})'></script><style>@media screen and (min-width:769px){.post-content input[type=checkbox]:checked~label>img{transform:scale(1.6);cursor:zoom-out;position:relative;z-index:999}.post-content img.zoomCheck{transition:transform .15s ease;z-index:999;cursor:zoom-in}}</style><meta property="og:title" content="Geometric Deep Learning"><meta property="og:description" content="Some notes on geometric deep learning"><meta property="og:type" content="article"><meta property="og:url" content="https://ldomenichelli.github.io/posts/post7/"><meta property="og:image" content="https://ldomenichelli.github.io/logo.png"><meta property="article:section" content="posts"><meta property="og:site_name" content="lucia's notes"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://ldomenichelli.github.io/logo.png"><meta name=twitter:title content="Geometric Deep Learning"><meta name=twitter:description content="Some notes on geometric deep learning"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"","item":"https://ldomenichelli.github.io/posts/"},{"@type":"ListItem","position":2,"name":"Geometric Deep Learning","item":"https://ldomenichelli.github.io/posts/post7/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Geometric Deep Learning","name":"Geometric Deep Learning","description":"Some notes on geometric deep learning","keywords":["geometric","deep learning"],"articleBody":"🏗️ Representation Learning for NLP All neural‑network (NN) architectures create vector representations—also called embeddings—of the input.\nThese vectors pack statistical and semantic cues that let the model classify, translate, or generate text.\nThe network learns better representations through feedback from a loss function.\nTransformers build features for each word with an attention mechanism that asks:\n“How important is every other word in the sentence to this word?”\n🔗 GNNs—Representing Graphs Graph Neural Networks (GNNs) or Graph Convolutional Networks (GCNs) embed nodes and edges.\nThey rely on neighbourhood aggregation / message passing:\nGNN update the hidden feature h of node i at layer l via a non-linear transformation of the node’s own feature $h_i^l$ added to the aggregation of feature $h_j^l$ from each neighboring node $j \\in N(i)$\n$$h_{i}^{\\ell+1} = \\sigma \\Big( U^{\\ell} h_{i}^{\\ell} + \\sum_{j \\in \\mathcal{N}(i)} \\left( V^{\\ell} h_{j}^{\\ell} \\right) \\Big)$$ where $U^l$ and $V^l$ are learnable weight matrices of the GNN layer and $\\sigma$ is a non-linear function such as ReLU.\nSymbol Meaning $(h_i^\\ell$) feature of node i at layer ($\\ell$) $(\\mathcal{N}(i))$ neighbours of i $(U^\\ell, V^\\ell)$ learnable weights ($\\sigma)$ non‑linearity (e.g., ReLU) Stacking layers lets information flow across the whole graph.\n🧩 Where Transformers Meet GNNs Replace the plain sum with a weighted sum via attention → you get a Graph Attention Network (GAT).\nAdd layer‑norm and an MLP, and voilà — a Graph Transformer!\nWhat we have with transformers instead, is this, for an hidden feature $h$:\n$$h_{i}^{\\ell+1} = \\text{Attention} \\left( Q^{\\ell} h_{i}^{\\ell} \\ , K^{\\ell} h_{j}^{\\ell} \\ , V^{\\ell} h_{j}^{\\ell} \\right)$$ with: $$\\ h_{i}^{\\ell+1} = \\sum_{j \\in \\mathcal{S}} w_{ij} \\left( V^{\\ell} h_{j}^{\\ell} \\right)$$ $$ \\text{where} \\ w_{ij} = \\text{softmax}_j \\left ( Q^{\\ell} h^{\\ell}_i \\cdot K^{\\ell} h^{\\ell}_j \\right)$$\n📝 Sentences as Graphs—But with Caveats Think of a sentence as a fully‑connected graph where every word links to every other.\nTransformers = GNNs with multi‑head attention acting as the aggregation rule.\nYet fully connected graphs mean quadratic growth in edges, which makes learning very long‑range word relations hard.\n🤔 Are Transformers Learning Neural Syntax? Studies suggest attention heads latch onto task‑specific syntax:\nAttention can surface the most relevant word pairs in a sentence. Different heads specialise in different syntactic cues. Graph‑theoretic view: can GNNs on full graphs reveal which edges matter most by inspecting the aggregation weights? This might expose the hidden structure driving model accuracy.\n📚 References Chaitanya K. Joshi, “Transformers are Graph Neural Networks,” The Gradient (2020). 🎥 YouTube Talk ","wordCount":"405","inLanguage":"en","datePublished":"0001-01-01T00:00:00Z","dateModified":"0001-01-01T00:00:00Z","author":{"@type":"Person","name":"Lucia"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ldomenichelli.github.io/posts/post7/"},"publisher":{"@type":"Organization","name":"lucia's notes","logo":{"@type":"ImageObject","url":"https://ldomenichelli.github.io/favicon.ico"}}}</script><link rel="stylesheet" href="/assets/css/site-theme.css"></head><body class=dark id=top><header class=header><nav class=nav><div class=logo><a href=https://ldomenichelli.github.io/ accesskey=h title="lucia's notes (Alt + H)">lucia's notes</a><div class=logo-switches><ul class=lang-switch><li>|</li></ul></div></div><button id=menu-trigger aria-haspopup=menu aria-label="Menu Button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><ul class="menu hidden"><li><a href=https://ldomenichelli.github.io/about/ title=about><span>about</span></a></li><li><a href=https://ldomenichelli.github.io/posts/ title=notes><span>notes</span></a></li><li><a href=https://ldomenichelli.github.io/random/ title=hobbies><span>hobbies</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><div class=breadcrumbs><a href=https://ldomenichelli.github.io/>Home</a>&nbsp;»&nbsp;<a href=https://ldomenichelli.github.io/posts/></a></div><h1 class=post-title>Geometric Deep Learning</h1><div class=post-description>Some notes on geometric deep learning</div><div class=post-meta>Lucia</div></header><div class="toc side left"><details open><summary accesskey=c title="(Alt + C)"><span class=details>Table of Contents</span></summary><div class=inner><nav id=TableOfContents><ul><li><ul><li><a href=#representationlearning-for-nlp>🏗️ Representation Learning for NLP</a><ul><li><a href=#gnnsrepresenting-graphs>🔗 GNNs—Representing Graphs</a></li><li><a href=#where-transformers-meet-gnns>🧩 Where Transformers Meet GNNs</a></li></ul></li></ul></li><li><a href=#sentences-as-graphsbut-with-caveats>📝 Sentences as Graphs—But with Caveats</a><ul><li><a href=#are-transformers-learning-neural-syntax>🤔 Are Transformers Learning <em>Neural Syntax</em>?</a></li></ul></li><li><a href=#references>📚 References</a></li></ul></nav></div></details></div><div class=post-content><h3 id=representationlearning-for-nlp>🏗️ Representation Learning for NLP<a hidden class=anchor aria-hidden=true href=#representationlearning-for-nlp>#</a></h3><p>All neural‑network (NN) architectures create <strong>vector representations</strong>—also called <em>embeddings</em>—of the input.<br>These vectors pack statistical <em>and</em> semantic cues that let the model classify, translate, or generate text.</p><p>The network <em>learns</em> better representations through feedback from a <strong>loss function</strong>.</p><blockquote><p><strong>Transformers</strong> build features for each word with an <strong>attention mechanism</strong> that asks:<br><em>“How important is every other word in the sentence to this word?”</em></p></blockquote><h4 id=gnnsrepresenting-graphs>🔗 GNNs—Representing Graphs<a hidden class=anchor aria-hidden=true href=#gnnsrepresenting-graphs>#</a></h4><p>Graph Neural Networks (GNNs) or Graph Convolutional Networks (GCNs) embed <strong>nodes and edges</strong>.<br>They rely on <strong>neighbourhood aggregation / message passing</strong>:</p><p>GNN update the hidden feature <em>h</em> of node <em>i</em> at layer <em>l</em> via a non-linear transformation of the node&rsquo;s own feature $h_i^l$ added to the aggregation of feature $h_j^l$ from each neighboring node $j \in N(i)$</p><p>$$h_{i}^{\ell+1} = \sigma \Big( U^{\ell} h_{i}^{\ell} + \sum_{j \in \mathcal{N}(i)} \left( V^{\ell} h_{j}^{\ell} \right) \Big)$$
-where $U^l$ and $V^l$ are learnable weight matrices of the GNN layer and $\sigma$ is a non-linear function such as ReLU.</p><table><thead><tr><th>Symbol</th><th>Meaning</th></tr></thead><tbody><tr><td>$(h_i^\ell$)</td><td>feature of node <em>i</em> at layer ($\ell$)</td></tr><tr><td>$(\mathcal{N}(i))$</td><td>neighbours of <em>i</em></td></tr><tr><td>$(U^\ell, V^\ell)$</td><td>learnable weights</td></tr><tr><td>($\sigma)$</td><td>non‑linearity (e.g., ReLU)</td></tr></tbody></table><p>Stacking layers lets information flow across the whole graph.</p><hr><h4 id=where-transformers-meet-gnns>🧩 Where Transformers Meet GNNs<a hidden class=anchor aria-hidden=true href=#where-transformers-meet-gnns>#</a></h4><p>Replace the plain sum with a <strong>weighted sum via attention</strong> → you get a <strong>Graph Attention Network (GAT)</strong>.<br>Add layer‑norm and an MLP, and voilà — a <strong>Graph Transformer</strong>!</p><p>What we have with transformers instead, is this, for an hidden feature $h$:</p><p>$$h_{i}^{\ell+1} = \text{Attention} \left( Q^{\ell} h_{i}^{\ell} \ , K^{\ell} h_{j}^{\ell} \ , V^{\ell} h_{j}^{\ell} \right)$$
-with: $$\ h_{i}^{\ell+1} = \sum_{j \in \mathcal{S}} w_{ij} \left( V^{\ell} h_{j}^{\ell} \right)$$
-$$ \text{where} \ w_{ij} = \text{softmax}_j \left ( Q^{\ell} h^{\ell}_i \cdot K^{\ell} h^{\ell}_j \right)$$</p><hr><h2 id=sentences-as-graphsbut-with-caveats>📝 Sentences as Graphs—But with Caveats<a hidden class=anchor aria-hidden=true href=#sentences-as-graphsbut-with-caveats>#</a></h2><p>Think of a sentence as a <strong>fully‑connected graph</strong> where every word links to every other.<br>Transformers = <em>GNNs with multi‑head attention</em> acting as the aggregation rule.</p><p>Yet fully connected graphs mean <strong>quadratic growth in edges</strong>, which makes learning <em>very</em> long‑range word relations hard.</p><hr><h3 id=are-transformers-learning-neural-syntax>🤔 Are Transformers Learning <em>Neural Syntax</em>?<a hidden class=anchor aria-hidden=true href=#are-transformers-learning-neural-syntax>#</a></h3><p>Studies suggest attention heads latch onto task‑specific syntax:</p><ul><li>Attention can surface the <em>most relevant</em> word pairs in a sentence.</li><li>Different heads specialise in different syntactic cues.</li></ul><p>Graph‑theoretic view: can GNNs on full graphs <strong>reveal which edges matter most</strong> by inspecting the aggregation weights? This might expose the hidden structure driving model accuracy.</p><hr><h2 id=references>📚 References<a hidden class=anchor aria-hidden=true href=#references>#</a></h2><ul><li>Chaitanya K. Joshi, <strong>“Transformers are Graph Neural Networks,”</strong> <em>The Gradient</em> (2020).</li><li>🎥 <a href="https://www.youtube.com/watch?v=qAF3ZHmkXUw">YouTube Talk</a></li></ul></div><footer class=post-footer><ul class=post-tags><li><a href=https://ldomenichelli.github.io/tags/geometric/>Geometric</a></li><li><a href=https://ldomenichelli.github.io/tags/deep-learning/>Deep Learning</a></li></ul><nav class=paginav><a class=prev href=https://ldomenichelli.github.io/posts/post1/><span class=title>« Prev</span><br><span>Embeddings space 𖦹ׂ ₊˚⊹⋆</span>
-</a><a class=next href=https://ldomenichelli.github.io/posts/post2/><span class=title>Next »</span><br><span>Optimal Transport 🕷️ and Wasserstein distance</span></a></nav></footer></article></main><footer class=footer style=padding-top:18px;padding-bottom:18px><div class=social-icons style=padding-bottom:0><a style=border-bottom:none href=https://x.com/workerplacemint rel=me title=Twitter><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9.0 01-3.14 1.53 4.48 4.48.0 00-7.86 3v1A10.66 10.66.0 013 4s-4 9 5 13a11.64 11.64.0 01-7 2c9 5 20 0 20-11.5a4.5 4.5.0 00-.08-.83A7.72 7.72.0 0023 3z"/></svg>
-</a><a style=border-bottom:none href=https://github.com/ldomenichelli rel=me title=Github><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg>
-</a><a style=border-bottom:none href=mailto:ldomenichelli2@gmail.com rel=me title=Email><svg viewBox="0 0 24 21" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1.0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1.0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a></div><span>&copy; 2025 <a href=https://ldomenichelli.github.io/>lucia's notes</a></span>
-<span>•
-Powered by
-<a href=https://gohugo.io/>Hugo</a> &
-        <a href=https://github.com/adityatelange/hugo-PaperMod/>PaperMod</a>
-</span><span>•
-<a href=/privacy>Privacy Policy</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
-</a><script>let b=document.querySelector("#menu-trigger"),m=document.querySelector(".menu");b.addEventListener("click",function(){m.classList.toggle("hidden")}),document.body.addEventListener("click",function(e){b.contains(e.target)||m.classList.add("hidden")})</script><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="copy";function s(){t.innerHTML="copied!",setTimeout(()=>{t.innerHTML="copy"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>
+<!doctype html>
+<html lang="en" dir="auto">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+  <meta name="robots" content="index, follow">
+  <title>Geometric Deep Learning | lucia's notes</title>
+  <meta
+    name="keywords"
+    content="geometric deep learning, equivariance, invariance, graph neural networks, manifolds, gauge equivariance"
+  >
+  <meta
+    name="description"
+    content="A digital mathematical notebook on Geometric Deep Learning: symmetry, invariance, equivariance, sets, graphs, manifolds, geodesics, gauges, and transformers through the geometric lens."
+  >
+  <meta name="author" content="Lucia">
+  <link
+    crossorigin="anonymous"
+    href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css"
+    integrity="sha256-WtmxyqkuTOqD680wiOlzYvI5sH2BREkKrwvB1r2JzRc="
+    rel="preload stylesheet"
+    as="style"
+  >
+  <link rel="canonical" href="https://ldomenichelli.github.io/posts/post7/">
+  <link rel="icon" href="https://ldomenichelli.github.io/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ldomenichelli.github.io/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ldomenichelli.github.io/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="https://ldomenichelli.github.io/apple-touch-icon.png">
+  <link rel="mask-icon" href="https://ldomenichelli.github.io/safari-pinned-tab.svg">
+  <meta name="theme-color" content="#2e2e33">
+  <meta name="msapplication-TileColor" content="#2e2e33">
+  <link rel="alternate" hreflang="en" href="https://ldomenichelli.github.io/posts/post7/">
+  <noscript>
+    <style>
+      #theme-toggle,
+      .top-link {
+        display: none;
+      }
+    </style>
+  </noscript>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+    integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X"
+    crossorigin="anonymous"
+  >
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"
+    integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+    integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"
+    crossorigin="anonymous"
+    onload='renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:true},{left:"$",right:"$",display:false},{left:"\\(",right:"\\)",display:false},{left:"\\[",right:"\\]",display:true}]})'
+  ></script>
+  <meta property="og:title" content="Geometric Deep Learning">
+  <meta
+    property="og:description"
+    content="A digital mathematical notebook on Geometric Deep Learning: symmetry, invariance, equivariance, sets, graphs, manifolds, geodesics, gauges, and transformers through the geometric lens."
+  >
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ldomenichelli.github.io/posts/post7/">
+  <meta property="og:image" content="https://ldomenichelli.github.io/logo.png">
+  <meta property="article:section" content="posts">
+  <meta property="og:site_name" content="lucia's notes">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ldomenichelli.github.io/logo.png">
+  <meta name="twitter:title" content="Geometric Deep Learning">
+  <meta
+    name="twitter:description"
+    content="A digital mathematical notebook on Geometric Deep Learning: symmetry, invariance, equivariance, sets, graphs, manifolds, geodesics, gauges, and transformers through the geometric lens."
+  >
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "",
+          "item": "https://ldomenichelli.github.io/posts/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Geometric Deep Learning",
+          "item": "https://ldomenichelli.github.io/posts/post7/"
+        }
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Geometric Deep Learning",
+      "name": "Geometric Deep Learning",
+      "description": "A digital mathematical notebook on Geometric Deep Learning: symmetry, invariance, equivariance, sets, graphs, manifolds, geodesics, gauges, and transformers through the geometric lens.",
+      "keywords": ["geometric deep learning", "equivariance", "graphs", "manifolds", "gauge"],
+      "articleBody": "Geometric Deep Learning studies how neural networks should respect the structure and symmetries of the domain on which the data live. This page develops the subject from invariance and equivariance through grids, groups, sets, graphs, manifolds, geodesics, gauges, transformers, and practical model-design questions.",
+      "wordCount": "5200",
+      "inLanguage": "en",
+      "datePublished": "0001-01-01T00:00:00Z",
+      "dateModified": "0001-01-01T00:00:00Z",
+      "author": {
+        "@type": "Person",
+        "name": "Lucia"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ldomenichelli.github.io/posts/post7/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "lucia's notes",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://ldomenichelli.github.io/favicon.ico"
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="/assets/css/site-theme.css">
+  <link rel="stylesheet" href="/assets/css/tda-notes.css">
+  <link rel="stylesheet" href="/assets/css/gdl-notes.css">
+</head>
+<body class="dark tda-notes-page gdl-notes-page" id="top">
+  <header class="header">
+    <nav class="nav">
+      <div class="logo">
+        <a href="https://ldomenichelli.github.io/" accesskey="h" title="lucia's notes (Alt + H)">
+          lucia's notes
+        </a>
+        <div class="logo-switches">
+          <ul class="lang-switch">
+            <li>|</li>
+          </ul>
+        </div>
+      </div>
+      <button id="menu-trigger" aria-haspopup="menu" aria-label="Menu Button">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentcolor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-menu"
+        >
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+      <ul class="menu hidden">
+        <li><a href="https://ldomenichelli.github.io/about/" title="about"><span>about</span></a></li>
+        <li><a href="https://ldomenichelli.github.io/posts/" title="notes"><span>notes</span></a></li>
+        <li><a href="https://ldomenichelli.github.io/random/" title="hobbies"><span>hobbies</span></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main">
+    <article class="post-single">
+      <header class="post-header">
+        <div class="breadcrumbs">
+          <a href="https://ldomenichelli.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://ldomenichelli.github.io/posts/"></a>
+        </div>
+        <h1 class="post-title">Geometric Deep Learning</h1>
+        <div class="post-description">A notebook on structure, symmetry, and learning beyond Euclidean grids</div>
+        <div class="post-meta">Lucia</div>
+      </header>
+
+      <div class="post-content">
+        <div class="tda-notebook" data-tda-page>
+          <section class="tda-hero">
+            <div class="gdl-hero-grid">
+              <div class="tda-hero-copy">
+                <p class="tda-kicker">Digital Mathematical Notebook</p>
+                <h1 class="tda-display">Geometric Deep Learning</h1>
+                <p class="tda-hero-intro">
+                  Geometric Deep Learning studies how to build neural networks that respect the structure and
+                  symmetries of the domain on which the data live. The subject is not only about graphs. It is a
+                  unifying way to think about grids, sets, groups, graphs, manifolds, meshes, point clouds, and
+                  local coordinate systems.
+                </p>
+                <p class="tda-hero-meta">
+                  This page moves from symmetry and equivariance to message passing, spectral graph methods,
+                  manifolds, geodesics, gauges, and transformers through the same structural lens.
+                </p>
+              </div>
+
+              <figure class="gdl-hero-diagram">
+                <svg viewBox="0 0 420 260" role="img" aria-label="Geometric Deep Learning hero diagram">
+                  <rect x="24" y="34" width="74" height="54" rx="12" class="gdl-badge"></rect>
+                  <rect x="24" y="102" width="74" height="54" rx="12" class="gdl-badge"></rect>
+                  <rect x="24" y="170" width="74" height="54" rx="12" class="gdl-badge"></rect>
+                  <rect x="316" y="66" width="84" height="50" rx="12" class="gdl-badge"></rect>
+                  <rect x="316" y="130" width="84" height="50" rx="12" class="gdl-badge"></rect>
+                  <rect x="316" y="194" width="84" height="42" rx="12" class="gdl-badge"></rect>
+                  <text x="44" y="52" class="gdl-svg-label">grid</text>
+                  <text x="44" y="120" class="gdl-svg-label">set / graph</text>
+                  <text x="44" y="188" class="gdl-svg-label">surface</text>
+                  <text x="330" y="86" class="gdl-svg-label">symmetry</text>
+                  <text x="330" y="150" class="gdl-svg-label">locality</text>
+                  <text x="330" y="214" class="gdl-svg-label">equivariance</text>
+                  <path d="M132 60 C188 60, 208 78, 286 90" class="gdl-arrow"></path>
+                  <path d="M132 128 C186 128, 208 136, 286 154" class="gdl-arrow"></path>
+                  <path d="M132 196 C188 196, 212 194, 286 214" class="gdl-arrow"></path>
+                  <rect x="46" y="58" width="10" height="10" class="gdl-patch is-active" rx="2"></rect>
+                  <rect x="58" y="58" width="10" height="10" class="gdl-patch is-active" rx="2"></rect>
+                  <rect x="70" y="58" width="10" height="10" class="gdl-patch is-active" rx="2"></rect>
+                  <circle cx="52" cy="134" r="6" class="gdl-node is-blue"></circle>
+                  <circle cx="74" cy="118" r="6" class="gdl-node is-green"></circle>
+                  <circle cx="78" cy="148" r="6" class="gdl-node is-yellow"></circle>
+                  <line x1="52" y1="134" x2="74" y2="118" class="gdl-edge"></line>
+                  <line x1="74" y1="118" x2="78" y2="148" class="gdl-edge"></line>
+                  <path d="M42 196 C72 154, 108 154, 122 196" class="gdl-manifold"></path>
+                  <text x="28" y="246" class="gdl-svg-small">choose the right inductive bias from the domain</text>
+                </svg>
+                <figcaption>
+                  Geometric Deep Learning asks which symmetries, neighborhoods, and structural constraints should be
+                  built into the model before training begins.
+                </figcaption>
+              </figure>
+            </div>
+
+            <p class="gdl-strip-label">Why this matters</p>
+            <div class="gdl-why-grid">
+              <article class="gdl-why-item">
+                <strong>Vision</strong>
+                <p>Images live on translation-structured grids, so locality and weight sharing matter.</p>
+              </article>
+              <article class="gdl-why-item">
+                <strong>Molecules</strong>
+                <p>Atoms, bonds, and spatial geometry interact through graph and Euclidean structure.</p>
+              </article>
+              <article class="gdl-why-item">
+                <strong>Proteins</strong>
+                <p>Structure-aware models must respect relational and three-dimensional constraints.</p>
+              </article>
+              <article class="gdl-why-item">
+                <strong>3D shapes</strong>
+                <p>Meshes and manifolds require intrinsic neighborhoods rather than flat-image assumptions.</p>
+              </article>
+              <article class="gdl-why-item">
+                <strong>Scientific ML</strong>
+                <p>Symmetry and conservation structure can be more important than raw model size.</p>
+              </article>
+              <article class="gdl-why-item">
+                <strong>NLP / relational data</strong>
+                <p>Attention and graph structure become geometric only when the right inductive bias is specified.</p>
+              </article>
+            </div>
+          </section>
+
+          <div class="tda-jump" data-tda-jump></div>
+
+          <div class="tda-layout">
+            <aside class="tda-sidebar">
+              <div class="tda-toc-card">
+                <div>
+                  <p class="tda-sidebar-label">Section Map</p>
+                  <div class="tda-toc-links" data-tda-toc></div>
+                </div>
+              </div>
+            </aside>
+
+            <div class="tda-main">
+              <section class="tda-section" id="big-idea" data-tda-section data-tda-label="1. The Big Idea">
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Section 1 • The unifying question</p>
+                  <h2>The big idea</h2>
+                  <p class="tda-section-intro">
+                    The central question is not “which architecture is most fashionable?” but “what inductive bias
+                    should the model have for this domain?”
+                  </p>
+                </header>
+
+                <article class="tda-callout is-intuition">
+                  <p class="tda-callout-label">KeyIdeaBox</p>
+                  <strong class="tda-callout-title">Structure first</strong>
+                  <p>
+                    Data are often not plain vectors in an anonymous Euclidean box. They may come with order,
+                    neighborhoods, adjacency, coordinates, symmetries, local charts, or conservation laws. Geometric
+                    Deep Learning studies architectures that treat that structure as first-class information.
+                  </p>
+                </article>
+
+                <div class="gdl-domain-grid">
+                  <article class="tda-callout is-example">
+                    <p class="tda-callout-label">ExampleBox</p>
+                    <strong class="tda-callout-title">Grids</strong>
+                    <p>Images and videos live on regular lattices, where translation locality is meaningful.</p>
+                  </article>
+                  <article class="tda-callout is-example">
+                    <p class="tda-callout-label">ExampleBox</p>
+                    <strong class="tda-callout-title">Sets and graphs</strong>
+                    <p>Order may be irrelevant, but relations between elements matter strongly.</p>
+                  </article>
+                  <article class="tda-callout is-example">
+                    <p class="tda-callout-label">ExampleBox</p>
+                    <strong class="tda-callout-title">Manifolds and meshes</strong>
+                    <p>Intrinsic neighborhoods can differ from raw ambient Euclidean proximity.</p>
+                  </article>
+                </div>
+              </section>
+
+              <section class="tda-section" id="classical-to-gdl" data-tda-section data-tda-label="2. From Classical DL to GDL">
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Section 2 • Classical architectures already encode geometry</p>
+                  <h2>From classical deep learning to geometric deep learning</h2>
+                  <p class="tda-section-intro">
+                    Standard architectures already use domain structure. Geometric Deep Learning makes that design
+                    principle explicit and general.
+                  </p>
+                </header>
+
+                <div class="tda-grid-three">
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">MLPs</strong>
+                    <p>
+                      Dense layers treat coordinates almost symmetrically. They impose relatively weak structural bias
+                      beyond the choice of input representation itself.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">CNNs</strong>
+                    <p>
+                      Convolution assumes a regular grid, local neighborhoods, and translation sharing. That is already
+                      a geometric prior.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Sequence models</strong>
+                    <p>
+                      RNNs and transformers for text usually treat data as ordered one-dimensional structures, often
+                      enriched by positional encodings or relative biases.
+                    </p>
+                  </article>
+                </div>
+
+                <article class="tda-callout is-remark">
+                  <p class="tda-callout-label">RemarkBox</p>
+                  <strong class="tda-callout-title">Generalization by respecting the domain</strong>
+                  <p>
+                    A model that already respects the right symmetries can learn with fewer samples, share parameters
+                    more effectively, and avoid spending capacity relearning a structure that was known in advance.
+                  </p>
+                </article>
+              </section>
+
+              <section class="tda-section" id="symmetry" data-tda-section data-tda-label="3. Symmetry, Invariance, Equivariance">
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Section 3 • The core language of the subject</p>
+                  <h2>Symmetry, invariance, and equivariance</h2>
+                  <p class="tda-section-intro">
+                    These notions should be stated carefully. They are the backbone of the whole page.
+                  </p>
+                </header>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Group and group action</strong>
+                    <p>
+                      A group \(G\) is a set of transformations with composition, an identity, and inverses. A group
+                      action on a space \(X\) is a family of maps \(T_g : X \to X\) satisfying \(T_e = \mathrm{id}\)
+                      and \(T_{gh} = T_g \circ T_h\).
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">FormulaBlock</p>
+                    <strong class="tda-callout-title">Invariance and equivariance</strong>
+                    <div class="tda-formula">
+                      <p>$$ F(T_g x) = F(x) \qquad \text{(invariance)} $$</p>
+                      <p>$$ F(T_g x) = S_g F(x) \qquad \text{(equivariance)} $$</p>
+                    </div>
+                    <p>
+                      Invariance discards the transformation. Equivariance tracks it through a corresponding action
+                      \(S_g\) on the output space.
+                    </p>
+                  </article>
+                </div>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-example">
+                    <p class="tda-callout-label">ExampleBox</p>
+                    <strong class="tda-callout-title">Examples</strong>
+                    <p>
+                      Classification is often invariant: translating or rotating a cat image should not change the
+                      class. Dense prediction is often equivariant: translating the input image should translate the
+                      feature map or segmentation mask in the same way.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-remark">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">Why the distinction matters</strong>
+                    <p>
+                      Invariance and equivariance are not the same. Equivariance preserves structured information about
+                      how the input moved. Invariance removes it.
+                    </p>
+                  </article>
+                </div>
+
+                <section class="tda-widget" data-widget="symmetry-demo">
+                  <div class="tda-widget-head">
+                    <div>
+                      <p class="tda-widget-kicker">InteractiveWidgetShell</p>
+                      <h3>Symmetry / equivariance demo</h3>
+                    </div>
+                    <div class="tda-widget-controls">
+                      <button class="tda-widget-button is-active" type="button" data-transform="translation">translation</button>
+                      <button class="tda-widget-button" type="button" data-transform="rotation">rotation</button>
+                      <button class="tda-widget-button" type="button" data-transform="permutation">permutation</button>
+                    </div>
+                  </div>
+
+                  <div class="tda-widget-shell">
+                    <div class="tda-widget-canvas" data-canvas></div>
+                    <p class="tda-widget-summary" data-summary></p>
+                  </div>
+                </section>
+              </section>
+
+              <section class="tda-section" id="grids" data-tda-section data-tda-label="4. Grids and CNNs">
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Section 4 • The first geometric success story</p>
+                  <h2>Grids and CNNs as the first geometric deep learning example</h2>
+                  <p class="tda-section-intro">
+                    CNNs are best understood as a special case: convolution exploits translation structure on regular
+                    grids through locality and weight sharing.
+                  </p>
+                </header>
+
+                <article class="tda-callout is-definition">
+                  <p class="tda-callout-label">FormulaBlock</p>
+                  <strong class="tda-callout-title">Discrete convolution on a grid</strong>
+                  <div class="tda-formula">
+                    <p>$$ (k * x)(u) = \sum_{v \in \mathbb{Z}^2} k(v)\,x(u-v). $$</p>
+                  </div>
+                  <p>
+                    The same filter \(k\) is evaluated at every spatial location. That is what creates parameter
+                    sharing and translation equivariance.
+                  </p>
+                </article>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-intuition">
+                    <p class="tda-callout-label">KeyIdeaBox</p>
+                    <strong class="tda-callout-title">Locality</strong>
+                    <p>
+                      Each output depends only on a small spatial neighborhood. This is a bias toward local compositional
+                      structure, not a generic property of all neural nets.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-remark">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">CNNs are not the whole story</strong>
+                    <p>
+                      CNNs solve the grid case elegantly, but the same idea must be reformulated when the domain is a
+                      set, a graph, a manifold, or a space with only local coordinates.
+                    </p>
+                  </article>
+                </div>
+
+                <section class="tda-widget" data-widget="cnn-demo">
+                  <div class="tda-widget-head">
+                    <div>
+                      <p class="tda-widget-kicker">InteractiveWidgetShell</p>
+                      <h3>CNN-on-grid intuition</h3>
+                    </div>
+                    <div class="tda-widget-controls">
+                      <button class="tda-widget-button is-active" type="button" data-shift="original">original</button>
+                      <button class="tda-widget-button" type="button" data-shift="shifted">shifted</button>
+                    </div>
+                  </div>
+
+                  <div class="tda-widget-shell">
+                    <div class="tda-widget-canvas" data-canvas></div>
+                    <p class="tda-widget-summary" data-summary></p>
+                  </div>
+                </section>
+              </section>
+
+              <section class="tda-section" id="groups" data-tda-section data-tda-label="5. Groups and Group-Equivariant Networks">
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Section 5 • CNNs generalized</p>
+                  <h2>Groups and group-equivariant networks</h2>
+                  <p class="tda-section-intro">
+                    Moving from translations to more general groups extends the convolutional idea beyond plain images.
+                  </p>
+                </header>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Translation equivariance is a special case</strong>
+                    <p>
+                      Standard CNNs are equivariant to the translation group acting on a grid. Group-equivariant
+                      networks replace that one symmetry with a larger family such as rotations, reflections, or other
+                      structured transformations.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-example">
+                    <p class="tda-callout-label">ExampleBox</p>
+                    <strong class="tda-callout-title">Rotations and discrete symmetries</strong>
+                    <p>
+                      If the task is insensitive to image rotations or to the orientation of a molecule up to a known
+                      group action, enforcing equivariance can reduce sample complexity and make predictions more stable.
+                    </p>
+                  </article>
+                </div>
+
+                <article class="tda-callout is-remark">
+                  <p class="tda-callout-label">RemarkBox</p>
+                  <strong class="tda-callout-title">Parameter sharing through symmetry</strong>
+                  <p>
+                    Equivariance is not only a philosophical statement. It determines how filters, kernels, or feature
+                    fields can be shared across transformed copies of the same local pattern.
+                  </p>
+                </article>
+              </section>
+
+              <section class="tda-section" id="sets" data-tda-section data-tda-label="6. Sets and Permutation Symmetry">
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Section 6 • Orderless domains</p>
+                  <h2>Sets and permutation symmetry</h2>
+                  <p class="tda-section-intro">
+                    A set has elements but no preferred ordering. That symmetry must be reflected in the architecture.
+                  </p>
+                </header>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Permutation invariance and equivariance</strong>
+                    <p>
+                      A set-level output should usually be permutation invariant. An elementwise feature map should be
+                      permutation equivariant, meaning that permuting the input elements only permutes the outputs.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-theorem">
+                    <p class="tda-callout-label">TheoremBox</p>
+                    <strong class="tda-callout-title">Deep Sets form</strong>
+                    <div class="tda-formula">
+                      <p>$$ f(\{x_1,\dots,x_n\}) = \rho\!\left(\sum_{i=1}^n \phi(x_i)\right). $$</p>
+                    </div>
+                    <p>
+                      Sum, mean, or related symmetric aggregations produce invariant set summaries. The important point
+                      is the symmetry of the pooling operation, not only the nonlinearity around it.
+                    </p>
+                  </article>
+                </div>
+
+                <section class="tda-widget" data-widget="set-demo">
+                  <div class="tda-widget-head">
+                    <div>
+                      <p class="tda-widget-kicker">InteractiveWidgetShell</p>
+                      <h3>Set invariance demo</h3>
+                    </div>
+                    <div class="tda-widget-controls">
+                      <button class="tda-widget-button is-active" type="button" data-order="original">original</button>
+                      <button class="tda-widget-button" type="button" data-order="swap">swap first two</button>
+                      <button class="tda-widget-button" type="button" data-order="reverse">reverse</button>
+                    </div>
+                  </div>
+
+                  <div class="tda-widget-shell">
+                    <div class="tda-widget-canvas" data-canvas></div>
+                    <p class="tda-widget-summary" data-summary></p>
+                  </div>
+                </section>
+              </section>
+
+              <section class="tda-section" id="graphs" data-tda-section data-tda-label="7. Graphs and Message Passing">
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Section 7 • Relational domains</p>
+                  <h2>Graphs and message passing</h2>
+                  <p class="tda-section-intro">
+                    Graphs make relations explicit, but “graph structure” and “geometric structure” are not identical
+                    concepts.
+                  </p>
+                </header>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">What information a graph may carry</strong>
+                    <p>
+                      A graph can include adjacency, node features, edge features, coordinates, edge weights, or
+                      additional geometry. Some tasks need only connectivity; others need metric or geometric data
+                      beyond adjacency.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">FormulaBlock</p>
+                    <strong class="tda-callout-title">Message passing</strong>
+                    <div class="tda-formula">
+                      <p>$$ m_v^{(\ell+1)} = \mathrm{AGG}^{(\ell)}\Big(\{\psi^{(\ell)}(h_v^{(\ell)}, h_u^{(\ell)}, e_{uv}) : u \in \mathcal{N}(v)\}\Big), $$</p>
+                      <p>$$ h_v^{(\ell+1)} = \phi^{(\ell)}(h_v^{(\ell)}, m_v^{(\ell+1)}). $$</p>
+                    </div>
+                    <p>
+                      Each layer exchanges information only across graph edges. Deeper stacks enlarge the effective
+                      neighborhood.
+                    </p>
+                  </article>
+                </div>
+
+                <article class="tda-callout is-remark">
+                  <p class="tda-callout-label">RemarkBox</p>
+                  <strong class="tda-callout-title">Neighborhood aggregation is not the whole theory</strong>
+                  <p>
+                    Message passing is the dominant graph paradigm, but it is one family inside a broader design space
+                    that also includes spectral constructions, positional features, attention variants, and higher-order
+                    models.
+                  </p>
+                </article>
+
+                <section class="tda-widget" data-widget="message-passing-demo">
+                  <div class="tda-widget-head">
+                    <div>
+                      <p class="tda-widget-kicker">InteractiveWidgetShell</p>
+                      <h3>Graph message passing demo</h3>
+                    </div>
+                    <div class="tda-slider-wrap">
+                      <label for="gdl-step">layer</label>
+                      <input id="gdl-step" class="tda-slider" type="range" min="0" max="4" value="0" data-step>
+                      <span data-step-label>0</span>
+                    </div>
+                  </div>
+
+                  <div class="tda-widget-shell">
+                    <div class="tda-widget-canvas" data-canvas></div>
+                    <p class="tda-widget-summary" data-summary></p>
+                  </div>
+                </section>
+              </section>
+
+              <section class="tda-section" id="spectral-spatial" data-tda-section data-tda-label="8. Spectral vs Spatial Graph Methods">
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Section 8 • Two graph-convolution viewpoints</p>
+                  <h2>Spectral vs spatial graph methods</h2>
+                  <p class="tda-section-intro">
+                    These viewpoints are related, but they are not interchangeable descriptions of exactly the same
+                    object.
+                  </p>
+                </header>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">FormulaBlock</p>
+                    <strong class="tda-callout-title">Spectral viewpoint</strong>
+                    <div class="tda-formula">
+                      <p>$$ g_\theta(L)x = U\, g_\theta(\Lambda)\, U^\top x, $$</p>
+                    </div>
+                    <p>
+                      where \(L = U\Lambda U^\top\) is a graph Laplacian eigendecomposition. Filters are defined through
+                      graph operators and their spectrum.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Spatial viewpoint</strong>
+                    <p>
+                      Spatial methods describe computation directly through neighborhoods and aggregation rules on the
+                      graph. Message passing is the dominant example.
+                    </p>
+                  </article>
+                </div>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-remark">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">Why spectral methods arise naturally</strong>
+                    <p>
+                      Graph Laplacians are canonical operators for diffusion, smoothness, and frequency notions on
+                      graphs, so spectral models inherit a strong operator-theoretic interpretation.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-remark">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">Tradeoffs</strong>
+                    <p>
+                      Spectral constructions connect cleanly to graph operators but can depend more strongly on the
+                      graph domain. Spatial methods are often easier to implement and scale, but their behavior depends
+                      heavily on the chosen aggregation mechanism.
+                    </p>
+                  </article>
+                </div>
+              </section>
+
+              <section class="tda-section" id="expressivity" data-tda-section data-tda-label="9. Expressivity and Limitations">
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Section 9 • What message passing can and cannot distinguish</p>
+                  <h2>Expressivity and limitations of GNNs</h2>
+                  <p class="tda-section-intro">
+                    Expressivity claims need caveats. They depend on the architecture class and on what information is
+                    provided to the model.
+                  </p>
+                </header>
+
+                <article class="tda-callout is-theorem">
+                  <p class="tda-callout-label">TheoremBox</p>
+                  <strong class="tda-callout-title">Standard message passing and 1-WL</strong>
+                  <p>
+                    Under the usual neighborhood-aggregation setup, many message-passing GNNs are at most as
+                    discriminative as the 1-dimensional Weisfeiler-Lehman graph isomorphism test. With sufficiently
+                    expressive injective multiset aggregation, one can match 1-WL, but not in general surpass it without
+                    additional structure or higher-order mechanisms.
+                  </p>
+                </article>
+
+                <details class="tda-proof">
+                  <summary>Details • Why this is a limitation statement, not a universal impossibility result</summary>
+                  <div class="tda-proof-body">
+                    <p>
+                      The statement concerns a standard class of message-passing architectures with shared local
+                      aggregation. It does not mean all graph-based models are limited to 1-WL in every setting.
+                      Positional encodings, subgraph features, higher-order tensors, or geometric coordinates can change
+                      the expressive regime.
+                    </p>
+                  </div>
+                </details>
+
+                <article class="tda-callout is-remark">
+                  <p class="tda-callout-label">RemarkBox</p>
+                  <strong class="tda-callout-title">Coordinates do not magically solve everything</strong>
+                  <p>
+                    Adding coordinates can help distinguish structures, but coordinates themselves may break
+                    permutation, rotation, or gauge symmetries unless they are used carefully.
+                  </p>
+                </article>
+              </section>
+
+              <section class="tda-section" id="smoothing-squashing" data-tda-section data-tda-label="10. Oversmoothing and Oversquashing">
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Section 10 • Two different deep-graph pathologies</p>
+                  <h2>Oversmoothing and oversquashing</h2>
+                  <p class="tda-section-intro">
+                    These are related only in the loose sense that both can hurt deep graph models. Conceptually they
+                    are different phenomena.
+                  </p>
+                </header>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Oversmoothing</strong>
+                    <p>
+                      Repeated local mixing can make node embeddings increasingly similar, eventually erasing local
+                      distinctions that the task needs.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Oversquashing</strong>
+                    <p>
+                      Information from many distant nodes may have to pass through a narrow graph bottleneck, so too
+                      many signals are compressed into too little communication capacity.
+                    </p>
+                  </article>
+                </div>
+
+                <section class="tda-widget" data-widget="oversmoothing-demo">
+                  <div class="tda-widget-head">
+                    <div>
+                      <p class="tda-widget-kicker">InteractiveWidgetShell</p>
+                      <h3>Oversmoothing demo</h3>
+                    </div>
+                    <div class="tda-slider-wrap">
+                      <label for="gdl-layers">layers</label>
+                      <input id="gdl-layers" class="tda-slider" type="range" min="0" max="12" value="0" data-layers>
+                      <span data-layers-label>0</span>
+                    </div>
+                  </div>
+
+                  <div class="tda-widget-shell">
+                    <div class="tda-widget-canvas" data-canvas></div>
+                    <p class="tda-widget-summary" data-summary></p>
+                  </div>
+                </section>
+
+                <section class="tda-widget" data-widget="oversquashing-demo">
+                  <div class="tda-widget-head">
+                    <div>
+                      <p class="tda-widget-kicker">InteractiveWidgetShell</p>
+                      <h3>Oversquashing demo</h3>
+                    </div>
+                    <div class="tda-slider-wrap">
+                      <label for="gdl-depth">tree depth</label>
+                      <input id="gdl-depth" class="tda-slider" type="range" min="1" max="5" value="3" data-depth>
+                      <span data-depth-label>3</span>
+                    </div>
+                  </div>
+
+                  <div class="tda-widget-shell">
+                    <div class="tda-widget-canvas" data-canvas></div>
+                    <p class="tda-widget-summary" data-summary></p>
+                  </div>
+                </section>
+              </section>
+
+              <section class="tda-section" id="manifolds" data-tda-section data-tda-label="11. Manifolds, Meshes, Point Clouds">
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Section 11 • Non-Euclidean geometric domains</p>
+                  <h2>Manifolds, meshes, and point clouds</h2>
+                  <p class="tda-section-intro">
+                    These objects are often grouped together, but they are not the same thing.
+                  </p>
+                </header>
+
+                <div class="tda-grid-three">
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Manifold</strong>
+                    <p>
+                      A manifold is an intrinsic space that locally looks Euclidean, even if it sits inside a larger
+                      ambient space in a curved way.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Mesh</strong>
+                    <p>
+                      A mesh is a discrete combinatorial representation of a geometric object, often approximating a
+                      surface by vertices, edges, and faces.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Point cloud</strong>
+                    <p>
+                      A point cloud is a finite sample of points, usually with ambient coordinates, but not necessarily
+                      an explicit intrinsic connectivity or surface parameterization.
+                    </p>
+                  </article>
+                </div>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-remark">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">Intrinsic versus extrinsic</strong>
+                    <p>
+                      Intrinsic geometry depends on the object itself, such as geodesic distance on a surface.
+                      Extrinsic geometry depends on how that object sits inside a larger ambient space.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-remark">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">Why this matters for model design</strong>
+                    <p>
+                      If the task is driven by intrinsic geometry, a model built only from ambient Euclidean distances
+                      may mix points that are nearby in space but far apart along the surface.
+                    </p>
+                  </article>
+                </div>
+              </section>
+
+              <section class="tda-section" id="geodesics" data-tda-section data-tda-label="12. Geodesics and Intrinsic Geometry">
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Section 12 • Locality beyond straight lines</p>
+                  <h2>Geodesics and intrinsic geometry</h2>
+                  <p class="tda-section-intro">
+                    On curved domains, the meaningful neighborhood notion may be geodesic rather than Euclidean.
+                  </p>
+                </header>
+
+                <article class="tda-callout is-definition">
+                  <p class="tda-callout-label">FormulaBlock</p>
+                  <strong class="tda-callout-title">Geodesic distance</strong>
+                  <div class="tda-formula">
+                    <p>$$ d_{\mathcal{M}}(p,q) = \inf_{\gamma : p \rightsquigarrow q} \operatorname{length}(\gamma). $$</p>
+                  </div>
+                  <p>
+                    The shortest path is constrained to remain on the domain \(\mathcal{M}\). This differs from the
+                    unconstrained straight-line distance in ambient space.
+                  </p>
+                </article>
+
+                <section class="tda-widget" data-widget="geodesic-demo">
+                  <div class="tda-widget-head">
+                    <div>
+                      <p class="tda-widget-kicker">InteractiveWidgetShell</p>
+                      <h3>Geodesic vs Euclidean neighborhood</h3>
+                    </div>
+                    <div class="tda-widget-controls">
+                      <button class="tda-widget-button is-active" type="button" data-neighborhood="euclidean">Euclidean</button>
+                      <button class="tda-widget-button" type="button" data-neighborhood="geodesic">geodesic</button>
+                    </div>
+                  </div>
+
+                  <div class="tda-widget-shell">
+                    <div class="tda-widget-canvas" data-canvas></div>
+                    <p class="tda-widget-summary" data-summary></p>
+                  </div>
+                </section>
+              </section>
+
+              <section class="tda-section" id="gauges" data-tda-section data-tda-label="13. Gauges and Local Coordinates">
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Section 13 • Local frames and coordinate ambiguity</p>
+                  <h2>Gauges and local coordinates</h2>
+                  <p class="tda-section-intro">
+                    On manifolds and curved surfaces, there may be no globally consistent coordinate frame. Local
+                    coordinates are useful, but they introduce an ambiguity that the architecture should respect.
+                  </p>
+                </header>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">DefinitionBox</p>
+                    <strong class="tda-callout-title">Gauge intuition</strong>
+                    <p>
+                      A local frame chooses basis directions in a tangent space. Another valid observer may choose a
+                      different local basis related by a group transformation. The underlying geometry did not change,
+                      only its coordinates did.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-definition">
+                    <p class="tda-callout-label">FormulaBlock</p>
+                    <strong class="tda-callout-title">Schematic frame change</strong>
+                    <div class="tda-formula">
+                      <p>$$ f_p \longmapsto \rho(g_p)\,f_p, $$</p>
+                    </div>
+                    <p>
+                      where \(g_p\) changes the local frame at \(p\) and \(\rho\) is a representation on the feature
+                      space. A gauge-equivariant layer should commute with this change.
+                    </p>
+                  </article>
+                </div>
+
+                <section class="tda-widget" data-widget="gauge-demo">
+                  <div class="tda-widget-head">
+                    <div>
+                      <p class="tda-widget-kicker">InteractiveWidgetShell</p>
+                      <h3>Gauge / local-frame intuition</h3>
+                    </div>
+                    <div class="tda-slider-wrap">
+                      <label for="gdl-angle">frame rotation</label>
+                      <input id="gdl-angle" class="tda-slider" type="range" min="0" max="180" value="35" data-angle>
+                      <span data-angle-label>35°</span>
+                    </div>
+                  </div>
+
+                  <div class="tda-widget-shell">
+                    <div class="tda-widget-canvas" data-canvas></div>
+                    <p class="tda-widget-summary" data-summary></p>
+                  </div>
+                </section>
+              </section>
+
+              <section class="tda-section" id="transformers" data-tda-section data-tda-label="14. Transformers Through the Geometric Lens">
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Section 14 • Attention as a relational operator</p>
+                  <h2>Transformers through the geometric lens</h2>
+                  <p class="tda-section-intro">
+                    Transformers fit the GDL story, but only after the domain structure is stated carefully.
+                  </p>
+                </header>
+
+                <article class="tda-callout is-definition">
+                  <p class="tda-callout-label">FormulaBlock</p>
+                  <strong class="tda-callout-title">Self-attention</strong>
+                  <div class="tda-formula">
+                    <p>$$ h_i' = \sum_j \alpha_{ij}\,W_V h_j, \qquad \alpha_{ij} = \operatorname{softmax}_j(q_i^\top k_j + b_{ij}). $$</p>
+                  </div>
+                  <p>
+                    Attention is a flexible relational mechanism. The geometric content enters through the structure of
+                    the index set, masks, relative positional information, or other symmetry-aware biases \(b_{ij}\).
+                  </p>
+                </article>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-remark">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">Without positional information</strong>
+                    <p>
+                      Self-attention over a collection of tokens is permutation equivariant as a set operator. Sequence
+                      order is not built in automatically. It is usually added through positional encodings or relative
+                      biases.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-remark">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">When transformers are geometric</strong>
+                    <p>
+                      On graphs, manifolds, or molecular systems, attention becomes geometric when neighborhoods,
+                      coordinates, pairwise features, or equivariant constraints encode the right domain structure. A
+                      transformer is not automatically geometric just because it is powerful.
+                    </p>
+                  </article>
+                </div>
+              </section>
+
+              <section class="tda-section" id="applications" data-tda-section data-tda-label="15. Applications">
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Section 15 • Where the framework is useful</p>
+                  <h2>Applications</h2>
+                  <p class="tda-section-intro">
+                    The value of Geometric Deep Learning appears when the domain really carries structure that the model
+                    should not ignore.
+                  </p>
+                </header>
+
+                <div class="gdl-application-grid">
+                  <article class="tda-callout is-example">
+                    <p class="tda-callout-label">ExampleBox</p>
+                    <strong class="tda-callout-title">Molecules and chemistry</strong>
+                    <p>
+                      Atomic graphs, bond types, and spatial coordinates interact. Symmetry-aware relational models are
+                      central here.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-example">
+                    <p class="tda-callout-label">ExampleBox</p>
+                    <strong class="tda-callout-title">Protein structure</strong>
+                    <p>
+                      Local neighborhoods, residue graphs, and three-dimensional geometry all matter for prediction.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-example">
+                    <p class="tda-callout-label">ExampleBox</p>
+                    <strong class="tda-callout-title">3D vision and graphics</strong>
+                    <p>
+                      Point clouds, meshes, and surfaces require intrinsic or equivariant handling beyond plain image
+                      convolutions.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-example">
+                    <p class="tda-callout-label">ExampleBox</p>
+                    <strong class="tda-callout-title">Recommender and relational data</strong>
+                    <p>
+                      Graphs capture interaction structure, but the choice of graph, features, and invariances remains a
+                      modeling decision.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-example">
+                    <p class="tda-callout-label">ExampleBox</p>
+                    <strong class="tda-callout-title">Scientific machine learning</strong>
+                    <p>
+                      Physical symmetries and conserved quantities can be encoded directly into the architecture.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-example">
+                    <p class="tda-callout-label">ExampleBox</p>
+                    <strong class="tda-callout-title">Language and structured sequences</strong>
+                    <p>
+                      Attention, order, and relational constraints can all be viewed through the same structural-bias
+                      question, provided the geometry is stated explicitly.
+                    </p>
+                  </article>
+                </div>
+              </section>
+
+              <section class="tda-section" id="diagnostics" data-tda-section data-tda-label="16. Practical Diagnostics and Design">
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Section 16 • How to choose a model family</p>
+                  <h2>Practical diagnostics and design choices</h2>
+                  <p class="tda-section-intro">
+                    The best architecture depends on the domain, the target symmetry, and the notion of locality that
+                    the task actually cares about.
+                  </p>
+                </header>
+
+                <div class="gdl-checklist-grid">
+                  <article class="tda-callout is-remark">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">What is the domain?</strong>
+                    <p>
+                      Grid, set, graph, manifold, mesh, or something hybrid? The answer already narrows the model class.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-remark">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">Which symmetries matter?</strong>
+                    <p>
+                      Translation, rotation, permutation, gauge, or none? Respect the ones the task truly has.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-remark">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">What notion of locality matters?</strong>
+                    <p>
+                      Euclidean, graph-hop, geodesic, or global? This affects the whole architecture.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-remark">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">Do you need invariance or equivariance?</strong>
+                    <p>
+                      Classification often wants invariance; dense or structured prediction often needs equivariance.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-remark">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">Is adjacency enough?</strong>
+                    <p>
+                      Some graph tasks need only connectivity. Others need coordinates, edge geometry, or operator-based
+                      notions of smoothness.
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-remark">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">How deep can information travel?</strong>
+                    <p>
+                      Watch for oversmoothing, oversquashing, and the mismatch between task range and communication
+                      topology.
+                    </p>
+                  </article>
+                </div>
+              </section>
+
+              <section class="tda-section" id="misconceptions" data-tda-section data-tda-label="17. Common Misconceptions">
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Section 17 • Short corrections</p>
+                  <h2>Common misconceptions</h2>
+                  <p class="tda-section-intro">
+                    Several common claims become misleading once the geometry is stated precisely.
+                  </p>
+                </header>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-review">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">“Geometric Deep Learning just means GNNs.”</strong>
+                    <p>No. Graphs are central, but the framework also covers grids, sets, groups, manifolds, gauges, and more.</p>
+                  </article>
+
+                  <article class="tda-callout is-review">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">“Equivariance and invariance are the same.”</strong>
+                    <p>No. Invariance forgets the transformation. Equivariance propagates it into the output space.</p>
+                  </article>
+
+                  <article class="tda-callout is-review">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">“Any graph model is automatically geometric.”</strong>
+                    <p>No. A graph architecture can still ignore the relevant symmetries or geometry of the task.</p>
+                  </article>
+
+                  <article class="tda-callout is-review">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">“Transformers are always geometric deep learning.”</strong>
+                    <p>No. They become geometric only when structure, symmetry, or relational inductive bias is specified carefully.</p>
+                  </article>
+
+                  <article class="tda-callout is-review">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">“Oversmoothing and oversquashing are the same issue.”</strong>
+                    <p>No. One concerns homogenized features; the other concerns topological information bottlenecks.</p>
+                  </article>
+
+                  <article class="tda-callout is-review">
+                    <p class="tda-callout-label">RemarkBox</p>
+                    <strong class="tda-callout-title">“Coordinates automatically give geometry.”</strong>
+                    <p>No. Coordinates can be extrinsic, arbitrary, or frame-dependent. They need the right symmetry handling.</p>
+                  </article>
+                </div>
+              </section>
+
+              <section class="tda-section" id="takeaways" data-tda-section data-tda-label="18. Takeaways and Reading">
+                <header class="tda-section-header">
+                  <p class="tda-lecture-meta">Section 18 • Closing map</p>
+                  <h2>Takeaways and further reading</h2>
+                  <p class="tda-section-intro">
+                    Geometric Deep Learning is best understood as a disciplined way to choose model bias from domain
+                    structure and symmetry.
+                  </p>
+                </header>
+
+                <div class="tda-grid-two">
+                  <article class="tda-callout is-intuition">
+                    <p class="tda-callout-label">KeyIdeaBox</p>
+                    <strong class="tda-callout-title">Summary</strong>
+                    <p>
+                      Classical architectures are already geometric in special cases. CNNs encode translation
+                      equivariance on grids, Deep Sets encode permutation symmetry, message passing encodes relational
+                      locality on graphs, and manifold or gauge-aware models encode richer intrinsic structure. The
+                      practical question is always the same: which symmetries and neighborhoods should the model respect?
+                    </p>
+                  </article>
+
+                  <article class="tda-callout is-remark">
+                    <p class="tda-callout-label">FurtherReadingBox</p>
+                    <strong class="tda-callout-title">How to read further</strong>
+                    <p>
+                      A good path is: broad GDL overview, then symmetry/equivariance, then graph methods and their
+                      limits, then intrinsic geometry on manifolds and gauge-dependent domains.
+                    </p>
+                  </article>
+                </div>
+
+                <div class="gdl-reference-grid">
+                  <article class="gdl-reference-card">
+                    <strong>Gentle overview</strong>
+                    <p>
+                      <a href="https://geometricdeeplearning.com/" target="_blank" rel="noopener">Geometric Deep Learning</a>
+                      and
+                      <a href="https://arxiv.org/abs/2104.13478" target="_blank" rel="noopener">Grids, Groups, Graphs, Geodesics, and Gauges</a>.
+                    </p>
+                  </article>
+
+                  <article class="gdl-reference-card">
+                    <strong>Symmetry / equivariance</strong>
+                    <p>
+                      <a href="https://proceedings.mlr.press/v48/cohenc16.html" target="_blank" rel="noopener">Group Equivariant Convolutional Networks</a>
+                      and
+                      <a href="https://arxiv.org/abs/1902.04615" target="_blank" rel="noopener">Gauge Equivariant CNNs</a>.
+                    </p>
+                  </article>
+
+                  <article class="gdl-reference-card">
+                    <strong>Sets and permutation symmetry</strong>
+                    <p>
+                      <a href="https://arxiv.org/abs/1703.06114" target="_blank" rel="noopener">Deep Sets</a>
+                      and
+                      <a href="https://proceedings.mlr.press/v97/lee19d.html" target="_blank" rel="noopener">Set Transformer</a>.
+                    </p>
+                  </article>
+
+                  <article class="gdl-reference-card">
+                    <strong>Graphs and message passing</strong>
+                    <p>
+                      <a href="https://proceedings.mlr.press/v70/gilmer17a.html" target="_blank" rel="noopener">Neural Message Passing for Quantum Chemistry</a>,
+                      <a href="https://arxiv.org/abs/1609.02907" target="_blank" rel="noopener">GCN</a>,
+                      and
+                      <a href="https://openreview.net/forum?id=ryGs6iA5Km" target="_blank" rel="noopener">How Powerful are Graph Neural Networks?</a>.
+                    </p>
+                  </article>
+
+                  <article class="gdl-reference-card">
+                    <strong>Manifolds / intrinsic geometry</strong>
+                    <p>
+                      <a href="https://openaccess.thecvf.com/content_iccv_2015_workshops/w22/papers/Masci_Geodesic_Convolutional_Neural_ICCV_2015_paper.pdf" target="_blank" rel="noopener">Geodesic CNNs</a>
+                      for an early intrinsic-surface perspective.
+                    </p>
+                  </article>
+
+                  <article class="gdl-reference-card">
+                    <strong>Theory / limitations</strong>
+                    <p>
+                      <a href="https://openreview.net/forum?id=ryGs6iA5Km" target="_blank" rel="noopener">WL-style expressivity</a>,
+                      <a href="https://openreview.net/forum?id=i80OPhOCVH2" target="_blank" rel="noopener">oversquashing bottlenecks</a>,
+                      and
+                      <a href="https://openreview.net/forum?id=rkecl1rtwB" target="_blank" rel="noopener">oversmoothing / PairNorm</a>.
+                    </p>
+                  </article>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="post-footer">
+        <ul class="post-tags">
+          <li><a href="https://ldomenichelli.github.io/tags/geometric/">Geometric</a></li>
+          <li><a href="https://ldomenichelli.github.io/tags/deep-learning/">Deep Learning</a></li>
+        </ul>
+        <nav class="paginav">
+          <a class="prev" href="https://ldomenichelli.github.io/posts/post1/">
+            <span class="title">« Prev</span><br><span>Embeddings space 𖦹ׂ ₊˚⊹⋆</span>
+          </a>
+          <a class="next" href="https://ldomenichelli.github.io/posts/post2/">
+            <span class="title">Next »</span><br><span>Optimal Transport 🕷️ and Wasserstein distance</span>
+          </a>
+        </nav>
+      </footer>
+    </article>
+  </main>
+
+  <footer class="footer" style="padding-top:18px;padding-bottom:18px">
+    <div class="social-icons" style="padding-bottom:0">
+      <a style="border-bottom:none" href="https://x.com/workerplacemint" rel="me" title="Twitter">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentcolor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+        </svg>
+      </a>
+      <a style="border-bottom:none" href="https://github.com/ldomenichelli" rel="me" title="Github">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentcolor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77 5.44 5.44 0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path>
+        </svg>
+      </a>
+      <a style="border-bottom:none" href="mailto:ldomenichelli2@gmail.com" rel="me" title="Email">
+        <svg
+          viewBox="0 0 24 21"
+          fill="none"
+          stroke="currentcolor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+          <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+      </a>
+    </div>
+    <span>&copy; 2025 <a href="https://ldomenichelli.github.io/">lucia's notes</a></span>
+    <span>• Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/adityatelange/hugo-PaperMod/">PaperMod</a></span>
+    <span>• <a href="/privacy">Privacy Policy</a></span>
+  </footer>
+
+  <script type="module">
+    import { enhanceGdlNotesPage } from "/assets/js/gdl-notes.js";
+    enhanceGdlNotesPage();
+  </script>
+</body>
+</html>
