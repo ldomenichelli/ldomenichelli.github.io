@@ -1,0 +1,355 @@
+body.ts-notes-page {
+  --tda-yellow: #e6cf75;
+  --tda-orange: #e4a36f;
+  --tda-green: #8ec98a;
+  --tda-blue: #88b6e2;
+  --tda-pink: #e09dbd;
+  --tda-violet: #c1b4ef;
+}
+
+body.ts-notes-page .tda-notebook::before {
+  opacity: 0.08;
+}
+
+body.ts-notes-page .tda-display {
+  max-width: 10ch;
+}
+
+body.ts-notes-page .tda-callout-label,
+body.ts-notes-page .tda-figure-kicker,
+body.ts-notes-page .tda-widget-kicker {
+  display: none;
+}
+
+body.ts-notes-page .tda-callout,
+body.ts-notes-page .tda-widget,
+body.ts-notes-page .tda-figure,
+body.ts-notes-page .tda-toc-card {
+  background: rgba(14, 19, 17, 0.28);
+}
+
+body.ts-notes-page .tda-button,
+body.ts-notes-page .tda-widget-button {
+  background: rgba(20, 27, 23, 0.22);
+}
+
+body.ts-notes-page .tda-button.is-primary,
+body.ts-notes-page .tda-widget-button.is-active {
+  background: rgba(169, 196, 178, 0.08);
+}
+
+.ts-hero-grid {
+  display: grid;
+  gap: 0.95rem;
+  grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.88fr);
+}
+
+.ts-hero-diagram {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 14px;
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0.7rem;
+}
+
+.ts-hero-diagram svg {
+  background: rgba(12, 17, 15, 0.18);
+  border-radius: 12px;
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.ts-strip-label {
+  color: var(--tda-ink-faint);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.ts-why-grid {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding-top: 0.85rem;
+}
+
+.ts-why-item {
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  display: grid;
+  gap: 0.35rem;
+  padding: 0 1rem 0.95rem;
+}
+
+.ts-why-item:nth-child(3n + 1) {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.ts-why-item strong,
+.ts-reference-card strong {
+  color: var(--tda-ink);
+  font-size: 0.92rem;
+}
+
+.ts-why-item p,
+.ts-reference-card p {
+  color: var(--tda-ink-soft);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.ts-control-grid,
+.ts-checklist-grid,
+.ts-application-grid,
+.ts-reference-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.ts-control-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ts-checklist-grid,
+.ts-application-grid,
+.ts-reference-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ts-slider-row {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.ts-slider-row span {
+  align-items: baseline;
+  color: var(--tda-ink-soft);
+  display: flex;
+  font-size: 0.84rem;
+  gap: 0.65rem;
+  justify-content: space-between;
+}
+
+.ts-reference-card {
+  background: transparent;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.75rem 0 0;
+}
+
+.ts-reference-card a {
+  color: var(--tda-ink);
+  text-decoration-color: rgba(169, 196, 178, 0.32);
+  text-underline-offset: 0.15rem;
+}
+
+.ts-reference-card a:hover {
+  color: var(--site-accent);
+}
+
+.ts-svg-label,
+.ts-svg-small,
+.ts-svg-number,
+.ts-svg-title {
+  fill: var(--tda-ink);
+  font-family: var(--site-font-stack);
+}
+
+.ts-svg-label {
+  font-size: 12px;
+}
+
+.ts-svg-small {
+  fill: var(--tda-ink-soft);
+  font-size: 10.5px;
+}
+
+.ts-svg-number {
+  font-size: 10px;
+}
+
+.ts-svg-title {
+  font-size: 13px;
+}
+
+.ts-axis,
+.ts-grid-line,
+.ts-observed-line,
+.ts-state-line,
+.ts-forecast-line,
+.ts-trend-line,
+.ts-seasonal-line,
+.ts-remainder-line,
+.ts-baseline-line,
+.ts-band,
+.ts-arrow {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ts-axis {
+  stroke: rgba(214, 226, 219, 0.52);
+  stroke-width: 1.3;
+}
+
+.ts-grid-line {
+  stroke: rgba(255, 255, 255, 0.06);
+  stroke-width: 1;
+}
+
+.ts-arrow {
+  stroke: rgba(169, 196, 178, 0.72);
+  stroke-width: 2.8;
+}
+
+.ts-observed-line {
+  stroke: rgba(214, 226, 219, 0.96);
+  stroke-width: 2.4;
+}
+
+.ts-state-line {
+  stroke: rgba(136, 182, 226, 0.9);
+  stroke-width: 2.4;
+}
+
+.ts-forecast-line {
+  stroke: rgba(230, 207, 117, 0.92);
+  stroke-width: 2.4;
+}
+
+.ts-trend-line {
+  stroke: rgba(228, 163, 111, 0.9);
+  stroke-width: 2.2;
+}
+
+.ts-seasonal-line {
+  stroke: rgba(142, 201, 138, 0.92);
+  stroke-width: 2.1;
+}
+
+.ts-remainder-line {
+  stroke: rgba(224, 157, 189, 0.86);
+  stroke-width: 1.9;
+}
+
+.ts-baseline-line {
+  stroke: rgba(193, 180, 239, 0.92);
+  stroke-dasharray: 5 5;
+  stroke-width: 2.1;
+}
+
+.ts-band {
+  stroke: rgba(230, 207, 117, 0.26);
+  stroke-width: 18;
+}
+
+.ts-bar,
+.ts-box,
+.ts-point,
+.ts-chip {
+  stroke-width: 1.2;
+}
+
+.ts-box,
+.ts-chip {
+  fill: rgba(20, 27, 23, 0.2);
+  stroke: rgba(255, 255, 255, 0.08);
+}
+
+.ts-bar.is-blue,
+.ts-point.is-blue,
+.ts-chip.is-blue {
+  fill: rgba(136, 182, 226, 0.24);
+  stroke: rgba(136, 182, 226, 0.98);
+}
+
+.ts-bar.is-green,
+.ts-point.is-green,
+.ts-chip.is-green {
+  fill: rgba(142, 201, 138, 0.22);
+  stroke: rgba(142, 201, 138, 0.98);
+}
+
+.ts-bar.is-yellow,
+.ts-point.is-yellow,
+.ts-chip.is-yellow {
+  fill: rgba(230, 207, 117, 0.22);
+  stroke: rgba(230, 207, 117, 0.98);
+}
+
+.ts-bar.is-pink,
+.ts-point.is-pink,
+.ts-chip.is-pink {
+  fill: rgba(224, 157, 189, 0.22);
+  stroke: rgba(224, 157, 189, 0.98);
+}
+
+.ts-range-fill {
+  fill: rgba(230, 207, 117, 0.14);
+  stroke: rgba(230, 207, 117, 0.2);
+  stroke-width: 1;
+}
+
+.ts-window {
+  rx: 10px;
+}
+
+.ts-window.train {
+  fill: rgba(136, 182, 226, 0.22);
+  stroke: rgba(136, 182, 226, 0.96);
+}
+
+.ts-window.validation {
+  fill: rgba(230, 207, 117, 0.22);
+  stroke: rgba(230, 207, 117, 0.96);
+}
+
+.ts-window.test {
+  fill: rgba(142, 201, 138, 0.22);
+  stroke: rgba(142, 201, 138, 0.96);
+}
+
+.ts-window.shuffle {
+  fill: rgba(224, 157, 189, 0.2);
+  stroke: rgba(224, 157, 189, 0.92);
+}
+
+.ts-widget-note {
+  color: var(--tda-ink-faint);
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+@media (max-width: 1080px) {
+  .ts-hero-grid,
+  .ts-control-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .ts-why-grid,
+  .ts-checklist-grid,
+  .ts-application-grid,
+  .ts-reference-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ts-why-item {
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.9rem 0 0;
+  }
+
+  .ts-why-item:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+}
