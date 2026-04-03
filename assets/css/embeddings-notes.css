@@ -1,0 +1,314 @@
+body.embeddings-notes-page {
+  --tda-yellow: #e6ca72;
+  --tda-orange: #e8a36d;
+  --tda-green: #8dc98a;
+  --tda-blue: #8cb9e7;
+  --tda-pink: #e19dc0;
+}
+
+body.embeddings-notes-page .tda-notebook::before {
+  opacity: 0.08;
+}
+
+body.embeddings-notes-page .tda-display {
+  max-width: 13ch;
+}
+
+body.embeddings-notes-page .tda-callout-label,
+body.embeddings-notes-page .tda-figure-kicker,
+body.embeddings-notes-page .tda-widget-kicker {
+  display: none;
+}
+
+body.embeddings-notes-page .tda-callout,
+body.embeddings-notes-page .tda-widget,
+body.embeddings-notes-page .tda-figure,
+body.embeddings-notes-page .tda-toc-card {
+  background: rgba(14, 19, 17, 0.28);
+}
+
+body.embeddings-notes-page .tda-button,
+body.embeddings-notes-page .tda-widget-button {
+  background: rgba(20, 27, 23, 0.22);
+}
+
+body.embeddings-notes-page .tda-widget-button.is-active {
+  background: rgba(169, 196, 178, 0.08);
+}
+
+.emb-hero-grid {
+  display: grid;
+  gap: 0.95rem;
+  grid-template-columns: minmax(0, 1.22fr) minmax(280px, 0.86fr);
+}
+
+.emb-hero-diagram {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 14px;
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0.7rem;
+}
+
+.emb-hero-diagram svg {
+  background: rgba(12, 17, 15, 0.18);
+  border-radius: 12px;
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.emb-strip-label {
+  color: var(--tda-ink-faint);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.emb-why-grid {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  padding-top: 0.85rem;
+}
+
+.emb-why-item {
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  display: grid;
+  gap: 0.35rem;
+  padding: 0 1rem;
+}
+
+.emb-why-item:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.emb-why-item strong,
+.emb-reference-card strong {
+  color: var(--tda-ink);
+  font-size: 0.92rem;
+}
+
+.emb-why-item p,
+.emb-reference-card p {
+  color: var(--tda-ink-soft);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.emb-diagnostic-grid,
+.emb-application-grid,
+.emb-reference-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.emb-reference-card {
+  background: transparent;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.75rem 0 0;
+}
+
+.emb-reference-card a {
+  color: var(--tda-ink);
+  text-decoration-color: rgba(169, 196, 178, 0.32);
+  text-underline-offset: 0.15rem;
+}
+
+.emb-reference-card a:hover {
+  color: var(--site-accent);
+}
+
+.emb-axis,
+.emb-unit-circle,
+.emb-grid-line {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.emb-axis {
+  stroke: rgba(214, 226, 219, 0.52);
+  stroke-width: 1.3;
+}
+
+.emb-grid-line {
+  stroke: rgba(255, 255, 255, 0.06);
+  stroke-width: 1;
+}
+
+.emb-unit-circle {
+  stroke: rgba(214, 226, 219, 0.28);
+  stroke-dasharray: 6 6;
+  stroke-width: 1.2;
+}
+
+.emb-arrow,
+.emb-connector,
+.emb-pair-line {
+  fill: none;
+  stroke: rgba(169, 196, 178, 0.7);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.emb-arrow {
+  stroke-width: 3.2;
+}
+
+.emb-connector {
+  stroke-width: 2.4;
+}
+
+.emb-pair-line {
+  stroke-width: 2;
+}
+
+.emb-point,
+.emb-bar,
+.emb-heat-cell {
+  stroke-width: 1.3;
+}
+
+.emb-point.is-blue,
+.emb-bar.is-blue,
+.emb-heat-cell.is-blue {
+  fill: rgba(140, 185, 231, 0.24);
+  stroke: rgba(140, 185, 231, 0.96);
+}
+
+.emb-point.is-green,
+.emb-bar.is-green,
+.emb-heat-cell.is-green {
+  fill: rgba(141, 201, 138, 0.22);
+  stroke: rgba(141, 201, 138, 0.96);
+}
+
+.emb-point.is-yellow,
+.emb-bar.is-yellow,
+.emb-heat-cell.is-yellow {
+  fill: rgba(230, 202, 114, 0.22);
+  stroke: rgba(230, 202, 114, 0.96);
+}
+
+.emb-point.is-pink,
+.emb-bar.is-pink,
+.emb-heat-cell.is-pink {
+  fill: rgba(225, 157, 192, 0.22);
+  stroke: rgba(225, 157, 192, 0.96);
+}
+
+.emb-point.is-query {
+  fill: rgba(169, 196, 178, 0.32);
+  stroke: rgba(214, 226, 219, 0.98);
+}
+
+.emb-point.is-hub {
+  fill: rgba(232, 163, 109, 0.3);
+  stroke: rgba(232, 163, 109, 0.98);
+}
+
+.emb-svg-label,
+.emb-svg-small,
+.emb-svg-number,
+.emb-svg-title {
+  fill: var(--tda-ink);
+  font-family: var(--site-font-stack);
+}
+
+.emb-svg-label {
+  font-size: 12px;
+}
+
+.emb-svg-small {
+  fill: var(--tda-ink-soft);
+  font-size: 10.5px;
+}
+
+.emb-svg-number {
+  font-size: 10px;
+}
+
+.emb-svg-title {
+  font-size: 13px;
+}
+
+.emb-spectrum-line,
+.emb-cumulative-line,
+.emb-unit-arc {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.4;
+}
+
+.emb-spectrum-line {
+  stroke: rgba(140, 185, 231, 0.92);
+}
+
+.emb-cumulative-line {
+  stroke: rgba(230, 202, 114, 0.92);
+}
+
+.emb-unit-arc {
+  stroke: rgba(169, 196, 178, 0.65);
+  stroke-dasharray: 4 5;
+}
+
+.emb-hub-bar {
+  fill: rgba(140, 185, 231, 0.18);
+  stroke: rgba(140, 185, 231, 0.85);
+  stroke-width: 1;
+}
+
+.emb-hub-bar.is-peak {
+  fill: rgba(232, 163, 109, 0.22);
+  stroke: rgba(232, 163, 109, 0.96);
+}
+
+.emb-heat-label {
+  fill: var(--tda-ink);
+  font-family: var(--site-font-stack);
+  font-size: 11px;
+}
+
+.emb-widget-note {
+  color: var(--tda-ink-faint);
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+@media (max-width: 1180px) {
+  .emb-hero-grid,
+  .emb-why-grid,
+  .emb-diagnostic-grid,
+  .emb-application-grid,
+  .emb-reference-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .emb-why-grid {
+    gap: 0.75rem;
+  }
+
+  .emb-why-item,
+  .emb-why-item:first-child {
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.75rem 0 0;
+  }
+}
+
+@media (max-width: 840px) {
+  body.embeddings-notes-page .tda-display {
+    max-width: 11ch;
+  }
+}
