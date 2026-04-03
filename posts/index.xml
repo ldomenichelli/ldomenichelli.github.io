@@ -88,8 +88,7 @@ A non‑profit updates it every month, storing:&lt;/p&gt;
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ldomenichelli.github.io/posts/post8/</guid>
-      <description>&lt;p&gt;Here are the slides and notes on the course hold by Prof. Chiaromonte at Sant&amp;rsquo;Anna University, Pisa.
-&lt;embed src=&#34;https://ldomenichelli.github.io/SLLD_new.pdf&#34; width=&#34;100%&#34; height=&#34;800px&#34; type=&#34;application/pdf&#34;&gt;&lt;/p&gt;</description>
+      <description>A digital mathematical notebook rebuilt from the Statistical Learning and Large Data slide deck: clustering, PCA, supervised classification, smoothing, resampling, penalization, supervised dimension reduction, and ultrahigh-dimensional screening.</description>
     </item>
     
     <item>
