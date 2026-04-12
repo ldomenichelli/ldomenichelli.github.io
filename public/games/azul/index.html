@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en" dir="auto">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+  <meta name="robots" content="index, follow">
+  <title>Azul | lucia's notes</title>
+  <meta name="description" content="Playable Azul: local human vs human or human vs computer with selectable seat and difficulty.">
+  <link crossorigin="anonymous" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css" rel="preload stylesheet" as="style">
+  <link rel="stylesheet" href="/assets/css/game-shell.css">
+  <link rel="stylesheet" href="/assets/css/azul.css">
+  <link rel="stylesheet" href="/assets/css/site-theme.css">
+</head>
+<body class="page dark azul-page">
+<header class="header">
+  <nav class="nav">
+    <div class="logo"><a href="/" accesskey="h">lucia's notes</a><div class="logo-switches"><ul class="lang-switch"><li>|</li></ul></div></div>
+    <button id="menu-trigger" aria-haspopup="menu" aria-label="Menu Button">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <ul class="menu hidden"><li><a href="/about/" title="about"><span>about</span></a></li><li><a href="/posts/" title="notes"><span>notes</span></a></li><li><a href="/projects/" title="projects"><span>projects</span></a></li><li><a href="/random/" title="hobbies"><span>hobbies</span></a></li></ul>
+  </nav>
+</header>
+
+<main class="game-shell-wrap">
+  <section class="panel game-shell-hero" aria-labelledby="azul-title">
+    <div>
+      <h1 id="azul-title" class="hero-title">Azul</h1>
+      <p class="muted">Draft original mosaic tiles, stack pattern lines, and finish the wall before your opponent does.</p>
+    </div>
+    <div class="meta-row"><span class="meta-pill">2-player base game</span><span class="meta-pill">Human vs Human</span><span class="meta-pill">Human vs Computer</span></div>
+  </section>
+
+  <section class="game-shell-play" aria-label="Playable Azul board and controls">
+    <div class="panel game-shell-board-panel azul-board-panel">
+      <div class="game-shell-board-header">
+        <div>
+          <h2>Azul Arena</h2>
+          <p class="stat game-shell-turn" data-turn></p>
+        </div>
+        <p class="game-shell-thinking hidden" data-thinking aria-live="polite">Computer thinking…</p>
+      </div>
+      <p class="muted game-shell-status-copy" data-status aria-live="polite"></p>
+      <p class="azul-status-note muted" data-substatus></p>
+      <div class="game-shell-banner hidden" data-banner aria-live="assertive"></div>
+
+      <div class="azul-arena" data-azul-arena>
+        <section class="azul-table" aria-label="Factories and center">
+          <div class="azul-table-header">
+            <div>
+              <h3>Table</h3>
+              <p class="muted tiny">Choose a color from one factory or from the center, then place it on exactly one pattern line or the floor.</p>
+            </div>
+            <div class="azul-stock-strip">
+              <span class="azul-stock-pill"><strong data-bag-count>0</strong><small>Bag</small></span>
+              <span class="azul-stock-pill"><strong data-discard-count>0</strong><small>Discard</small></span>
+            </div>
+          </div>
+
+          <div class="azul-table-layout">
+            <div class="azul-factory-ring" data-factories aria-label="Factory displays"></div>
+            <section class="azul-center" data-center aria-label="Center of the table"></section>
+          </div>
+        </section>
+
+        <section class="azul-boards" data-boards aria-label="Player boards"></section>
+      </div>
+    </div>
+
+    <aside class="panel game-shell-side" aria-label="Game controls and history">
+      <div class="game-shell-section">
+        <h3>Mode</h3>
+        <div class="game-shell-control-grid">
+          <label for="azul-mode">Game mode</label>
+          <select id="azul-mode" data-mode>
+            <option value="HUMAN_VS_HUMAN">Human vs Human</option>
+            <option value="HUMAN_VS_COMPUTER">Human vs Computer</option>
+          </select>
+
+          <label for="azul-seat">Your seat</label>
+          <select id="azul-seat" data-seat>
+            <option value="0">First player</option>
+            <option value="1">Second player</option>
+          </select>
+
+          <label for="azul-difficulty">Difficulty</label>
+          <select id="azul-difficulty" data-difficulty>
+            <option value="Easy">Easy</option>
+            <option value="Medium" selected>Medium</option>
+            <option value="Hard">Hard</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="game-shell-section compact-stats">
+        <h3>Live status</h3>
+        <p class="muted tiny" data-round-summary></p>
+        <p class="muted tiny" data-seat-summary></p>
+        <div class="azul-stat-grid">
+          <div class="azul-stat"><span>Round</span><strong data-round>1</strong></div>
+          <div class="azul-stat"><span>Phase</span><strong data-phase>Factory offer</strong></div>
+          <div class="azul-stat"><span>Current turn</span><strong data-current-player>Player 1</strong></div>
+          <div class="azul-stat"><span>Next starter</span><strong data-next-starter>Player 1</strong></div>
+        </div>
+      </div>
+
+      <div class="game-shell-section">
+        <h3>Selection</h3>
+        <p class="muted tiny" data-selection-summary>Choose a factory or the center.</p>
+        <p class="muted tiny" data-reason-summary></p>
+      </div>
+
+      <div class="game-shell-section">
+        <h3>Controls</h3>
+        <div class="game-shell-button-row">
+          <button id="azul-undo" class="ghost" data-undo>Undo</button>
+          <button id="azul-new-game" class="ghost" data-new-game>New game</button>
+        </div>
+      </div>
+
+      <div class="game-shell-section history-shell">
+        <h3>Move history</h3>
+        <ol class="game-shell-history azul-history" data-history aria-live="polite"></ol>
+      </div>
+    </aside>
+  </section>
+
+  <section class="panel game-shell-learn azul-help" aria-label="Azul guide">
+    <div class="game-shell-tabs" role="tablist" aria-label="Azul guide tabs">
+      <button class="game-shell-tab is-active" data-tab-button="rules" role="tab" aria-selected="true">Rules</button>
+      <button class="game-shell-tab" data-tab-button="play" role="tab" aria-selected="false">How to play</button>
+      <button class="game-shell-tab" data-tab-button="tips" role="tab" aria-selected="false">Strategy tips</button>
+    </div>
+
+    <section class="game-shell-tab-panel" data-tab-panel="rules" role="tabpanel">
+      <ul class="rule-list">
+        <li>Base Azul uses 5 factory displays in a 2-player game and 4 tiles per factory.</li>
+        <li>On your turn, take all tiles of one color from a single factory or from the center.</li>
+        <li>The first player to take tiles from the center also takes the starting-player marker and adds it to the floor line.</li>
+        <li>Chosen tiles must go to exactly one pattern line or to the floor. A pattern line can hold only one color, and its wall row cannot already contain that color.</li>
+        <li>At the end of the round, each completed pattern line moves one tile to the wall, scores immediately, and sends the extras to the discard.</li>
+        <li>The game ends after the wall-tiling phase in which at least one wall row is complete. Bonus points come from completed rows, columns, and color sets.</li>
+      </ul>
+    </section>
+
+    <section class="game-shell-tab-panel hidden" data-tab-panel="play" role="tabpanel">
+      <ol class="rule-list">
+        <li>Click a color group in a factory or in the center to select your draft.</li>
+        <li>The active player board highlights every legal pattern line and shows how many tiles would spill to the floor.</li>
+        <li>Click a legal line to place there, or click the floor line if you want to dump everything.</li>
+        <li>Invalid rows explain why they are blocked, so it stays clear whether the issue is color mismatch, a full line, or a wall conflict.</li>
+        <li>Undo in Human vs Computer mode rewinds a full human/computer pair when that is the natural reversal.</li>
+      </ol>
+    </section>
+
+    <section class="game-shell-tab-panel hidden" data-tab-panel="tips" role="tabpanel">
+      <ul class="rule-list">
+        <li>Large pattern lines are tempting, but floor penalties often erase a flashy draft if the timing is wrong.</li>
+        <li>Watch the opponent's wall rows: denying a single color can strand a nearly completed pattern line for a full round.</li>
+        <li>Taking the first-player marker is strongest when you can absorb the penalty and exploit the next opening draft.</li>
+        <li>Rows matter for the end trigger, but columns and complete color sets are where big late-game swings come from.</li>
+      </ul>
+    </section>
+  </section>
+</main>
+
+<footer class="footer" style="padding-top:18px;padding-bottom:18px">
+  <span>&copy; 2025 <a href="https://ldomenichelli.github.io/">lucia's notes</a></span>
+  <span>•
+  <a href="/privacy">Privacy Policy</a></span>
+</footer>
+
+<script>
+  let b=document.querySelector('#menu-trigger'),m=document.querySelector('.menu');
+  b.addEventListener('click',()=>m.classList.toggle('hidden'));
+  document.body.addEventListener('click',e=>{if(!b.contains(e.target))m.classList.add('hidden')});
+</script>
+<script type="module" src="/assets/js/azul-page.js"></script>
+</body>
+</html>

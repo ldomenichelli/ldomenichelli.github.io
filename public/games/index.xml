@@ -2,39 +2,39 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>lucia&#39;s notes</title>
-    <link>http://localhost:1313/games/</link>
+    <link>https://ldomenichelli.github.io/games/</link>
     <description>Recent content on lucia&#39;s notes</description>
     <image>
       <title>lucia&#39;s notes</title>
-      <url>http://localhost:1313/logo.png</url>
-      <link>http://localhost:1313/logo.png</link>
+      <url>https://ldomenichelli.github.io/logo.png</url>
+      <link>https://ldomenichelli.github.io/logo.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="http://localhost:1313/games/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="https://ldomenichelli.github.io/games/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Abalone</title>
-      <link>http://localhost:1313/games/abalone/</link>
+      <link>https://ldomenichelli.github.io/games/abalone/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/games/abalone/</guid>
+      <guid>https://ldomenichelli.github.io/games/abalone/</guid>
       <description>Introduction to Abalone</description>
     </item>
     
     <item>
       <title>Achi</title>
-      <link>http://localhost:1313/games/achi/</link>
+      <link>https://ldomenichelli.github.io/games/achi/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/games/achi/</guid>
+      <guid>https://ldomenichelli.github.io/games/achi/</guid>
       <description>Introduction to Achi</description>
     </item>
     
     <item>
       <title>Adugo</title>
-      <link>http://localhost:1313/games/adugo/</link>
+      <link>https://ldomenichelli.github.io/games/adugo/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/games/adugo/</guid>
+      <guid>https://ldomenichelli.github.io/games/adugo/</guid>
       <description>&lt;h1 id=&#34;adugo-the-game-of-the-jaguar-and-dogs&#34;&gt;Adugo: The Game of the Jaguar and Dogs&lt;/h1&gt;
 &lt;p&gt;Adugo, also known as &amp;ldquo;Jaguar and Dogs,&amp;rdquo; is a traditional game played by the &lt;a href=&#34;https://pib.socioambiental.org/en/Povo:Bororo&#34;&gt;Bororo&lt;/a&gt; people in Brazil. This game simulates a hunting scenario and shares similarities with other strategic games from Southeast Asia.&lt;/p&gt;
 &lt;h2 id=&#34;overview-of-the-game&#34;&gt;Overview of the Game&lt;/h2&gt;
@@ -53,6 +53,15 @@
     &lt;/label&gt;
 
 &lt;/p&gt;</description>
+    </item>
+
+    <item>
+      <title>Azul</title>
+      <link>https://ldomenichelli.github.io/games/azul/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+
+      <guid>https://ldomenichelli.github.io/games/azul/</guid>
+      <description>Playable Azul: draft tile colors from factories or the center, fill pattern lines, resolve wall-tiling, and challenge a local human or the computer.</description>
     </item>
     
   </channel>

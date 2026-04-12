@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Azul Browser Suite</title>
+  <style>
+    body {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      background: #111;
+      color: #f5f5f5;
+      margin: 0;
+      padding: 16px;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      margin: 0;
+      line-height: 1.45;
+    }
+  </style>
+</head>
+<body data-test-status="RUNNING">
+  <pre id="log">Running...</pre>
+  <script type="module">
+    import {
+      START_MARKER,
+      PHASES,
+      WALL_PATTERN,
+      createInitialState,
+      getDraftOptions,
+      getPlacementOptions,
+      getLegalMoves,
+      applyMove,
+      getWallColumnForColor,
+      computeEndgameBonus,
+      isMoveLegal
+    } from '/assets/js/azul-engine.js';
+    import { chooseAIMove } from '/assets/js/azul-ai.js';
+
+    const logEl = document.getElementById('log');
+    const messages = [];
+
+    function log(message) {
+      messages.push(message);
+      logEl.textContent = messages.join('\n');
+    }
+
+    function assert(condition, message) {
+      if (!condition) throw new Error(message);
+      log(`PASS ${message}`);
+    }
+
+    function makeState(overrides = {}) {
+      const state = createInitialState({
+        playerCount: 2,
+        bag: [],
+        seed: 1
+      });
+
+      state.bag = [];
+      state.discard = [];
+      state.factories = Array.from({ length: 5 }, () => []);
+      state.center = {
+        tiles: [],
+        hasStartMarker: true
+      };
+      state.turn = 0;
+      state.currentStartPlayer = 0;
+      state.nextStartPlayer = 0;
+      state.round = 1;
+      state.phase = PHASES.OFFER;
+      state.history = [];
+      state.lastRoundSummary = null;
+      state.winnerIndices = [];
+      state.tieBreak = 'score';
+
+      return Object.assign(state, overrides);
+    }
+
+    function setWallTile(player, row, color) {
+      const column = getWallColumnForColor(row, color);
+      player.wall[row][column] = color;
+    }
+
+    async function run() {
+      const setup = createInitialState({ playerCount: 2, seed: 9 });
+      assert(setup.factories.length === 5, 'setup uses five factories for the 2-player game');
+      assert(setup.factories.every((factory) => factory.length === 4), 'each factory starts with four tiles');
+
+      let state = makeState({
+        factories: [['COBALT', 'COBALT', 'AMBER', 'ONYX'], [], [], [], []],
+        center: { tiles: [], hasStartMarker: true }
+      });
+      let move = getLegalMoves(state, 0).find((candidate) =>
+        candidate.draft.source.kind === 'FACTORY' &&
+        candidate.draft.source.index === 0 &&
+        candidate.draft.color === 'COBALT' &&
+        candidate.destination.kind === 'PATTERN_LINE' &&
+        candidate.destination.row === 4
+      );
+      let next = applyMove(state, move);
+      assert(next.center.tiles.includes('AMBER') && next.center.tiles.includes('ONYX'), 'factory leftovers move to the center');
+
+      state = makeState({
+        factories: [['COBALT'], [], [], [], []],
+        center: { tiles: ['AMBER', 'AMBER'], hasStartMarker: true }
+      });
+      move = getLegalMoves(state, 0).find((candidate) =>
+        candidate.draft.source.kind === 'CENTER' &&
+        candidate.draft.color === 'AMBER' &&
+        candidate.destination.kind === 'PATTERN_LINE' &&
+        candidate.destination.row === 1
+      );
+      next = applyMove(state, move);
+      assert(next.players[0].floor[0] === START_MARKER, 'the first center draft takes the starting-player marker');
+
+      const players = makeState().players;
+      players[0].patternLines[2].color = 'COBALT';
+      players[0].patternLines[2].filled = 1;
+      setWallTile(players[0], 0, 'AMBER');
+      state = makeState({
+        players,
+        factories: [['AMBER', 'AMBER'], [], [], [], []],
+        center: { tiles: [], hasStartMarker: true }
+      });
+      const amberDraft = getDraftOptions(state, 0).find((draft) =>
+        draft.source.kind === 'FACTORY' &&
+        draft.source.index === 0 &&
+        draft.color === 'AMBER'
+      );
+      const placements = getPlacementOptions(state, 0, amberDraft);
+      assert(placements.find((option) => option.destination.kind === 'PATTERN_LINE' && option.destination.row === 0).isLegal === false, 'wall duplicates are blocked');
+      assert(placements.find((option) => option.destination.kind === 'PATTERN_LINE' && option.destination.row === 2).isLegal === false, 'mixed-color pattern lines are blocked');
+
+      state = makeState({
+        players: makeState().players.map((player, index) => {
+          if (index !== 0) return player;
+          player.score = 1;
+          return player;
+        }),
+        factories: [['COBALT', 'COBALT', 'COBALT'], [], [], [], []],
+        center: { tiles: [], hasStartMarker: false }
+      });
+      move = getLegalMoves(state, 0).find((candidate) =>
+        candidate.draft.color === 'COBALT' &&
+        candidate.destination.kind === 'PATTERN_LINE' &&
+        candidate.destination.row === 0
+      );
+      next = applyMove(state, move);
+      assert(next.players[0].score === 0, 'floor penalties resolve and never push the score below zero');
+
+      const scoringPlayers = makeState().players;
+      setWallTile(scoringPlayers[0], 2, 'PEARL');
+      setWallTile(scoringPlayers[0], 2, 'AMBER');
+      setWallTile(scoringPlayers[0], 1, 'AMBER');
+      scoringPlayers[0].patternLines[2].color = 'COBALT';
+      scoringPlayers[0].patternLines[2].filled = 3;
+      state = makeState({
+        players: scoringPlayers,
+        factories: [['TERRACOTTA'], [], [], [], []],
+        center: { tiles: [], hasStartMarker: false }
+      });
+      move = getLegalMoves(state, 0).find((candidate) =>
+        candidate.draft.color === 'TERRACOTTA' &&
+        candidate.destination.kind === 'PATTERN_LINE' &&
+        candidate.destination.row === 4
+      );
+      next = applyMove(state, move);
+      const placement = next.lastRoundSummary.playerSummaries[0].placements.find((item) => item.row === 2);
+      assert(placement.scoreGain === 5, 'wall-tiling scores horizontal and vertical adjacency correctly');
+
+      state = makeState({
+        bag: ['COBALT', 'AMBER', 'PEARL', 'ONYX'],
+        discard: ['TERRACOTTA', 'TERRACOTTA', 'AMBER', 'PEARL', 'ONYX', 'COBALT'],
+        factories: [['COBALT'], [], [], [], []],
+        center: { tiles: [], hasStartMarker: false }
+      });
+      move = getLegalMoves(state, 0).find((candidate) =>
+        candidate.draft.color === 'COBALT' &&
+        candidate.destination.kind === 'PATTERN_LINE' &&
+        candidate.destination.row === 4
+      );
+      next = applyMove(state, move);
+      assert(next.round === 2 && next.center.hasStartMarker, 'the next round refills factories and restores the center marker');
+
+      const bonusPlayer = makeState().players[0];
+      for (const color of WALL_PATTERN[0]) {
+        setWallTile(bonusPlayer, 0, color);
+      }
+      for (let row = 0; row < 5; row += 1) {
+        setWallTile(bonusPlayer, row, WALL_PATTERN[row][0]);
+        setWallTile(bonusPlayer, row, 'COBALT');
+      }
+      const bonus = computeEndgameBonus(bonusPlayer);
+      assert(bonus.points === 19, 'endgame bonuses combine rows, columns, and color sets');
+
+      const tiePlayers = makeState().players;
+      for (const color of WALL_PATTERN[0].slice(0, 4)) {
+        setWallTile(tiePlayers[0], 0, color);
+      }
+      tiePlayers[0].patternLines[0].color = 'PEARL';
+      tiePlayers[0].patternLines[0].filled = 1;
+      tiePlayers[0].score = 5;
+      tiePlayers[1].score = 12;
+      state = makeState({
+        players: tiePlayers,
+        factories: [['COBALT'], [], [], [], []],
+        center: { tiles: [], hasStartMarker: false }
+      });
+      move = getLegalMoves(state, 0).find((candidate) =>
+        candidate.draft.color === 'COBALT' &&
+        candidate.destination.kind === 'PATTERN_LINE' &&
+        candidate.destination.row === 4
+      );
+      next = applyMove(state, move);
+      assert(next.winnerIndices.length === 1 && next.winnerIndices[0] === 0 && next.tieBreak === 'rows', 'tie-break prefers the tied player with more complete rows');
+
+      const aiState = createInitialState({ playerCount: 2, seed: 11 });
+      const aiMove = chooseAIMove(aiState, aiState.turn, 'Hard');
+      assert(Boolean(aiMove) && isMoveLegal(aiState, aiMove, aiState.turn), 'AI always produces a legal move');
+
+      log('PASS browser suite completed');
+      document.body.dataset.testStatus = 'PASS';
+    }
+
+    run().catch((error) => {
+      log(`FAIL ${error.message}`);
+      document.body.dataset.testStatus = 'FAIL';
+    });
+  </script>
+</body>
+</html>
