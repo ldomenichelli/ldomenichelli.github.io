@@ -128,6 +128,28 @@ a:hover,
   color: var(--site-accent);
 }
 
+.profile_inner img[src*="logo-dithered"],
+.about-avatar[src*="logo-dithered"] {
+  background: transparent;
+  border: 0 !important;
+  border-radius: 0;
+  box-shadow: none !important;
+  filter: drop-shadow(22px 26px 9px rgba(16, 9, 47, 0.29));
+  object-fit: contain;
+  transition:
+    filter 180ms ease,
+    transform 180ms ease;
+}
+
+.profile_inner img[src*="logo-dithered"]:hover,
+.profile_inner img[src*="logo-dithered"]:focus,
+.about-avatar[src*="logo-dithered"]:hover,
+.about-avatar[src*="logo-dithered"]:focus {
+  border: 0 !important;
+  filter: hue-rotate(190deg) saturate(50%) drop-shadow(22px 26px 9px rgba(16, 9, 47, 0.29));
+  transform: rotate(8deg);
+}
+
 :focus-visible {
   outline: 2px solid var(--site-focus);
   outline-offset: 2px;
