@@ -2,129 +2,129 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Tags on lucia&#39;s notes</title>
-    <link>http://localhost:1313/tags/</link>
+    <link>https://ldomenichelli.github.io/tags/</link>
     <description>Recent content in Tags on lucia&#39;s notes</description>
     <image>
       <title>lucia&#39;s notes</title>
-      <url>http://localhost:1313/logo.png</url>
-      <link>http://localhost:1313/logo.png</link>
+      <url>https://ldomenichelli.github.io/logo.png</url>
+      <link>https://ldomenichelli.github.io/logo.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="https://ldomenichelli.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>1-vs-1</title>
-      <link>http://localhost:1313/tags/1-vs-1/</link>
+      <link>https://ldomenichelli.github.io/tags/1-vs-1/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/1-vs-1/</guid>
+      <guid>https://ldomenichelli.github.io/tags/1-vs-1/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Abalone</title>
-      <link>http://localhost:1313/tags/abalone/</link>
+      <link>https://ldomenichelli.github.io/tags/abalone/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/abalone/</guid>
+      <guid>https://ldomenichelli.github.io/tags/abalone/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Abstract</title>
-      <link>http://localhost:1313/tags/abstract/</link>
+      <link>https://ldomenichelli.github.io/tags/abstract/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/abstract/</guid>
+      <guid>https://ldomenichelli.github.io/tags/abstract/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Achi</title>
-      <link>http://localhost:1313/tags/achi/</link>
+      <link>https://ldomenichelli.github.io/tags/achi/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/achi/</guid>
+      <guid>https://ldomenichelli.github.io/tags/achi/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Deep Learning</title>
-      <link>http://localhost:1313/tags/deep-learning/</link>
+      <link>https://ldomenichelli.github.io/tags/deep-learning/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/deep-learning/</guid>
+      <guid>https://ldomenichelli.github.io/tags/deep-learning/</guid>
       <description></description>
     </item>
         
     <item>
       <title>GENEO</title>
-      <link>http://localhost:1313/tags/geneo/</link>
+      <link>https://ldomenichelli.github.io/tags/geneo/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/geneo/</guid>
+      <guid>https://ldomenichelli.github.io/tags/geneo/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Geometric</title>
-      <link>http://localhost:1313/tags/geometric/</link>
+      <link>https://ldomenichelli.github.io/tags/geometric/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/geometric/</guid>
+      <guid>https://ldomenichelli.github.io/tags/geometric/</guid>
       <description></description>
     </item>
     
     <item>
       <title>History</title>
-      <link>http://localhost:1313/tags/history/</link>
+      <link>https://ldomenichelli.github.io/tags/history/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/history/</guid>
+      <guid>https://ldomenichelli.github.io/tags/history/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Hobby</title>
-      <link>http://localhost:1313/tags/hobby/</link>
+      <link>https://ldomenichelli.github.io/tags/hobby/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/hobby/</guid>
+      <guid>https://ldomenichelli.github.io/tags/hobby/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Homology</title>
-      <link>http://localhost:1313/tags/homology/</link>
+      <link>https://ldomenichelli.github.io/tags/homology/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/homology/</guid>
+      <guid>https://ldomenichelli.github.io/tags/homology/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Optimal Transport</title>
-      <link>http://localhost:1313/tags/optimal-transport/</link>
+      <link>https://ldomenichelli.github.io/tags/optimal-transport/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/optimal-transport/</guid>
+      <guid>https://ldomenichelli.github.io/tags/optimal-transport/</guid>
       <description></description>
     </item>
         
     <item>
       <title>Tea</title>
-      <link>http://localhost:1313/tags/tea/</link>
+      <link>https://ldomenichelli.github.io/tags/tea/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/tea/</guid>
+      <guid>https://ldomenichelli.github.io/tags/tea/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Wsdistance</title>
-      <link>http://localhost:1313/tags/wsdistance/</link>
+      <link>https://ldomenichelli.github.io/tags/wsdistance/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/tags/wsdistance/</guid>
+      <guid>https://ldomenichelli.github.io/tags/wsdistance/</guid>
       <description></description>
     </item>
     

@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>1-vs-1 on lucia&#39;s notes</title>
-    <link>http://localhost:1313/tags/1-vs-1/</link>
+    <link>https://ldomenichelli.github.io/tags/1-vs-1/</link>
     <description>Recent content in 1-vs-1 on lucia&#39;s notes</description>
     <image>
       <title>lucia&#39;s notes</title>
-      <url>http://localhost:1313/logo.png</url>
-      <link>http://localhost:1313/logo.png</link>
+      <url>https://ldomenichelli.github.io/logo.png</url>
+      <link>https://ldomenichelli.github.io/logo.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="http://localhost:1313/tags/1-vs-1/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="https://ldomenichelli.github.io/tags/1-vs-1/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Abalone</title>
-      <link>http://localhost:1313/games/abalone/</link>
+      <link>https://ldomenichelli.github.io/games/abalone/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/games/abalone/</guid>
+      <guid>https://ldomenichelli.github.io/games/abalone/</guid>
       <description>Introduction to Abalone</description>
     </item>
     
     <item>
       <title>Achi</title>
-      <link>http://localhost:1313/games/achi/</link>
+      <link>https://ldomenichelli.github.io/games/achi/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/games/achi/</guid>
+      <guid>https://ldomenichelli.github.io/games/achi/</guid>
       <description>Introduction to Achi</description>
     </item>
     
