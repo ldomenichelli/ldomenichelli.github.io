@@ -62,14 +62,29 @@
             color: #555;
         }
     </style>
-</head>
-<body>
-    <h1>Adugo: The Game of the Jaguar and Dogs</h1>
-    <div class="board"></div>
-    <div class="controls">
-        <button id="reset">Reset Game</button>
-        <p id="status">Jaguar's Turn</p>
-    </div>
+<link rel="stylesheet" href="/assets/css/site-theme.css"></head>
+<body class="page dark standalone-adugo-page">
+    <header class="header">
+        <nav class="nav">
+            <div class="logo"><a href="/" accesskey="h">lucia's notes</a></div>
+            <ul class="menu hidden">
+                <li><a href="/about/" title="about"><span>about</span></a></li>
+                <li><a href="/posts/" title="notes"><span>notes</span></a></li>
+                <li><a href="/projects/" title="projects"><span>projects</span></a></li>
+                <li><a href="/random/" title="hobbies"><span>hobbies</span></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="main standalone-game-main">
+        <article class="post-single">
+            <h1>Adugo: The Game of the Jaguar and Dogs</h1>
+            <div class="board"></div>
+            <div class="controls">
+                <button id="reset">Reset Game</button>
+                <p id="status">Jaguar's Turn</p>
+            </div>
+        </article>
+    </main>
     <script>
         const board = document.querySelector('.board');
         const status = document.getElementById('status');
@@ -152,4 +167,3 @@
     </script>
 </body>
 </html>
-

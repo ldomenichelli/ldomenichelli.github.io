@@ -622,3 +622,61 @@
     transform: none;
   }
 }
+
+/* Match the rest of the handmade personal-site skin. */
+.explorable-paper {
+  max-width: 840px;
+}
+
+.explorable-hero,
+.explorable-panel,
+.takeaway-card,
+.setup-card,
+.hero-highlight,
+.question-card,
+.metric-chip {
+  background: rgba(251, 249, 234, 0.92);
+  border: 1px solid var(--site-border);
+  border-radius: var(--site-radius-sm);
+  box-shadow: none;
+}
+
+.explorable-hero {
+  border-color: var(--site-border-strong);
+}
+
+.explorable-kicker,
+.hero-highlight strong,
+.explorable-hero h1,
+.explorable-panel h2,
+.question-card strong,
+.takeaway-card strong,
+.setup-card strong {
+  color: var(--site-accent-strong);
+  letter-spacing: 0;
+}
+
+.explorable-dek,
+.explorable-summary,
+.hero-highlight small,
+.explorable-panel p,
+.explorable-panel li,
+.section-note {
+  color: var(--site-text-muted);
+}
+
+.explorable-action,
+.explorable-action.primary,
+.explorable-action.accent {
+  background: var(--site-surface-strong);
+  border: 1px solid var(--site-border);
+  border-radius: var(--site-radius-sm);
+  color: var(--site-accent-strong);
+}
+
+.explorable-action:hover {
+  background: var(--site-accent-soft);
+  border-color: var(--site-border-strong);
+  color: var(--site-accent-strong);
+  transform: none;
+}

@@ -223,3 +223,50 @@
     transition: none;
   }
 }
+
+/* Match the rest of the handmade personal-site skin. */
+.publications-page {
+  max-width: 840px;
+}
+
+.publication-hero,
+.publication-summary,
+.publication-focus,
+.publication-notice,
+.publication-grid-card,
+.publication-card {
+  background: rgba(251, 249, 234, 0.92);
+  border: 1px solid var(--site-border);
+  border-radius: var(--site-radius-sm);
+  box-shadow: none;
+}
+
+.publication-hero {
+  border-color: var(--site-border-strong);
+}
+
+.publication-kicker,
+.publication-tag,
+.publication-hero h1,
+.publication-card h2,
+.publication-grid-card strong {
+  color: var(--site-accent-strong);
+  letter-spacing: 0;
+}
+
+.publication-tag,
+.publication-action {
+  background: var(--site-surface-strong);
+  border: 1px solid var(--site-border);
+  border-radius: var(--site-radius-sm);
+  color: var(--site-accent-strong);
+}
+
+.publication-action.primary,
+.publication-action.accent,
+.publication-action:hover {
+  background: var(--site-accent-soft);
+  border-color: var(--site-border-strong);
+  color: var(--site-accent-strong);
+  transform: none;
+}
