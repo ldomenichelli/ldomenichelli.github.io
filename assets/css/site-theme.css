@@ -664,11 +664,11 @@ textarea {
 :root,
 .dark {
   --site-font-stack: Consolas, "Courier New", "Liberation Mono", monospace;
-  --site-bg: #f2efdc;
-  --site-bg-soft: #ebe6cb;
-  --site-surface: #fbf9ea;
-  --site-surface-strong: #f7f3dc;
-  --site-surface-alt: #e7e0bd;
+  --site-bg: #e8f1d8;
+  --site-bg-soft: #dfeacb;
+  --site-surface: #f7fbed;
+  --site-surface-strong: #eff6df;
+  --site-surface-alt: #d9e8bf;
   --site-text: #31530d;
   --site-text-muted: #5c7439;
   --site-text-soft: #77835f;
@@ -689,10 +689,10 @@ textarea {
   --entry: var(--site-surface);
   --primary: var(--site-text);
   --secondary: var(--site-text-muted);
-  --tertiary: #dfd8b6;
+  --tertiary: #d2dfb8;
   --content: #344d18;
-  --hljs-bg: #f7f3dc;
-  --code-bg: #f7f3dc;
+  --hljs-bg: #eff6df;
+  --code-bg: #eff6df;
   --border: var(--site-border);
   --carolina_blue: var(--site-accent);
   --main-width: 820px;
@@ -893,7 +893,7 @@ a:hover,
 .terms-tags a,
 .pagination a,
 .button {
-  background: rgba(251, 249, 234, 0.92);
+  background: rgba(247, 251, 237, 0.92);
   border: 1px solid var(--site-border);
   border-radius: var(--site-radius-md);
   box-shadow: none;
@@ -1120,7 +1120,7 @@ textarea:hover,
 .project-lab input[type="number"],
 .project-lab button,
 .project-lab canvas {
-  background: rgba(251, 249, 234, 0.92);
+  background: rgba(247, 251, 237, 0.92);
   border-color: var(--site-border);
   border-radius: var(--site-radius-sm);
   color: var(--site-text);
@@ -1162,6 +1162,77 @@ textarea:hover,
   border: 1px solid var(--site-border);
   border-radius: var(--site-radius-sm);
   color: var(--site-accent-strong);
+}
+
+.site-music-player {
+  background: rgba(247, 251, 237, 0.94);
+  border: 1px solid var(--site-border-strong);
+  color: var(--site-text);
+  font: 12px/1.45 var(--site-font-stack);
+  padding: 0.55rem;
+  position: fixed;
+  right: 28px;
+  top: 150px;
+  width: 210px;
+  z-index: 24;
+}
+
+.site-music-kicker {
+  border-bottom: 1px solid var(--site-border);
+  color: var(--site-text-soft);
+  margin-bottom: 0.4rem;
+  padding-bottom: 0.25rem;
+}
+
+.site-music-title {
+  color: var(--site-accent-strong);
+  font-weight: 700;
+}
+
+.site-music-artist,
+.site-music-time {
+  color: var(--site-text-muted);
+}
+
+.site-music-select {
+  margin-top: 0.45rem;
+  width: 100%;
+}
+
+.site-music-controls {
+  display: grid;
+  gap: 0.35rem;
+  grid-template-columns: 34px 1fr 34px;
+  margin-top: 0.45rem;
+}
+
+.site-music-player button,
+.site-music-player select,
+.site-music-progress {
+  background: var(--site-surface-strong);
+  border: 1px solid var(--site-border);
+  border-radius: var(--site-radius-sm);
+  color: var(--site-accent-strong);
+  font: inherit;
+  min-height: 30px;
+}
+
+.site-music-player button {
+  padding: 0.2rem 0.35rem;
+}
+
+.site-music-player button:hover,
+.site-music-player select:hover {
+  background: var(--site-accent-soft);
+  border-color: var(--site-border-strong);
+}
+
+.site-music-progress {
+  accent-color: var(--site-accent);
+  height: 30px;
+  margin-top: 0.4rem;
+  padding: 0 0.3rem;
+  width: 100%;
 }
 
 ::-webkit-scrollbar {
@@ -1214,7 +1285,7 @@ button.ghost,
 .azul-player-chip,
 .azul-score-pill,
 .azul-marker-pill {
-  background: rgba(251, 249, 234, 0.92) !important;
+  background: rgba(247, 251, 237, 0.92) !important;
   border: 1px solid var(--site-border) !important;
   border-radius: var(--site-radius-sm) !important;
   box-shadow: none !important;
@@ -1329,6 +1400,15 @@ button.ghost,
   body::after {
     display: none;
   }
+
+  .site-music-player {
+    bottom: 14px;
+    left: 14px;
+    max-width: 360px;
+    right: 14px;
+    top: auto;
+    width: auto;
+  }
 }
 
 @media screen and (max-width: 899px) {
@@ -1341,7 +1421,7 @@ button.ghost,
   }
 
   .header {
-    background: rgba(242, 239, 220, 0.96);
+    background: rgba(232, 241, 216, 0.96);
     border-bottom: 1px solid var(--site-border);
     padding: 0.75rem var(--gap);
     position: sticky;
