@@ -1415,8 +1415,13 @@ button.ghost,
   }
 }
 
-body.list .profile {
-  padding-top: clamp(2.5rem, 9vh, 5rem);
+body.list .main .profile {
+  align-items: flex-start;
+  display: block;
+  justify-content: flex-start;
+  min-height: auto;
+  padding-top: clamp(0.5rem, 2vh, 1.25rem);
+  text-align: left;
 }
 
 body.list .profile_inner {
@@ -1424,8 +1429,31 @@ body.list .profile_inner {
   border: 0;
   border-radius: 0;
   box-shadow: none;
+  display: flex;
+  flex-direction: column;
   max-width: 620px;
   padding: 0;
+}
+
+body.list .profile_inner img {
+  order: 1;
+}
+
+body.list .profile_inner h1 {
+  order: 2;
+  text-transform: none;
+}
+
+body.list .profile_inner span {
+  order: 4;
+}
+
+body.list .profile_inner .social-icons {
+  order: 5;
+}
+
+body.list .profile_inner > div:last-child {
+  order: 6;
 }
 
 body.list .profile_inner::after {
@@ -1434,5 +1462,7 @@ body.list .profile_inner::after {
 }
 
 body.list .profile_inner::before {
+  order: 3;
+  margin-top: 0.2rem;
   margin-bottom: 1.25rem;
 }
