@@ -1297,16 +1297,7 @@ textarea:hover,
 .control-grid select,
 button.ghost,
 .game-shell-tab,
-.seg-btn,
-.azul-table,
-.azul-player-board,
-.azul-factory,
-.azul-center,
-.azul-source-button,
-.azul-stock-pill,
-.azul-player-chip,
-.azul-score-pill,
-.azul-marker-pill {
+.seg-btn {
   background: rgba(247, 251, 237, 0.92) !important;
   border: 1px solid var(--site-border) !important;
   border-radius: var(--site-radius-sm) !important;
@@ -1314,14 +1305,6 @@ button.ghost,
   color: var(--site-text) !important;
 }
 
-.azul-board-panel::before {
-  display: none !important;
-}
-
-.azul-source-button:hover,
-.azul-source-button:focus-visible,
-.azul-source-button.is-selected,
-.azul-center.is-selected,
 .game-shell-tab.is-active,
 .seg-btn.active {
   background: var(--site-accent-soft) !important;
@@ -1330,10 +1313,6 @@ button.ghost,
   transform: none !important;
 }
 
-.azul-factory-header h4,
-.azul-center-header h4,
-.azul-player-title,
-.azul-table-header h3,
 .game-shell-section h3,
 .rail-section h3 {
   color: var(--site-accent-strong) !important;
