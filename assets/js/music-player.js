@@ -21,6 +21,7 @@
     '<div class="site-music-controls">',
     '  <button type="button" data-music-prev aria-label="Previous song">&lt;</button>',
     '  <button type="button" data-music-play aria-label="Play song">play</button>',
+    '  <button type="button" data-music-stop aria-label="Stop song">stop</button>',
     '  <button type="button" data-music-next aria-label="Next song">&gt;</button>',
     "</div>",
     '<input class="site-music-progress" type="range" min="0" max="100" value="0" aria-label="Song progress">',
@@ -31,6 +32,7 @@
   const artist = player.querySelector(".site-music-artist");
   const select = player.querySelector(".site-music-select");
   const playButton = player.querySelector("[data-music-play]");
+  const stopButton = player.querySelector("[data-music-stop]");
   const prevButton = player.querySelector("[data-music-prev]");
   const nextButton = player.querySelector("[data-music-next]");
   const progress = player.querySelector(".site-music-progress");
@@ -80,6 +82,14 @@
     playButton.textContent = audio.paused ? "play" : "pause";
   }
 
+  function stopTrack() {
+    audio.pause();
+    audio.currentTime = 0;
+    progress.value = "0";
+    time.textContent = `0:00 / ${formatTime(audio.duration)}`;
+    setPlayingState();
+  }
+
   playButton.addEventListener("click", () => {
     if (audio.paused) {
       audio.play().catch(() => {
@@ -97,6 +107,8 @@
   nextButton.addEventListener("click", () => {
     setTrack(currentIndex + 1, !audio.paused);
   });
+
+  stopButton.addEventListener("click", stopTrack);
 
   select.addEventListener("change", () => {
     setTrack(Number.parseInt(select.value, 10), !audio.paused);

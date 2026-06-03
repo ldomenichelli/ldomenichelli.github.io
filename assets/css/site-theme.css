@@ -1224,7 +1224,7 @@ textarea:hover,
 .site-music-controls {
   display: grid;
   gap: 0.35rem;
-  grid-template-columns: 34px 1fr 34px;
+  grid-template-columns: 34px 1fr 44px 34px;
   margin-top: 0.45rem;
 }
 
