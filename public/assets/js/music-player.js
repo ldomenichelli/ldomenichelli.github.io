@@ -78,5 +78,11 @@
 
   setTrack(currentIndex, false);
   player.appendChild(audio);
-  document.body.appendChild(player);
+
+  const header = document.querySelector(".header");
+  if (header && header.parentNode) {
+    header.insertAdjacentElement("afterend", player);
+  } else {
+    document.body.appendChild(player);
+  }
 })();
