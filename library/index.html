@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en" dir="auto">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+  <meta name="robots" content="index, follow">
+  <title>the library | lucia's room</title>
+  <meta name="description" content="An empty bookshelf for Lucia's reading library.">
+  <meta name="author" content="Lucia Domenichelli">
+  <link rel="canonical" href="https://ldomenichelli.github.io/library/">
+  <link crossorigin="anonymous" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css" integrity="sha256-WtmxyqkuTOqD680wiOlzYvI5sH2BREkKrwvB1r2JzRc=" rel="preload stylesheet" as="style">
+  <link rel="icon" href="https://ldomenichelli.github.io/favicon-dithered.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ldomenichelli.github.io/favicon-16x16-dithered.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ldomenichelli.github.io/favicon-32x32-dithered.png">
+  <link rel="apple-touch-icon" href="https://ldomenichelli.github.io/apple-touch-icon-dithered.png">
+  <meta property="og:title" content="the library | lucia's room">
+  <meta property="og:description" content="An empty bookshelf for Lucia's reading library.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ldomenichelli.github.io/library/">
+  <meta property="og:image" content="https://ldomenichelli.github.io/logo-dithered.png">
+  <meta property="og:site_name" content="lucia's room">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ldomenichelli.github.io/logo-dithered.png">
+  <meta name="twitter:title" content="the library | lucia's room">
+  <meta name="twitter:description" content="An empty bookshelf for Lucia's reading library.">
+  <script src="/assets/js/analytics.js" async></script>
+  <link rel="stylesheet" href="/assets/css/site-theme.css">
+  <style>
+    html {
+      background: #f7f5ed;
+    }
+
+    body.library-page {
+      --library-ink: #15100d;
+      --library-paper: #fbfaf4;
+      --library-paper-soft: #eee8d9;
+      --library-teal: #1b6f6a;
+      background:
+        radial-gradient(circle at 18% 24%, rgba(88, 51, 32, 0.08) 0 1px, transparent 1px),
+        radial-gradient(circle at 72% 38%, rgba(27, 111, 106, 0.08) 0 1px, transparent 1px),
+        linear-gradient(180deg, #f7f5ed 0%, #e8dfca 100%);
+      background-size: 7px 7px, 11px 11px, auto;
+      color: var(--library-ink);
+    }
+
+    body.library-page::after {
+      display: none;
+    }
+
+    body.library-page .header {
+      background: transparent;
+      border: 0;
+    }
+
+    body.library-page .main,
+    body.library-page .footer {
+      max-width: min(1060px, calc(100vw - 40px));
+    }
+
+    body.library-page .post-single {
+      background: transparent;
+      border: 0;
+      padding: 0 0 2rem;
+    }
+
+    body.library-page .post-single::before {
+      content: none;
+    }
+
+    .library-intro {
+      margin: 0 auto 0.8rem;
+      max-width: 720px;
+      padding: 0.6rem 0.8rem;
+      text-align: right;
+      text-wrap: balance;
+    }
+
+    .library-intro h1 {
+      color: var(--library-ink);
+      font-size: clamp(1.55rem, 4vw, 2.1rem);
+      line-height: 1.05;
+      margin: 0 0 0.35rem;
+      text-transform: none;
+    }
+
+    .library-intro p {
+      color: #3a2b22;
+      margin: 0;
+    }
+
+    .library-room {
+      margin: 0 auto;
+      max-width: 1000px;
+      position: relative;
+      text-align: center;
+    }
+
+    .library-shelf-frame {
+      align-items: center;
+      background: transparent;
+      box-shadow:
+        6px 8px 0 rgba(0, 0, 0, 0.2);
+      display: inline-flex;
+      filter: contrast(1.04) saturate(0.86);
+      justify-content: center;
+      margin: 0;
+      max-width: 100%;
+      overflow: hidden;
+      position: relative;
+      transform-origin: center;
+      transition:
+        filter 180ms ease,
+        transform 180ms ease;
+      width: fit-content;
+      image-rendering: pixelated;
+    }
+
+    .library-room:hover .library-shelf-frame,
+    .library-shelf-frame:hover {
+      filter: hue-rotate(190deg) saturate(0.5) contrast(1.04);
+      transform: rotate(8deg);
+    }
+
+    .library-shelf-frame::before,
+    .library-shelf-frame::after {
+      content: "";
+      inset: 0;
+      pointer-events: none;
+      position: absolute;
+      z-index: 1;
+    }
+
+    .library-shelf-frame::before {
+      background:
+        linear-gradient(135deg, rgba(48, 22, 10, 0.22), transparent 42%),
+        linear-gradient(315deg, rgba(48, 22, 10, 0.18), transparent 36%);
+    }
+
+    .library-shelf-frame::after {
+      background:
+        radial-gradient(circle, rgba(36, 18, 8, 0.24) 0 1px, transparent 1px) 0 0 / 4px 4px,
+        radial-gradient(circle, rgba(255, 232, 176, 0.2) 0 1px, transparent 1px) 2px 2px / 4px 4px;
+      mix-blend-mode: multiply;
+      opacity: 0.75;
+    }
+
+    .library-shelf-image {
+      display: block;
+      height: auto;
+      max-height: min(620px, calc(100vh - 185px));
+      max-width: 100%;
+      object-fit: contain;
+      width: auto;
+    }
+
+    .library-empty-note {
+      background: var(--library-paper-soft);
+      border: 1px dashed #19110d;
+      box-shadow: 4px 4px rgba(0, 0, 0, 0.2);
+      margin: 1.15rem auto 0;
+      max-width: 640px;
+      padding: 0.8rem;
+      text-align: center;
+    }
+
+    .library-empty-note p {
+      color: #3a2b22;
+      font-size: 0.86rem;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    body.library-page .site-music-player {
+      bottom: 16px;
+      top: auto;
+    }
+
+    @media screen and (max-width: 899px) {
+      body.library-page .main,
+      body.library-page .footer {
+        max-width: var(--mobile-content-width);
+        width: var(--mobile-content-width);
+      }
+
+      body.library-page .header {
+        box-sizing: border-box;
+      }
+
+      .library-intro {
+        padding-inline: 0;
+        text-align: left;
+      }
+
+      .library-shelf-image {
+        max-height: none;
+        width: 100%;
+      }
+
+      body.library-page .site-music-player {
+        bottom: auto;
+        margin-left: 0;
+      }
+    }
+
+    @media screen and (max-width: 520px) {
+      body.library-page .header {
+        width: min(100%, 390px);
+      }
+
+      body.library-page .main,
+      body.library-page .footer {
+        max-width: min(var(--mobile-content-width), 354px);
+        width: min(var(--mobile-content-width), 354px);
+      }
+
+      .library-room,
+      .library-empty-note {
+        max-width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .library-shelf-frame {
+        transition: none;
+      }
+
+      .library-room:hover .library-shelf-frame,
+      .library-shelf-frame:hover {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body class="page dark library-page" id="top">
+<header class="header">
+<nav class="nav">
+<div class="logo">
+<a href="https://ldomenichelli.github.io/" accesskey="h" title="lucia's room (Alt + H)">lucia's room</a>
+<div class="logo-switches">
+<ul class="lang-switch"><li>|</li></ul>
+</div>
+</div>
+<button id="menu-trigger" aria-haspopup="menu" aria-label="Menu Button">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
+<ul class="menu hidden">
+<li><a href="https://ldomenichelli.github.io/about/" title="about"><span>about</span></a></li>
+<li><a href="https://ldomenichelli.github.io/posts/" title="notes"><span>notes</span></a></li>
+<li><a href="https://ldomenichelli.github.io/projects/" title="projects"><span>projects</span></a></li>
+<li><a href="https://ldomenichelli.github.io/random/" title="hobbies"><span>hobbies</span></a></li>
+<li><a href="https://ldomenichelli.github.io/library/" title="the library"><span class="active">the library</span></a></li>
+</ul>
+</nav>
+</header>
+<main class="main">
+  <article class="post-single">
+    <header class="library-intro">
+      <h1>the library</h1>
+      <p>The shelf is empty for now, waiting for the first books to arrive.</p>
+    </header>
+
+    <section class="library-room" aria-label="Empty bookshelf">
+      <figure class="library-shelf-frame">
+        <img class="library-shelf-image" src="img/shelf.jpeg" alt="Empty wooden bookshelf">
+      </figure>
+    </section>
+
+
+  </article>
+</main>
+<footer class="footer" style="padding-top:18px;padding-bottom:18px">
+<span>&copy; 2025 <a href="https://ldomenichelli.github.io/">lucia's room</a></span>
+<span>•
+<a href="/privacy">Privacy Policy</a></span>
+</footer>
+<script>
+  let b=document.querySelector('#menu-trigger'),m=document.querySelector('.menu');
+  b.addEventListener('click',()=>m.classList.toggle('hidden'));
+  document.body.addEventListener('click',e=>{if(!b.contains(e.target))m.classList.add('hidden')});
+</script>
+<script src="/assets/js/music-playlist.js" defer></script><script src="/assets/js/music-player.js" defer></script></body>
+</html>
