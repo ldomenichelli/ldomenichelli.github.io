@@ -1187,46 +1187,56 @@ textarea:hover,
 }
 
 .site-music-player {
-  background: rgba(247, 251, 237, 0.94);
-  border: 1px solid var(--site-border-strong);
-  color: var(--site-text);
-  font: 12px/1.45 var(--site-font-stack);
-  padding: 0.4rem 0.45rem;
+  background: rgba(239, 246, 223, 0.96);
+  border: 2px solid var(--site-border-strong);
+  border-radius: var(--site-radius-md);
+  color: var(--site-accent-strong);
+  font: 11px/1.2 var(--site-font-stack);
+  padding: 0 0.4rem 0.25rem;
   position: fixed;
-  right: 28px;
-  top: 150px;
-  width: 150px;
+  right: 18px;
+  top: 145px;
+  width: 300px;
   z-index: 24;
 }
 
-.site-music-title {
+.site-music-label {
   color: var(--site-accent-strong);
+  font-size: 11px;
   font-weight: 700;
+  line-height: 1;
+  margin: -0.05rem 0.35rem 0.08rem 0;
+  text-align: right;
+}
+
+.site-music-audio {
+  background: #303030;
+  border-radius: var(--site-radius-sm);
+  display: block;
+  height: 32px;
+  width: 100%;
+}
+
+.site-music-audio::-webkit-media-controls-panel {
+  background-color: #303030;
+}
+
+.site-music-audio::-webkit-media-controls-current-time-display,
+.site-music-audio::-webkit-media-controls-time-remaining-display {
+  color: #f7fbed;
+  text-shadow: none;
+}
+
+.site-music-title {
+  color: var(--site-accent);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.15;
   overflow: hidden;
+  padding-top: 0.18rem;
+  text-align: right;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.site-music-controls {
-  display: grid;
-  gap: 0.3rem;
-  grid-template-columns: 1fr 1fr;
-  margin-top: 0.35rem;
-}
-
-.site-music-player button {
-  background: var(--site-surface-strong);
-  border: 1px solid var(--site-border);
-  border-radius: var(--site-radius-sm);
-  color: var(--site-accent-strong);
-  font: inherit;
-  min-height: 28px;
-  padding: 0.2rem 0.35rem;
-}
-
-.site-music-player button:hover {
-  background: var(--site-accent-soft);
-  border-color: var(--site-border-strong);
 }
 
 ::-webkit-scrollbar {
@@ -1380,7 +1390,7 @@ button.ghost,
     max-width: calc(100vw - 28px);
     right: auto;
     top: auto;
-    width: 150px;
+    width: 300px;
   }
 }
 
@@ -1734,11 +1744,11 @@ body.list .profile_inner::before {
     bottom: auto;
     left: auto;
     margin: 0.65rem var(--gap) 0;
-    max-width: calc(100vw - 24px);
+    max-width: 300px;
     position: static;
     right: auto;
     top: auto;
-    width: 150px;
+    width: var(--mobile-content-width);
   }
 }
 
