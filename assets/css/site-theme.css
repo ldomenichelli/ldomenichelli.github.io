@@ -686,21 +686,21 @@ textarea {
 :root,
 .dark {
   --site-font-stack: Consolas, "Courier New", "Liberation Mono", monospace;
-  --site-bg: #e8f1d8;
-  --site-bg-soft: #dfeacb;
-  --site-surface: #f7fbed;
-  --site-surface-strong: #eff6df;
-  --site-surface-alt: #d9e8bf;
-  --site-text: #31530d;
-  --site-text-muted: #5c7439;
-  --site-text-soft: #77835f;
-  --site-border: #d8d1ad;
-  --site-border-strong: #7aa129;
-  --site-accent: #5e940e;
-  --site-accent-strong: #2f5e09;
-  --site-accent-soft: rgba(94, 148, 14, 0.12);
-  --site-accent-soft-strong: rgba(94, 148, 14, 0.22);
-  --site-focus: rgba(94, 148, 14, 0.45);
+  --site-bg: #b3c09f;
+  --site-bg-soft: #9dab88;
+  --site-surface: #edf3dd;
+  --site-surface-strong: #dfe9c9;
+  --site-surface-alt: #c7d7ae;
+  --site-text: #1f3f07;
+  --site-text-muted: #2f5114;
+  --site-text-soft: #335414;
+  --site-border: #9fb878;
+  --site-border-strong: #486f12;
+  --site-accent: #295605;
+  --site-accent-strong: #1d4304;
+  --site-accent-soft: rgba(41, 86, 5, 0.16);
+  --site-accent-soft-strong: rgba(41, 86, 5, 0.28);
+  --site-focus: rgba(31, 63, 7, 0.55);
   --site-shadow: none;
   --site-shadow-soft: none;
   --site-radius-sm: 2px;
@@ -711,10 +711,10 @@ textarea {
   --entry: var(--site-surface);
   --primary: var(--site-text);
   --secondary: var(--site-text-muted);
-  --tertiary: #d2dfb8;
-  --content: #344d18;
-  --hljs-bg: #eff6df;
-  --code-bg: #eff6df;
+  --tertiary: #b4ca91;
+  --content: #243f0c;
+  --hljs-bg: #dfe9c9;
+  --code-bg: #dfe9c9;
   --border: var(--site-border);
   --carolina_blue: var(--site-accent);
   --main-width: 820px;
@@ -764,8 +764,8 @@ body.page,
 body.list,
 body.abalone-page {
   background:
-    linear-gradient(rgba(94, 148, 14, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(94, 148, 14, 0.045) 1px, transparent 1px),
+    linear-gradient(rgba(31, 63, 7, 0.085) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(31, 63, 7, 0.07) 1px, transparent 1px),
     var(--site-bg);
   background-size: 24px 24px, 24px 24px, auto;
   color: var(--primary);
@@ -783,7 +783,7 @@ body::before {
 }
 
 body::after {
-  color: rgba(49, 83, 13, 0.42);
+  color: rgba(31, 63, 7, 0.58);
   content: "lucia's notes\A----------------\Apersonal site v.2\Aresearch / games\Atea-stained margins";
   display: block;
   font: 12px/1.35 var(--site-font-stack);
@@ -802,7 +802,7 @@ body::after {
 
 a {
   color: var(--site-accent);
-  text-decoration-color: rgba(94, 148, 14, 0.38);
+  text-decoration-color: rgba(41, 86, 5, 0.48);
   text-underline-offset: 0.17em;
 }
 
@@ -915,7 +915,7 @@ a:hover,
 .terms-tags a,
 .pagination a,
 .button {
-  background: rgba(247, 251, 237, 0.92);
+  background: rgba(237, 243, 221, 0.94);
   border: 1px solid var(--site-border);
   border-radius: var(--site-radius-md);
   box-shadow: none;
@@ -1142,7 +1142,7 @@ textarea:hover,
 .project-lab input[type="number"],
 .project-lab button,
 .project-lab canvas {
-  background: rgba(247, 251, 237, 0.92);
+  background: rgba(237, 243, 221, 0.94);
   border-color: var(--site-border);
   border-radius: var(--site-radius-sm);
   color: var(--site-text);
@@ -1187,7 +1187,7 @@ textarea:hover,
 }
 
 .site-music-player {
-  background: rgba(239, 246, 223, 0.96);
+  background: rgba(223, 233, 201, 0.96);
   border: 2px solid var(--site-border-strong);
   border-radius: var(--site-radius-md);
   color: var(--site-accent-strong);
@@ -1280,7 +1280,7 @@ textarea:hover,
 button.ghost,
 .game-shell-tab,
 .seg-btn {
-  background: rgba(247, 251, 237, 0.92) !important;
+  background: rgba(237, 243, 221, 0.94) !important;
   border: 1px solid var(--site-border) !important;
   border-radius: var(--site-radius-sm) !important;
   box-shadow: none !important;
@@ -1404,7 +1404,7 @@ button.ghost,
   }
 
   .header {
-    background: rgba(232, 241, 216, 0.96);
+    background: rgba(179, 192, 159, 0.96);
     border-bottom: 1px solid var(--site-border);
     padding: 0.75rem var(--gap);
     position: sticky;
