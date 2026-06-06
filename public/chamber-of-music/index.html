@@ -5,25 +5,25 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
   <meta name="robots" content="index, follow">
-  <title>the library | lucia's room</title>
-  <meta name="description" content="A bookshelf for Lucia's reading library.">
+  <title>the chamber of music | lucia's room</title>
+  <meta name="description" content="An empty chamber for Lucia's music notes.">
   <meta name="author" content="Lucia Domenichelli">
-  <link rel="canonical" href="https://ldomenichelli.github.io/library/">
+  <link rel="canonical" href="https://ldomenichelli.github.io/chamber-of-music/">
   <link crossorigin="anonymous" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css" integrity="sha256-WtmxyqkuTOqD680wiOlzYvI5sH2BREkKrwvB1r2JzRc=" rel="preload stylesheet" as="style">
   <link rel="icon" href="https://ldomenichelli.github.io/favicon-dithered.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="https://ldomenichelli.github.io/favicon-16x16-dithered.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://ldomenichelli.github.io/favicon-32x32-dithered.png">
   <link rel="apple-touch-icon" href="https://ldomenichelli.github.io/apple-touch-icon-dithered.png">
-  <meta property="og:title" content="the library | lucia's room">
-  <meta property="og:description" content="A bookshelf for Lucia's reading library.">
+  <meta property="og:title" content="the chamber of music | lucia's room">
+  <meta property="og:description" content="An empty chamber for Lucia's music notes.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://ldomenichelli.github.io/library/">
+  <meta property="og:url" content="https://ldomenichelli.github.io/chamber-of-music/">
   <meta property="og:image" content="https://ldomenichelli.github.io/logo-dithered.png">
   <meta property="og:site_name" content="lucia's room">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://ldomenichelli.github.io/logo-dithered.png">
-  <meta name="twitter:title" content="the library | lucia's room">
-  <meta name="twitter:description" content="A bookshelf for Lucia's reading library.">
+  <meta name="twitter:title" content="the chamber of music | lucia's room">
+  <meta name="twitter:description" content="An empty chamber for Lucia's music notes.">
   <script src="/assets/js/analytics.js" async></script>
   <link rel="stylesheet" href="/assets/css/site-theme.css">
   <style>
@@ -31,99 +31,100 @@
       background: #f7f5ed;
     }
 
-    body.library-page {
-      --library-ink: #15100d;
-      --library-paper: #fbfaf4;
-      --library-paper-soft: #eee8d9;
-      --library-teal: #1b6f6a;
+    body.chamber-page {
+      --chamber-ink: #15100d;
+      --chamber-paper: #fbfaf4;
+      --chamber-paper-soft: #eee8d9;
+      --chamber-green: #1b6f6a;
+      --chamber-wood: #7a4b2f;
       background:
         radial-gradient(circle at 18% 24%, rgba(88, 51, 32, 0.08) 0 1px, transparent 1px),
         radial-gradient(circle at 72% 38%, rgba(27, 111, 106, 0.08) 0 1px, transparent 1px),
         linear-gradient(180deg, #f7f5ed 0%, #e8dfca 100%);
       background-size: 7px 7px, 11px 11px, auto;
-      color: var(--library-ink);
+      color: var(--chamber-ink);
     }
 
-    body.library-page::after {
+    body.chamber-page::after {
       display: none;
     }
 
-    body.library-page .header {
+    body.chamber-page .header {
       background: transparent;
       border: 0;
     }
 
-    body.library-page .main,
-    body.library-page .footer {
+    body.chamber-page .main,
+    body.chamber-page .footer {
       max-width: min(1060px, calc(100vw - 40px));
     }
 
-    body.library-page .post-single {
+    body.chamber-page .post-single {
       background: transparent;
       border: 0;
       padding: 0 0 2rem;
     }
 
-    body.library-page .post-single::before {
+    body.chamber-page .post-single::before {
       content: none;
     }
 
-    .library-intro {
+    .chamber-intro {
       margin: 0 auto 0.8rem;
-      max-width: 720px;
+      max-width: 760px;
       padding: 0.6rem 0.8rem;
       text-align: right;
       text-wrap: balance;
     }
 
-    .library-intro h1 {
-      color: var(--library-ink);
+    .chamber-intro h1 {
+      color: var(--chamber-ink);
       font-size: clamp(1.55rem, 4vw, 2.1rem);
       line-height: 1.05;
       margin: 0 0 0.35rem;
       text-transform: none;
     }
 
-    .library-intro p {
+    .chamber-intro p {
       color: #3a2b22;
       margin: 0;
     }
 
-    .library-room {
+    .chamber-room {
       margin: 0 auto;
-      max-width: 1000px;
-      position: relative;
+      max-width: 900px;
       text-align: center;
     }
 
-    .library-shelf-frame {
-      align-items: center;
-      background: transparent;
+    .chamber-panel {
+      background:
+        linear-gradient(180deg, rgba(255, 248, 218, 0.78), rgba(221, 205, 170, 0.7)),
+        repeating-linear-gradient(90deg, rgba(122, 75, 47, 0.22) 0 18px, rgba(92, 52, 31, 0.18) 18px 24px);
+      border: 1px solid #19110d;
       box-shadow:
+        inset 0 0 0 5px rgba(122, 75, 47, 0.32),
+        inset 28px 28px 42px rgba(255, 236, 187, 0.3),
+        inset -30px -28px 42px rgba(42, 18, 8, 0.24),
         6px 8px 0 rgba(0, 0, 0, 0.2);
-      display: inline-flex;
-      filter: contrast(1.04) saturate(0.86);
-      justify-content: center;
-      margin: 0;
-      max-width: 100%;
+      display: grid;
+      min-height: clamp(250px, 43vw, 460px);
       overflow: hidden;
+      place-items: center;
       position: relative;
       transform-origin: center;
       transition:
         filter 180ms ease,
         transform 180ms ease;
-      width: fit-content;
-      image-rendering: pixelated;
     }
 
-    .library-room:hover .library-shelf-frame,
-    .library-shelf-frame:hover {
+    .chamber-room:hover .chamber-panel,
+    .chamber-panel:hover {
       filter: hue-rotate(190deg) saturate(0.5) contrast(1.04);
-      transform: rotate(8deg);
+      transform: rotate(4deg);
     }
 
-    .library-shelf-frame::before,
-    .library-shelf-frame::after {
+    .chamber-panel::before,
+    .chamber-panel::after {
       content: "";
       inset: 0;
       pointer-events: none;
@@ -131,78 +132,50 @@
       z-index: 1;
     }
 
-    .library-shelf-frame::before {
+    .chamber-panel::before {
       background:
-        linear-gradient(135deg, rgba(48, 22, 10, 0.22), transparent 42%),
-        linear-gradient(315deg, rgba(48, 22, 10, 0.18), transparent 36%);
+        linear-gradient(180deg, transparent 28%, rgba(21, 16, 13, 0.55) 28% 29%, transparent 29%),
+        linear-gradient(180deg, transparent 39%, rgba(21, 16, 13, 0.4) 39% 40%, transparent 40%),
+        linear-gradient(180deg, transparent 50%, rgba(21, 16, 13, 0.35) 50% 51%, transparent 51%),
+        linear-gradient(180deg, transparent 61%, rgba(21, 16, 13, 0.3) 61% 62%, transparent 62%),
+        linear-gradient(90deg, rgba(55, 25, 12, 0.32), transparent 11%, transparent 89%, rgba(55, 25, 12, 0.28));
     }
 
-    .library-shelf-frame::after {
+    .chamber-panel::after {
       background:
-        radial-gradient(circle, rgba(36, 18, 8, 0.24) 0 1px, transparent 1px) 0 0 / 4px 4px,
+        radial-gradient(circle, rgba(36, 18, 8, 0.22) 0 1px, transparent 1px) 0 0 / 4px 4px,
         radial-gradient(circle, rgba(255, 232, 176, 0.2) 0 1px, transparent 1px) 2px 2px / 4px 4px;
       mix-blend-mode: multiply;
       opacity: 0.75;
     }
 
-    .library-shelf-image {
-      display: block;
-      height: auto;
-      max-height: min(620px, calc(100vh - 185px));
-      max-width: 100%;
-      object-fit: contain;
-      width: auto;
-    }
-
-    .library-book {
-      align-items: center;
+    .chamber-rest {
+      align-self: end;
       background:
-        linear-gradient(90deg, rgba(255, 255, 255, 0.26), transparent 26%, rgba(0, 0, 0, 0.24)),
-        #315f37;
+        linear-gradient(180deg, rgba(255, 232, 176, 0.36), transparent 35%),
+        var(--chamber-wood);
       border: 1px solid rgba(31, 16, 9, 0.84);
-      bottom: 10.8%;
       box-shadow:
-        inset 3px 0 rgba(255, 255, 255, 0.16),
-        inset -3px 0 rgba(0, 0, 0, 0.2),
-        2px 2px 0 rgba(0, 0, 0, 0.24),
-        0 4px 0 rgba(35, 18, 9, 0.38);
-      color: #fff8dc;
-      display: flex;
-      font-weight: 700;
-      height: 22%;
-      justify-content: center;
-      left: 12%;
-      line-height: 1;
-      min-height: 50px;
-      min-width: 16px;
-      padding: 0.25rem 0.1rem;
-      position: absolute;
-      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.48);
-      width: 5%;
-      writing-mode: vertical-rl;
+        inset 0 5px rgba(255, 255, 255, 0.14),
+        0 5px 0 rgba(35, 18, 9, 0.28);
+      height: clamp(22px, 3vw, 34px);
+      margin-bottom: clamp(28px, 6vw, 64px);
+      position: relative;
+      width: min(520px, 78%);
       z-index: 2;
     }
 
-    .library-book::after {
+    .chamber-rest::before {
       background:
         radial-gradient(circle, rgba(18, 10, 6, 0.2) 0 1px, transparent 1px) 0 0 / 3px 3px;
       content: "";
       inset: 0;
       mix-blend-mode: multiply;
-      opacity: 0.68;
-      pointer-events: none;
       position: absolute;
     }
 
-    .library-book span {
-      color: inherit;
-      font-size: clamp(0.68rem, 1.35vw, 0.92rem);
-      position: relative;
-      z-index: 1;
-    }
-
-    .library-empty-note {
-      background: var(--library-paper-soft);
+    .chamber-empty-note {
+      background: var(--chamber-paper-soft);
       border: 1px dashed #19110d;
       box-shadow: 4px 4px rgba(0, 0, 0, 0.2);
       margin: 1.15rem auto 0;
@@ -211,75 +184,70 @@
       text-align: center;
     }
 
-    .library-empty-note p {
+    .chamber-empty-note p {
       color: #3a2b22;
       font-size: 0.86rem;
       line-height: 1.6;
       margin: 0;
     }
 
-    body.library-page .site-music-player {
+    body.chamber-page .site-music-player {
       bottom: 16px;
       top: auto;
     }
 
     @media screen and (max-width: 899px) {
-      body.library-page .main,
-      body.library-page .footer {
+      body.chamber-page .main,
+      body.chamber-page .footer {
         max-width: var(--mobile-content-width);
         width: var(--mobile-content-width);
       }
 
-      body.library-page .header {
+      body.chamber-page .header {
         box-sizing: border-box;
       }
 
-      .library-intro {
+      .chamber-intro {
         padding-inline: 0;
         text-align: left;
       }
 
-      .library-shelf-image {
-        max-height: none;
-        width: 100%;
-      }
-
-      body.library-page .site-music-player {
+      body.chamber-page .site-music-player {
         bottom: auto;
         margin-left: 0;
       }
     }
 
     @media screen and (max-width: 520px) {
-      body.library-page .header {
+      body.chamber-page .header {
         width: min(100%, 390px);
       }
 
-      body.library-page .main,
-      body.library-page .footer {
+      body.chamber-page .main,
+      body.chamber-page .footer {
         max-width: min(var(--mobile-content-width), 354px);
         width: min(var(--mobile-content-width), 354px);
       }
 
-      .library-room,
-      .library-empty-note {
+      .chamber-room,
+      .chamber-empty-note {
         max-width: 100%;
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .library-shelf-frame {
+      .chamber-panel {
         transition: none;
       }
 
-      .library-room:hover .library-shelf-frame,
-      .library-shelf-frame:hover {
+      .chamber-room:hover .chamber-panel,
+      .chamber-panel:hover {
         transform: none;
       }
     }
   </style>
 </head>
-<body class="page dark library-page" id="top">
+<body class="page dark chamber-page" id="top">
 <header class="header">
 <nav class="nav">
 <div class="logo">
@@ -296,25 +264,27 @@
 <li><a href="https://ldomenichelli.github.io/posts/" title="notes"><span>notes</span></a></li>
 <li><a href="https://ldomenichelli.github.io/projects/" title="projects"><span>projects</span></a></li>
 <li><a href="https://ldomenichelli.github.io/random/" title="hobbies"><span>hobbies</span></a></li>
-<li><a href="https://ldomenichelli.github.io/library/" title="the library"><span class="active">the library</span></a></li><li><a href="https://ldomenichelli.github.io/chamber-of-music/" title="the chamber of music"><span>the chamber of music</span></a></li>
+<li><a href="https://ldomenichelli.github.io/library/" title="the library"><span>the library</span></a></li>
+<li><a href="https://ldomenichelli.github.io/chamber-of-music/" title="the chamber of music"><span class="active">the chamber of music</span></a></li>
 </ul>
 </nav>
 </header>
 <main class="main">
   <article class="post-single">
-    <header class="library-intro">
-      <h1>the library</h1>
-      <p>The first book has arrived.</p>
+    <header class="chamber-intro">
+      <h1>the chamber of music</h1>
+      <p>The room is quiet for now.</p>
     </header>
 
-    <section class="library-room" aria-label="Bookshelf">
-      <figure class="library-shelf-frame">
-        <img class="library-shelf-image" src="img/shelf.jpeg" alt="Wooden bookshelf with one book labeled 2026">
-        <span class="library-book" role="img" aria-label="Book labeled 2026"><span>2026</span></span>
-      </figure>
+    <section class="chamber-room" aria-label="Empty music chamber">
+      <div class="chamber-panel" aria-hidden="true">
+        <div class="chamber-rest"></div>
+      </div>
     </section>
 
-
+    <aside class="chamber-empty-note">
+      <p>Music notes can be added here later.</p>
+    </aside>
   </article>
 </main>
 <footer class="footer" style="padding-top:18px;padding-bottom:18px">

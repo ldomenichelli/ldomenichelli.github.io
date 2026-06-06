@@ -862,6 +862,22 @@ a:hover,
   text-decoration: none;
 }
 
+.menu a[href*="/library/"],
+#menu a[href*="/library/"],
+.menu a[href*="/chamber-of-music/"],
+#menu a[href*="/chamber-of-music/"] {
+  line-height: 1.25;
+  padding-left: 0.82rem;
+  white-space: normal;
+}
+
+.menu a[href*="/library/"]::before,
+#menu a[href*="/library/"]::before,
+.menu a[href*="/chamber-of-music/"]::before,
+#menu a[href*="/chamber-of-music/"]::before {
+  content: "- ";
+}
+
 .menu a::before,
 #menu a::before {
   content: "* ";
