@@ -1,5 +1,25 @@
+@font-face {
+  font-family: "Dinobyte Web";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    url("/assets/fonts/dinobyte/dinobyte-web.woff") format("woff"),
+    url("/assets/fonts/dinobyte/dinobyte-web.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Dinobyte Web";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src:
+    url("/assets/fonts/dinobyte/dinobyte-web.woff") format("woff"),
+    url("/assets/fonts/dinobyte/dinobyte-web.ttf") format("truetype");
+}
+
 :root {
-  --site-font-stack: "Courier Prime", "IBM Plex Mono", "Azeret Mono", "Cascadia Mono",
+  --site-font-stack: "Dinobyte Web", "Courier Prime", "IBM Plex Mono", "Azeret Mono", "Cascadia Mono",
     "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --site-bg: #0c100e;
   --site-bg-soft: #101512;
@@ -51,7 +71,11 @@
 }
 
 html {
-  background: var(--site-bg);
+  background:
+    linear-gradient(rgba(31, 63, 7, 0.26) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(31, 63, 7, 0.22) 1px, transparent 1px),
+    var(--site-bg);
+  background-size: 24px 24px, 24px 24px, auto;
 }
 
 ::selection {
@@ -701,7 +725,7 @@ textarea {
 /* Handmade personal-site skin inspired by early web homepages. */
 :root,
 .dark {
-  --site-font-stack: Consolas, "Courier New", "Liberation Mono", monospace;
+  --site-font-stack: "Dinobyte Web", Consolas, "Courier New", "Liberation Mono", monospace;
   --site-bg: #b3c09f;
   --site-bg-soft: #9dab88;
   --site-surface: #edf3dd;
@@ -740,7 +764,11 @@ textarea {
 }
 
 html {
-  background: var(--site-bg);
+  background:
+    linear-gradient(rgba(31, 63, 7, 0.26) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(31, 63, 7, 0.22) 1px, transparent 1px),
+    var(--site-bg);
+  background-size: 24px 24px, 24px 24px, auto;
 }
 
 *,
@@ -780,8 +808,8 @@ body.page,
 body.list,
 body.abalone-page {
   background:
-    linear-gradient(rgba(31, 63, 7, 0.085) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(31, 63, 7, 0.07) 1px, transparent 1px),
+    linear-gradient(rgba(31, 63, 7, 0.26) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(31, 63, 7, 0.22) 1px, transparent 1px),
     var(--site-bg);
   background-size: 24px 24px, 24px 24px, auto;
   color: var(--primary);
@@ -1195,6 +1223,14 @@ textarea:hover,
   max-width: 840px;
 }
 
+.footer::after {
+  color: var(--site-text-muted);
+  content: "type: DINOBYTE by mby (CC BY 4.0)";
+  display: block;
+  font-size: 11px;
+  margin-top: 0.35rem;
+}
+
 .top-link {
   background: var(--site-surface-strong);
   border: 1px solid var(--site-border);
@@ -1411,6 +1447,7 @@ button.ghost,
 }
 
 @media screen and (max-width: 899px) {
+  html,
   body,
   body.dark,
   body.page,
@@ -1566,6 +1603,7 @@ body.list .profile_inner::before {
   }
 
   .header {
+    box-sizing: border-box;
     overflow-x: hidden;
     padding: 0.75rem calc(var(--gap) + 16px) 0.75rem var(--gap);
     width: 100%;
@@ -1591,9 +1629,9 @@ body.list .profile_inner::before {
   .menu,
   .menu.hidden,
   #menu {
-    display: flex !important;
-    flex-wrap: wrap;
-    gap: 0.1rem 0.38rem;
+    display: grid !important;
+    gap: 0.12rem 0.7rem;
+    grid-template-columns: repeat(2, max-content);
     line-height: 1.45;
     margin: 0.35rem 0 0;
     max-width: 100%;
@@ -1774,13 +1812,13 @@ body.list .profile_inner::before {
   .menu,
   .menu.hidden,
   #menu {
-    gap: 0.05rem 0.28rem;
+    gap: 0.08rem 0.5rem;
   }
 
   .menu a,
   #menu a {
-    font-size: 0.84rem;
-    padding-inline: 0.12rem;
+    font-size: 0.78rem;
+    padding-inline: 0.06rem;
   }
 
   .profile_inner::before {
