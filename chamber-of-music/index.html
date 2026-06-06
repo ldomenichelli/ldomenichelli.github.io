@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
   <meta name="robots" content="index, follow">
   <title>the chamber of music | lucia's room</title>
-  <meta name="description" content="An empty chamber for Lucia's music notes.">
+  <meta name="description" content="A chamber for Lucia's music notes and instruments.">
   <meta name="author" content="Lucia Domenichelli">
   <link rel="canonical" href="https://ldomenichelli.github.io/chamber-of-music/">
   <link crossorigin="anonymous" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css" integrity="sha256-WtmxyqkuTOqD680wiOlzYvI5sH2BREkKrwvB1r2JzRc=" rel="preload stylesheet" as="style">
@@ -15,15 +15,15 @@
   <link rel="icon" type="image/png" sizes="32x32" href="https://ldomenichelli.github.io/favicon-32x32-dithered.png">
   <link rel="apple-touch-icon" href="https://ldomenichelli.github.io/apple-touch-icon-dithered.png">
   <meta property="og:title" content="the chamber of music | lucia's room">
-  <meta property="og:description" content="An empty chamber for Lucia's music notes.">
+  <meta property="og:description" content="A chamber for Lucia's music notes and instruments.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ldomenichelli.github.io/chamber-of-music/">
-  <meta property="og:image" content="https://ldomenichelli.github.io/logo-dithered.png">
+  <meta property="og:image" content="https://ldomenichelli.github.io/chamber-of-music/img/doumbek-dithered.png">
   <meta property="og:site_name" content="lucia's room">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://ldomenichelli.github.io/logo-dithered.png">
+  <meta name="twitter:image" content="https://ldomenichelli.github.io/chamber-of-music/img/doumbek-dithered.png">
   <meta name="twitter:title" content="the chamber of music | lucia's room">
-  <meta name="twitter:description" content="An empty chamber for Lucia's music notes.">
+  <meta name="twitter:description" content="A chamber for Lucia's music notes and instruments.">
   <script src="/assets/js/analytics.js" async></script>
   <link rel="stylesheet" href="/assets/css/site-theme.css">
   <style>
@@ -117,10 +117,31 @@
         transform 180ms ease;
     }
 
-    .chamber-room:hover .chamber-panel,
     .chamber-panel:hover {
       filter: hue-rotate(190deg) saturate(0.5) contrast(1.04);
-      transform: rotate(4deg);
+    }
+
+    .chamber-instrument {
+      align-self: end;
+      filter: drop-shadow(18px 22px 9px rgba(16, 9, 47, 0.24));
+      grid-area: 1 / 1;
+      image-rendering: pixelated;
+      justify-self: center;
+      margin-bottom: clamp(42px, 7vw, 78px);
+      max-height: clamp(190px, 35vw, 360px);
+      object-fit: contain;
+      position: relative;
+      transform-origin: center bottom;
+      transition:
+        filter 180ms ease,
+        transform 180ms ease;
+      width: min(300px, 54%);
+      z-index: 3;
+    }
+
+    .chamber-instrument:hover {
+      filter: hue-rotate(190deg) saturate(0.58) contrast(1.05) drop-shadow(18px 22px 9px rgba(16, 9, 47, 0.24));
+      transform: rotate(8deg) translateY(-6px);
     }
 
     .chamber-panel::before,
@@ -155,6 +176,7 @@
         linear-gradient(180deg, rgba(255, 232, 176, 0.36), transparent 35%),
         var(--chamber-wood);
       border: 1px solid rgba(31, 16, 9, 0.84);
+      grid-area: 1 / 1;
       box-shadow:
         inset 0 5px rgba(255, 255, 255, 0.14),
         0 5px 0 rgba(35, 18, 9, 0.28);
@@ -244,6 +266,14 @@
       .chamber-panel:hover {
         transform: none;
       }
+
+      .chamber-instrument {
+        transition: none;
+      }
+
+      .chamber-instrument:hover {
+        transform: none;
+      }
     }
   </style>
 </head>
@@ -264,8 +294,8 @@
 <li><a href="https://ldomenichelli.github.io/posts/" title="notes"><span>notes</span></a></li>
 <li><a href="https://ldomenichelli.github.io/projects/" title="projects"><span>projects</span></a></li>
 <li><a href="https://ldomenichelli.github.io/random/" title="hobbies"><span>hobbies</span></a></li>
-<li><a href="https://ldomenichelli.github.io/library/" title="the library"><span>the library</span></a></li>
-<li><a href="https://ldomenichelli.github.io/chamber-of-music/" title="the chamber of music"><span class="active">the chamber of music</span></a></li>
+
+
 </ul>
 </nav>
 </header>
@@ -273,17 +303,18 @@
   <article class="post-single">
     <header class="chamber-intro">
       <h1>the chamber of music</h1>
-      <p>The room is quiet for now.</p>
+      <p>The first instrument has arrived.</p>
     </header>
 
-    <section class="chamber-room" aria-label="Empty music chamber">
-      <div class="chamber-panel" aria-hidden="true">
+    <section class="chamber-room" aria-label="Music chamber">
+      <div class="chamber-panel">
+        <img class="chamber-instrument" src="img/doumbek-dithered.png" alt="Dithered black doumbek drum">
         <div class="chamber-rest"></div>
       </div>
     </section>
 
     <aside class="chamber-empty-note">
-      <p>Music notes can be added here later.</p>
+      <p>More instruments and music notes can be added here later.</p>
     </aside>
   </article>
 </main>

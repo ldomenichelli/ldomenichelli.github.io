@@ -397,6 +397,22 @@ a:hover,
   color: var(--site-accent-strong);
 }
 
+.hobby-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin: 0.85rem 0 0;
+}
+
+.hobby-buttons .button {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0.48rem 0.72rem;
+  text-decoration: none;
+}
+
 .post-content table {
   background: rgba(23, 31, 27, 0.84);
   border-radius: var(--site-radius-lg);
@@ -860,22 +876,6 @@ a:hover,
   font-size: 0.92rem;
   padding: 0.26rem 0.4rem;
   text-decoration: none;
-}
-
-.menu a[href*="/library/"],
-#menu a[href*="/library/"],
-.menu a[href*="/chamber-of-music/"],
-#menu a[href*="/chamber-of-music/"] {
-  line-height: 1.25;
-  padding-left: 0.82rem;
-  white-space: normal;
-}
-
-.menu a[href*="/library/"]::before,
-#menu a[href*="/library/"]::before,
-.menu a[href*="/chamber-of-music/"]::before,
-#menu a[href*="/chamber-of-music/"]::before {
-  content: "- ";
 }
 
 .menu a::before,
