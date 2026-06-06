@@ -104,6 +104,30 @@
       position: relative;
     }
 
+    .chamber-link-box {
+      display: grid;
+      justify-items: center;
+      width: 100%;
+    }
+
+    .chamber-link-box > summary {
+      cursor: pointer;
+      display: grid;
+      justify-items: center;
+      list-style: none;
+      outline: none;
+      width: 100%;
+    }
+
+    .chamber-link-box > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .chamber-link-box > summary:focus-visible .chamber-instrument {
+      outline: 2px solid var(--chamber-green);
+      outline-offset: 6px;
+    }
+
     .chamber-instrument {
       filter: drop-shadow(18px 22px 9px rgba(16, 9, 47, 0.24));
       image-rendering: pixelated;
@@ -120,7 +144,31 @@
 
     .chamber-instrument:hover {
       filter: hue-rotate(190deg) saturate(0.58) contrast(1.05) drop-shadow(18px 22px 9px rgba(16, 9, 47, 0.24));
-      transform: rotate(8deg) translateY(-6px);
+      transform: rotate(2deg) translateY(-2px);
+    }
+
+    .chamber-link-list {
+      background: var(--chamber-paper-soft);
+      border: 1px dashed #19110d;
+      box-shadow: 4px 4px rgba(0, 0, 0, 0.2);
+      margin: 1rem auto 0;
+      max-width: min(520px, 100%);
+      padding: 0.8rem 1rem;
+      text-align: left;
+      width: 100%;
+    }
+
+    .chamber-link-list ol {
+      margin: 0;
+      padding-left: 1.3rem;
+    }
+
+    .chamber-link-list li + li {
+      margin-top: 0.45rem;
+    }
+
+    .chamber-link-list a {
+      overflow-wrap: anywhere;
     }
 
     .chamber-empty-note {
@@ -230,12 +278,22 @@
   <article class="post-single">
     <header class="chamber-intro">
       <h1>the chamber of music</h1>
-      <p>The first instrument has arrived.</p>
+
+
     </header>
 
     <section class="chamber-room" aria-label="Music chamber">
       <div class="chamber-panel">
-        <img class="chamber-instrument" src="img/doumbek-dithered.png" alt="Dithered black doumbek drum">
+        <details class="chamber-link-box">
+          <summary aria-label="Show doumbek links">
+            <img class="chamber-instrument" src="img/doumbek-dithered.png" alt="Dithered black doumbek drum">
+          </summary>
+          <nav class="chamber-link-list" aria-label="Doumbek links">
+            <ol>
+              <li><a href="https://www.youtube.com/watch?v=LR511iAedYU" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=LR511iAedYU</a></li>
+            </ol>
+          </nav>
+        </details>
       </div>
     </section>
 

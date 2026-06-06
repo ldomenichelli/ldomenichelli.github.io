@@ -147,7 +147,7 @@ a:hover,
 .about-avatar[src*="logo-dithered"]:focus {
   border: 0 !important;
   filter: hue-rotate(190deg) saturate(50%) drop-shadow(22px 26px 9px rgba(16, 9, 47, 0.29));
-  transform: rotate(8deg);
+  transform: rotate(3deg);
 }
 
 :focus-visible {
@@ -1504,14 +1504,11 @@ body.list .main .profile {
 }
 
 body.list .profile_inner {
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
   display: flex;
   flex-direction: column;
   max-width: 620px;
-  padding: 0;
+  min-width: 0;
+  width: 100%;
 }
 
 body.list .profile_inner img {
