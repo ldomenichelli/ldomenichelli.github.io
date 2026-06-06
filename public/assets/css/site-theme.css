@@ -735,7 +735,6 @@ textarea {
   --carolina_blue: var(--site-accent);
   --main-width: 820px;
   --nav-width: 1080px;
-  --site-centered-width: 640px;
   --gap: 24px;
   --radius: var(--site-radius-md);
 }
@@ -1209,10 +1208,10 @@ textarea:hover,
   border-radius: var(--site-radius-md);
   color: var(--site-accent-strong);
   font: 11px/1.2 var(--site-font-stack);
-  margin: 1rem auto 0;
-  max-width: calc(100vw - var(--gap) * 2);
   padding: 0 0.4rem 0.25rem;
-  position: static;
+  position: fixed;
+  right: 18px;
+  top: 145px;
   width: 300px;
   z-index: 24;
 }
@@ -1350,38 +1349,31 @@ button.ghost,
 
 @media screen and (min-width: 900px) {
   .header {
-    bottom: auto;
-    left: auto;
-    padding: 1rem var(--gap) 0;
-    position: static;
-    top: auto;
-    width: auto;
+    bottom: 0;
+    left: 0;
+    padding: 28px 18px;
+    position: fixed;
+    top: 0;
+    width: 205px;
   }
 
   .nav {
-    align-items: center;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    margin: 0 auto;
-    max-width: var(--site-centered-width);
-    text-align: center;
   }
 
   .logo a {
     border: 1px solid var(--site-border-strong);
-    margin: 0 auto 0.65rem;
-    width: auto;
+    margin-bottom: 1.5rem;
+    width: 160px;
   }
 
   .menu,
   .menu.hidden,
   #menu {
     display: flex !important;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
+    flex-direction: column;
+    width: 160px;
   }
 
   #menu-trigger {
@@ -1393,19 +1385,13 @@ button.ghost,
   .game-shell-wrap,
   .abalone-wrap,
   .footer {
-    margin-left: auto;
+    margin-left: 230px;
     margin-right: auto;
-  }
-
-  .main,
-  .games-landing,
-  .footer {
-    max-width: var(--site-centered-width);
   }
 
   .game-shell-wrap,
   .abalone-wrap {
-    max-width: min(1040px, calc(100vw - var(--gap) * 2));
+    max-width: min(1040px, calc(100vw - 278px));
   }
 }
 
@@ -1567,8 +1553,7 @@ body.list .profile_inner::before {
   :root,
   .dark {
     --gap: 18px;
-    --mobile-content-width: calc(100vw - var(--gap) * 2);
-    --mobile-content-margin: calc((100vw - var(--mobile-content-width)) / 2);
+    --mobile-content-width: calc(100vw - var(--gap) - var(--gap) - 20px);
   }
 
   body,
@@ -1582,22 +1567,20 @@ body.list .profile_inner::before {
 
   .header {
     overflow-x: hidden;
-    padding: 0.75rem 0;
+    padding: 0.75rem calc(var(--gap) + 16px) 0.75rem var(--gap);
     width: 100%;
   }
 
   .nav {
-    align-items: center;
     gap: 0.5rem;
-    margin: 0 var(--mobile-content-margin);
+    margin: 0;
     max-width: 100%;
     padding: 0;
-    text-align: center;
-    width: var(--mobile-content-width);
+    width: 100%;
   }
 
   .logo {
-    margin: 0 auto;
+    margin: 0;
     max-width: 100%;
   }
 
@@ -1611,7 +1594,6 @@ body.list .profile_inner::before {
     display: flex !important;
     flex-wrap: wrap;
     gap: 0.1rem 0.38rem;
-    justify-content: center;
     line-height: 1.45;
     margin: 0.35rem 0 0;
     max-width: 100%;
@@ -1640,8 +1622,8 @@ body.list .profile_inner::before {
   .game-shell-wrap,
   .abalone-wrap,
   .footer {
-    margin-left: var(--mobile-content-margin) !important;
-    margin-right: 0 !important;
+    margin-left: var(--gap) !important;
+    margin-right: auto !important;
     max-width: var(--mobile-content-width);
     width: var(--mobile-content-width);
   }
@@ -1773,23 +1755,20 @@ body.list .profile_inner::before {
 
   .site-music-player {
     bottom: auto;
-    left: 50vw;
-    margin: 0.65rem 0 0;
+    left: auto;
+    margin: 0.65rem var(--gap) 0;
     max-width: 300px;
-    position: relative;
+    position: static;
     right: auto;
     top: auto;
-    transform: translateX(-50%);
-    width: min(300px, var(--mobile-content-width));
+    width: var(--mobile-content-width);
   }
 }
 
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 420px) {
   :root,
   .dark {
     --gap: 16px;
-    --mobile-content-width: min(358px, calc(100vw - var(--gap) * 2));
-    --mobile-content-margin: clamp(16px, calc((100vw - var(--mobile-content-width)) / 2), 32px);
   }
 
   .menu,
@@ -1806,11 +1785,5 @@ body.list .profile_inner::before {
 
   .profile_inner::before {
     font-size: 7px;
-  }
-
-  .site-music-player {
-    left: auto;
-    margin-left: clamp(16px, calc((100vw - min(300px, var(--mobile-content-width))) / 2), 70px);
-    transform: none;
   }
 }
