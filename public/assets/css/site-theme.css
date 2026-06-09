@@ -806,19 +806,6 @@ body::before {
   background: transparent;
 }
 
-body::after {
-  color: rgba(31, 63, 7, 0.58);
-  content: "lucia's notes\A----------------\Apersonal site v.2\Aresearch / games\Atea-stained margins";
-  display: block;
-  font: 12px/1.35 var(--site-font-stack);
-  pointer-events: none;
-  position: fixed;
-  right: 28px;
-  top: 34px;
-  white-space: pre;
-  z-index: 0;
-}
-
 ::selection {
   background: var(--site-accent-soft-strong);
   color: var(--site-accent-strong);
@@ -1404,10 +1391,6 @@ button.ghost,
 }
 
 @media screen and (max-width: 1160px) {
-  body::after {
-    display: none;
-  }
-
   .site-music-player {
     bottom: 14px;
     left: 14px;
