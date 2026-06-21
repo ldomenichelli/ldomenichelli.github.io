@@ -1203,10 +1203,10 @@ textarea:hover,
   border-radius: var(--site-radius-md);
   color: var(--site-accent-strong);
   font: 11px/1.2 var(--site-font-stack);
+  margin: 0 auto 1rem;
+  max-width: calc(100vw - var(--gap) * 2);
   padding: 0 0.4rem 0.25rem;
-  position: fixed;
-  right: 18px;
-  top: 145px;
+  position: static;
   width: 300px;
   z-index: 24;
 }
@@ -1344,31 +1344,32 @@ button.ghost,
 
 @media screen and (min-width: 900px) {
   .header {
-    bottom: 0;
-    left: 0;
-    padding: 28px 18px;
-    position: fixed;
-    top: 0;
-    width: 205px;
+    margin: 28px auto 0;
+    max-width: 840px;
+    padding: 0 var(--gap);
+    width: calc(100% - var(--gap) * 2);
   }
 
   .nav {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
   }
 
   .logo a {
     border: 1px solid var(--site-border-strong);
-    margin-bottom: 1.5rem;
-    width: 160px;
+    margin-bottom: 0;
+    width: auto;
   }
 
   .menu,
   .menu.hidden,
   #menu {
     display: flex !important;
-    flex-direction: column;
-    width: 160px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    width: auto;
   }
 
   #menu-trigger {
@@ -1380,23 +1381,19 @@ button.ghost,
   .game-shell-wrap,
   .abalone-wrap,
   .footer {
-    margin-left: 230px;
+    margin-left: auto;
     margin-right: auto;
   }
 
   .game-shell-wrap,
   .abalone-wrap {
-    max-width: min(1040px, calc(100vw - 278px));
+    max-width: min(1040px, calc(100vw - var(--gap) * 2));
   }
 }
 
 @media screen and (max-width: 1160px) {
   .site-music-player {
-    bottom: 14px;
-    left: 14px;
     max-width: calc(100vw - 28px);
-    right: auto;
-    top: auto;
     width: 300px;
   }
 }
@@ -1749,7 +1746,7 @@ body.list .profile_inner::before {
   .site-music-player {
     bottom: auto;
     left: auto;
-    margin: 0.65rem var(--gap) 0;
+    margin: 0.65rem auto 0;
     max-width: 300px;
     position: static;
     right: auto;
