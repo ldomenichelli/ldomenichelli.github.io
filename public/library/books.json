@@ -5,7 +5,7 @@
       "title": "Tokyo Express",
       "shortTitle": "Tokyo",
       "author": "Seicho Matsumoto",
-      "status": "shelved",
+      "status": "read",
       "genre": "mystery fiction",
       "note": "A mystery fiction stop on the shelf.",
       "cover": "img/tokyo_express.jpg",
@@ -13,7 +13,7 @@
       "accent": "#d9dfe0"
     },
     {
-      "title": "Zero-Touch Intimacy",
+      "title": "Contactless Intimacy",
       "shortTitle": "Intimacy",
       "author": "Lin Hsin-Hui",
       "status": "read",
@@ -66,6 +66,83 @@
       "cover": "img/shah_in_shah.jpg",
       "color": "#4a3325",
       "accent": "#d0a36c"
+    },
+    {
+      "title": "Lo sbilico",
+      "shortTitle": "Sbilico",
+      "author": "Alcide Pierantozzi",
+      "status": "read",
+      "genre": "literary fiction",
+      "note": "Italian contemporary fiction.",
+      "cover": "img/lo_sbilico.jpg",
+      "color": "#8b2036",
+      "accent": "#f3c3cc"
+    },
+    {
+      "title": "Gertrude",
+      "shortTitle": "Gertrude",
+      "author": "Hermann Hesse",
+      "status": "read",
+      "genre": "philosophical novel",
+      "note": "English title of Gertrud.",
+      "cover": "img/gertrud.jpg",
+      "color": "#c9a66e",
+      "accent": "#fff0c6"
+    },
+    {
+      "title": "I convitati di pietra",
+      "shortTitle": "Convitati",
+      "author": "Michele Mari",
+      "status": "read",
+      "genre": "literary fiction",
+      "note": "Italian contemporary fiction.",
+      "cover": "img/convitati_di_pietra.jpg",
+      "color": "#5b5b5b",
+      "accent": "#d9d5cf"
+    },
+    {
+      "title": "The Golden Ass",
+      "shortTitle": "Golden Ass",
+      "author": "Apuleius",
+      "status": "read",
+      "genre": "classic / picaresque novel",
+      "note": "English title of L'asino d'oro.",
+      "cover": "img/the_golden_ass.jpg",
+      "color": "#d9d7ce",
+      "accent": "#777d82"
+    },
+    {
+      "title": "Bartleby, the Scrivener",
+      "shortTitle": "Bartleby",
+      "author": "Herman Melville",
+      "status": "read",
+      "genre": "short story",
+      "note": "A Story of Wall Street.",
+      "cover": "img/bartleby.jpg",
+      "color": "#d8c7aa",
+      "accent": "#406b78"
+    },
+    {
+      "title": "The Box Man",
+      "shortTitle": "Box Man",
+      "author": "Kobo Abe",
+      "status": "read",
+      "genre": "surreal / experimental fiction",
+      "note": "English title of L'uomo scatola.",
+      "cover": "img/uomo_scatola.jpg",
+      "color": "#1e1d18",
+      "accent": "#c4a650"
+    },
+    {
+      "title": "The Hour of the Star",
+      "shortTitle": "Star",
+      "author": "Clarice Lispector",
+      "status": "read",
+      "genre": "literary fiction",
+      "note": "English title of A hora da estrela.",
+      "cover": "img/hour_of_the_star.jpg",
+      "color": "#4c9ed9",
+      "accent": "#eef1dd"
     }
   ]
 }
