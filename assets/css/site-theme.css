@@ -1437,6 +1437,7 @@ body.list .main .profile {
 }
 
 body.list .profile_inner {
+  align-items: center;
   display: flex;
   flex-direction: column;
   margin-left: auto;
@@ -1460,11 +1461,13 @@ body.list .profile_inner span {
 }
 
 body.list .profile_inner .social-icons {
+  justify-content: center;
   order: 5;
 }
 
 body.list .profile_inner > div:last-child {
   order: 6;
+  text-align: center;
 }
 
 body.list .profile_inner::after {
@@ -1473,9 +1476,12 @@ body.list .profile_inner::after {
 }
 
 body.list .profile_inner::before {
+  align-self: center;
+  max-width: 100%;
   order: 3;
   margin-top: 0.2rem;
   margin-bottom: 1.25rem;
+  width: max-content;
 }
 
 @media screen and (max-width: 899px) {
