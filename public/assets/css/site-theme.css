@@ -1293,16 +1293,17 @@ button.ghost,
 
 @media screen and (min-width: 900px) {
   .header {
-    margin: 28px auto 0;
-    max-width: 840px;
-    padding: 0 var(--gap);
-    width: calc(100% - var(--gap) * 2);
+    margin: 28px auto 0 var(--gap);
+    max-width: calc(100vw - var(--gap) * 2);
+    padding: 0;
+    width: fit-content;
   }
 
   .nav {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: flex-start;
   }
 
   .logo a {
@@ -1317,7 +1318,7 @@ button.ghost,
     display: flex !important;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: flex-end;
+    justify-content: flex-start;
     width: auto;
   }
 
