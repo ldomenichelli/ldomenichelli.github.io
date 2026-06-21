@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
   <meta name="robots" content="index, follow">
   <title>the library | lucia's room</title>
-  <meta name="description" content="A bookshelf for Lucia's reading library.">
+  <meta name="description" content="A pixel bookshelf for Lucia's reading library.">
   <meta name="author" content="Lucia Domenichelli">
   <link rel="canonical" href="https://ldomenichelli.github.io/library/">
   <link crossorigin="anonymous" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css" integrity="sha256-WtmxyqkuTOqD680wiOlzYvI5sH2BREkKrwvB1r2JzRc=" rel="preload stylesheet" as="style">
@@ -15,7 +15,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="https://ldomenichelli.github.io/favicon-32x32-dithered.png">
   <link rel="apple-touch-icon" href="https://ldomenichelli.github.io/apple-touch-icon-dithered.png">
   <meta property="og:title" content="the library | lucia's room">
-  <meta property="og:description" content="A bookshelf for Lucia's reading library.">
+  <meta property="og:description" content="A pixel bookshelf for Lucia's reading library.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ldomenichelli.github.io/library/">
   <meta property="og:image" content="https://ldomenichelli.github.io/logo-dithered.png">
@@ -23,24 +23,31 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://ldomenichelli.github.io/logo-dithered.png">
   <meta name="twitter:title" content="the library | lucia's room">
-  <meta name="twitter:description" content="A bookshelf for Lucia's reading library.">
+  <meta name="twitter:description" content="A pixel bookshelf for Lucia's reading library.">
   <script src="/assets/js/analytics.js" async></script>
   <link rel="stylesheet" href="/assets/css/site-theme.css">
   <style>
     html {
-      background: #f7f5ed;
+      background: #f5f0df;
     }
 
     body.library-page {
-      --library-ink: #15100d;
-      --library-paper: #fbfaf4;
-      --library-paper-soft: #eee8d9;
-      --library-teal: #1b6f6a;
+      --library-ink: #22140f;
+      --library-muted: #60433a;
+      --library-paper: #fbf6df;
+      --library-paper-deep: #ead9ae;
+      --library-wood: #743b2f;
+      --library-wood-dark: #4f241f;
+      --library-wood-light: #9c6246;
+      --library-red: #8a2638;
+      --library-blue: #1f5b6d;
+      --library-green: #2e6b52;
+      --library-gold: #d7ad4b;
       background:
-        radial-gradient(circle at 18% 24%, rgba(88, 51, 32, 0.08) 0 1px, transparent 1px),
-        radial-gradient(circle at 72% 38%, rgba(27, 111, 106, 0.08) 0 1px, transparent 1px),
-        linear-gradient(180deg, #f7f5ed 0%, #e8dfca 100%);
-      background-size: 7px 7px, 11px 11px, auto;
+        radial-gradient(circle at 24% 20%, rgba(138, 38, 56, 0.08) 0 1px, transparent 1px),
+        radial-gradient(circle at 74% 42%, rgba(31, 91, 109, 0.08) 0 1px, transparent 1px),
+        linear-gradient(180deg, #f7f1dd 0%, #e8d8b3 100%);
+      background-size: 8px 8px, 12px 12px, auto;
       color: var(--library-ink);
     }
 
@@ -55,7 +62,7 @@
 
     body.library-page .main,
     body.library-page .footer {
-      max-width: min(1060px, calc(100vw - 40px));
+      max-width: min(980px, calc(100vw - 40px));
     }
 
     body.library-page .post-single {
@@ -68,107 +75,260 @@
       content: none;
     }
 
+    .library-page-shell {
+      display: grid;
+      gap: 1rem;
+      margin: 0 auto;
+      max-width: 920px;
+    }
+
     .library-intro {
-      margin: 0 auto 0.8rem;
-      max-width: 720px;
-      padding: 0.6rem 0.8rem;
-      text-align: right;
-      text-wrap: balance;
+      background: var(--library-paper);
+      border: 2px solid var(--library-wood-dark);
+      box-shadow: 5px 5px 0 rgba(79, 36, 31, 0.28);
+      padding: 0.85rem 1rem;
+      text-align: left;
     }
 
     .library-intro h1 {
       color: var(--library-ink);
-      font-size: clamp(1.55rem, 4vw, 2.1rem);
-      line-height: 1.05;
-      margin: 0 0 0.35rem;
+      font-size: clamp(1.7rem, 4vw, 2.35rem);
+      line-height: 1;
+      margin: 0 0 0.45rem;
       text-transform: none;
     }
 
     .library-intro p {
-      color: #3a2b22;
+      color: var(--library-muted);
       margin: 0;
     }
 
-    .library-room {
-      margin: 0 auto;
-      max-width: 1000px;
+    .library-jump {
+      color: var(--library-muted);
+      font-size: 0.85rem;
+      margin-top: 0.65rem;
+    }
+
+    .library-jump a {
+      color: var(--library-blue);
+      font-weight: 700;
+      margin-right: 0.55rem;
+      text-decoration: none;
+    }
+
+    .library-section-title {
+      align-items: end;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.7rem;
+      justify-content: space-between;
+      margin: 0 0 0.55rem;
+    }
+
+    .library-section-title h2 {
+      color: var(--library-ink);
+      font-size: 1.05rem;
+      line-height: 1.1;
+      margin: 0;
+      text-transform: lowercase;
+    }
+
+    .library-updated,
+    .library-count {
+      color: var(--library-muted);
+      font-size: 0.78rem;
+      margin: 0;
+    }
+
+    .library-board {
+      background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.16) 0 2px, transparent 2px 12px),
+        linear-gradient(var(--library-paper), var(--library-paper-deep));
+      border: 2px solid var(--library-wood-dark);
+      box-shadow: 7px 7px 0 rgba(79, 36, 31, 0.25);
+      padding: 0.9rem;
+    }
+
+    .pixel-shelf {
+      background:
+        linear-gradient(180deg, transparent calc(100% - 18px), var(--library-wood-dark) calc(100% - 18px) 100%),
+        repeating-linear-gradient(90deg, var(--library-wood) 0 18px, var(--library-wood-light) 18px 23px, var(--library-wood) 23px 42px);
+      border: 6px solid var(--library-wood-dark);
+      box-shadow:
+        inset 0 0 0 4px var(--library-wood-light),
+        inset 0 -18px 0 var(--library-wood-dark);
+      display: grid;
+      gap: 0.75rem 0.45rem;
+      grid-template-columns: repeat(auto-fill, minmax(68px, 1fr));
+      image-rendering: pixelated;
+      min-height: 260px;
+      padding: 1.2rem 1rem 1.8rem;
+      position: relative;
+    }
+
+    .pixel-shelf::before,
+    .pixel-shelf::after {
+      background: var(--library-wood-dark);
+      content: "";
+      height: 14px;
+      left: 0;
+      position: absolute;
+      right: 0;
+    }
+
+    .pixel-shelf::before {
+      top: 45%;
+    }
+
+    .pixel-shelf::after {
+      top: 72%;
+    }
+
+    .library-book {
+      --book-color: var(--library-red);
+      --book-accent: var(--library-gold);
+      align-self: end;
+      aspect-ratio: 3 / 4;
+      background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.22) 0 10px, transparent 10px),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.2), transparent 34%),
+        var(--book-color);
+      border: 2px solid #25120f;
+      box-shadow:
+        inset 0 0 0 3px rgba(255, 255, 255, 0.12),
+        3px 4px 0 rgba(37, 18, 15, 0.35);
+      color: #fff8de;
+      cursor: pointer;
+      display: grid;
+      font: 700 0.6rem/1.05 var(--site-font-stack);
+      height: min(112px, 24vw);
+      justify-self: center;
+      min-height: 82px;
+      min-width: 58px;
+      overflow: hidden;
+      padding: 0.45rem 0.35rem 0.35rem 0.55rem;
+      place-items: end center;
       position: relative;
       text-align: center;
-    }
-
-    .library-shelf-frame {
-      align-items: center;
-      background: transparent;
-      box-shadow:
-        6px 8px 0 rgba(0, 0, 0, 0.2);
-      display: inline-flex;
-      filter: contrast(1.04) saturate(0.86);
-      justify-content: center;
-      margin: 0;
-      max-width: 100%;
-      overflow: hidden;
-      position: relative;
-      transform-origin: center;
-      transition:
-        filter 180ms ease,
-        transform 180ms ease;
-      width: fit-content;
-      image-rendering: pixelated;
-    }
-
-    .library-room:hover .library-shelf-frame,
-    .library-shelf-frame:hover {
-      filter: hue-rotate(190deg) saturate(0.5) contrast(1.04);
-      transform: rotate(2deg);
-    }
-
-    .library-shelf-frame::before,
-    .library-shelf-frame::after {
-      content: "";
-      inset: 0;
-      pointer-events: none;
-      position: absolute;
+      text-transform: lowercase;
+      width: min(82px, 18vw);
       z-index: 1;
     }
 
-    .library-shelf-frame::before {
+    .library-book::before {
       background:
-        linear-gradient(135deg, rgba(48, 22, 10, 0.22), transparent 42%),
-        linear-gradient(315deg, rgba(48, 22, 10, 0.18), transparent 36%);
+        linear-gradient(var(--book-accent), var(--book-accent)) 50% 26% / 58% 4px no-repeat,
+        linear-gradient(var(--book-accent), var(--book-accent)) 50% 38% / 42% 4px no-repeat;
+      content: "";
+      inset: 0;
+      opacity: 0.9;
+      position: absolute;
     }
 
-    .library-shelf-frame::after {
+    .library-book:hover,
+    .library-book:focus-visible,
+    .library-book.is-active {
+      filter: saturate(1.08) contrast(1.05);
+      transform: translateY(-5px);
+    }
+
+    .library-book img {
+      height: 100%;
+      image-rendering: pixelated;
+      inset: 0;
+      object-fit: cover;
+      position: absolute;
+      width: 100%;
+    }
+
+    .library-book span {
+      background: rgba(34, 20, 15, 0.58);
+      padding: 0.12rem 0.2rem;
+      position: relative;
+      text-wrap: balance;
+      z-index: 1;
+    }
+
+    .library-book.is-placeholder {
+      color: rgba(255, 248, 222, 0.75);
+      cursor: default;
+      filter: saturate(0.7);
+    }
+
+    .library-book.is-placeholder:hover {
+      transform: none;
+    }
+
+    .library-card {
       background:
-        radial-gradient(circle, rgba(36, 18, 8, 0.24) 0 1px, transparent 1px) 0 0 / 4px 4px,
-        radial-gradient(circle, rgba(255, 232, 176, 0.2) 0 1px, transparent 1px) 2px 2px / 4px 4px;
-      mix-blend-mode: multiply;
-      opacity: 0.75;
+        linear-gradient(transparent 31px, rgba(31, 91, 109, 0.18) 32px),
+        var(--library-paper);
+      background-size: 100% 32px;
+      border: 2px solid var(--library-wood-dark);
+      box-shadow: 5px 5px 0 rgba(79, 36, 31, 0.22);
+      color: var(--library-ink);
+      display: grid;
+      gap: 0.55rem;
+      padding: 0.9rem 1rem 1rem;
     }
 
-    .library-shelf-image {
-      display: block;
-      height: auto;
-      max-height: min(620px, calc(100vh - 185px));
-      max-width: 100%;
-      object-fit: contain;
-      width: auto;
+    .library-card-kicker {
+      color: var(--library-red);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
-    .library-empty-note {
-      background: var(--library-paper-soft);
-      border: 1px dashed #19110d;
-      box-shadow: 4px 4px rgba(0, 0, 0, 0.2);
-      margin: 1.15rem auto 0;
-      max-width: 640px;
-      padding: 0.8rem;
-      text-align: center;
-    }
-
-    .library-empty-note p {
-      color: #3a2b22;
-      font-size: 0.86rem;
-      line-height: 1.6;
+    .library-card h2 {
+      color: var(--library-ink);
+      font-size: clamp(1.1rem, 3vw, 1.45rem);
+      line-height: 1.15;
       margin: 0;
+      text-transform: none;
+    }
+
+    .library-card dl {
+      display: grid;
+      gap: 0.25rem 0.75rem;
+      grid-template-columns: max-content 1fr;
+      margin: 0;
+    }
+
+    .library-card dt {
+      color: var(--library-muted);
+      font-weight: 700;
+      text-transform: lowercase;
+    }
+
+    .library-card dd {
+      margin: 0;
+    }
+
+    .library-card p {
+      color: var(--library-muted);
+      margin: 0;
+    }
+
+    .library-card a {
+      color: var(--library-blue);
+      font-weight: 700;
+    }
+
+    .library-json-note {
+      background: var(--library-paper);
+      border: 1px dashed var(--library-wood-dark);
+      box-shadow: 4px 4px 0 rgba(79, 36, 31, 0.18);
+      color: var(--library-muted);
+      font-size: 0.82rem;
+      padding: 0.65rem 0.8rem;
+    }
+
+    .library-json-note code {
+      background: rgba(255, 255, 255, 0.48);
+      border: 1px solid rgba(79, 36, 31, 0.18);
+      color: var(--library-ink);
+      padding: 0.05rem 0.2rem;
     }
 
     @media screen and (max-width: 899px) {
@@ -182,16 +342,18 @@
         box-sizing: border-box;
       }
 
-      .library-intro {
-        padding-inline: 0;
-        text-align: left;
+      .library-board {
+        padding: 0.55rem;
       }
 
-      .library-shelf-image {
-        max-height: none;
-        width: 100%;
+      .pixel-shelf {
+        grid-template-columns: repeat(auto-fill, minmax(54px, 1fr));
+        padding: 0.85rem 0.55rem 1.35rem;
       }
 
+      .library-card dl {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media screen and (max-width: 520px) {
@@ -205,19 +367,19 @@
         width: min(var(--mobile-content-width), 354px);
       }
 
-      .library-room,
-      .library-empty-note {
+      .library-page-shell {
         max-width: 100%;
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .library-shelf-frame {
+      .library-book {
         transition: none;
       }
 
-      .library-room:hover .library-shelf-frame,
-      .library-shelf-frame:hover {
+      .library-book:hover,
+      .library-book:focus-visible,
+      .library-book.is-active {
         transform: none;
       }
     }
@@ -246,18 +408,46 @@
 </header>
 <main class="main">
   <article class="post-single">
-    <header class="library-intro">
-      <h1>the library</h1>
-      <p>The shelf is waiting.</p>
-    </header>
+    <div class="library-page-shell">
+      <header class="library-intro">
+        <h1>the library</h1>
+        <p>A little pixel shelf for books I want to keep close.</p>
+        <nav class="library-jump" aria-label="Library sections">
+          jump to:
+          <a href="#shelf">shelf</a>
+          <a href="#card">card</a>
+          <a href="#catalogue">json</a>
+        </nav>
+      </header>
 
-    <section class="library-room" aria-label="Bookshelf">
-      <figure class="library-shelf-frame">
-        <img class="library-shelf-image" src="img/shelf.jpeg" alt="Wooden bookshelf">
-      </figure>
-    </section>
+      <section class="library-board" id="shelf" aria-labelledby="shelf-title">
+        <div class="library-section-title">
+          <h2 id="shelf-title">the shelf</h2>
+          <p class="library-updated" data-library-updated>last updated: catalogue soon</p>
+        </div>
+        <div class="pixel-shelf" data-library-shelf aria-label="Book shelf"></div>
+      </section>
 
+      <aside class="library-card" id="card" data-library-card aria-live="polite">
+        <div class="library-card-kicker">library card</div>
+        <h2 data-book-title>catalogue soon</h2>
+        <dl>
+          <dt>author</dt>
+          <dd data-book-author>waiting for the first stack</dd>
+          <dt>status</dt>
+          <dd data-book-status>empty shelf</dd>
+          <dt>genre</dt>
+          <dd data-book-genre>-</dd>
+        </dl>
+        <p data-book-note>When the book JSON arrives, each cover on the shelf will open its own card here.</p>
+        <p data-book-link-wrap hidden><a data-book-link href="#">open link</a></p>
+      </aside>
 
+      <section class="library-json-note" id="catalogue" aria-label="Book JSON status">
+        catalogue source: <code>/library/books.json</code>
+        <span class="library-count" data-library-count>0 books</span>
+      </section>
+    </div>
   </article>
 </main>
 <footer class="footer" style="padding-top:18px;padding-bottom:18px">
@@ -270,5 +460,5 @@
   b.addEventListener('click',()=>m.classList.toggle('hidden'));
   document.body.addEventListener('click',e=>{if(!b.contains(e.target))m.classList.add('hidden')});
 </script>
-<script src="/assets/js/pocket-bird.js" defer></script></body>
+<script src="/assets/js/library-page.js" defer></script><script src="/assets/js/pocket-bird.js" defer></script></body>
 </html>
