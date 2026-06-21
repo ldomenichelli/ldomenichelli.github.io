@@ -1,4 +1,16 @@
 {
-  "updated": "",
-  "books": []
+  "updated": "jun 2026",
+  "books": [
+    {
+      "title": "Tokyo Express",
+      "shortTitle": "Tokyo",
+      "author": "Seicho Matsumoto",
+      "status": "shelved",
+      "genre": "mystery fiction",
+      "note": "A mystery fiction stop on the shelf.",
+      "cover": "img/tokyo_express.jpg",
+      "color": "#20272a",
+      "accent": "#d9dfe0"
+    }
+  ]
 }
