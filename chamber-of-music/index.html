@@ -188,11 +188,6 @@
       margin: 0;
     }
 
-    body.chamber-page .site-music-player {
-      bottom: 16px;
-      top: auto;
-    }
-
     @media screen and (max-width: 899px) {
       body.chamber-page .main,
       body.chamber-page .footer {
@@ -209,10 +204,6 @@
         text-align: left;
       }
 
-      body.chamber-page .site-music-player {
-        bottom: auto;
-        margin-left: 0;
-      }
     }
 
     @media screen and (max-width: 520px) {
@@ -309,5 +300,5 @@
   b.addEventListener('click',()=>m.classList.toggle('hidden'));
   document.body.addEventListener('click',e=>{if(!b.contains(e.target))m.classList.add('hidden')});
 </script>
-<script src="/assets/js/music-playlist.js" defer></script><script src="/assets/js/music-player.js" defer></script><script src="/assets/js/pocket-bird.js" defer></script></body>
+<script src="/assets/js/pocket-bird.js" defer></script></body>
 </html>
