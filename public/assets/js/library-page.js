@@ -27,6 +27,26 @@
     ["#45568b", "#e8bf64"],
   ];
 
+  const readMonthOrder = new Map(
+    [
+      "december",
+      "january",
+      "february",
+      "march",
+      "april",
+      "may",
+      "june",
+      "july",
+      "august",
+      "september",
+      "october",
+      "november",
+    ].flatMap((month, index) => [
+      [month, index],
+      [month.slice(0, 3), index],
+    ]),
+  );
+
   function normalizeCatalogue(data) {
     if (Array.isArray(data)) {
       return { books: data, updated: "" };
@@ -60,6 +80,21 @@
 
   function text(value, fallback) {
     return value == null || value === "" ? fallback : String(value);
+  }
+
+  function monthRank(book, fallback) {
+    const month = text(book.readMonth || book.month || book.shortTitle, "")
+      .trim()
+      .toLowerCase();
+
+    return readMonthOrder.has(month) ? readMonthOrder.get(month) : fallback;
+  }
+
+  function sortBooks(books) {
+    return books
+      .map((book, index) => ({ book, index }))
+      .sort((a, b) => monthRank(a.book, a.index) - monthRank(b.book, b.index) || a.index - b.index)
+      .map(({ book }) => book);
   }
 
   function setCard(book) {
@@ -120,7 +155,7 @@
 
   function render(catalogue) {
     const hasBooks = catalogue.books.length > 0;
-    const books = hasBooks ? catalogue.books : placeholderBooks();
+    const books = hasBooks ? sortBooks(catalogue.books) : placeholderBooks();
 
     shelf.replaceChildren(...books.map(makeBook));
 

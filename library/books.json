@@ -4,6 +4,7 @@
     {
       "title": "Tokyo Express",
       "shortTitle": "Dec",
+      "readMonth": "december",
       "author": "Seicho Matsumoto",
       "status": "read",
       "genre": "mystery fiction",
@@ -15,6 +16,7 @@
     {
       "title": "Contactless Intimacy",
       "shortTitle": "Dec",
+      "readMonth": "december",
       "author": "Lin Hsin-Hui",
       "status": "read",
       "genre": "science fiction",
@@ -24,30 +26,9 @@
       "accent": "#f0a5c8"
     },
     {
-      "title": "Flowers for Algernon",
-      "shortTitle": "March",
-      "author": "Daniel Keyes",
-      "status": "read",
-      "genre": "science fiction",
-      "note": "Everyone should read this.",
-      "cover": "img/fiori_per_algernon.jpg",
-      "color": "#7d6147",
-      "accent": "#d8c39b"
-    },
-    {
-      "title": "The Infected Sea",
-      "shortTitle": "March",
-      "author": "Kim Bo-young",
-      "status": "read",
-      "genre": "weird science fiction",
-      "note": "Once again I was influenced by the themes, Lovecraftian in nature.",
-      "cover": "img/il_mare_infetto.jpg",
-      "color": "#101010",
-      "accent": "#ef1140"
-    },
-    {
       "title": "Exit Reality",
       "shortTitle": "Feb",
+      "readMonth": "february",
       "author": "Valentina Tanni",
       "status": "read",
       "genre": "nonfiction / internet culture",
@@ -59,6 +40,7 @@
     {
       "title": "Shah-in-Shah",
       "shortTitle": "Feb",
+      "readMonth": "february",
       "author": "Ryszard Kapuscinski",
       "status": "read",
       "genre": "literary reportage",
@@ -68,54 +50,33 @@
       "accent": "#d0a36c"
     },
     {
-      "title": "Lo sbilico",
-      "shortTitle": "June",
-      "author": "Alcide Pierantozzi",
-      "status": "reading",
-      "genre": "literary fiction",
-      "note": "Italian contemporary fiction about mental illness.",
-      "cover": "img/lo_sbilico.jpg",
-      "color": "#8b2036",
-      "accent": "#f3c3cc"
-    },
-    {
-      "title": "Gertrude",
-      "shortTitle": "May",
-      "author": "Hermann Hesse",
-      "status": "reading/on hold",
-      "genre": "philosophical novel",
-      "note": "I'm obsessed with Hesse but the themes are very similar to Demian, so I put it on hold.",
-      "cover": "img/gertrud.jpg",
-      "color": "#c9a66e",
-      "accent": "#fff0c6"
-    },
-    {
-      "title": "I convitati di pietra",
-      "shortTitle": "June",
-      "author": "Michele Mari",
+      "title": "Flowers for Algernon",
+      "shortTitle": "March",
+      "readMonth": "march",
+      "author": "Daniel Keyes",
       "status": "read",
-      "genre": "literary fiction",
-      "note": "A book to read on holiday",
-      "cover": "img/convitati_di_pietra.jpg",
-      "color": "#5b5b5b",
-      "accent": "#d9d5cf"
+      "genre": "science fiction",
+      "note": "Everyone should read this.",
+      "cover": "img/fiori_per_algernon.jpg",
+      "color": "#7d6147",
+      "accent": "#d8c39b"
     },
-    
-    
     {
-      "title": "Bartleby, the Scrivener",
-      "shortTitle": "May",
-      "author": "Herman Melville",
+      "title": "The Infected Sea",
+      "shortTitle": "March",
+      "readMonth": "march",
+      "author": "Kim Bo-young",
       "status": "read",
-      "genre": "short story",
-      "note": "I would prefer not to :).",
-      "cover": "img/bartleby.jpg",
-      "color": "#d8c7aa",
-      "accent": "#406b78"
+      "genre": "weird science fiction",
+      "note": "Once again I was influenced by the themes, Lovecraftian in nature.",
+      "cover": "img/il_mare_infetto.jpg",
+      "color": "#101010",
+      "accent": "#ef1140"
     },
     {
       "title": "The Box Man",
       "shortTitle": "April",
+      "readMonth": "april",
       "author": "Kobo Abe",
       "status": "read",
       "genre": "surreal / experimental fiction",
@@ -127,6 +88,7 @@
     {
       "title": "The Hour of the Star",
       "shortTitle": "April",
+      "readMonth": "april",
       "author": "Clarice Lispector",
       "status": "read",
       "genre": "literary fiction",
@@ -134,6 +96,54 @@
       "cover": "img/hour_of_the_star.jpg",
       "color": "#4c9ed9",
       "accent": "#eef1dd"
+    },
+    {
+      "title": "Gertrude",
+      "shortTitle": "May",
+      "readMonth": "may",
+      "author": "Hermann Hesse",
+      "status": "reading/on hold",
+      "genre": "philosophical novel",
+      "note": "I'm obsessed with Hesse but the themes are very similar to Demian, so I put it on hold.",
+      "cover": "img/gertrud.jpg",
+      "color": "#c9a66e",
+      "accent": "#fff0c6"
+    },
+    {
+      "title": "Bartleby, the Scrivener",
+      "shortTitle": "May",
+      "readMonth": "may",
+      "author": "Herman Melville",
+      "status": "read",
+      "genre": "short story",
+      "note": "I would prefer not to :).",
+      "cover": "img/bartleby.jpg",
+      "color": "#d8c7aa",
+      "accent": "#406b78"
+    },
+    {
+      "title": "Lo sbilico",
+      "shortTitle": "June",
+      "readMonth": "june",
+      "author": "Alcide Pierantozzi",
+      "status": "reading",
+      "genre": "literary fiction",
+      "note": "Italian contemporary fiction about mental illness.",
+      "cover": "img/lo_sbilico.jpg",
+      "color": "#8b2036",
+      "accent": "#f3c3cc"
+    },
+    {
+      "title": "I convitati di pietra",
+      "shortTitle": "June",
+      "readMonth": "june",
+      "author": "Michele Mari",
+      "status": "read",
+      "genre": "literary fiction",
+      "note": "A book to read on holiday",
+      "cover": "img/convitati_di_pietra.jpg",
+      "color": "#5b5b5b",
+      "accent": "#d9d5cf"
     }
   ]
 }

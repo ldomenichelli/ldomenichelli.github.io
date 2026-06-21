@@ -706,35 +706,35 @@ textarea {
 :root,
 .dark {
   --site-font-stack: Consolas, "Courier New", "Liberation Mono", monospace;
-  --site-bg: #b3c09f;
-  --site-bg-soft: #9dab88;
-  --site-surface: #edf3dd;
-  --site-surface-strong: #dfe9c9;
-  --site-surface-alt: #c7d7ae;
-  --site-text: #1f3f07;
-  --site-text-muted: #2f5114;
-  --site-text-soft: #335414;
-  --site-border: #9fb878;
-  --site-border-strong: #486f12;
-  --site-accent: #295605;
-  --site-accent-strong: #1d4304;
-  --site-accent-soft: rgba(41, 86, 5, 0.16);
-  --site-accent-soft-strong: rgba(41, 86, 5, 0.28);
-  --site-focus: rgba(31, 63, 7, 0.55);
-  --site-shadow: none;
-  --site-shadow-soft: none;
-  --site-radius-sm: 2px;
-  --site-radius-md: 3px;
-  --site-radius-lg: 4px;
-  --site-radius-xl: 4px;
+  --site-bg: #f5f0df;
+  --site-bg-soft: #ead9ae;
+  --site-surface: #fbf6df;
+  --site-surface-strong: #f2e8c7;
+  --site-surface-alt: #ead9ae;
+  --site-text: #22140f;
+  --site-text-muted: #60433a;
+  --site-text-soft: #7e6255;
+  --site-border: #9c6246;
+  --site-border-strong: #4f241f;
+  --site-accent: #1f5b6d;
+  --site-accent-strong: #22140f;
+  --site-accent-soft: rgba(31, 91, 109, 0.12);
+  --site-accent-soft-strong: rgba(31, 91, 109, 0.22);
+  --site-focus: rgba(31, 91, 109, 0.45);
+  --site-shadow: 7px 7px 0 rgba(79, 36, 31, 0.24);
+  --site-shadow-soft: 5px 5px 0 rgba(79, 36, 31, 0.18);
+  --site-radius-sm: 0;
+  --site-radius-md: 0;
+  --site-radius-lg: 0;
+  --site-radius-xl: 0;
   --theme: var(--site-bg);
   --entry: var(--site-surface);
   --primary: var(--site-text);
   --secondary: var(--site-text-muted);
-  --tertiary: #b4ca91;
-  --content: #243f0c;
-  --hljs-bg: #dfe9c9;
-  --code-bg: #dfe9c9;
+  --tertiary: #ead9ae;
+  --content: #60433a;
+  --hljs-bg: #f2e8c7;
+  --code-bg: #f2e8c7;
   --border: var(--site-border);
   --carolina_blue: var(--site-accent);
   --main-width: 820px;
@@ -744,11 +744,7 @@ textarea {
 }
 
 html {
-  background:
-    linear-gradient(rgba(31, 63, 7, 0.26) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(31, 63, 7, 0.22) 1px, transparent 1px),
-    var(--site-bg);
-  background-size: 24px 24px, 24px 24px, auto;
+  background: #f5f0df;
 }
 
 *,
@@ -788,10 +784,10 @@ body.page,
 body.list,
 body.abalone-page {
   background:
-    linear-gradient(rgba(31, 63, 7, 0.26) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(31, 63, 7, 0.22) 1px, transparent 1px),
-    var(--site-bg);
-  background-size: 24px 24px, 24px 24px, auto;
+    radial-gradient(circle at 24% 20%, rgba(138, 38, 56, 0.08) 0 1px, transparent 1px),
+    radial-gradient(circle at 74% 42%, rgba(31, 91, 109, 0.08) 0 1px, transparent 1px),
+    linear-gradient(180deg, #f7f1dd 0%, #e8d8b3 100%);
+  background-size: 8px 8px, 12px 12px, auto;
   color: var(--primary);
   font-family: var(--site-font-stack);
   font-size: 14px;
@@ -813,7 +809,7 @@ body::before {
 
 a {
   color: var(--site-accent);
-  text-decoration-color: rgba(41, 86, 5, 0.48);
+  text-decoration-color: rgba(31, 91, 109, 0.48);
   text-underline-offset: 0.17em;
 }
 
@@ -884,14 +880,14 @@ a:hover,
 #menu a:hover,
 .menu .active,
 #menu .active {
-  background: var(--site-accent-soft);
+  background: rgba(31, 91, 109, 0.1);
   color: var(--site-accent-strong);
 }
 
 #menu-trigger {
   align-items: center;
   background: var(--site-surface);
-  border: 1px solid var(--site-border);
+  border: 2px solid var(--site-border-strong);
   border-radius: var(--site-radius-sm);
   color: var(--site-accent-strong);
   height: 34px;
@@ -929,10 +925,10 @@ a:hover,
 .terms-tags a,
 .pagination a,
 .button {
-  background: rgba(237, 243, 221, 0.94);
-  border: 1px solid var(--site-border);
+  background: var(--site-surface);
+  border: 2px solid var(--site-border-strong);
   border-radius: var(--site-radius-md);
-  box-shadow: none;
+  box-shadow: var(--site-shadow-soft);
 }
 
 .post-single,
@@ -951,25 +947,16 @@ a:hover,
 .post-single::before,
 .panel::before,
 .profile_inner::after {
-  background: var(--site-surface-alt);
-  border-bottom: 1px solid var(--site-border);
-  color: var(--site-accent-strong);
-  content: "lucia_notes.txt";
-  display: block;
-  font-size: 0.76rem;
-  margin: -1rem -1rem 1rem;
-  padding: 0.22rem 0.5rem;
+  content: none;
+  display: none;
 }
 
 .profile_inner::after {
-  content: "home.txt";
-  border-bottom: 0;
-  border-top: 1px solid var(--site-border);
-  margin: 1rem -1rem -1rem;
+  content: none;
 }
 
 .profile_inner::before {
-  color: var(--site-accent);
+  color: #2e6b52;
   content: " _            _       _       \A| |_   _  ___(_) __ _ ( )___  \A| | | | |/ __| |/ _  ||// __| \A| | |_| | (__| | (_| |  \\__ \\ \A|_|\\__,_|\\___|_|\\__,_|  |___/ \A      notes / projects / games";
   display: block;
   font: 11px/1.15 var(--site-font-stack);
@@ -1018,7 +1005,7 @@ a:hover,
 .entry-cover img,
 .post-content img {
   background: var(--site-surface-strong);
-  border: 1px solid var(--site-border);
+  border: 2px solid var(--site-border-strong);
   border-radius: var(--site-radius-sm);
   filter: saturate(0.84) contrast(1.03);
 }
@@ -1042,7 +1029,8 @@ a:hover,
 .project-link-card:hover,
 .game-card:hover {
   border-color: var(--site-border-strong);
-  transform: none;
+  box-shadow: var(--site-shadow);
+  transform: translate(-1px, -1px);
 }
 
 .post-entry:active,
@@ -1089,9 +1077,10 @@ a:hover,
 }
 
 .post-content blockquote {
-  background: var(--site-surface-strong);
-  border: 1px solid var(--site-border);
-  border-inline-start: 3px solid var(--site-accent);
+  background: linear-gradient(transparent 31px, rgba(31, 91, 109, 0.14) 32px), var(--site-surface);
+  background-size: 100% 32px;
+  border: 2px solid var(--site-border-strong);
+  border-inline-start: 6px solid #8a2638;
   border-radius: var(--site-radius-sm);
   padding: 0.55rem 0.75rem;
 }
@@ -1112,7 +1101,7 @@ textarea,
 .game-link,
 .hero-links a {
   background: var(--site-surface-strong);
-  border: 1px solid var(--site-border);
+  border: 2px solid var(--site-border-strong);
   border-radius: var(--site-radius-sm);
   color: var(--site-accent-strong);
   min-height: 34px;
@@ -1126,8 +1115,9 @@ textarea:hover,
 .button:hover,
 .game-link:hover,
 .hero-links a:hover {
-  background: var(--site-accent-soft);
+  background: var(--site-surface);
   border-color: var(--site-border-strong);
+  box-shadow: 3px 3px 0 rgba(79, 36, 31, 0.18);
 }
 
 .project-link-card {
@@ -1156,8 +1146,8 @@ textarea:hover,
 .project-lab input[type="number"],
 .project-lab button,
 .project-lab canvas {
-  background: rgba(237, 243, 221, 0.94);
-  border-color: var(--site-border);
+  background: var(--site-surface);
+  border: 2px solid var(--site-border-strong);
   border-radius: var(--site-radius-sm);
   color: var(--site-text);
 }
@@ -1171,7 +1161,7 @@ textarea:hover,
 
 .about-hero,
 .about-section {
-  border-color: var(--site-border);
+  border-color: var(--site-border-strong);
 }
 
 .eyebrow,
@@ -1187,7 +1177,7 @@ textarea:hover,
 }
 
 .footer {
-  border-top: 1px solid var(--site-border);
+  border-top: 2px solid var(--site-border-strong);
   color: var(--site-text-muted);
   margin-top: 1rem;
   max-width: 840px;
@@ -1195,7 +1185,7 @@ textarea:hover,
 
 .top-link {
   background: var(--site-surface-strong);
-  border: 1px solid var(--site-border);
+  border: 2px solid var(--site-border-strong);
   border-radius: var(--site-radius-sm);
   color: var(--site-accent-strong);
 }
@@ -1241,10 +1231,10 @@ textarea:hover,
 button.ghost,
 .game-shell-tab,
 .seg-btn {
-  background: rgba(237, 243, 221, 0.94) !important;
-  border: 1px solid var(--site-border) !important;
+  background: var(--site-surface) !important;
+  border: 2px solid var(--site-border-strong) !important;
   border-radius: var(--site-radius-sm) !important;
-  box-shadow: none !important;
+  box-shadow: 3px 3px 0 rgba(79, 36, 31, 0.16) !important;
   color: var(--site-text) !important;
 }
 
@@ -1264,19 +1254,19 @@ button.ghost,
 
 .board {
   background: var(--site-surface-alt) !important;
-  border: 1px solid var(--site-border-strong) !important;
+  border: 2px solid var(--site-border-strong) !important;
   border-radius: var(--site-radius-sm);
-  box-shadow: none !important;
+  box-shadow: var(--site-shadow-soft) !important;
 }
 
 .cell {
   background: var(--site-surface) !important;
-  border: 1px solid var(--site-border) !important;
+  border: 1px solid var(--site-border-strong) !important;
 }
 
 .jaguar,
 .dog {
-  border: 1px solid var(--site-border-strong);
+  border: 2px solid var(--site-border-strong);
   box-shadow: none;
 }
 
@@ -1308,7 +1298,7 @@ button.ghost,
   }
 
   .logo a {
-    border: 1px solid var(--site-border-strong);
+    border: 2px solid var(--site-border-strong);
     margin-bottom: 0;
     width: auto;
   }
@@ -1353,8 +1343,12 @@ button.ghost,
   }
 
   .header {
-    background: rgba(179, 192, 159, 0.96);
-    border-bottom: 1px solid var(--site-border);
+    background:
+      radial-gradient(circle at 24% 20%, rgba(138, 38, 56, 0.08) 0 1px, transparent 1px),
+      radial-gradient(circle at 74% 42%, rgba(31, 91, 109, 0.08) 0 1px, transparent 1px),
+      #f7f1dd;
+    background-size: 8px 8px, 12px 12px, auto;
+    border-bottom: 2px solid var(--site-border-strong);
     padding: 0.75rem var(--gap);
     position: sticky;
     top: 0;
@@ -1368,7 +1362,7 @@ button.ghost,
   }
 
   .logo a {
-    border: 1px solid var(--site-border-strong);
+    border: 2px solid var(--site-border-strong);
     padding: 0.35rem 0.55rem;
   }
 
@@ -1494,7 +1488,7 @@ body.list .profile_inner::before {
   :root,
   .dark {
     --gap: 18px;
-    --mobile-content-width: calc(100vw - var(--gap) - var(--gap) - 20px);
+    --mobile-content-width: min(354px, calc(100vw - var(--gap) - var(--gap)));
   }
 
   body,
@@ -1504,6 +1498,7 @@ body.list .profile_inner::before {
   body.abalone-page {
     background-size: 18px 18px, 18px 18px, auto;
     font-size: 14px;
+    width: 100vw;
   }
 
   .header {
@@ -1599,7 +1594,7 @@ body.list .profile_inner::before {
   }
 
   body.list .profile_inner {
-    max-width: 100%;
+    max-width: min(354px, 100%);
   }
 
   .profile_inner h1,
@@ -1613,6 +1608,7 @@ body.list .profile_inner::before {
     font-size: clamp(7px, 2.2vw, 9px);
     max-width: 100%;
     overflow-x: hidden;
+    width: 100%;
   }
 
   .profile img {
@@ -1701,6 +1697,17 @@ body.list .profile_inner::before {
   :root,
   .dark {
     --gap: 16px;
+  }
+
+  .main,
+  .games-landing,
+  .game-shell-wrap,
+  .abalone-wrap,
+  .footer {
+    margin-left: var(--gap) !important;
+    margin-right: var(--gap) !important;
+    max-width: calc(100vw - var(--gap) * 2);
+    width: calc(100vw - var(--gap) * 2);
   }
 
   .menu,
