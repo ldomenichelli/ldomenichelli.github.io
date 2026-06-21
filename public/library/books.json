@@ -11,6 +11,61 @@
       "cover": "img/tokyo_express.jpg",
       "color": "#20272a",
       "accent": "#d9dfe0"
+    },
+    {
+      "title": "Zero-Touch Intimacy",
+      "shortTitle": "Intimacy",
+      "author": "Lin Hsin-Hui",
+      "status": "read",
+      "genre": "science fiction",
+      "note": "Literal English rendering; Italian cover title: Intimita senza contatto.",
+      "cover": "img/intimita_senza_contatto.jpg",
+      "color": "#7664b8",
+      "accent": "#f0a5c8"
+    },
+    {
+      "title": "Flowers for Algernon",
+      "shortTitle": "Algernon",
+      "author": "Daniel Keyes",
+      "status": "read",
+      "genre": "science fiction",
+      "note": "A classic science-fiction novel about intelligence, care, and personhood.",
+      "cover": "img/fiori_per_algernon.jpg",
+      "color": "#7d6147",
+      "accent": "#d8c39b"
+    },
+    {
+      "title": "The Infected Sea",
+      "shortTitle": "Sea",
+      "author": "Kim Bo-young",
+      "status": "read",
+      "genre": "weird science fiction",
+      "note": "Literal English rendering; Italian cover title: Il mare infetto.",
+      "cover": "img/il_mare_infetto.jpg",
+      "color": "#101010",
+      "accent": "#ef1140"
+    },
+    {
+      "title": "Exit Reality",
+      "shortTitle": "Exit",
+      "author": "Valentina Tanni",
+      "status": "read",
+      "genre": "nonfiction / internet culture",
+      "note": "Vaporwave, backrooms, weirdcore, and threshold landscapes.",
+      "cover": "img/exit_reality.jpg",
+      "color": "#a7a7a2",
+      "accent": "#26316d"
+    },
+    {
+      "title": "Shah of Shahs",
+      "shortTitle": "Shah",
+      "author": "Ryszard Kapuscinski",
+      "status": "read",
+      "genre": "literary reportage",
+      "note": "English title of Shah-in-Shah.",
+      "cover": "img/shah_in_shah.jpg",
+      "color": "#4a3325",
+      "accent": "#d0a36c"
     }
   ]
 }
