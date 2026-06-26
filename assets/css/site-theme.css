@@ -1488,7 +1488,7 @@ body.list .profile_inner::before {
   :root,
   .dark {
     --gap: 18px;
-    --mobile-content-width: min(354px, calc(100vw - var(--gap) - var(--gap)));
+    --mobile-content-width: min(354px, calc(100vw - 72px));
   }
 
   body,
@@ -1728,13 +1728,13 @@ body.list .profile_inner::before {
 }
 
 body.list {
-  background: #101110;
+  background: linear-gradient(180deg, #f7f1dd 0%, #e8d8b3 100%);
 }
 
 body.list::before {
   background:
-    radial-gradient(circle, rgba(148, 164, 91, 0.24) 0 1px, transparent 1.2px),
-    radial-gradient(circle, rgba(207, 232, 92, 0.14) 0 1px, transparent 1.2px);
+    radial-gradient(circle, rgba(138, 38, 56, 0.14) 0 1px, transparent 1.2px),
+    radial-gradient(circle, rgba(31, 91, 109, 0.1) 0 1px, transparent 1.2px);
   background-position: 0 0, 4px 4px;
   background-size: 8px 8px, 8px 8px;
   opacity: 1;
@@ -1746,40 +1746,40 @@ body.list .footer {
   z-index: 1;
 }
 
-/* Dark terminal skin inspired by sparse personal research pages. */
+/* Light handmade skin. */
 :root,
 .dark {
-  --site-bg: #101110;
-  --site-bg-soft: #151715;
-  --site-surface: #121412;
-  --site-surface-strong: #181b17;
-  --site-surface-alt: #1e221c;
-  --site-text: #d8e36a;
-  --site-text-muted: #aebc72;
-  --site-text-soft: #788654;
-  --site-border: #27301f;
-  --site-border-strong: #52613b;
-  --site-accent: #cfe85c;
-  --site-accent-strong: #e6ff73;
-  --site-accent-soft: rgba(207, 232, 92, 0.12);
-  --site-accent-soft-strong: rgba(207, 232, 92, 0.22);
-  --site-focus: rgba(207, 232, 92, 0.5);
-  --site-shadow: none;
-  --site-shadow-soft: none;
+  --site-bg: #f5f0df;
+  --site-bg-soft: #ead9ae;
+  --site-surface: #fbf6df;
+  --site-surface-strong: #f2e8c7;
+  --site-surface-alt: #ead9ae;
+  --site-text: #22140f;
+  --site-text-muted: #60433a;
+  --site-text-soft: #7e6255;
+  --site-border: #9c6246;
+  --site-border-strong: #4f241f;
+  --site-accent: #1f5b6d;
+  --site-accent-strong: #22140f;
+  --site-accent-soft: rgba(31, 91, 109, 0.12);
+  --site-accent-soft-strong: rgba(31, 91, 109, 0.22);
+  --site-focus: rgba(31, 91, 109, 0.45);
+  --site-shadow: 7px 7px 0 rgba(79, 36, 31, 0.24);
+  --site-shadow-soft: 5px 5px 0 rgba(79, 36, 31, 0.18);
   --theme: var(--site-bg);
   --entry: var(--site-surface);
   --primary: var(--site-text);
   --secondary: var(--site-text-muted);
-  --tertiary: #1e221c;
-  --content: #b8c77a;
-  --hljs-bg: #181b17;
-  --code-bg: #181b17;
+  --tertiary: #ead9ae;
+  --content: #60433a;
+  --hljs-bg: #f2e8c7;
+  --code-bg: #f2e8c7;
   --border: var(--site-border);
   --carolina_blue: var(--site-accent);
 }
 
 html {
-  background: #101110;
+  background: #f5f0df;
 }
 
 body,
@@ -1787,33 +1787,26 @@ body.dark,
 body.page,
 body.list,
 body.abalone-page {
-  background: #101110;
+  background:
+    radial-gradient(circle at 24% 20%, rgba(138, 38, 56, 0.08) 0 1px, transparent 1px),
+    radial-gradient(circle at 74% 42%, rgba(31, 91, 109, 0.08) 0 1px, transparent 1px),
+    linear-gradient(180deg, #f7f1dd 0%, #e8d8b3 100%);
+  background-size: 8px 8px, 12px 12px, auto;
   color: var(--site-text);
 }
 
 body::before,
 body.list::before {
-  background:
-    radial-gradient(circle at 10% 8%, rgba(148, 164, 91, 0.55) 0 2px, transparent 2.4px),
-    radial-gradient(circle at 15% 36%, rgba(148, 164, 91, 0.35) 0 1.4px, transparent 1.8px),
-    radial-gradient(circle at 88% 32%, rgba(148, 164, 91, 0.45) 0 1.8px, transparent 2.2px),
-    radial-gradient(circle at 74% 66%, rgba(148, 164, 91, 0.38) 0 1.5px, transparent 1.9px),
-    linear-gradient(32deg, transparent 0 18%, rgba(148, 164, 91, 0.12) 18.1% 18.35%, transparent 18.45% 100%),
-    linear-gradient(144deg, transparent 0 64%, rgba(148, 164, 91, 0.1) 64.1% 64.35%, transparent 64.45% 100%);
-  background-position: 0 0;
-  background-size: 260px 260px, 340px 340px, 320px 320px, 420px 420px, 380px 380px, 460px 460px;
-  display: block;
-  opacity: 0.42;
-  z-index: 0;
+  background: transparent;
 }
 
 .header {
-  background: #101110;
+  background: transparent;
 }
 
 @media screen and (max-width: 899px) {
   .header {
-    background: #101110;
+    background: transparent;
     border-bottom-color: var(--site-border);
   }
 }
@@ -1859,7 +1852,7 @@ a:hover,
 .terms-tags a:hover,
 .game-link:hover,
 .project-link-card:hover {
-  background: transparent;
+  background: rgba(31, 91, 109, 0.1);
   color: var(--site-accent-strong);
 }
 
@@ -1882,9 +1875,9 @@ select,
 textarea,
 .game-link,
 .hero-links a {
-  background: rgba(18, 20, 18, 0.9);
-  border-color: var(--site-border);
-  box-shadow: none;
+  background: var(--site-surface);
+  border-color: var(--site-border-strong);
+  box-shadow: var(--site-shadow-soft);
 }
 
 .post-entry:hover,
@@ -1897,9 +1890,9 @@ textarea:hover,
 .button:hover,
 .game-link:hover,
 .hero-links a:hover {
-  background: #151715;
+  background: var(--site-surface-strong);
   border-color: var(--site-border-strong);
-  box-shadow: none;
+  box-shadow: 3px 3px 0 rgba(79, 36, 31, 0.18);
 }
 
 .profile_inner h1,
@@ -1920,7 +1913,7 @@ textarea:hover,
 }
 
 .profile_inner::before {
-  color: #7f9149;
+  color: #2e6b52;
 }
 
 .profile img,
@@ -1928,8 +1921,8 @@ textarea:hover,
 .entry-cover img,
 .post-content img {
   background: var(--site-surface-strong);
-  border-color: var(--site-border);
-  filter: saturate(0.72) contrast(1.08) brightness(0.72);
+  border-color: var(--site-border-strong);
+  filter: saturate(0.84) contrast(1.03);
 }
 
 .post-content,
@@ -1941,9 +1934,10 @@ textarea:hover,
 }
 
 .post-content blockquote {
-  background: #151715;
-  border-color: var(--site-border);
-  border-inline-start-color: var(--site-accent);
+  background: linear-gradient(transparent 31px, rgba(31, 91, 109, 0.14) 32px), var(--site-surface);
+  background-size: 100% 32px;
+  border-color: var(--site-border-strong);
+  border-inline-start-color: #8a2638;
 }
 
 .footer {
@@ -1963,14 +1957,45 @@ textarea:hover,
 }
 
 ::-webkit-scrollbar-track {
-  background: #101110;
+  background: #f5f0df;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #5a6b35;
-  border-color: #101110;
+  background: #9c6246;
+  border-color: #f5f0df;
 }
 
 * {
-  scrollbar-color: #5a6b35 #101110;
+  scrollbar-color: #9c6246 #f5f0df;
+}
+
+@media screen and (max-width: 520px) {
+  :root,
+  .dark {
+    --mobile-content-width: calc(100vw - 48px);
+  }
+
+  .main,
+  .games-landing {
+    margin-left: 24px !important;
+    margin-right: 24px !important;
+    max-width: var(--mobile-content-width) !important;
+    padding-inline: 0 !important;
+    width: var(--mobile-content-width) !important;
+  }
+
+  .post-single,
+  .profile_inner,
+  .panel,
+  .game-card {
+    box-sizing: border-box !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .main .profile {
+    justify-content: flex-start !important;
+  }
 }
