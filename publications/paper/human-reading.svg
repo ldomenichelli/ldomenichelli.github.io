@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-labelledby="title desc">
+  <title id="title">Paper thumbnail placeholder</title>
+  <desc id="desc">Placeholder image for From Human Reading to NLM Understanding.</desc>
+  <rect width="640" height="480" fill="#121412"/>
+  <rect x="32" y="32" width="576" height="416" fill="#181b17" stroke="#52613b" stroke-width="3"/>
+  <ellipse cx="320" cy="190" rx="190" ry="86" fill="none" stroke="#cfe85c" stroke-width="9"/>
+  <circle cx="320" cy="190" r="42" fill="#d8e36a"/>
+  <circle cx="320" cy="190" r="18" fill="#101110"/>
+  <path d="M130 326 H510 M164 360 H476 M202 394 H438" stroke="#788654" stroke-width="10" stroke-linecap="round"/>
+  <g fill="#aebc72" font-family="Courier New, monospace" font-weight="700">
+    <text x="72" y="92" font-size="30">HUMAN READING</text>
+    <text x="72" y="128" font-size="22">eye-tracking + encoders</text>
+    <text x="72" y="430" font-size="20">paper thumbnail</text>
+  </g>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-labelledby="title desc">
+  <title id="title">Paper thumbnail placeholder</title>
+  <desc id="desc">Placeholder image for Linguistic Profiling of Transformer Embedding Geometry.</desc>
+  <rect width="640" height="480" fill="#121412"/>
+  <rect x="32" y="32" width="576" height="416" fill="#181b17" stroke="#52613b" stroke-width="3"/>
+  <path d="M84 352 C170 232 246 300 320 184 C392 72 460 148 556 94" fill="none" stroke="#cfe85c" stroke-width="9"/>
+  <circle cx="134" cy="310" r="20" fill="#d8e36a"/>
+  <circle cx="300" cy="210" r="20" fill="#d8e36a"/>
+  <circle cx="500" cy="126" r="20" fill="#d8e36a"/>
+  <g fill="#aebc72" font-family="Courier New, monospace" font-weight="700">
+    <text x="72" y="92" font-size="34">LINGUISTIC PROFILING</text>
+    <text x="72" y="136" font-size="24">embedding geometry</text>
+    <text x="72" y="414" font-size="20">paper thumbnail</text>
+  </g>
+</svg>

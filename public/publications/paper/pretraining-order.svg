@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-labelledby="title desc">
+  <title id="title">Paper thumbnail placeholder</title>
+  <desc id="desc">Placeholder image for pretraining data ordering paper.</desc>
+  <rect width="640" height="480" fill="#121412"/>
+  <rect x="32" y="32" width="576" height="416" fill="#181b17" stroke="#52613b" stroke-width="3"/>
+  <g fill="none" stroke="#cfe85c" stroke-width="5">
+    <path d="M96 140 H544"/>
+    <path d="M96 220 H544"/>
+    <path d="M96 300 H544"/>
+    <path d="M190 100 V340"/>
+    <path d="M320 100 V340"/>
+    <path d="M450 100 V340"/>
+  </g>
+  <g fill="#d8e36a">
+    <rect x="116" y="118" width="54" height="44"/>
+    <rect x="214" y="198" width="84" height="44"/>
+    <rect x="344" y="278" width="82" height="44"/>
+    <rect x="472" y="118" width="50" height="204"/>
+  </g>
+  <g fill="#aebc72" font-family="Courier New, monospace" font-weight="700">
+    <text x="72" y="396" font-size="26">PRETRAINING DATA ORDER</text>
+    <text x="72" y="426" font-size="20">paper thumbnail</text>
+  </g>
+</svg>
