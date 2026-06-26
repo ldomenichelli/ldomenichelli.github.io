@@ -1749,37 +1749,37 @@ body.list .footer {
 /* Dark terminal skin inspired by sparse personal research pages. */
 :root,
 .dark {
-  --site-bg: #000000;
-  --site-bg-soft: #050505;
-  --site-surface: #030303;
-  --site-surface-strong: #080808;
-  --site-surface-alt: #101010;
-  --site-text: #a8b300;
-  --site-text-muted: #a6a6a6;
-  --site-text-soft: #6f6f6f;
-  --site-border: #2a2a2a;
-  --site-border-strong: #737373;
-  --site-accent: #c4d000;
-  --site-accent-strong: #d8e300;
-  --site-accent-soft: rgba(196, 208, 0, 0.12);
-  --site-accent-soft-strong: rgba(196, 208, 0, 0.22);
-  --site-focus: rgba(196, 208, 0, 0.5);
+  --site-bg: #101110;
+  --site-bg-soft: #151715;
+  --site-surface: #121412;
+  --site-surface-strong: #181b17;
+  --site-surface-alt: #1e221c;
+  --site-text: #d8e36a;
+  --site-text-muted: #aebc72;
+  --site-text-soft: #788654;
+  --site-border: #27301f;
+  --site-border-strong: #52613b;
+  --site-accent: #cfe85c;
+  --site-accent-strong: #e6ff73;
+  --site-accent-soft: rgba(207, 232, 92, 0.12);
+  --site-accent-soft-strong: rgba(207, 232, 92, 0.22);
+  --site-focus: rgba(207, 232, 92, 0.5);
   --site-shadow: none;
   --site-shadow-soft: none;
   --theme: var(--site-bg);
   --entry: var(--site-surface);
   --primary: var(--site-text);
   --secondary: var(--site-text-muted);
-  --tertiary: #141414;
-  --content: #b0b0b0;
-  --hljs-bg: #080808;
-  --code-bg: #080808;
+  --tertiary: #1e221c;
+  --content: #b8c77a;
+  --hljs-bg: #181b17;
+  --code-bg: #181b17;
   --border: var(--site-border);
   --carolina_blue: var(--site-accent);
 }
 
 html {
-  background: #000000;
+  background: #101110;
 }
 
 body,
@@ -1787,19 +1787,19 @@ body.dark,
 body.page,
 body.list,
 body.abalone-page {
-  background: #000000;
+  background: #101110;
   color: var(--site-text);
 }
 
 body::before,
 body.list::before {
   background:
-    radial-gradient(circle at 10% 8%, rgba(154, 154, 154, 0.55) 0 2px, transparent 2.4px),
-    radial-gradient(circle at 15% 36%, rgba(154, 154, 154, 0.35) 0 1.4px, transparent 1.8px),
-    radial-gradient(circle at 88% 32%, rgba(154, 154, 154, 0.45) 0 1.8px, transparent 2.2px),
-    radial-gradient(circle at 74% 66%, rgba(154, 154, 154, 0.38) 0 1.5px, transparent 1.9px),
-    linear-gradient(32deg, transparent 0 18%, rgba(154, 154, 154, 0.12) 18.1% 18.35%, transparent 18.45% 100%),
-    linear-gradient(144deg, transparent 0 64%, rgba(154, 154, 154, 0.1) 64.1% 64.35%, transparent 64.45% 100%);
+    radial-gradient(circle at 10% 8%, rgba(148, 164, 91, 0.55) 0 2px, transparent 2.4px),
+    radial-gradient(circle at 15% 36%, rgba(148, 164, 91, 0.35) 0 1.4px, transparent 1.8px),
+    radial-gradient(circle at 88% 32%, rgba(148, 164, 91, 0.45) 0 1.8px, transparent 2.2px),
+    radial-gradient(circle at 74% 66%, rgba(148, 164, 91, 0.38) 0 1.5px, transparent 1.9px),
+    linear-gradient(32deg, transparent 0 18%, rgba(148, 164, 91, 0.12) 18.1% 18.35%, transparent 18.45% 100%),
+    linear-gradient(144deg, transparent 0 64%, rgba(148, 164, 91, 0.1) 64.1% 64.35%, transparent 64.45% 100%);
   background-position: 0 0;
   background-size: 260px 260px, 340px 340px, 320px 320px, 420px 420px, 380px 380px, 460px 460px;
   display: block;
@@ -1808,12 +1808,12 @@ body.list::before {
 }
 
 .header {
-  background: #000000;
+  background: #101110;
 }
 
 @media screen and (max-width: 899px) {
   .header {
-    background: #000000;
+    background: #101110;
     border-bottom-color: var(--site-border);
   }
 }
@@ -1882,7 +1882,7 @@ select,
 textarea,
 .game-link,
 .hero-links a {
-  background: rgba(3, 3, 3, 0.88);
+  background: rgba(18, 20, 18, 0.9);
   border-color: var(--site-border);
   box-shadow: none;
 }
@@ -1897,7 +1897,7 @@ textarea:hover,
 .button:hover,
 .game-link:hover,
 .hero-links a:hover {
-  background: #050505;
+  background: #151715;
   border-color: var(--site-border-strong);
   box-shadow: none;
 }
@@ -1920,7 +1920,7 @@ textarea:hover,
 }
 
 .profile_inner::before {
-  color: #6f7600;
+  color: #7f9149;
 }
 
 .profile img,
@@ -1941,7 +1941,7 @@ textarea:hover,
 }
 
 .post-content blockquote {
-  background: #050505;
+  background: #151715;
   border-color: var(--site-border);
   border-inline-start-color: var(--site-accent);
 }
@@ -1956,15 +1956,21 @@ textarea:hover,
   color: var(--site-text-muted);
 }
 
+.about-redesign .post-title,
+.about-redesign .about-copy h2,
+.about-redesign .about-section h3 {
+  text-transform: none;
+}
+
 ::-webkit-scrollbar-track {
-  background: #000000;
+  background: #101110;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #777777;
-  border-color: #000000;
+  background: #5a6b35;
+  border-color: #101110;
 }
 
 * {
-  scrollbar-color: #777777 #000000;
+  scrollbar-color: #5a6b35 #101110;
 }

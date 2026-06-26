@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
   <meta name="robots" content="index, follow">
-  <title>the chamber of music | lucia's room</title>
+  <title>Chamber of Music | lucia's room</title>
   <meta name="description" content="A chamber for Lucia's music notes and instruments.">
   <meta name="author" content="Lucia Domenichelli">
   <link rel="canonical" href="https://ldomenichelli.github.io/chamber-of-music/">
@@ -14,7 +14,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="https://ldomenichelli.github.io/favicon-16x16-dithered.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://ldomenichelli.github.io/favicon-32x32-dithered.png">
   <link rel="apple-touch-icon" href="https://ldomenichelli.github.io/apple-touch-icon-dithered.png">
-  <meta property="og:title" content="the chamber of music | lucia's room">
+  <meta property="og:title" content="Chamber of Music | lucia's room">
   <meta property="og:description" content="A chamber for Lucia's music notes and instruments.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ldomenichelli.github.io/chamber-of-music/">
@@ -22,25 +22,21 @@
   <meta property="og:site_name" content="lucia's room">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://ldomenichelli.github.io/chamber-of-music/img/doumbek-dithered.png">
-  <meta name="twitter:title" content="the chamber of music | lucia's room">
+  <meta name="twitter:title" content="Chamber of Music | lucia's room">
   <meta name="twitter:description" content="A chamber for Lucia's music notes and instruments.">
   <script src="/assets/js/analytics.js" async></script>
   <link rel="stylesheet" href="/assets/css/site-theme.css">
   <style>
     html {
-      background: #f7f5ed;
+      background: var(--site-bg);
     }
 
     body.chamber-page {
-      --chamber-ink: #15100d;
-      --chamber-paper: #fbfaf4;
-      --chamber-paper-soft: #eee8d9;
-      --chamber-green: #1b6f6a;
-      background:
-        radial-gradient(circle at 18% 24%, rgba(88, 51, 32, 0.08) 0 1px, transparent 1px),
-        radial-gradient(circle at 72% 38%, rgba(27, 111, 106, 0.08) 0 1px, transparent 1px),
-        linear-gradient(180deg, #f7f5ed 0%, #e8dfca 100%);
-      background-size: 7px 7px, 11px 11px, auto;
+      --chamber-ink: var(--site-text);
+      --chamber-paper: var(--site-surface);
+      --chamber-paper-soft: var(--site-surface-strong);
+      --chamber-green: var(--site-accent);
+      background: var(--site-bg);
       color: var(--chamber-ink);
     }
 
@@ -49,8 +45,8 @@
     }
 
     body.chamber-page .header {
-      background: transparent;
-      border: 0;
+      background: var(--site-bg);
+      border-bottom: 1px solid var(--site-border);
     }
 
     body.chamber-page .main,
@@ -59,9 +55,10 @@
     }
 
     body.chamber-page .post-single {
-      background: transparent;
-      border: 0;
-      padding: 0 0 2rem;
+      background: rgba(18, 20, 18, 0.9);
+      border: 1px solid var(--site-border);
+      box-shadow: none;
+      padding: 1rem 1rem 2rem;
     }
 
     body.chamber-page .post-single::before {
@@ -69,15 +66,16 @@
     }
 
     .chamber-intro {
-      margin: 0 auto 0.8rem;
+      border-bottom: 1px solid var(--site-border);
+      margin: 0 auto 1.2rem;
       max-width: 760px;
-      padding: 0.6rem 0.8rem;
-      text-align: right;
+      padding: 0 0 1rem;
+      text-align: left;
       text-wrap: balance;
     }
 
     .chamber-intro h1 {
-      color: var(--chamber-ink);
+      color: var(--site-accent-strong);
       font-size: clamp(1.55rem, 4vw, 2.1rem);
       line-height: 1.05;
       margin: 0 0 0.35rem;
@@ -85,7 +83,7 @@
     }
 
     .chamber-intro p {
-      color: #3a2b22;
+      color: var(--site-text-muted);
       margin: 0;
     }
 
@@ -129,7 +127,7 @@
     }
 
     .chamber-instrument {
-      filter: drop-shadow(18px 22px 9px rgba(16, 9, 47, 0.24));
+      filter: saturate(0.86) contrast(1.08) drop-shadow(14px 18px 10px rgba(207, 232, 92, 0.12));
       image-rendering: pixelated;
       max-height: clamp(240px, 45vw, 430px);
       object-fit: contain;
@@ -143,14 +141,15 @@
     }
 
     .chamber-instrument:hover {
-      filter: hue-rotate(190deg) saturate(0.58) contrast(1.05) drop-shadow(18px 22px 9px rgba(16, 9, 47, 0.24));
+      filter: saturate(0.92) contrast(1.12) drop-shadow(14px 18px 10px rgba(207, 232, 92, 0.18));
       transform: rotate(2deg) translateY(-2px);
     }
 
     .chamber-link-list {
       background: var(--chamber-paper-soft);
-      border: 1px dashed #19110d;
-      box-shadow: 4px 4px rgba(0, 0, 0, 0.2);
+      border: 1px dashed var(--site-border);
+      box-shadow: none;
+      color: var(--site-text-muted);
       margin: 1rem auto 0;
       max-width: min(520px, 100%);
       padding: 0.8rem 1rem;
@@ -168,13 +167,14 @@
     }
 
     .chamber-link-list a {
+      color: var(--site-accent);
       overflow-wrap: anywhere;
     }
 
     .chamber-empty-note {
       background: var(--chamber-paper-soft);
-      border: 1px dashed #19110d;
-      box-shadow: 4px 4px rgba(0, 0, 0, 0.2);
+      border: 1px dashed var(--site-border);
+      box-shadow: none;
       margin: 1.15rem auto 0;
       max-width: 640px;
       padding: 0.8rem;
@@ -182,7 +182,7 @@
     }
 
     .chamber-empty-note p {
-      color: #3a2b22;
+      color: var(--site-text-muted);
       font-size: 0.86rem;
       line-height: 1.6;
       margin: 0;
@@ -259,7 +259,7 @@
 <li><a href="https://ldomenichelli.github.io/about/" title="about"><span>about</span></a></li>
 <li><a href="https://ldomenichelli.github.io/posts/" title="notes"><span>notes</span></a></li>
 <li><a href="https://ldomenichelli.github.io/projects/" title="projects"><span>projects</span></a></li>
-<li><a href="https://ldomenichelli.github.io/random/" title="hobbies"><span>hobbies</span></a></li>
+<li><a href="https://ldomenichelli.github.io/random/" title="hobbies"><span class="active">hobbies</span></a></li>
 
 
 </ul>
@@ -268,7 +268,7 @@
 <main class="main">
   <article class="post-single">
     <header class="chamber-intro">
-      <h1>the chamber of music</h1>
+      <h1>Chamber of Music</h1>
 
 
     </header>
