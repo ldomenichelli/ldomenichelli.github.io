@@ -1,24 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-labelledby="title desc">
-  <title id="title">Paper thumbnail placeholder</title>
-  <desc id="desc">Placeholder image for pretraining data ordering paper.</desc>
-  <rect width="640" height="480" fill="#121412"/>
-  <rect x="32" y="32" width="576" height="416" fill="#181b17" stroke="#52613b" stroke-width="3"/>
-  <g fill="none" stroke="#cfe85c" stroke-width="5">
-    <path d="M96 140 H544"/>
-    <path d="M96 220 H544"/>
-    <path d="M96 300 H544"/>
-    <path d="M190 100 V340"/>
-    <path d="M320 100 V340"/>
-    <path d="M450 100 V340"/>
+  <title id="title">Paper thumbnail for pretraining data ordering</title>
+  <desc id="desc">First-page style thumbnail for the Knowledge-Based Systems paper.</desc>
+  <rect width="640" height="480" fill="#fbf6df"/>
+  <rect x="28" y="24" width="584" height="432" fill="#fffdf6" stroke="#4f241f" stroke-width="2"/>
+  <g font-family="Georgia, 'Times New Roman', serif" fill="#171717">
+    <rect x="46" y="42" width="548" height="76" fill="#e8e6df"/>
+    <text x="226" y="74" font-size="22">Knowledge-Based Systems</text>
+    <text x="226" y="100" font-size="12">journal homepage: www.elsevier.com/locate/knosys</text>
+    <text x="46" y="164" font-size="24">On the impact of pretraining data ordering</text>
+    <text x="46" y="194" font-size="24">in transformer encoder- and decoder-only</text>
+    <text x="46" y="224" font-size="24">language models</text>
+    <text x="46" y="266" font-size="16">Luca Dini, Lucia Domenichelli, Dominique Brunato</text>
+    <text x="46" y="288" font-size="16">and Felice Dell'Orletta</text>
   </g>
-  <g fill="#d8e36a">
-    <rect x="116" y="118" width="54" height="44"/>
-    <rect x="214" y="198" width="84" height="44"/>
-    <rect x="344" y="278" width="82" height="44"/>
-    <rect x="472" y="118" width="50" height="204"/>
-  </g>
-  <g fill="#aebc72" font-family="Courier New, monospace" font-weight="700">
-    <text x="72" y="396" font-size="26">PRETRAINING DATA ORDER</text>
-    <text x="72" y="426" font-size="20">paper thumbnail</text>
+  <line x1="46" y1="318" x2="594" y2="318" stroke="#171717" stroke-width="1"/>
+  <g font-family="Georgia, 'Times New Roman', serif" fill="#171717">
+    <text x="46" y="354" font-size="16" letter-spacing="8">ARTICLE INFO</text>
+    <text x="336" y="354" font-size="16" letter-spacing="8">ABSTRACT</text>
+    <text x="46" y="384" font-size="12" font-style="italic">Keywords:</text>
+    <text x="46" y="404" font-size="11">Curriculum learning</text>
+    <text x="46" y="420" font-size="11">Data ordering</text>
+    <text x="336" y="384" font-size="11">Pretraining large language models typically relies</text>
+    <text x="336" y="400" font-size="11">on randomly ordered corpora. Here, curriculum</text>
+    <text x="336" y="416" font-size="11">strategies are examined across transformer models.</text>
   </g>
 </svg>
