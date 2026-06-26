@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-labelledby="title desc">
+  <title id="title">Paper thumbnail placeholder</title>
+  <desc id="desc">Placeholder image for The Role of Eye-Tracking Data in Encoder-Based Models.</desc>
+  <rect width="640" height="480" fill="#121412"/>
+  <rect x="32" y="32" width="576" height="416" fill="#181b17" stroke="#52613b" stroke-width="3"/>
+  <g fill="none" stroke="#cfe85c" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M104 238 C164 150 264 116 322 198 C384 284 474 286 536 198" stroke-width="8"/>
+    <path d="M134 322 C214 372 418 372 502 314" stroke="#788654" stroke-width="7"/>
+    <path d="M152 116 H488" stroke="#788654" stroke-width="5"/>
+    <path d="M152 394 H488" stroke="#788654" stroke-width="5"/>
+  </g>
+  <circle cx="320" cy="238" r="66" fill="none" stroke="#d8e36a" stroke-width="9"/>
+  <circle cx="320" cy="238" r="24" fill="#d8e36a"/>
+  <g fill="#aebc72" font-family="Courier New, monospace" font-weight="700">
+    <text x="72" y="88" font-size="28">EYE-TRACKING DATA</text>
+    <text x="72" y="124" font-size="22">linguistic analysis</text>
+    <text x="72" y="430" font-size="20">paper thumbnail</text>
+  </g>
+</svg>
