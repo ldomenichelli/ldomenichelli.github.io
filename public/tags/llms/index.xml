@@ -12,13 +12,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language><atom:link href="https://ldomenichelli.github.io/tags/llms/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>ACL 2026 San Diego</title>
+      <link>https://ldomenichelli.github.io/posts/post10/</link>
+      <pubDate>Fri, 03 Jul 2026 00:00:00 +0200</pubDate>
+
+      <guid>https://ldomenichelli.github.io/posts/post10/</guid>
+      <description>Notes from ACL 2026 San Diego tutorials, starting with Towards Effective and Efficient Multi-Agent Language Model Systems: small language model agents, consensus, black-box and white-box collaboration, healthcare, and science applications.</description>
+    </item>
+
+    <item>
       <title>❄️ HPLT × NLPL Winter School</title>
       <link>https://ldomenichelli.github.io/posts/post5/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
+
       <guid>https://ldomenichelli.github.io/posts/post5/</guid>
       <description>Short notes and slide links from the Winter School in Skeikampen, Norway (Feb 10‑14, 2025).</description>
     </item>
-    
+
   </channel>
 </rss>

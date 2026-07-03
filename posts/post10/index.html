@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en" dir="auto">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+  <meta name="robots" content="index, follow">
+  <title>ACL 2026 San Diego: Tutorial Notes on Multi-Agent LLM Systems | lucia's room</title>
+  <meta
+    name="keywords"
+    content="ACL 2026 San Diego, ACL 2026 tutorial, multi-agent LLM systems, language model agents, small language models, agentic AI, AI co-scientist, biomedical agents, LLM agents"
+  >
+  <meta
+    name="description"
+    content="Notes from ACL 2026 San Diego tutorials, starting with Towards Effective and Efficient Multi-Agent Language Model Systems: small language model agents, black-box and white-box collaboration, healthcare, and science applications."
+  >
+  <meta name="author" content="Lucia">
+  <link
+    crossorigin="anonymous"
+    href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css"
+    integrity="sha256-WtmxyqkuTOqD680wiOlzYvI5sH2BREkKrwvB1r2JzRc="
+    rel="preload stylesheet"
+    as="style"
+  >
+  <link rel="canonical" href="https://ldomenichelli.github.io/posts/post10/">
+  <link rel="icon" href="https://ldomenichelli.github.io/favicon-dithered.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ldomenichelli.github.io/favicon-16x16-dithered.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ldomenichelli.github.io/favicon-32x32-dithered.png">
+  <link rel="apple-touch-icon" href="https://ldomenichelli.github.io/apple-touch-icon-dithered.png">
+  <link rel="mask-icon" href="https://ldomenichelli.github.io/safari-pinned-tab.svg">
+  <meta name="theme-color" content="#2e2e33">
+  <meta name="msapplication-TileColor" content="#2e2e33">
+  <link rel="alternate" hreflang="en" href="https://ldomenichelli.github.io/posts/post10/">
+  <noscript>
+    <style>
+      #theme-toggle,
+      .top-link {
+        display: none;
+      }
+    </style>
+  </noscript>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+    integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X"
+    crossorigin="anonymous"
+  >
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"
+    integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+    integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"
+    crossorigin="anonymous"
+    onload='renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:true},{left:"$",right:"$",display:false},{left:"\\(",right:"\\)",display:false},{left:"\\[",right:"\\]",display:true}]})'
+  ></script>
+  <meta property="og:title" content="ACL 2026 San Diego: Tutorial Notes on Multi-Agent LLM Systems">
+  <meta
+    property="og:description"
+    content="A summary of the ACL 2026 tutorial on effective and efficient multi-agent language model systems: SLM agents, consensus, industry, healthcare, and science."
+  >
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ldomenichelli.github.io/posts/post10/">
+  <meta property="og:image" content="https://ldomenichelli.github.io/logo-dithered.png">
+  <meta property="article:published_time" content="2026-07-03T00:00:00+02:00">
+  <meta property="article:modified_time" content="2026-07-03T00:00:00+02:00">
+  <meta property="article:section" content="posts">
+  <meta property="article:tag" content="ACL">
+  <meta property="article:tag" content="NLP">
+  <meta property="article:tag" content="LLMs">
+  <meta property="article:tag" content="multi-agent systems">
+  <meta property="og:site_name" content="lucia's room">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ldomenichelli.github.io/logo-dithered.png">
+  <meta name="twitter:title" content="ACL 2026 San Diego: Tutorial Notes on Multi-Agent LLM Systems">
+  <meta
+    name="twitter:description"
+    content="Notes from the ACL 2026 tutorial on effective and efficient multi-agent language model systems."
+  >
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "",
+          "item": "https://ldomenichelli.github.io/posts/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "ACL 2026 San Diego",
+          "item": "https://ldomenichelli.github.io/posts/post10/"
+        }
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "ACL 2026 San Diego",
+      "name": "ACL 2026 San Diego",
+      "description": "Notes from ACL 2026 San Diego tutorials, starting with Towards Effective and Efficient Multi-Agent Language Model Systems.",
+      "keywords": [
+        "ACL 2026",
+        "San Diego",
+        "multi-agent LLM systems",
+        "language model agents",
+        "small language models",
+        "AI co-scientist",
+        "biomedical agents"
+      ],
+      "articleBody": "This post summarizes the ACL 2026 tutorial Towards Effective and Efficient Multi-Agent Language Model Systems: Foundations, Prospects, and Applications. The tutorial covered small language model agents, efficient consensus, black-box and white-box collaboration, biomedical agents, AI co-scientists, and scientific discovery workflows. The main through-line is that agentic AI is moving from more agents to better controlled, more verifiable systems.",
+      "wordCount": "2500",
+      "inLanguage": "en",
+      "datePublished": "2026-07-03T00:00:00+02:00",
+      "dateModified": "2026-07-03T00:00:00+02:00",
+      "author": {
+        "@type": "Person",
+        "name": "Lucia"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ldomenichelli.github.io/posts/post10/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "lucia's room",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://ldomenichelli.github.io/favicon-dithered.ico"
+        }
+      }
+    }
+  </script>
+  <script src="/assets/js/analytics.js" async></script>
+  <link rel="stylesheet" href="/assets/css/site-theme.css">
+  <link rel="stylesheet" href="/assets/css/acl-2026.css">
+</head>
+<body class="dark acl26-page" id="top">
+  <header class="header">
+    <nav class="nav">
+      <div class="logo">
+        <a href="https://ldomenichelli.github.io/" accesskey="h" title="lucia's room (Alt + H)">
+          lucia's room
+        </a>
+        <div class="logo-switches">
+          <ul class="lang-switch">
+            <li>|</li>
+          </ul>
+        </div>
+      </div>
+      <button id="menu-trigger" aria-haspopup="menu" aria-label="Menu Button">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentcolor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-menu"
+        >
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+      <ul class="menu hidden">
+        <li><a href="https://ldomenichelli.github.io/about/" title="about"><span>about</span></a></li>
+        <li><a href="https://ldomenichelli.github.io/posts/" title="notes"><span>notes</span></a></li>
+        <li><a href="https://ldomenichelli.github.io/projects/" title="projects"><span>projects</span></a></li>
+        <li><a href="https://ldomenichelli.github.io/random/" title="hobbies"><span>hobbies</span></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main">
+    <article class="post-single">
+      <header class="post-header">
+        <div class="breadcrumbs">
+          <a href="https://ldomenichelli.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://ldomenichelli.github.io/posts/"></a>
+        </div>
+        <h1 class="post-title">ACL 2026 San Diego</h1>
+        <div class="post-description">Tutorial notes on multi-agent language model systems</div>
+        <div class="post-meta">Lucia · July 3, 2026 · ACL 2026 tutorials</div>
+      </header>
+
+      <div class="post-content">
+        <div class="acl26-wrap">
+          <section class="acl26-hero" aria-labelledby="acl26-title">
+            <div>
+              <p class="acl26-kicker">First page: tutorials</p>
+              <h2 class="acl26-display" id="acl26-title">Multi-agent LLM systems at ACL 2026</h2>
+              <p class="acl26-lede">
+                I am starting my ACL 2026 San Diego notes with tutorials, because tutorials are the best way to reconstruct
+                the intellectual map of a conference. The first one I attended was
+                <strong>Towards Effective and Efficient Multi-Agent Language Model Systems: Foundations, Prospects, and Applications</strong>.
+                The short version: the field is moving from "let several agents talk" toward systems that are smaller,
+                cheaper, controllable, domain-aware, and easier to evaluate.
+              </p>
+              <div class="acl26-source-list" aria-label="Sources">
+                <a class="acl26-pill" href="https://xuanwang91.github.io/2026-07-02-acl26-tutorial" target="_blank" rel="noopener">Tutorial page</a>
+                <a class="acl26-pill" href="#summary">Main summary</a>
+                <a class="acl26-pill" href="#search-terms">Terms to search</a>
+              </div>
+            </div>
+
+            <dl class="acl26-facts">
+              <div class="acl26-fact">
+                <dt>Tutorial</dt>
+                <dd>Towards Effective and Efficient Multi-Agent Language Model Systems</dd>
+              </div>
+              <div class="acl26-fact">
+                <dt>Speakers</dt>
+                <dd>Xuan Wang, Shuxiang Cao, Yuchen Zhuang, Wenqi Shi</dd>
+              </div>
+              <div class="acl26-fact">
+                <dt>Where</dt>
+                <dd>San Diego, Harbor G-I, Manchester Grand Hyatt area</dd>
+              </div>
+              <div class="acl26-fact">
+                <dt>Core question</dt>
+                <dd>How do we make agentic systems effective without making them too expensive, opaque, or fragile?</dd>
+              </div>
+            </dl>
+          </section>
+
+          <nav class="acl26-nav" aria-label="Tutorial sections">
+            <a href="#summary">Summary</a>
+            <a href="#small-models">Small agents</a>
+            <a href="#industry">Industry</a>
+            <a href="#healthcare">Healthcare</a>
+            <a href="#science">Science</a>
+            <a href="#takeaways">Takeaways</a>
+          </nav>
+
+          <section class="acl26-section" id="summary">
+            <h2>What the tutorial was really about</h2>
+            <p>
+              The tutorial framed multi-agent language model systems as a practical response to the limits of single,
+              giant models. A single frontier model can be powerful, but it is often expensive, closed, slow, hard to
+              personalize, and difficult to deploy near private or latency-sensitive data. A multi-agent system can split
+              work across specialized components: a planner, a tool user, a critic, a domain expert, a retriever, a guard,
+              or a small local model that handles a narrow part of the job.
+            </p>
+            <p>
+              But the tutorial also pushed against the lazy version of the idea. More agents do not automatically mean
+              better reasoning. They can amplify sycophancy, repeat mistakes, burn tokens, or converge on a bad consensus.
+              The recurring theme was control: choose the right model size, use tools deliberately, design communication
+              protocols, measure consensus, and build environments where agents receive real feedback instead of only
+              producing plausible text.
+            </p>
+
+            <div class="acl26-map" aria-label="Conceptual map of the tutorial">
+              <div class="acl26-node">
+                <span>Agent</span>
+                <p>A language or vision-language model with memory, tools, planning, and feedback.</p>
+              </div>
+              <div class="acl26-node">
+                <span>Team</span>
+                <p>Multiple agents coordinate, debate, route tasks, or specialize by role.</p>
+              </div>
+              <div class="acl26-node">
+                <span>Domain</span>
+                <p>Industry, healthcare, biomedicine, robotics, and science impose different constraints.</p>
+              </div>
+              <div class="acl26-node">
+                <span>Environment</span>
+                <p>Tools, simulators, execution, retrieval, experiments, and human feedback make progress verifiable.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="acl26-section" id="small-models">
+            <h2>Part I: small language model agents</h2>
+            <p>
+              Xuan Wang's section started from a very practical question: can small language models become competitive
+              agents? The answer was not a simple yes or no. Small models help with privacy, local deployment, latency,
+              network stability, and edge use cases, but their reasoning behavior is uneven. A model that looks strong on
+              one benchmark can still fail on algorithmic tasks such as sorting, planning, or compositional search.
+            </p>
+            <p>
+              <strong>BeyondBench</strong> was presented as a way to stress-test reasoning without relying only on fixed
+              benchmark items. The key idea is to generate reasoning problems with verifiable answers and adjustable
+              difficulty, so evaluation can ask how a model behaves as tasks become harder and token budgets become real
+              constraints. This matters for agents because an agent is not only answering a question; it is deciding what
+              to try, when to use a tool, and when to stop.
+            </p>
+            <p>
+              <strong>EffGen</strong> pushed this toward agent design. The system combines prompt compression, task
+              decomposition, complexity-based routing, and memory. The part I found most useful is the routing intuition:
+              do not send every subtask to the biggest model. If a small model can decide, retrieve, call a tool, or
+              solve a local step reliably, the whole system can become cheaper and more responsive.
+            </p>
+            <p>
+              The tutorial also covered self-improvement and tool-integrated reasoning, including <strong>Debate, Train,
+              Evolve</strong> and <strong>VISTA-GYM</strong>. The shared lesson is that agentic behavior needs training
+              situations that resemble agentic work: tool calls, intermediate failures, retries, and feedback loops.
+            </p>
+
+            <div class="acl26-note">
+              <p>
+                My takeaway: small models are not just budget versions of large models. They become interesting when they
+                are placed in the right role: local, private, fast, specialized, or used as controllers around stronger
+                black-box models.
+              </p>
+            </div>
+
+            <h3>Consensus is not the same as truth</h3>
+            <p>
+              The multi-agent communication part focused on consensus. In debate-style systems, agents may appear to
+              deliberate, but the group can still drift toward agreement for the wrong reasons. <strong>ConsensAgent</strong>
+              was presented as an attempt to make consensus faster and less sycophantic. This is important because a
+              multi-agent system should not be judged only by whether agents eventually agree. We also need process-level
+              diagnostics: who changed their mind, why, how much evidence was exchanged, and whether minority information
+              survived the discussion.
+            </p>
+            <p>
+              The real-world debate examples, such as city planning and political debate, made this concrete. These tasks
+              have ambiguous goals, incomplete information, conflicting stakeholders, and resource limits. That is exactly
+              where naive "agent debate" becomes fragile.
+            </p>
+          </section>
+
+          <section class="acl26-section" id="industry">
+            <h2>Part II: agents in industry</h2>
+            <p>
+              Yuchen Zhuang's section centered on collaborative intelligence: how to bridge black-box frontier models and
+              white-box smaller models. The black-box models have the strongest general capabilities, but they are closed,
+              expensive, and hard to adapt directly. The smaller white-box models are trainable and controllable, but
+              usually weaker as generators. The tutorial's strategy was to combine them rather than treat them as rivals.
+            </p>
+            <p>
+              The pattern appeared in several forms. <strong>BBox-Adapter</strong> adapts outputs by scoring and steering
+              generations from a black-box model. <strong>Hydra</strong> adapts inputs by selecting user-specific context
+              more intelligently than simple retrieval. <strong>Matryoshka Pilot</strong> treats the black-box generator as
+              an environment and trains a controller to guide it across multiple steps.
+            </p>
+            <p>
+              This is a useful industrial framing: when you cannot fine-tune the giant model, you can still control
+              inputs, rerank outputs, add guard models, steer prompts, or train a separate controller. The tutorial also
+              connected this to retrieval-augmented generation and autonomous ML engineering, where the challenge is not
+              just writing code, but generating tasks, refining failed solutions, and coordinating hierarchical agents.
+            </p>
+
+            <div class="acl26-grid">
+              <div class="acl26-card">
+                <h3>Input control</h3>
+                <p>Choose context, enrich prompts, personalize retrieved evidence, and avoid assuming nearest neighbors are always useful.</p>
+              </div>
+              <div class="acl26-card">
+                <h3>Output control</h3>
+                <p>Score, rerank, adapt, guard, and revise generations while keeping the frontier model frozen.</p>
+              </div>
+              <div class="acl26-card">
+                <h3>Process control</h3>
+                <p>Train controllers that guide multi-step behavior instead of hoping a single prompt can carry the whole plan.</p>
+              </div>
+              <div class="acl26-card">
+                <h3>Cost control</h3>
+                <p>Route easy or private steps to smaller models and reserve expensive calls for the parts that need them.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="acl26-section" id="healthcare">
+            <h2>Part III: agents in healthcare and biomedicine</h2>
+            <p>
+              Wenqi Shi's section made the agent architecture more concrete. An LLM-powered agent has a "brain" for
+              reasoning and planning, but it also needs memory, tools, actions, and environmental feedback. In biomedicine,
+              that distinction is not cosmetic. The agent must retrieve domain knowledge, call specialized tools, write
+              code, inspect errors, and interact with data that may be private, heterogeneous, and noisy.
+            </p>
+            <p>
+              The examples ranged from general biomedical agents such as <strong>Biomni</strong> and Google's AI
+              co-scientist to chemistry and EHR workflows. <strong>ChemCrow</strong> showed how an LLM can use chemistry
+              tools through an iterative ReAct-like loop. <strong>EHRAgent</strong> focused on complex tabular reasoning
+              over electronic health records, where natural language questions require code generation, execution
+              feedback, debugging, and long-term memory over past successful cases.
+            </p>
+            <p>
+              The most memorable biomedical story was the virtual lab: a team of agents organized scientific meetings,
+              proposed a workflow, used tools such as ESM, AlphaFold-Multimer, and Rosetta, and designed candidate
+              nanobodies for SARS-CoV-2 variants. The important point was not "the AI replaces the scientist"; it was that
+              agents can organize repeated, tool-heavy scientific work while humans still shape goals and evaluate what
+              matters.
+            </p>
+            <p>
+              The section ended with the training problem. Static biomedical benchmarks are not enough for agentic
+              research. Agents need environments with data, tools, verifiable signals, feedback, and trajectories.
+              <strong>MedAgentGym</strong> was presented in this direction: an environment for code-centric biomedical
+              reasoning where reinforcement learning can improve generalization across tasks. <strong>LabOS</strong> points
+              toward a future where the AI co-scientist does not only read and write, but also sees and works with humans.
+            </p>
+          </section>
+
+          <section class="acl26-section" id="science">
+            <h2>Part IV: agents in science</h2>
+            <p>
+              The science part broadened the same pattern: plan, act, observe, revise. In scientific discovery, an agent
+              must decide which experiment to run, allocate a limited budget, stop when evidence is sufficient, and recover
+              from errors. That makes the environment central. Without an environment, the agent can only narrate a plan;
+              with an environment, it can test, fail, repair, and learn.
+            </p>
+            <p>
+              The tutorial discussed recurring search patterns: single-loop agents, tree search, population search,
+              tournaments, debate protocols, and human- or trace-constrained workflows. This connected naturally to
+              examples such as AI co-scientist systems, molecular optimization, autonomous labs, quantum-computing
+              evaluation, and scientific agent gyms.
+            </p>
+            <p>
+              My strongest note from this section was that <strong>error recovery is the bottleneck</strong>. It is easy to
+              make an agent produce a plausible next step. It is harder to make it notice that the step failed for the
+              right reason, choose a better repair, and avoid looping forever. For science, that is where the difference
+              between demo and tool begins.
+            </p>
+          </section>
+
+          <section class="acl26-section" id="takeaways">
+            <h2>What I am taking away</h2>
+            <ul>
+              <li><strong>Agentic AI is becoming systems engineering.</strong> The interesting work is in routing, memory, tool interfaces, controllers, evaluation, and environments.</li>
+              <li><strong>Small models matter.</strong> Not because they magically reason like frontier models, but because they can make agentic systems private, local, fast, and cheaper.</li>
+              <li><strong>Consensus can be dangerous.</strong> Multi-agent agreement needs diagnostics, otherwise sycophancy can look like collaboration.</li>
+              <li><strong>Domains change the architecture.</strong> Healthcare, science, robotics, and industry need different tools, constraints, and feedback signals.</li>
+              <li><strong>Long reasoning traces are not enough.</strong> Robustness to perturbations, non-English reasoning, high-stakes use, and real execution feedback remain open problems.</li>
+            </ul>
+          </section>
+
+          <section class="acl26-section" id="search-terms">
+            <h2>Terms worth searching after this tutorial</h2>
+            <ul class="acl26-terms">
+              <li>BeyondBench</li>
+              <li>EffGen</li>
+              <li>VISTA-GYM</li>
+              <li>ConsensAgent</li>
+              <li>BBox-Adapter</li>
+              <li>Hydra personalization</li>
+              <li>Matryoshka Pilot</li>
+              <li>Collab-RAG</li>
+              <li>AceSearcher</li>
+              <li>Biomni</li>
+              <li>Google AI co-scientist</li>
+              <li>ChemCrow</li>
+              <li>EHRAgent</li>
+              <li>MedAgentGym</li>
+              <li>LabOS</li>
+            </ul>
+          </section>
+
+          <section class="acl26-section">
+            <h2>Open questions</h2>
+            <p>
+              After this tutorial, I would not ask only "how many agents should we use?" I would ask: what should each
+              agent know, what should it be allowed to do, what evidence can change its mind, what failures can it detect,
+              and which parts of the system can be verified outside language itself?
+            </p>
+            <p>
+              That is also why I think multi-agent LLM systems are worth following closely. They are not just a new prompt
+              pattern. They are a way of turning language models into pieces of larger computational systems, where the
+              hard work is coordination, grounding, and feedback.
+            </p>
+          </section>
+
+          <section class="acl26-section">
+            <h2>Sources</h2>
+            <ol class="acl26-sources">
+              <li>
+                Xuan Wang et al.,
+                <a href="https://xuanwang91.github.io/2026-07-02-acl26-tutorial" target="_blank" rel="noopener">
+                  ACL 2026 Tutorial: Towards Effective and Efficient Multi-Agent Language Model Systems
+                </a>.
+              </li>
+              <li>My notes from the tutorial and the combined tutorial slide deck.</li>
+            </ol>
+          </section>
+        </div>
+      </div>
+
+      <footer class="post-footer">
+        <ul class="post-tags">
+          <li><a href="https://ldomenichelli.github.io/tags/acl/">ACL</a></li>
+          <li><a href="https://ldomenichelli.github.io/tags/nlp/">NLP</a></li>
+          <li><a href="https://ldomenichelli.github.io/tags/llms/">LLMs</a></li>
+        </ul>
+      </footer>
+    </article>
+  </main>
+
+  <footer class="footer" style="padding-top:18px;padding-bottom:18px">
+    <div class="social-icons" style="padding-bottom:0">
+      <a style="border-bottom:none" href="https://x.com/workerplacemint" rel="me" title="Twitter">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 3a10.9 10.9.0 01-3.14 1.53 4.48 4.48.0 00-7.86 3v1A10.66 10.66.0 013 4s-4 9 5 13a11.64 11.64.0 01-7 2c9 5 20 0 20-11.5a4.5 4.5.0 00-.08-.83A7.72 7.72.0 0023 3z"></path>
+        </svg>
+      </a>
+      <a style="border-bottom:none" href="https://github.com/ldomenichelli" rel="me" title="Github">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"></path>
+        </svg>
+      </a>
+      <a style="border-bottom:none" href="mailto:ldomenichelli2@gmail.com" rel="me" title="Email">
+        <svg viewBox="0 0 24 21" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1.0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1.0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+          <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+      </a>
+    </div>
+    <span>&copy; 2025 <a href="https://ldomenichelli.github.io/">lucia's room</a></span>
+    <span> &bull; Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/adityatelange/hugo-PaperMod/">PaperMod</a></span>
+    <span> &bull; <a href="/privacy">Privacy Policy</a></span>
+  </footer>
+  <a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"></path></svg>
+  </a>
+  <script>
+    let b = document.querySelector("#menu-trigger"),
+      m = document.querySelector(".menu");
+    b.addEventListener("click", function () {
+      m.classList.toggle("hidden");
+    });
+    document.body.addEventListener("click", function (e) {
+      b.contains(e.target) || m.classList.add("hidden");
+    });
+  </script>
+  <script>
+    let menu = document.getElementById("menu");
+    menu && (menu.scrollLeft = localStorage.getItem("menu-scroll-position"), menu.onscroll = function () {
+      localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+    });
+    document.querySelectorAll('a[href^="#"]').forEach((e) => {
+      e.addEventListener("click", function (e) {
+        e.preventDefault();
+        var t = this.getAttribute("href").substr(1);
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView()
+          : document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({ behavior: "smooth" });
+        t === "top" ? history.replaceState(null, null, " ") : history.pushState(null, null, `#${t}`);
+      });
+    });
+  </script>
+  <script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+      document.body.scrollTop > 800 || document.documentElement.scrollTop > 800
+        ? ((mybutton.style.visibility = "visible"), (mybutton.style.opacity = "1"))
+        : ((mybutton.style.visibility = "hidden"), (mybutton.style.opacity = "0"));
+    };
+  </script>
+  <script src="/assets/js/pocket-bird.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,360 @@
+.acl26-page .post-content {
+  max-width: 980px;
+}
+
+.acl26-page .post-title {
+  letter-spacing: 0;
+}
+
+.acl26-page .post-description {
+  color: var(--secondary);
+  opacity: 1;
+}
+
+.acl26-page .main,
+.acl26-page .post-single,
+.acl26-page .post-content,
+.acl26-wrap {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.acl26-wrap {
+  color: var(--content);
+}
+
+.acl26-hero {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.65fr);
+  gap: 28px;
+  align-items: start;
+  margin: 8px 0 36px;
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(43, 184, 170, 0.13), transparent 42%),
+    linear-gradient(315deg, rgba(255, 183, 77, 0.11), transparent 46%),
+    rgba(255, 255, 255, 0.025);
+  max-width: 100%;
+  min-width: 0;
+}
+
+.acl26-hero > *,
+.acl26-facts,
+.acl26-fact,
+.acl26-card,
+.acl26-node {
+  min-width: 0;
+}
+
+.acl26-kicker {
+  margin: 0 0 10px;
+  color: #7fd8d0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.acl26-display {
+  margin: 0;
+  color: #f8fafc;
+  font-size: clamp(2.1rem, 5vw, 4.4rem);
+  line-height: 0.98;
+  letter-spacing: 0;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.acl26-lede {
+  max-width: 68ch;
+  margin: 18px 0 0;
+  color: #d7dee8;
+  font-size: 1.02rem;
+  line-height: 1.75;
+  overflow-wrap: break-word;
+  white-space: normal;
+  word-break: normal;
+}
+
+.acl26-source-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.acl26-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 7px 12px;
+  border: 1px solid rgba(127, 216, 208, 0.35);
+  border-radius: 999px;
+  color: #e8fbf8;
+  background: rgba(127, 216, 208, 0.08);
+  font-size: 0.86rem;
+  text-decoration: none;
+}
+
+.acl26-pill:hover {
+  border-color: rgba(255, 183, 77, 0.75);
+  color: #fff4d8;
+}
+
+.acl26-facts {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.acl26-fact {
+  padding: 14px 15px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background: rgba(8, 13, 22, 0.52);
+}
+
+.acl26-fact dt {
+  margin: 0 0 5px;
+  color: #ffbf75;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  overflow-wrap: normal;
+  text-transform: uppercase;
+  white-space: normal;
+  word-break: normal;
+}
+
+.acl26-fact dd {
+  margin: 0;
+  color: #eef2f6;
+  line-height: 1.5;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.acl26-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 34px;
+}
+
+.acl26-nav a {
+  padding: 8px 11px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  color: #dce4ee;
+  background: rgba(255, 255, 255, 0.035);
+  font-size: 0.86rem;
+  text-decoration: none;
+}
+
+.acl26-nav a:hover {
+  border-color: rgba(255, 122, 122, 0.75);
+  color: #ffe5e5;
+}
+
+.acl26-section {
+  margin: 38px 0;
+}
+
+.acl26-section h2,
+.acl26-section h3 {
+  color: #f8fafc;
+  letter-spacing: 0;
+}
+
+.acl26-section h2 {
+  margin-top: 0;
+  font-size: 1.7rem;
+}
+
+.acl26-section h3 {
+  margin-top: 28px;
+  font-size: 1.18rem;
+}
+
+.acl26-section p,
+.acl26-section li {
+  color: #d9e2ec;
+  line-height: 1.75;
+}
+
+.acl26-section strong {
+  color: #ffffff;
+}
+
+.acl26-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 20px 0;
+}
+
+.acl26-card,
+.acl26-note,
+.acl26-map {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.acl26-card {
+  padding: 16px;
+}
+
+.acl26-card h3 {
+  margin: 0 0 8px;
+  color: #91e4dc;
+  font-size: 1rem;
+}
+
+.acl26-card p {
+  margin: 0;
+  font-size: 0.94rem;
+}
+
+.acl26-note {
+  margin: 24px 0;
+  padding: 18px 20px;
+  border-left: 4px solid #ff7a7a;
+}
+
+.acl26-note p {
+  margin: 0;
+}
+
+.acl26-map {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 22px 0 8px;
+  padding: 14px;
+}
+
+.acl26-node {
+  min-height: 118px;
+  padding: 14px;
+  border-radius: 8px;
+  background: rgba(8, 13, 22, 0.62);
+}
+
+.acl26-node span {
+  display: block;
+  margin-bottom: 9px;
+  color: #ffbf75;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.acl26-node p {
+  margin: 0;
+  color: #e8edf3;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.acl26-terms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  list-style: none;
+}
+
+.acl26-terms li {
+  padding: 7px 10px;
+  border: 1px solid rgba(145, 228, 220, 0.28);
+  border-radius: 999px;
+  background: rgba(145, 228, 220, 0.07);
+  color: #f2f7fb;
+  font-size: 0.88rem;
+}
+
+.acl26-sources {
+  padding-left: 18px;
+}
+
+.acl26-sources a {
+  word-break: break-word;
+}
+
+@media (max-width: 860px) {
+  .acl26-hero,
+  .acl26-grid,
+  .acl26-map {
+    grid-template-columns: 1fr;
+  }
+
+  .acl26-hero {
+    padding: 22px;
+  }
+
+  .acl26-node {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .acl26-page .main {
+    max-width: calc(100vw - 32px);
+    width: calc(100vw - 32px);
+  }
+
+  .acl26-page .post-single {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .acl26-page .post-description,
+  .acl26-page .post-meta {
+    max-width: 292px;
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+
+  .acl26-hero {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    max-width: 312px;
+    padding: 18px;
+    width: 100%;
+  }
+
+  .acl26-hero > div,
+  .acl26-facts {
+    max-width: 276px;
+    width: 100%;
+  }
+
+  .acl26-display {
+    font-size: 1.45rem;
+    line-height: 1.25;
+    white-space: normal !important;
+  }
+
+  .acl26-hero h2,
+  .acl26-hero p,
+  .acl26-hero strong,
+  .acl26-fact dd {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    white-space: normal !important;
+    word-break: normal;
+  }
+
+  .acl26-nav a,
+  .acl26-pill {
+    width: 100%;
+    justify-content: center;
+  }
+}
