@@ -32,12 +32,12 @@
   align-items: start;
   margin: 8px 0 36px;
   padding: 28px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(71, 45, 31, 0.16);
   border-radius: 8px;
   background:
     linear-gradient(135deg, rgba(43, 184, 170, 0.13), transparent 42%),
     linear-gradient(315deg, rgba(255, 183, 77, 0.11), transparent 46%),
-    rgba(255, 255, 255, 0.025);
+    rgba(255, 252, 229, 0.72);
   max-width: 100%;
   min-width: 0;
 }
@@ -52,7 +52,7 @@
 
 .acl26-kicker {
   margin: 0 0 10px;
-  color: #7fd8d0;
+  color: #5d3827;
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -61,7 +61,7 @@
 
 .acl26-display {
   margin: 0;
-  color: #f8fafc;
+  color: #17110d;
   font-size: clamp(2.1rem, 5vw, 4.4rem);
   line-height: 0.98;
   letter-spacing: 0;
@@ -72,7 +72,7 @@
 .acl26-lede {
   max-width: 68ch;
   margin: 18px 0 0;
-  color: #d7dee8;
+  color: #60483a;
   font-size: 1.02rem;
   line-height: 1.75;
   overflow-wrap: break-word;
@@ -92,17 +92,17 @@
   align-items: center;
   min-height: 34px;
   padding: 7px 12px;
-  border: 1px solid rgba(127, 216, 208, 0.35);
+  border: 1px solid rgba(18, 103, 99, 0.55);
   border-radius: 999px;
-  color: #e8fbf8;
-  background: rgba(127, 216, 208, 0.08);
+  color: #115f5d;
+  background: rgba(18, 103, 99, 0.08);
   font-size: 0.86rem;
   text-decoration: none;
 }
 
 .acl26-pill:hover {
-  border-color: rgba(255, 183, 77, 0.75);
-  color: #fff4d8;
+  border-color: rgba(137, 71, 42, 0.75);
+  color: #7a3d24;
 }
 
 .acl26-facts {
@@ -147,17 +147,17 @@
 
 .acl26-nav a {
   padding: 8px 11px;
-  border: 1px solid rgba(255, 255, 255, 0.13);
+  border: 1px solid rgba(71, 45, 31, 0.22);
   border-radius: 999px;
-  color: #dce4ee;
-  background: rgba(255, 255, 255, 0.035);
+  color: #5b4538;
+  background: rgba(71, 45, 31, 0.04);
   font-size: 0.86rem;
   text-decoration: none;
 }
 
 .acl26-nav a:hover {
-  border-color: rgba(255, 122, 122, 0.75);
-  color: #ffe5e5;
+  border-color: rgba(18, 103, 99, 0.7);
+  color: #115f5d;
 }
 
 .acl26-section {
@@ -166,7 +166,7 @@
 
 .acl26-section h2,
 .acl26-section h3 {
-  color: #f8fafc;
+  color: #17110d;
   letter-spacing: 0;
 }
 
@@ -182,12 +182,12 @@
 
 .acl26-section p,
 .acl26-section li {
-  color: #d9e2ec;
+  color: #60483a;
   line-height: 1.75;
 }
 
 .acl26-section strong {
-  color: #ffffff;
+  color: #19120e;
 }
 
 .acl26-grid {
@@ -200,9 +200,9 @@
 .acl26-card,
 .acl26-note,
 .acl26-map {
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(71, 45, 31, 0.18);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.035);
+  background: rgba(255, 252, 229, 0.58);
 }
 
 .acl26-card {
@@ -211,7 +211,7 @@
 
 .acl26-card h3 {
   margin: 0 0 8px;
-  color: #91e4dc;
+  color: #115f5d;
   font-size: 1rem;
 }
 
@@ -272,10 +272,10 @@
 
 .acl26-terms li {
   padding: 7px 10px;
-  border: 1px solid rgba(145, 228, 220, 0.28);
+  border: 1px solid rgba(18, 103, 99, 0.3);
   border-radius: 999px;
-  background: rgba(145, 228, 220, 0.07);
-  color: #f2f7fb;
+  background: rgba(18, 103, 99, 0.07);
+  color: #3e3028;
   font-size: 0.88rem;
 }
 
@@ -325,14 +325,14 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: 0;
-    max-width: 312px;
+    max-width: 270px;
     padding: 18px;
     width: 100%;
   }
 
   .acl26-hero > div,
   .acl26-facts {
-    max-width: 276px;
+    max-width: 234px;
     width: 100%;
   }
 
