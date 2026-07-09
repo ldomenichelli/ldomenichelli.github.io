@@ -12,12 +12,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language><atom:link href="https://ldomenichelli.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>ACL 2026 San Diego</title>
+      <title>ACL San Diego 2026</title>
       <link>https://ldomenichelli.github.io/posts/post10/</link>
       <pubDate>Fri, 03 Jul 2026 00:00:00 +0200</pubDate>
 
       <guid>https://ldomenichelli.github.io/posts/post10/</guid>
-      <description>Notes from ACL 2026 San Diego tutorials, starting with Towards Effective and Efficient Multi-Agent Language Model Systems: small language model agents, consensus, black-box and white-box collaboration, healthcare, and science applications.</description>
+      <description>Here are the notes from the ACL 2026 tutorial I attended in San Diego: multi-agent LLM systems, small agents, consensus, black-box and white-box collaboration, healthcare, and science.</description>
     </item>
 
     <item>
