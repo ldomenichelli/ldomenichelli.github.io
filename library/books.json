@@ -1,5 +1,5 @@
 {
-  "updated": "jun 2026",
+  "updated": "aug 2026",
   "books": [
     {
       "title": "Tokyo Express",
@@ -102,7 +102,7 @@
       "shortTitle": "May",
       "readMonth": "may",
       "author": "Hermann Hesse",
-      "status": "reading/on hold",
+      "status": "read",
       "genre": "philosophical novel",
       "note": "I'm obsessed with Hesse but the themes are very similar to Demian, so I put it on hold.",
       "cover": "img/gertrud.jpg",
@@ -126,7 +126,7 @@
       "shortTitle": "June",
       "readMonth": "june",
       "author": "Alcide Pierantozzi",
-      "status": "reading",
+      "status": "read",
       "genre": "literary fiction",
       "note": "Italian contemporary fiction about mental illness.",
       "cover": "img/lo_sbilico.jpg",
@@ -144,6 +144,30 @@
       "cover": "img/convitati_di_pietra.jpg",
       "color": "#5b5b5b",
       "accent": "#d9d5cf"
+    },
+    {
+      "title": "Le due chiese",
+      "shortTitle": "August",
+      "readMonth": "august",
+      "author": "Sebastiano Vassalli",
+      "status": "reading",
+      "genre": "historical fiction",
+      "note": "A choral story of an Italian mountain village across the twentieth century.",
+      "cover": "img/le_due_chiese.jpg",
+      "color": "#7185a0",
+      "accent": "#f4d1c8"
+    },
+    {
+      "title": "Butter",
+      "shortTitle": "August",
+      "readMonth": "august",
+      "author": "Asako Yuzuki",
+      "status": "reading",
+      "genre": "literary fiction / crime",
+      "note": "A Japanese novel about food, obsession, and misogyny.",
+      "cover": "img/butter.jpg",
+      "color": "#f6dc35",
+      "accent": "#312317"
     }
   ]
 }
