@@ -1728,7 +1728,7 @@ body.list .profile_inner::before {
 }
 
 body.list {
-  background: linear-gradient(180deg, #f7f1dd 0%, #e8d8b3 100%);
+  background: linear-gradient(180deg, #edf1e8 0%, #d5dfd0 100%);
 }
 
 body.list::before {
@@ -1749,7 +1749,7 @@ body.list .footer {
 /* Light handmade skin. */
 :root,
 .dark {
-  --site-bg: #f5f0df;
+  --site-bg: #dfe6d8;
   --site-bg-soft: #ead9ae;
   --site-surface: #fbf6df;
   --site-surface-strong: #f2e8c7;
@@ -1779,7 +1779,7 @@ body.list .footer {
 }
 
 html {
-  background: #f5f0df;
+  background: #dfe6d8;
 }
 
 body,
@@ -1790,7 +1790,7 @@ body.abalone-page {
   background:
     radial-gradient(circle at 24% 20%, rgba(138, 38, 56, 0.08) 0 1px, transparent 1px),
     radial-gradient(circle at 74% 42%, rgba(31, 91, 109, 0.08) 0 1px, transparent 1px),
-    linear-gradient(180deg, #f7f1dd 0%, #e8d8b3 100%);
+    linear-gradient(180deg, #edf1e8 0%, #d5dfd0 100%);
   background-size: 8px 8px, 12px 12px, auto;
   color: var(--site-text);
 }
@@ -1957,16 +1957,16 @@ textarea:hover,
 }
 
 ::-webkit-scrollbar-track {
-  background: #f5f0df;
+  background: #dfe6d8;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #9c6246;
-  border-color: #f5f0df;
+  border-color: #dfe6d8;
 }
 
 * {
-  scrollbar-color: #9c6246 #f5f0df;
+  scrollbar-color: #9c6246 #dfe6d8;
 }
 
 @media screen and (max-width: 520px) {
