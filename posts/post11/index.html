@@ -349,9 +349,6 @@
     <span> &bull; <a href="/privacy">Privacy Policy</a></span>
   </footer>
 
-  <a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
-    <svg viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"></path></svg>
-  </a>
   <script>
     const menuButton = document.querySelector("#menu-trigger");
     const menu = document.querySelector(".menu");
@@ -366,14 +363,6 @@
         menu.classList.add("hidden");
         menuButton.setAttribute("aria-expanded", "false");
       }
-    });
-  </script>
-  <script>
-    const topLink = document.getElementById("top-link");
-    window.addEventListener("scroll", function () {
-      const isVisible = document.body.scrollTop > 800 || document.documentElement.scrollTop > 800;
-      topLink.style.visibility = isVisible ? "visible" : "hidden";
-      topLink.style.opacity = isVisible ? "1" : "0";
     });
   </script>
   <script src="/assets/js/pocket-bird.js" defer></script>

@@ -19,8 +19,7 @@ body.ac-school-page {
 
 .ac-school-page .header,
 .ac-school-page .main,
-.ac-school-page .footer,
-.ac-school-page .top-link {
+.ac-school-page .footer {
   position: relative;
   z-index: 2;
 }
