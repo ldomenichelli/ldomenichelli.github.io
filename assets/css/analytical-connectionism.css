@@ -1,0 +1,521 @@
+/* School on Analytical Connectionism 2026.
+   The three background sheets are first-page vector exports of Lucia's
+   handwritten notebooks. They are decorative; the readable titles and links
+   stay in the document flow below. */
+
+body.ac-school-page {
+  --ac-ink: #241711;
+  --ac-copy: #5e4438;
+  --ac-paper: #fbf6df;
+  --ac-paper-glass: rgba(251, 246, 223, 0.88);
+  --ac-rule: rgba(79, 36, 31, 0.42);
+  --ac-red: #8a2638;
+  --ac-blue: #1f5b6d;
+  --ac-green: #2e6b52;
+  isolation: isolate;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.ac-school-page .header,
+.ac-school-page .main,
+.ac-school-page .footer,
+.ac-school-page .top-link {
+  position: relative;
+  z-index: 2;
+}
+
+.ac-school-page .main {
+  max-width: calc(1120px + var(--gap) * 2);
+}
+
+.ac-school-page .post-single {
+  backdrop-filter: blur(3px);
+  background: var(--ac-paper-glass);
+  border-color: var(--site-border-strong);
+  box-shadow: 10px 10px 0 rgba(79, 36, 31, 0.2);
+  overflow: hidden;
+  padding: clamp(1.2rem, 3vw, 2.4rem);
+  position: relative;
+}
+
+.ac-school-page .post-single::after {
+  background:
+    linear-gradient(rgba(31, 91, 109, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(31, 91, 109, 0.07) 1px, transparent 1px);
+  background-size: 28px 28px;
+  content: "";
+  inset: 0;
+  mask-image: linear-gradient(to bottom, black, transparent 34%);
+  opacity: 0.42;
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+}
+
+/* The SVGs retain their white PDF paper. Multiply blending makes the paper
+   disappear into the site background while leaving the handwriting visible. */
+.ac-notes-background {
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  user-select: none;
+  z-index: 0;
+}
+
+.ac-background-sheet {
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: sepia(0.18) saturate(0.72) contrast(1.06);
+  mix-blend-mode: multiply;
+  opacity: 0.17;
+  position: absolute;
+  will-change: transform;
+}
+
+.ac-background-sheet.is-smolensky {
+  animation: ac-drift-left 32s ease-in-out infinite alternate;
+  background-image: url("/posts/post11/img/smolensky-notes.svg");
+  height: 850px;
+  left: -9rem;
+  top: 4rem;
+  transform: rotate(-6deg);
+  width: 500px;
+}
+
+.ac-background-sheet.is-rowland {
+  animation: ac-drift-right 36s ease-in-out infinite alternate;
+  background-image: url("/posts/post11/img/rowland-notes.svg");
+  height: 700px;
+  right: -7rem;
+  top: 29rem;
+  transform: rotate(6deg);
+  width: 500px;
+}
+
+.ac-background-sheet.is-biehl {
+  animation: ac-drift-low 40s ease-in-out infinite alternate;
+  background-image: url("/posts/post11/img/biehl-notes.svg");
+  bottom: -8rem;
+  height: 700px;
+  left: 20%;
+  transform: rotate(-3deg);
+  width: 520px;
+}
+
+@keyframes ac-drift-left {
+  to {
+    transform: translate3d(12px, 16px, 0) rotate(-5deg);
+  }
+}
+
+@keyframes ac-drift-right {
+  to {
+    transform: translate3d(-10px, 18px, 0) rotate(5deg);
+  }
+}
+
+@keyframes ac-drift-low {
+  to {
+    transform: translate3d(8px, -14px, 0) rotate(-2deg);
+  }
+}
+
+.ac-hero {
+  border-bottom: 1px solid var(--ac-rule);
+  margin-bottom: clamp(1.7rem, 4vw, 3rem);
+  padding: clamp(0.4rem, 2vw, 1.2rem) 0 clamp(1.7rem, 4vw, 3rem);
+  position: relative;
+}
+
+.ac-hero::before {
+  color: rgba(138, 38, 56, 0.74);
+  content: "∿";
+  font-size: clamp(4.5rem, 12vw, 8.5rem);
+  font-weight: 400;
+  line-height: 0.7;
+  position: absolute;
+  right: clamp(-0.35rem, 1vw, 1rem);
+  top: 0;
+  transform: rotate(-8deg);
+}
+
+.ac-kicker {
+  color: var(--ac-green);
+  font-size: 0.79rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin: 0 0 0.85rem;
+  text-transform: uppercase;
+}
+
+.ac-school-page .ac-title {
+  color: var(--ac-ink);
+  font-size: clamp(2.15rem, 7vw, 5.15rem);
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+  margin: 0;
+  max-width: 13ch;
+  position: relative;
+  text-wrap: balance;
+  z-index: 1;
+}
+
+.ac-title-mark {
+  display: inline;
+  position: relative;
+  white-space: nowrap;
+}
+
+.ac-title-mark::after {
+  background: rgba(220, 202, 91, 0.48);
+  bottom: 0.05em;
+  content: "";
+  height: 0.25em;
+  left: -0.03em;
+  position: absolute;
+  right: -0.04em;
+  transform: rotate(-1deg);
+  z-index: -1;
+}
+
+.ac-lede {
+  color: var(--ac-copy);
+  font-size: clamp(1rem, 2vw, 1.18rem);
+  line-height: 1.75;
+  margin: 1.5rem 0 0;
+  max-width: 68ch;
+}
+
+.ac-hero-meta {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem 1.2rem;
+  margin-top: 1.45rem;
+}
+
+.ac-live-label {
+  align-items: center;
+  color: var(--ac-red);
+  display: inline-flex;
+  font-size: 0.8rem;
+  font-weight: 700;
+  gap: 0.48rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ac-live-label::before {
+  background: var(--ac-red);
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(138, 38, 56, 0.12);
+  content: "";
+  height: 0.52rem;
+  width: 0.52rem;
+}
+
+.ac-school-page .ac-official-link {
+  color: var(--ac-blue);
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-underline-offset: 0.25em;
+}
+
+.ac-section-head {
+  align-items: end;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin: 0 0 1.2rem;
+}
+
+.ac-school-page .post-content .ac-section-title {
+  color: var(--ac-ink);
+  font-size: clamp(1.55rem, 3vw, 2.3rem);
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+  margin: 0;
+}
+
+.ac-section-note {
+  color: var(--site-text-soft);
+  flex: 0 0 auto;
+  font-size: 0.77rem;
+  letter-spacing: 0.06em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.ac-notebook-grid {
+  display: grid;
+  gap: clamp(1rem, 2.2vw, 1.5rem);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 1.25rem;
+}
+
+.ac-notebook-card {
+  --card-accent: var(--ac-blue);
+  background: rgba(251, 246, 223, 0.84);
+  border: 1px solid var(--site-border-strong);
+  box-shadow: 6px 6px 0 rgba(79, 36, 31, 0.18);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  position: relative;
+  transition:
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.ac-notebook-card:nth-child(2) {
+  --card-accent: var(--ac-green);
+}
+
+.ac-notebook-card:nth-child(3) {
+  --card-accent: var(--ac-red);
+}
+
+.ac-notebook-card:hover {
+  box-shadow: 3px 3px 0 rgba(79, 36, 31, 0.2);
+  transform: translate(2px, 2px) rotate(-0.2deg);
+}
+
+.ac-preview-link {
+  background:
+    linear-gradient(rgba(31, 91, 109, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(31, 91, 109, 0.06) 1px, transparent 1px),
+    #fff;
+  background-size: 24px 24px;
+  border-bottom: 3px solid var(--card-accent);
+  display: block;
+  height: clamp(210px, 22vw, 275px);
+  overflow: hidden;
+  position: relative;
+}
+
+.ac-preview-link::after {
+  background: linear-gradient(to bottom, transparent 65%, rgba(36, 23, 17, 0.1));
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.ac-school-page .post-content .ac-preview-link:hover {
+  background-color: #fff;
+}
+
+.ac-school-page .post-content .ac-preview-image {
+  background: #fff;
+  border: 0;
+  border-radius: 0;
+  filter: none;
+  height: auto;
+  margin: 0;
+  min-height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transform: scale(1.015);
+  transform-origin: center top;
+  transition: transform 220ms ease;
+  width: 100%;
+}
+
+.ac-notebook-card:hover .ac-preview-image {
+  transform: scale(1.045);
+}
+
+.ac-card-copy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 1rem 1rem 1.1rem;
+  position: relative;
+}
+
+.ac-card-number {
+  color: rgba(79, 36, 31, 0.2);
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1;
+  position: absolute;
+  right: 0.85rem;
+  top: 0.85rem;
+}
+
+.ac-speaker {
+  color: var(--card-accent);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  margin: 0 2.4rem 0.55rem 0;
+  text-transform: uppercase;
+}
+
+.ac-school-page .post-content .ac-card-title {
+  color: var(--ac-ink);
+  font-size: clamp(1.02rem, 1.7vw, 1.24rem);
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.ac-card-description {
+  color: var(--ac-copy);
+  font-size: 0.88rem;
+  line-height: 1.65;
+  margin: 0.8rem 0 1rem;
+}
+
+.ac-card-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 0.9rem;
+  margin-top: auto;
+}
+
+.ac-school-page .post-content .ac-open-notes,
+.ac-school-page .post-content .ac-download-notes {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-underline-offset: 0.25em;
+}
+
+.ac-school-page .post-content .ac-open-notes {
+  color: var(--card-accent);
+}
+
+.ac-school-page .post-content .ac-download-notes {
+  color: var(--site-text-muted);
+}
+
+.ac-living-note {
+  align-items: start;
+  background:
+    linear-gradient(transparent 31px, rgba(31, 91, 109, 0.12) 32px),
+    rgba(251, 246, 223, 0.76);
+  background-size: 100% 32px;
+  border: 1px solid var(--site-border-strong);
+  display: grid;
+  gap: 0.5rem 1.4rem;
+  grid-template-columns: auto minmax(0, 1fr);
+  margin-top: clamp(1.6rem, 4vw, 2.8rem);
+  padding: 1rem 1.15rem;
+  transform: rotate(-0.35deg);
+}
+
+.ac-living-note strong {
+  color: var(--ac-red);
+  font-size: 0.78rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.ac-school-page .post-content .ac-living-note p {
+  color: var(--ac-copy);
+  font-size: 0.91rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+@media screen and (max-width: 900px) {
+  .ac-notebook-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ac-preview-link {
+    height: clamp(220px, 58vw, 430px);
+  }
+
+  .ac-school-page .post-content .ac-preview-image {
+    object-fit: cover;
+  }
+
+  .ac-background-sheet {
+    opacity: 0.1;
+  }
+
+  .ac-background-sheet.is-rowland {
+    right: -15rem;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .ac-school-page .post-single {
+    backdrop-filter: none;
+    background: rgba(251, 246, 223, 0.94);
+    box-shadow: 6px 6px 0 rgba(79, 36, 31, 0.18);
+  }
+
+  .ac-hero::before {
+    opacity: 0.4;
+  }
+
+  .ac-title-mark {
+    white-space: normal;
+  }
+
+  .ac-section-head {
+    align-items: start;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .ac-background-sheet.is-rowland,
+  .ac-background-sheet.is-biehl {
+    background-image: none;
+    display: none;
+  }
+
+  .ac-background-sheet.is-smolensky {
+    left: -17rem;
+    opacity: 0.07;
+    top: 11rem;
+  }
+
+  .ac-living-note {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ac-background-sheet,
+  .ac-notebook-card,
+  .ac-preview-image {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .ac-notes-background,
+  .ac-hero::before,
+  .ac-title-mark::after {
+    display: none;
+  }
+}
+
+@media print {
+  .ac-notes-background,
+  .ac-card-actions,
+  .ac-live-label::before {
+    display: none;
+  }
+
+  .ac-school-page .post-single,
+  .ac-notebook-card,
+  .ac-living-note {
+    background: #fff;
+    box-shadow: none;
+  }
+
+  .ac-notebook-card {
+    break-inside: avoid;
+  }
+}
