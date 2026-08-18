@@ -52,7 +52,7 @@ body.ac-school-page {
   z-index: -1;
 }
 
-/* The SVGs retain their white PDF paper. Multiply blending makes the paper
+/* The note images retain their white PDF paper. Multiply blending makes the paper
    disappear into the site background while leaving the handwriting visible. */
 .ac-notes-background {
   inset: 0;
@@ -69,7 +69,7 @@ body.ac-school-page {
   background-size: contain;
   filter: sepia(0.18) saturate(0.72) contrast(1.06);
   mix-blend-mode: multiply;
-  opacity: 0.17;
+  opacity: 0.23;
   position: absolute;
   will-change: transform;
 }
@@ -104,6 +104,39 @@ body.ac-school-page {
   width: 520px;
 }
 
+.ac-background-sheet.is-smolensky-two {
+  animation: none;
+  background-image: url("/posts/post11/img/smolensky-notes-2.jpg");
+  height: 815px;
+  opacity: 0.19;
+  right: -10rem;
+  top: -14rem;
+  transform: rotate(5deg);
+  width: 480px;
+}
+
+.ac-background-sheet.is-rowland-two {
+  animation: none;
+  background-image: url("/posts/post11/img/rowland-notes-2.jpg");
+  height: 670px;
+  left: -10rem;
+  opacity: 0.19;
+  top: 54rem;
+  transform: rotate(-5deg);
+  width: 500px;
+}
+
+.ac-background-sheet.is-biehl-two {
+  animation: none;
+  background-image: url("/posts/post11/img/biehl-notes-2.jpg");
+  height: 670px;
+  opacity: 0.19;
+  right: -9rem;
+  top: 65rem;
+  transform: rotate(4deg);
+  width: 500px;
+}
+
 @keyframes ac-drift-left {
   to {
     transform: translate3d(12px, 16px, 0) rotate(-5deg);
@@ -127,18 +160,6 @@ body.ac-school-page {
   margin-bottom: clamp(1.7rem, 4vw, 3rem);
   padding: clamp(0.4rem, 2vw, 1.2rem) 0 clamp(1.7rem, 4vw, 3rem);
   position: relative;
-}
-
-.ac-hero::before {
-  color: rgba(138, 38, 56, 0.74);
-  content: "∿";
-  font-size: clamp(4.5rem, 12vw, 8.5rem);
-  font-weight: 400;
-  line-height: 0.7;
-  position: absolute;
-  right: clamp(-0.35rem, 1vw, 1rem);
-  top: 0;
-  transform: rotate(-8deg);
 }
 
 .ac-kicker {
@@ -437,7 +458,13 @@ body.ac-school-page {
   }
 
   .ac-background-sheet {
-    opacity: 0.1;
+    opacity: 0.14;
+  }
+
+  .ac-background-sheet.is-smolensky-two,
+  .ac-background-sheet.is-rowland-two,
+  .ac-background-sheet.is-biehl-two {
+    opacity: 0.12;
   }
 
   .ac-background-sheet.is-rowland {
@@ -452,10 +479,6 @@ body.ac-school-page {
     box-shadow: 6px 6px 0 rgba(79, 36, 31, 0.18);
   }
 
-  .ac-hero::before {
-    opacity: 0.4;
-  }
-
   .ac-title-mark {
     white-space: normal;
   }
@@ -466,16 +489,28 @@ body.ac-school-page {
     gap: 0.45rem;
   }
 
-  .ac-background-sheet.is-rowland,
-  .ac-background-sheet.is-biehl {
-    background-image: none;
+  .ac-background-sheet.is-smolensky-two,
+  .ac-background-sheet.is-rowland-two,
+  .ac-background-sheet.is-biehl-two {
     display: none;
   }
 
   .ac-background-sheet.is-smolensky {
     left: -17rem;
-    opacity: 0.07;
+    opacity: 0.11;
     top: 11rem;
+  }
+
+  .ac-background-sheet.is-rowland {
+    opacity: 0.1;
+    right: -19rem;
+    top: 45rem;
+  }
+
+  .ac-background-sheet.is-biehl {
+    bottom: -6rem;
+    left: -15rem;
+    opacity: 0.1;
   }
 
   .ac-living-note {
@@ -494,7 +529,6 @@ body.ac-school-page {
 
 @media (forced-colors: active) {
   .ac-notes-background,
-  .ac-hero::before,
   .ac-title-mark::after {
     display: none;
   }
