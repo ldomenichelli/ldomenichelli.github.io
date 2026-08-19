@@ -179,6 +179,7 @@ body.ac-school-page {
   margin: 0;
   max-width: 13ch;
   position: relative;
+  text-transform: none;
   text-wrap: balance;
   z-index: 1;
 }
@@ -258,6 +259,7 @@ body.ac-school-page {
   letter-spacing: -0.035em;
   line-height: 1.12;
   margin: 0;
+  text-transform: none;
 }
 
 .ac-section-note {
@@ -382,6 +384,7 @@ body.ac-school-page {
   letter-spacing: -0.025em;
   line-height: 1.25;
   margin: 0;
+  text-transform: none;
   text-wrap: balance;
 }
 
