@@ -76,7 +76,7 @@ body.ac-school-page {
 
 .ac-background-sheet.is-smolensky {
   animation: ac-drift-left 32s ease-in-out infinite alternate;
-  background-image: url("/posts/post11/img/smolensky-notes.svg");
+  background-image: url("/posts/post11/img/smolensky-notes.jpg");
   height: 850px;
   left: -9rem;
   top: 4rem;
@@ -86,7 +86,7 @@ body.ac-school-page {
 
 .ac-background-sheet.is-rowland {
   animation: ac-drift-right 36s ease-in-out infinite alternate;
-  background-image: url("/posts/post11/img/rowland-notes.svg");
+  background-image: url("/posts/post11/img/rowland-notes.jpg");
   height: 700px;
   right: -7rem;
   top: 29rem;
@@ -96,7 +96,7 @@ body.ac-school-page {
 
 .ac-background-sheet.is-biehl {
   animation: ac-drift-low 40s ease-in-out infinite alternate;
-  background-image: url("/posts/post11/img/biehl-notes.svg");
+  background-image: url("/posts/post11/img/biehl-notes.jpg");
   bottom: -8rem;
   height: 700px;
   left: 20%;
