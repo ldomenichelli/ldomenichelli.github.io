@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Analytical Connectionism Reader Smoke Test</title>
+  <style>
+    body {
+      background: #111;
+      color: #f5f5f5;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      margin: 0;
+      padding: 16px;
+    }
+
+    iframe {
+      border: 0;
+      height: 800px;
+    }
+
+    pre {
+      line-height: 1.45;
+      margin: 0 0 16px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body data-test-status="RUNNING">
+  <pre id="log">Running...</pre>
+  <iframe id="frame" title="Page under test"></iframe>
+  <script>
+    const frame = document.querySelector('#frame');
+    const logElement = document.querySelector('#log');
+    const results = [];
+    const params = new URLSearchParams(window.location.search);
+    const frameWidth = Number(params.get('width') || '1280');
+    frame.style.width = `${frameWidth}px`;
+
+    const notes = [
+      {
+        slug: 'smolensky',
+        pages: 17,
+        pdf: '/AC.pdf'
+      },
+      {
+        slug: 'rowland',
+        pages: 4,
+        pdf: '/Carolin%20Rowland.pdf'
+      },
+      {
+        slug: 'biehl',
+        pages: 22,
+        pdf: '/Biehl.pdf'
+      }
+    ];
+
+    function log(message) {
+      results.push(message);
+      logElement.textContent = results.join('\n');
+    }
+
+    function assert(condition, message) {
+      if (!condition) {
+        throw new Error(message);
+      }
+      log(`PASS ${message}`);
+    }
+
+    function loadFrame(path) {
+      return new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => reject(new Error(`Timed out loading ${path}`)), 10000);
+        frame.addEventListener('load', () => {
+          clearTimeout(timeout);
+          resolve();
+        }, { once: true });
+        frame.src = path;
+      });
+    }
+
+    async function checkNotebookLinks() {
+      await loadFrame('/posts/post11/');
+      const doc = frame.contentDocument;
+
+      for (const note of notes) {
+        const preview = doc.querySelector(`[data-note-preview="${note.slug}"]`);
+        const open = doc.querySelector(`[data-note-open="${note.slug}"]`);
+        const download = doc.querySelector(`[data-note-download="${note.slug}"]`);
+        const readerPath = `/posts/post11/read/${note.slug}/`;
+
+        assert(Boolean(preview && open && download), `${note.slug} card exposes preview, open, and download actions`);
+        assert(preview.getAttribute('href') === readerPath, `${note.slug} cover opens the scrolling reader`);
+        assert(open.getAttribute('href') === readerPath && !open.hasAttribute('download'), `${note.slug} Open notes is an HTML route, not a download`);
+        assert(open.target === '_blank' && open.relList.contains('noopener'), `${note.slug} Open notes uses a safe new tab`);
+        assert(download.getAttribute('href') === note.pdf && download.hasAttribute('download'), `${note.slug} Download PDF remains a file download`);
+        assert(open.getAttribute('href') !== download.getAttribute('href'), `${note.slug} open and download perform different actions`);
+      }
+    }
+
+    async function checkReader(note) {
+      await loadFrame(`/posts/post11/read/${note.slug}/`);
+      const doc = frame.contentDocument;
+      const win = frame.contentWindow;
+      const pages = Array.from(doc.querySelectorAll('[data-note-page]'));
+      const images = pages.map((page) => page.querySelector('img'));
+      const download = doc.querySelector(`[data-note-download="${note.slug}"]`);
+
+      assert(Boolean(doc.querySelector('main') && doc.querySelector('h1')), `${note.slug} reader has a main landmark and title`);
+      assert(pages.length === note.pages, `${note.slug} reader contains all ${note.pages} pages`);
+      assert(images.every(Boolean), `${note.slug} reader represents every page with an image`);
+      assert(images.every((image) => image.getAttribute('src').endsWith('.svg')), `${note.slug} reader uses SVG sheets`);
+      assert(images.every((image) => image.width > 0 && image.height > 0), `${note.slug} SVG sheets reserve their intrinsic aspect ratios`);
+      assert(new Set(images.map((image) => image.alt)).size === note.pages, `${note.slug} pages have unique accessible names`);
+      assert(images.slice(1).every((image) => image.loading === 'lazy'), `${note.slug} defers off-screen SVG pages`);
+      assert(download.getAttribute('href') === note.pdf && download.hasAttribute('download'), `${note.slug} reader keeps a direct PDF download`);
+      assert(!doc.querySelector('iframe, object, embed'), `${note.slug} reader has no nested PDF viewport`);
+      assert(win.getComputedStyle(images[0]).mixBlendMode === 'multiply', `${note.slug} SVG ink blends into the site background`);
+      assert(win.getComputedStyle(doc.querySelector('.ac-reader-bar')).position === 'fixed', `${note.slug} reader controls remain available while scrolling`);
+
+      const tops = pages.map((page) => page.offsetTop);
+      assert(tops.every((top, index) => index === 0 || top > tops[index - 1]), `${note.slug} pages flow in continuous document order`);
+      assert(doc.scrollingElement.scrollHeight > win.innerHeight, `${note.slug} reader is vertically scrollable`);
+      assert(doc.scrollingElement.scrollWidth <= win.innerWidth + 1, `${note.slug} reader has no horizontal overflow at ${frameWidth}px`);
+
+      doc.scrollingElement.style.scrollBehavior = 'auto';
+      doc.scrollingElement.scrollTop = Math.min(900, doc.scrollingElement.scrollHeight - win.innerHeight);
+      assert(doc.scrollingElement.scrollTop > 0, `${note.slug} note scrolls with the document`);
+
+    }
+
+    async function run() {
+      await checkNotebookLinks();
+      for (const note of notes) {
+        await checkReader(note);
+      }
+      log(`PASS reader smoke test completed at ${frameWidth}px`);
+      document.body.dataset.testStatus = 'PASS';
+    }
+
+    run().catch((error) => {
+      log(`FAIL ${error.message}`);
+      document.body.dataset.testStatus = 'FAIL';
+    });
+  </script>
+</body>
+</html>
