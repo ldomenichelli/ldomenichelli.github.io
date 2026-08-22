@@ -1,9 +1,27 @@
 [
   {
-    "content": "Living handwritten notes from the three core classes at the 2026 School on Analytical Connectionism in Gothenburg: Paul Smolensky on analytical connectionism, Caroline Rowland on language acquisition, and Michael Biehl on the statistical physics of learning.",
+    "content": "Handwritten lecture notes from the 2026 School on Analytical Connectionism, a two-week summer school in Gothenburg. The notebooks follow Paul Smolensky on distributed representations and LLMs, Caroline Rowland on language acquisition and computational models, and Michael Biehl on the statistical physics of learning.",
     "permalink": "https://ldomenichelli.github.io/posts/post11/",
-    "summary": "<p>Living handwritten notes from the three core classes at the 2026 School on Analytical Connectionism in Gothenburg.</p>",
-    "title": "School on Analytical Connectionism 2026"
+    "summary": "<p>Handwritten lecture notes from the 2026 Analytical Connectionism summer school in Gothenburg.</p>",
+    "title": "2026 Analytical Connectionism Summer School Notes"
+  },
+  {
+    "content": "Paul Smolensky lecture notes from the 2026 School on Analytical Connectionism: neural and distributed representations, role-filler binding, tensor-product representations, compositional structure, attention, LLMs, and transformer production systems.",
+    "permalink": "https://ldomenichelli.github.io/posts/post11/read/smolensky/",
+    "summary": "<p>From Brain Signals to Language: continuous handwritten notes from Paul Smolensky’s Gothenburg lectures.</p>",
+    "title": "Paul Smolensky — From Brain Signals to Language | 2026 Notes"
+  },
+  {
+    "content": "Caroline Rowland lecture notes from the 2026 School on Analytical Connectionism: child language acquisition, word-referent mapping, multimodal input, frequency effects, inductive biases, grammar emergence, working memory, and computational models.",
+    "permalink": "https://ldomenichelli.github.io/posts/post11/read/rowland/",
+    "summary": "<p>The Puzzle of Language Acquisition: continuous handwritten notes from Caroline Rowland’s Gothenburg lectures.</p>",
+    "title": "Caroline Rowland — Language Acquisition Notes | 2026"
+  },
+  {
+    "content": "Michael Biehl lecture notes from the 2026 School on Analytical Connectionism: perceptrons, generalization error, teacher-student learning, statistical mechanics, replica methods, layered networks, hidden-unit specialization, and unsupervised learning.",
+    "permalink": "https://ldomenichelli.github.io/posts/post11/read/biehl/",
+    "summary": "<p>Statistical Physics of Learning: continuous handwritten notes from Michael Biehl’s Gothenburg lectures.</p>",
+    "title": "Michael Biehl — Statistical Physics of Learning | 2026 Notes"
   },
   {
     "content": "ACL San Diego 2026 notes on the tutorial Towards Effective and Efficient Multi-Agent Language Model Systems: small language model agents, consensus, black-box and white-box collaboration, healthcare, biomedicine, and scientific discovery workflows.",

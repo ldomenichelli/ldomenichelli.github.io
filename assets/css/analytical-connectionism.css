@@ -173,15 +173,19 @@ body.ac-school-page {
 
 .ac-school-page .ac-title {
   color: var(--ac-ink);
-  font-size: clamp(2.15rem, 7vw, 5.15rem);
+  font-size: clamp(2.05rem, 6.5vw, 4.8rem);
   letter-spacing: -0.055em;
   line-height: 0.98;
   margin: 0;
-  max-width: 13ch;
+  max-width: 16ch;
   position: relative;
   text-transform: none;
   text-wrap: balance;
   z-index: 1;
+}
+
+.ac-title-tail {
+  color: var(--ac-red);
 }
 
 .ac-title-mark {
@@ -243,6 +247,72 @@ body.ac-school-page {
   font-size: 0.88rem;
   font-weight: 700;
   text-underline-offset: 0.25em;
+}
+
+.ac-school-page .ac-author-link {
+  color: var(--ac-copy);
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-underline-offset: 0.25em;
+}
+
+.ac-overview {
+  border-bottom: 1px solid var(--ac-rule);
+  margin-bottom: clamp(1.7rem, 4vw, 3rem);
+  padding-bottom: clamp(1.7rem, 4vw, 2.6rem);
+}
+
+.ac-overview-body {
+  display: grid;
+  gap: 1rem clamp(1.25rem, 3vw, 2.2rem);
+  grid-template-columns: minmax(0, 1.05fr) minmax(16rem, 0.95fr);
+}
+
+.ac-school-page .post-content .ac-overview-copy p {
+  color: var(--ac-copy);
+  font-size: 0.94rem;
+  line-height: 1.75;
+  margin: 0;
+}
+
+.ac-school-page .post-content .ac-overview-copy p + p {
+  margin-top: 0.75rem;
+}
+
+.ac-school-page .post-content .ac-topic-list {
+  display: grid;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ac-school-page .post-content .ac-topic-list li {
+  border-left: 3px solid var(--ac-blue);
+  color: var(--ac-copy);
+  font-size: 0.84rem;
+  line-height: 1.55;
+  margin: 0;
+  padding: 0.55rem 0.7rem;
+}
+
+.ac-school-page .post-content .ac-topic-list li:nth-child(2) {
+  border-color: var(--ac-green);
+}
+
+.ac-school-page .post-content .ac-topic-list li:nth-child(3) {
+  border-color: var(--ac-red);
+}
+
+.ac-topic-list strong {
+  color: var(--ac-ink);
+  display: block;
+}
+
+.ac-school-page .post-content .ac-topic-list a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
 }
 
 .ac-section-head {
@@ -448,6 +518,10 @@ body.ac-school-page {
 }
 
 @media screen and (max-width: 900px) {
+  .ac-overview-body {
+    grid-template-columns: 1fr;
+  }
+
   .ac-notebook-grid {
     grid-template-columns: 1fr;
   }

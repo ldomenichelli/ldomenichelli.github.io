@@ -163,6 +163,54 @@ body.ac-reader-page::before {
   text-transform: uppercase;
 }
 
+.ac-reader-intro a {
+  color: inherit;
+  font-weight: 700;
+  text-underline-offset: 0.2em;
+}
+
+.ac-reader-summary {
+  background: rgba(245, 239, 216, 0.68);
+  border: 1px solid var(--reader-rule);
+  box-shadow: 6px 6px 0 rgba(79, 36, 31, 0.08);
+  margin: 0 auto clamp(2.4rem, 7vw, 5.2rem);
+  max-width: 760px;
+  padding: clamp(1rem, 3vw, 1.45rem);
+}
+
+.ac-reader-summary h2 {
+  color: var(--reader-ink);
+  font-size: clamp(1.15rem, 3vw, 1.55rem);
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.ac-reader-summary p {
+  color: var(--reader-copy);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin: 0.8rem 0 0;
+}
+
+.ac-reader-summary ul {
+  display: grid;
+  gap: 0.45rem 1.25rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+}
+
+.ac-reader-summary li {
+  border-left: 2px solid rgba(31, 91, 109, 0.42);
+  color: var(--reader-copy);
+  font-size: 0.79rem;
+  line-height: 1.5;
+  padding-left: 0.62rem;
+}
+
 .ac-reader-pages {
   display: grid;
   gap: clamp(2.4rem, 7vw, 5.5rem);
@@ -272,6 +320,10 @@ body.ac-reader-page::before {
     padding-inline: clamp(0.45rem, 2.5vw, 1rem);
   }
 
+  .ac-reader-summary ul {
+    grid-template-columns: 1fr;
+  }
+
   .ac-reader-pages {
     gap: clamp(1.8rem, 9vw, 3.2rem);
   }
@@ -310,6 +362,7 @@ body.ac-reader-page::before {
 @media print {
   .ac-reader-bar,
   .ac-reader-intro,
+  .ac-reader-summary,
   .ac-reader-end,
   .ac-reader-sheet figcaption {
     display: none;

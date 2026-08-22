@@ -12,12 +12,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language><atom:link href="https://ldomenichelli.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>School on Analytical Connectionism 2026</title>
+      <title>2026 Analytical Connectionism Summer School Notes</title>
       <link>https://ldomenichelli.github.io/posts/post11/</link>
       <pubDate>Tue, 18 Aug 2026 00:00:00 +0200</pubDate>
 
       <guid>https://ldomenichelli.github.io/posts/post11/</guid>
-      <description>Living handwritten notes from the three core classes at the 2026 School on Analytical Connectionism in Gothenburg.</description>
+      <description>Handwritten lecture notes from the 2026 School on Analytical Connectionism summer school in Gothenburg.</description>
+      <content:encoded><![CDATA[
+        <p>Handwritten lecture notes from the 2026 School on Analytical Connectionism in Gothenburg.</p>
+        <ul>
+          <li><a href="https://ldomenichelli.github.io/posts/post11/read/smolensky/">Paul Smolensky — From Brain Signals to Language</a></li>
+          <li><a href="https://ldomenichelli.github.io/posts/post11/read/rowland/">Caroline Rowland — The Puzzle of Language Acquisition</a></li>
+          <li><a href="https://ldomenichelli.github.io/posts/post11/read/biehl/">Michael Biehl — Statistical Physics of Learning</a></li>
+        </ul>
+      ]]></content:encoded>
     </item>
 
     <item>
