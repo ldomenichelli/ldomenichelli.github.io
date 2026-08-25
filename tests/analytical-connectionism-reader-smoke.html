@@ -51,6 +51,16 @@
         slug: 'biehl',
         pages: 32,
         pdf: '/Biehl.pdf'
+      },
+      {
+        slug: 'summerfield',
+        pages: 1,
+        pdf: '/Chris%20Sommerfield.pdf'
+      },
+      {
+        slug: 'misra',
+        pages: 5,
+        pdf: '/Misra.pdf'
       }
     ];
 
@@ -85,7 +95,7 @@
       assert(doc.title.includes('Analytical Connectionism Summer School Notes'), 'landing page has a search-focused title');
       assert(doc.querySelector('meta[name="description"]').content.includes('summer school'), 'landing page describes the summer school');
       assert(Boolean(doc.querySelector('.ac-overview')), 'landing page exposes a crawlable event overview');
-      assert(doc.querySelectorAll('.ac-topic-list li').length === 3, 'landing page summarizes all three core lectures');
+      assert(doc.querySelectorAll('.ac-topic-list li').length === 5, 'landing page summarizes all five lecture notebooks');
       assert(doc.querySelector('meta[property="og:image"]').content.endsWith('analytical-connectionism-2026-notes-social.png'), 'landing page uses the notebook social image');
       assert(doc.scrollingElement.scrollWidth <= win.innerWidth + 1, `landing page has no horizontal overflow at ${frameWidth}px`);
 
@@ -121,6 +131,13 @@
       const pages = Array.from(doc.querySelectorAll('[data-note-page]'));
       const images = pages.map((page) => page.querySelector('img'));
       const download = doc.querySelector(`[data-note-download="${note.slug}"]`);
+      const boundedElements = [
+        doc.querySelector('.ac-reader-back'),
+        doc.querySelector('.ac-reader-heading'),
+        download,
+        doc.querySelector('.ac-reader-summary'),
+        ...images
+      ];
 
       assert(Boolean(doc.querySelector('main') && doc.querySelector('h1')), `${note.slug} reader has a main landmark and title`);
       assert(Boolean(doc.querySelector('.ac-reader-summary')), `${note.slug} reader includes a crawlable lecture summary`);
@@ -132,6 +149,15 @@
       assert(images.every((image) => image.width > 0 && image.height > 0), `${note.slug} page images reserve their intrinsic aspect ratios`);
       assert(new Set(images.map((image) => image.alt)).size === note.pages, `${note.slug} pages have unique accessible names`);
       assert(images.slice(1).every((image) => image.loading === 'lazy'), `${note.slug} defers off-screen page images`);
+      assert(images[0].complete && images[0].naturalWidth > 0, `${note.slug} loads and decodes its first note page`);
+      if (note.slug === 'summerfield' || note.slug === 'misra') {
+        const pageAssets = await Promise.all(images.map(async (image) => {
+          const response = await win.fetch(image.getAttribute('src'));
+          if (!response.ok) throw new Error(`Could not load ${image.getAttribute('src')}`);
+          return response.blob();
+        }));
+        assert(pageAssets.every((page) => page.type === 'image/jpeg' && page.size > 0), `${note.slug} fetches every newly added note page as a JPEG`);
+      }
       assert(download.getAttribute('href') === note.pdf && download.hasAttribute('download'), `${note.slug} reader keeps a direct PDF download`);
       assert(!doc.querySelector('iframe, object, embed'), `${note.slug} reader has no nested PDF viewport`);
       assert(win.getComputedStyle(images[0]).mixBlendMode === 'multiply', `${note.slug} notebook ink blends into the site background`);
@@ -141,6 +167,10 @@
       assert(tops.every((top, index) => index === 0 || top > tops[index - 1]), `${note.slug} pages flow in continuous document order`);
       assert(doc.scrollingElement.scrollHeight > win.innerHeight, `${note.slug} reader is vertically scrollable`);
       assert(doc.scrollingElement.scrollWidth <= win.innerWidth + 1, `${note.slug} reader has no horizontal overflow at ${frameWidth}px`);
+      assert(boundedElements.every((element) => {
+        const rect = element.getBoundingClientRect();
+        return rect.left >= -1 && rect.right <= win.innerWidth + 1;
+      }), `${note.slug} controls, summary, and note pages fit inside the ${frameWidth}px viewport`);
 
       doc.scrollingElement.style.scrollBehavior = 'auto';
       doc.scrollingElement.scrollTop = Math.min(900, doc.scrollingElement.scrollHeight - win.innerHeight);

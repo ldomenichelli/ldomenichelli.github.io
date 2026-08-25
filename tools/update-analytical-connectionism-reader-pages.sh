@@ -16,6 +16,7 @@ render_note() {
   local slug=$1
   local pdf_name=$2
   local pdf_path="$repo_dir/$pdf_name"
+  local public_pdf_path="$repo_dir/public/$pdf_name"
   local reader_html="$repo_dir/posts/post11/read/$slug/index.html"
   local source_dir="$repo_dir/posts/post11/read/$slug/pages"
   local public_dir="$repo_dir/public/posts/post11/read/$slug/pages"
@@ -24,6 +25,12 @@ render_note() {
   page_count=$(pdfinfo "$pdf_path" | awk -F: '/^Pages:/{gsub(/[[:space:]]/, "", $2); print $2; exit}')
   if [[ ! "$page_count" =~ ^[1-9][0-9]*$ ]]; then
     echo "Could not determine a page count for $pdf_name" >&2
+    exit 1
+  fi
+
+  cp -- "$pdf_path" "$public_pdf_path"
+  if ! cmp -s -- "$pdf_path" "$public_pdf_path"; then
+    echo "The source/public PDF copies differ for $pdf_name." >&2
     exit 1
   fi
 
@@ -109,3 +116,5 @@ render_note() {
 render_note "smolensky" "AC.pdf"
 render_note "rowland" "Carolin Rowland.pdf"
 render_note "biehl" "Biehl.pdf"
+render_note "summerfield" "Chris Sommerfield.pdf"
+render_note "misra" "Misra.pdf"

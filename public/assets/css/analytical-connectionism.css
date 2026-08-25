@@ -1,5 +1,5 @@
 /* School on Analytical Connectionism 2026.
-   The three background sheets are first-page vector exports of Lucia's
+   The background sheets are first-page exports of Lucia's
    handwritten notebooks. They are decorative; the readable titles and links
    stay in the document flow below. */
 
@@ -296,11 +296,11 @@ body.ac-school-page {
   padding: 0.55rem 0.7rem;
 }
 
-.ac-school-page .post-content .ac-topic-list li:nth-child(2) {
+.ac-school-page .post-content .ac-topic-list li:nth-child(3n + 2) {
   border-color: var(--ac-green);
 }
 
-.ac-school-page .post-content .ac-topic-list li:nth-child(3) {
+.ac-school-page .post-content .ac-topic-list li:nth-child(3n) {
   border-color: var(--ac-red);
 }
 
@@ -363,11 +363,11 @@ body.ac-school-page {
     transform 180ms ease;
 }
 
-.ac-notebook-card:nth-child(2) {
+.ac-notebook-card:nth-child(3n + 2) {
   --card-accent: var(--ac-green);
 }
 
-.ac-notebook-card:nth-child(3) {
+.ac-notebook-card:nth-child(3n) {
   --card-accent: var(--ac-red);
 }
 

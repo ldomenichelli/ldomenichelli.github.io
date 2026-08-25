@@ -1,6 +1,6 @@
 [
   {
-    "content": "Handwritten lecture notes from the 2026 School on Analytical Connectionism, a two-week summer school in Gothenburg. The notebooks follow Paul Smolensky on distributed representations and LLMs, Caroline Rowland on language acquisition and computational models, and Michael Biehl on the statistical physics of learning.",
+    "content": "Five handwritten lecture notebooks from the 2026 School on Analytical Connectionism, a two-week summer school in Gothenburg. Topics include distributed representations, language acquisition, statistical physics of learning, curriculum learning, and the role of input in linguistic generalization.",
     "permalink": "https://ldomenichelli.github.io/posts/post11/",
     "summary": "<p>Handwritten lecture notes from the 2026 Analytical Connectionism summer school in Gothenburg.</p>",
     "title": "2026 Analytical Connectionism Summer School Notes"
@@ -22,6 +22,18 @@
     "permalink": "https://ldomenichelli.github.io/posts/post11/read/biehl/",
     "summary": "<p>Statistical Physics of Learning: continuous handwritten notes from Michael Biehl’s Gothenburg lectures.</p>",
     "title": "Michael Biehl — Statistical Physics of Learning | 2026 Notes"
+  },
+  {
+    "content": "Chris Summerfield lecture notes from the 2026 School on Analytical Connectionism: curriculum learning in natural and artificial intelligence, critical periods, loss of plasticity, off-manifold learning, dimensionality, ageing, and cognitive flexibility.",
+    "permalink": "https://ldomenichelli.github.io/posts/post11/read/summerfield/",
+    "summary": "<p>Curriculum Learning in Natural and Artificial Intelligence: continuous handwritten notes from Chris Summerfield’s Gothenburg lecture.</p>",
+    "title": "Chris Summerfield — Curriculum Learning Notes | 2026"
+  },
+  {
+    "content": "Kanishka Misra lecture notes from the 2026 School on Analytical Connectionism: linguistic generalization, direct and indirect evidence, controlled rearing of language models, adjective ordering, dative alternation, and development.",
+    "permalink": "https://ldomenichelli.github.io/posts/post11/read/misra/",
+    "summary": "<p>The Role of Input in Shaping Linguistic Generalizations: continuous handwritten notes from Kanishka Misra’s Gothenburg lecture.</p>",
+    "title": "Kanishka Misra — Linguistic Generalization Notes | 2026"
   },
   {
     "content": "ACL San Diego 2026 notes on the tutorial Towards Effective and Efficient Multi-Agent Language Model Systems: small language model agents, consensus, black-box and white-box collaboration, healthcare, biomedicine, and scientific discovery workflows.",

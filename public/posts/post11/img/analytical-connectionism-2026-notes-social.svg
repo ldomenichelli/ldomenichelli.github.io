@@ -1,41 +1,63 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
   <title id="title">Handwritten notes from the 2026 School on Analytical Connectionism</title>
-  <description id="description">A collage of notebook pages from Paul Smolensky, Caroline Rowland, and Michael Biehl's lectures in Gothenburg.</description>
+  <description id="description">A collage of five notebook pages from lectures by Paul Smolensky, Caroline Rowland, Michael Biehl, Chris Summerfield, and Kanishka Misra in Gothenburg.</description>
   <defs>
     <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
       <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#1f5b6d" stroke-opacity="0.1" stroke-width="1"/>
     </pattern>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
-      <feDropShadow dx="10" dy="14" stdDeviation="10" flood-color="#4f241f" flood-opacity="0.22"/>
+    <filter id="shadow" x="-25%" y="-25%" width="150%" height="160%">
+      <feDropShadow dx="8" dy="12" stdDeviation="9" flood-color="#4f241f" flood-opacity="0.23"/>
     </filter>
-    <clipPath id="page-a"><rect width="360" height="555" rx="3"/></clipPath>
-    <clipPath id="page-b"><rect width="360" height="525" rx="3"/></clipPath>
-    <clipPath id="page-c"><rect width="360" height="555" rx="3"/></clipPath>
+    <clipPath id="page-a"><rect width="280" height="520" rx="3"/></clipPath>
+    <clipPath id="page-b"><rect width="280" height="500" rx="3"/></clipPath>
+    <clipPath id="page-c"><rect width="280" height="520" rx="3"/></clipPath>
+    <clipPath id="page-d"><rect width="280" height="500" rx="3"/></clipPath>
+    <clipPath id="page-e"><rect width="280" height="520" rx="3"/></clipPath>
   </defs>
 
   <rect width="1200" height="630" fill="#e9e2ca"/>
   <rect width="1200" height="630" fill="url(#grid)"/>
-  <circle cx="98" cy="86" r="140" fill="#dcca5b" fill-opacity="0.17"/>
-  <circle cx="1095" cy="558" r="190" fill="#8a2638" fill-opacity="0.08"/>
+  <circle cx="90" cy="72" r="150" fill="#dcca5b" fill-opacity="0.18"/>
+  <circle cx="1100" cy="565" r="190" fill="#8a2638" fill-opacity="0.08"/>
 
-  <g transform="translate(28 35) rotate(-4 180 278)" filter="url(#shadow)">
-    <rect width="360" height="555" rx="3" fill="#fbf6df"/>
-    <image href="smolensky-notes.jpg" width="360" height="610" preserveAspectRatio="xMidYMin slice" clip-path="url(#page-a)"/>
-    <rect width="360" height="555" rx="3" fill="none" stroke="#4f241f" stroke-opacity="0.32" stroke-width="2"/>
-    <rect x="128" y="-9" width="104" height="24" rx="2" fill="#dcca5b" fill-opacity="0.82"/>
+  <g transform="translate(10 48) rotate(-5 140 260)" filter="url(#shadow)">
+    <rect width="280" height="520" rx="3" fill="#fbf6df"/>
+    <image href="smolensky-notes.jpg" width="280" height="520" preserveAspectRatio="xMidYMin slice" clip-path="url(#page-a)"/>
+    <rect width="280" height="520" rx="3" fill="none" stroke="#4f241f" stroke-opacity="0.3" stroke-width="2"/>
+    <rect x="90" y="-8" width="100" height="22" rx="2" fill="#dcca5b" fill-opacity="0.86"/>
   </g>
 
-  <g transform="translate(420 58) rotate(1.5 180 263)" filter="url(#shadow)">
-    <rect width="360" height="525" rx="3" fill="#fbf6df"/>
-    <image href="rowland-notes.jpg" width="360" height="525" preserveAspectRatio="xMidYMin slice" clip-path="url(#page-b)"/>
-    <rect width="360" height="525" rx="3" fill="none" stroke="#4f241f" stroke-opacity="0.32" stroke-width="2"/>
-    <rect x="126" y="-9" width="108" height="24" rx="2" fill="#2e6b52" fill-opacity="0.72"/>
+  <g transform="translate(235 67) rotate(-2 140 250)" filter="url(#shadow)">
+    <rect width="280" height="500" rx="3" fill="#fbf6df"/>
+    <image href="rowland-notes.jpg" width="280" height="500" preserveAspectRatio="xMidYMin slice" clip-path="url(#page-b)"/>
+    <rect width="280" height="500" rx="3" fill="none" stroke="#4f241f" stroke-opacity="0.3" stroke-width="2"/>
+    <rect x="90" y="-8" width="100" height="22" rx="2" fill="#2e6b52" fill-opacity="0.78"/>
   </g>
 
-  <g transform="translate(812 34) rotate(4 180 278)" filter="url(#shadow)">
-    <rect width="360" height="555" rx="3" fill="#fbf6df"/>
-    <image href="biehl-notes.jpg" width="360" height="555" preserveAspectRatio="xMidYMin slice" clip-path="url(#page-c)"/>
-    <rect width="360" height="555" rx="3" fill="none" stroke="#4f241f" stroke-opacity="0.32" stroke-width="2"/>
-    <rect x="128" y="-9" width="104" height="24" rx="2" fill="#8a2638" fill-opacity="0.7"/>
+  <g transform="translate(460 43) rotate(0.5 140 260)" filter="url(#shadow)">
+    <rect width="280" height="520" rx="3" fill="#fbf6df"/>
+    <image href="biehl-notes.jpg" width="280" height="520" preserveAspectRatio="xMidYMin slice" clip-path="url(#page-c)"/>
+    <rect width="280" height="520" rx="3" fill="none" stroke="#4f241f" stroke-opacity="0.3" stroke-width="2"/>
+    <rect x="90" y="-8" width="100" height="22" rx="2" fill="#8a2638" fill-opacity="0.76"/>
+  </g>
+
+  <g transform="translate(685 67) rotate(2.5 140 250)" filter="url(#shadow)">
+    <rect width="280" height="500" rx="3" fill="#fbf6df"/>
+    <image href="summerfield-notes.jpg" width="280" height="620" preserveAspectRatio="xMidYMin slice" clip-path="url(#page-d)"/>
+    <rect width="280" height="500" rx="3" fill="none" stroke="#4f241f" stroke-opacity="0.3" stroke-width="2"/>
+    <rect x="90" y="-8" width="100" height="22" rx="2" fill="#1f5b6d" fill-opacity="0.76"/>
+  </g>
+
+  <g transform="translate(910 48) rotate(5 140 260)" filter="url(#shadow)">
+    <rect width="280" height="520" rx="3" fill="#fbf6df"/>
+    <image href="misra-notes.jpg" width="280" height="520" preserveAspectRatio="xMidYMin slice" clip-path="url(#page-e)"/>
+    <rect width="280" height="520" rx="3" fill="none" stroke="#4f241f" stroke-opacity="0.3" stroke-width="2"/>
+    <rect x="90" y="-8" width="100" height="22" rx="2" fill="#2e6b52" fill-opacity="0.78"/>
+  </g>
+
+  <g>
+    <rect x="170" y="520" width="860" height="88" rx="4" fill="#fbf6df" fill-opacity="0.96" stroke="#4f241f" stroke-opacity="0.32" stroke-width="2"/>
+    <text x="600" y="556" text-anchor="middle" fill="#241711" font-family="Georgia, 'Times New Roman', serif" font-size="25" font-weight="700" letter-spacing="2">2026 SCHOOL ON ANALYTICAL CONNECTIONISM</text>
+    <text x="600" y="585" text-anchor="middle" fill="#8a2638" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" letter-spacing="5">HANDWRITTEN LECTURE NOTES</text>
   </g>
 </svg>
