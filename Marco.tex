@@ -1,0 +1,330 @@
+% Typeset transcription of Marco.pdf.
+% Compile with: pdflatex Marco.tex
+% The diagrams in the handwritten source are represented schematically.
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+
+\definecolor{accent}{HTML}{7A2C83}
+\newcommand{\ID}{\operatorname{ID}}
+\newcommand{\ED}{\operatorname{ED}}
+\newcommand{\highlight}[1]{\textcolor{accent}{\textbf{#1}}}
+
+\title{Looking for a Semantic Core in LLM Representations}
+\author{Lecture by Marco Baroni\\Notes by Lucia Domenichelli}
+\date{2026 School on Analytical Connectionism\\Gothenburg, 26 August 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+These notes ask whether different neural networks share a semantic core and how
+that core changes across layers, architectures, languages, and modalities. The
+discussion combines intrinsic-dimensionality analysis, information imbalance,
+cross-lingual and visual comparisons, and syntactic/semantic ablations.
+\end{abstract}
+
+\section{Motivation}
+
+As humans, two very different sentences can convey the same meaning. Meaning is
+core to human language, but it is latent:
+
+\[
+  \textbf{meaning}
+  \quad\Longrightarrow\quad
+  \substack{\text{core to human language}\\[2pt]\text{but latent}.}
+\]
+
+The central question is whether different neural networks capture the same
+meaning structure. This motivates the \emph{Platonic Representation
+Hypothesis} and two questions:
+
+\begin{enumerate}
+  \item Is there really a shared semantic core?
+  \item What are its properties across networks, network layers, modalities,
+        and inputs?
+\end{enumerate}
+
+\section{Emergence of a High-Dimensional Representation Space}
+
+An input is mapped to hidden-state vectors, which form a geometric
+representation space:
+
+\[
+  \text{input}
+  \longrightarrow
+  \boxed{\text{hidden-state vectors}}
+  \longrightarrow
+  \text{representation space}
+  \longrightarrow
+  \mathcal{M}.
+\]
+
+Here, $\mathcal{M}$ is treated as a data manifold. Its dimensionality can be
+studied at two levels:
+
+\begin{itemize}
+  \item the \textbf{extrinsic dimension} $\ED$, determined by the ambient
+        representation space;
+  \item the \textbf{intrinsic dimension} $\ID$, the effective number of
+        parameters needed to characterize the data manifold.
+\end{itemize}
+
+The intrinsic dimension evolves across layers:
+
+\[
+  \ID\!\left(h^{(1)}\right)
+  \longrightarrow
+  \ID\!\left(h^{(2)}\right)
+  \longrightarrow \cdots \longrightarrow
+  \ID\!\left(h^{(L)}\right).
+\]
+
+These manifolds are only locally linear and are generally nonlinear, so the
+analysis should not assume global linearity. The notes mention the
+\textsc{GRIDE} estimator (Denti et al., 2022), implemented in
+\textsc{DADApy}, for estimating intrinsic dimension.
+
+\subsection{Experimental setup}
+
+The language-model study uses a random sample of sentences:
+
+\begin{itemize}
+  \item $10{,}000$ fixed-length token sequences from the Pile;
+  \item a shuffled version of the corpus as a comparison.
+\end{itemize}
+
+For a causal language model, the hidden state of the final token is used as the
+representation of the sentence. In the example, the extrinsic dimension is
+$4096$, while the measured intrinsic dimension is much smaller:
+
+\[
+  \ID \ll \ED = 4096.
+\]
+
+Across layers, the handwritten plot shows the intrinsic dimension rising to a
+pronounced peak, falling, and then increasing slightly near the end. This peak
+emerges during training and is visible across multiple Pythia checkpoints.
+
+\subsection{What happens at the intrinsic-dimension peak?}
+
+The next question is whether the $\ID$ peak coincides with the emergence of
+linguistic information. The probing tasks are grouped as follows:
+
+\begin{itemize}
+  \item \textbf{Surface properties}
+    \begin{itemize}
+      \item sentence length;
+      \item word content.
+    \end{itemize}
+  \item \textbf{Deeper linguistic properties}
+    \begin{itemize}
+      \item bigram shift;
+      \item coordination inversion;
+      \item odd-man-out detection.
+    \end{itemize}
+\end{itemize}
+
+The notes report no correlation between the $\ID$ peak and the surface
+properties, but a correlation with the deeper probes.
+
+\section{A Systematic Study of Representational Geometry}
+
+A systematic study is useful because extracting representations manually with
+model hooks becomes too complex. A gzip-based linear/compression perspective is
+also mentioned as a point of comparison.
+
+For a quantitative analysis of semantic information in deep representations,
+the notes compare visual and textual data. Such representations can differ in
+extrinsic dimension and random-seed initialization, so the focus is placed on
+their \emph{similarity structure}. Three comparison methods are listed:
+
+\begin{itemize}
+  \item neighborhood overlap;
+  \item information imbalance;
+  \item representational similarity analysis.
+\end{itemize}
+
+\subsection{Information imbalance}
+
+Information imbalance is a local, asymmetric measure. Let $r^A_{ij}$ be the
+rank of point $j$ among the neighbors of point $i$ in representation space $A$,
+and define $r^B_{ij}$ analogously for space $B$. The formula recorded in the
+notes is
+
+\[
+  \Delta(A \to B)
+  =
+  \frac{2}{N}
+  \sum_{\substack{i,j\\ r^A_{ij}=1}}
+  \frac{r^B_{ij}}{N}.
+\]
+
+Equivalently, this asks where the nearest neighbor in $A$ is ranked in $B$.
+The direction matters:
+
+\[
+  \Delta(A \to B) \neq \Delta(B \to A)
+  \quad\text{in general}.
+\]
+
+The measure runs approximately from $0$ to $1$. A value near $0$ indicates
+that the spaces preserve the same local neighborhoods; larger values indicate
+less shared predictive structure. The notes also mention a data-processing
+property (Del Tatto et al., 2024).
+
+\section{Semantic Convergence Across Languages and Models}
+
+\subsection{Translations}
+
+Information imbalance is measured across relative network depth for translated
+sentences. The handwritten comparison uses
+
+\[
+  \text{English} \longrightarrow \text{Italian}
+  \qquad\text{and}\qquad
+  \text{English} \longrightarrow \text{Hungarian},
+\]
+
+with an open-weight DeepSeek model. Both sketches are U-shaped over relative
+depth, suggesting stronger convergence in intermediate layers. The notes also
+flag unequal training exposure: the model has seen less Hungarian. Because the
+curve labels and this side note are not fully consistent in the handwritten
+sketch, the precise ordering of the two curves should not be inferred from the
+drawing alone.
+
+\subsection{Language prevalence}
+
+For Qwen3-8B, the notes plot minimum information imbalance against the online
+presence of several languages (Hungarian, Italian, Spanish, and German). The
+recorded correlation is
+
+\[
+  \rho\!\left(\text{online presence},\,\Delta_{\min}\right) = -0.82.
+\]
+
+Thus, greater online presence is associated with lower minimum information
+imbalance in this comparison, suggesting stronger cross-lingual convergence.
+Relative depth makes it possible to compare the same pattern across models with
+different numbers of layers.
+
+\section{Visual and Multimodal Representations}
+
+The same analysis can be applied to image representations. The notes contrast
+two visual models:
+
+\begin{itemize}
+  \item \textbf{ImageGPT}, a causal model, whose curve has a minimum in the
+        intermediate layers;
+  \item \textbf{DINOv2}, whose representations become increasingly informative
+        toward later layers and are intended to serve as features for many
+        downstream tasks.
+\end{itemize}
+
+Both tied- and untied-weight settings are considered, and the model still
+appears to learn the correspondence.
+
+The notes then compare images with their descriptions in otherwise unrelated
+visual and language models. One directional comparison is
+
+\[
+  \text{CLIP-Text} \longrightarrow \text{CLIP-Image}.
+\]
+
+The qualitative result is that language predicts vision better than vision
+predicts language.
+
+\section{Differential Syntactic and Semantic Encoding}
+
+The final study separates syntax and semantics in LLM representations. It
+constructs syntactic and semantic twins, summarizes them with corresponding
+centroids, and performs ablations:
+
+\[
+\begin{array}{ccc}
+  \text{syntax twins} && \text{semantic twins} \\
+  \downarrow && \downarrow \\
+  \text{syntax centroids} && \text{semantic centroids}
+\end{array}
+\]
+
+\begin{itemize}
+  \item semantic ablation;
+  \item syntactic ablation;
+  \item evaluation with symmetrized information imbalance.
+\end{itemize}
+
+A natural symmetrized comparison is
+
+\[
+  \Delta_{\mathrm{sym}}(A,B)
+  = \frac{1}{2}
+    \bigl(\Delta(A \to B) + \Delta(B \to A)\bigr).
+\]
+
+Probing then branches into syntactic and semantic retrieval. The notes record
+that removing semantics has a larger effect than removing syntax, while also
+observing that syntactic ablation disrupts semantic information. Syntax,
+semantics, and the residual representation do not by themselves capture all of
+the structure:
+
+\[
+  \left.
+  \begin{array}{l}
+    \text{syntax} \\
+    \text{semantics} \\
+    \text{residual}
+  \end{array}
+  \right\}
+  \longrightarrow
+  \text{not the whole representation}
+  \longrightarrow
+  \text{semantic core}.
+\]
+
+\section{Main Takeaways and Open Direction}
+
+\begin{itemize}
+  \item A semantic core appears in the central layers of the models.
+  \item The intrinsic-dimension peak is related to deeper linguistic probes,
+        not to the surface probes considered here.
+  \item Information imbalance provides a local, directional way to compare
+        representations across layers, models, languages, and modalities.
+  \item Unequal data exposure can affect apparent cross-lingual convergence.
+  \item Syntax and semantics are not fully independent: ablating syntax can
+        disrupt semantic information.
+\end{itemize}
+
+The next goal is to map representations onto a shared semantic manifold that
+supports composed meaning:
+
+\[
+  \text{model representations}
+  \longrightarrow
+  \text{\highlight{shared semantic manifold}}
+  \longrightarrow
+  \text{composed meaning}.
+\]
+
+The closing question is how simple concepts can be retrieved from this
+manifold. The proposed direction is \highlight{polar probes}.
+
+\section*{Transcription Note}
+
+This document is a cleaned transcription of the handwritten source. Obvious
+spelling and grammatical slips have been normalized. Hand-drawn plots are
+described qualitatively because the source provides no numerical coordinates;
+page 9 of the PDF is blank.
+
+\end{document}

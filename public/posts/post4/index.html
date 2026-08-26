@@ -1,11 +1,189 @@
-<!doctype html><html lang=en dir=auto><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Topological Data Analysis 🌐 | lucia's room</title>
-<meta name=keywords content="homology,GENEO"><meta name=description content="On the HPLT & NLPL Winter School"><meta name=author content="Lucia Domenichelli"><link rel=canonical href=https://ldomenichelli.github.io/posts/post4/><link crossorigin=anonymous href=/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css integrity="sha256-WtmxyqkuTOqD680wiOlzYvI5sH2BREkKrwvB1r2JzRc=" rel="preload stylesheet" as=style><link rel=icon href=https://ldomenichelli.github.io/favicon-dithered.ico><link rel=icon type=image/png sizes=16x16 href=https://ldomenichelli.github.io/favicon-16x16-dithered.png><link rel=icon type=image/png sizes=32x32 href=https://ldomenichelli.github.io/favicon-32x32-dithered.png><link rel=apple-touch-icon href=https://ldomenichelli.github.io/apple-touch-icon-dithered.png><link rel=mask-icon href=https://ldomenichelli.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=en href=https://ldomenichelli.github.io/posts/post4/><noscript><style>#theme-toggle,.top-link{display:none}</style></noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X crossorigin=anonymous><script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin=anonymous></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin=anonymous onload='renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})'></script><style>@media screen and (min-width:769px){.post-content input[type=checkbox]:checked~label>img{transform:scale(1.6);cursor:zoom-out;position:relative;z-index:999}.post-content img.zoomCheck{transition:transform .15s ease;z-index:999;cursor:zoom-in}}</style><meta property="og:title" content="Topological Data Analysis 🌐"><meta property="og:description" content="On the HPLT & NLPL Winter School"><meta property="og:type" content="article"><meta property="og:url" content="https://ldomenichelli.github.io/posts/post4/"><meta property="og:image" content="https://ldomenichelli.github.io/logo-dithered.png"><meta property="article:section" content="posts"><meta property="og:site_name" content="lucia's room"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://ldomenichelli.github.io/logo-dithered.png"><meta name=twitter:title content="Topological Data Analysis 🌐"><meta name=twitter:description content="On the HPLT & NLPL Winter School"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"","item":"https://ldomenichelli.github.io/posts/"},{"@type":"ListItem","position":2,"name":"Topological Data Analysis 🌐","item":"https://ldomenichelli.github.io/posts/post4/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Topological Data Analysis 🌐","name":"Topological Data Analysis 🌐","description":"On the HPLT \u0026 NLPL Winter School","keywords":["homology","GENEO"],"articleBody":"Here are my notes from the lectures on “Topological Data Analysis” that was held from Prof. Patrizio Frosini at UniPi in Jan 2025.\n","wordCount":"23","inLanguage":"en","datePublished":"0001-01-01T00:00:00Z","dateModified":"0001-01-01T00:00:00Z","author":{"@type":"Person","name":"Lucia Domenichelli"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://ldomenichelli.github.io/posts/post4/"},"publisher":{"@type":"Organization","name":"lucia's room","logo":{"@type":"ImageObject","url":"https://ldomenichelli.github.io/favicon-dithered.ico"}}}</script><link rel="stylesheet" href="/assets/css/site-theme.css"></head><body class=dark id=top><header class=header><nav class=nav><div class=logo><a href=https://ldomenichelli.github.io/ accesskey=h title="lucia's room (Alt + H)">lucia's room</a><div class=logo-switches><ul class=lang-switch><li>|</li></ul></div></div><button id=menu-trigger aria-haspopup=menu aria-label="Menu Button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><ul class="menu hidden"><li><a href=https://ldomenichelli.github.io/about/ title=about><span>about</span></a></li><li><a href=https://ldomenichelli.github.io/posts/ title=notes><span>notes</span></a></li><li><a href=https://ldomenichelli.github.io/projects/ title=projects><span>projects</span></a></li><li><a href=https://ldomenichelli.github.io/random/ title=hobbies><span>hobbies</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><div class=breadcrumbs><a href=https://ldomenichelli.github.io/>Home</a>&nbsp;»&nbsp;<a href=https://ldomenichelli.github.io/posts/></a></div><h1 class=post-title>Topological Data Analysis 🌐</h1><div class=post-description>On the HPLT & NLPL Winter School</div><div class=post-meta>Lucia Domenichelli</div></header><div class=post-content><p>Here are my notes from the lectures on &ldquo;Topological Data Analysis&rdquo; that was held from Prof. Patrizio Frosini at UniPi in Jan 2025.</p><embed src=/tdafull.pdf width=100% height=800px type=application/pdf></div><footer class=post-footer><ul class=post-tags><li><a href=https://ldomenichelli.github.io/tags/homology/>Homology</a></li><li><a href=https://ldomenichelli.github.io/tags/geneo/>GENEO</a></li></ul><nav class=paginav><a class=prev href=https://ldomenichelli.github.io/posts/post9/><span class=title>« Prev</span><br><span>Time Series 📈</span></a></nav></footer></article></main><footer class=footer style=padding-top:18px;padding-bottom:18px><div class=social-icons style=padding-bottom:0><a style=border-bottom:none href=https://x.com/workerplacemint rel=me title=Twitter><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9.0 01-3.14 1.53 4.48 4.48.0 00-7.86 3v1A10.66 10.66.0 013 4s-4 9 5 13a11.64 11.64.0 01-7 2c9 5 20 0 20-11.5a4.5 4.5.0 00-.08-.83A7.72 7.72.0 0023 3z"/></svg>
-</a><a style=border-bottom:none href=https://github.com/ldomenichelli rel=me title=Github><svg viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg>
-</a><a style=border-bottom:none href=mailto:ldomenichelli2@gmail.com rel=me title=Email><svg viewBox="0 0 24 21" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1.0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1.0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a></div><span>&copy; 2025 <a href=https://ldomenichelli.github.io/>lucia's room</a></span>
-<span>•
-Powered by
-<a href=https://gohugo.io/>Hugo</a> &
-        <a href=https://github.com/adityatelange/hugo-PaperMod/>PaperMod</a>
-</span><span>•
-<a href=/privacy>Privacy Policy</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
-</a><script>let b=document.querySelector("#menu-trigger"),m=document.querySelector(".menu");b.addEventListener("click",function(){m.classList.toggle("hidden")}),document.body.addEventListener("click",function(e){b.contains(e.target)||m.classList.add("hidden")})</script><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="copy";function s(){t.innerHTML="copied!",setTimeout(()=>{t.innerHTML="copy"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script><script src="/assets/js/pocket-bird.js" defer></script></body></html>
+<!doctype html>
+<html lang="en" dir="auto">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+  <meta name="robots" content="index, follow">
+  <title>Topological Data Analysis 🌐 | Handwritten Notes</title>
+  <meta name="description" content="Original handwritten Topological Data Analysis lecture notes from Prof. Patrizio Frosini's University of Pisa course, with a continuous reader and PDF download.">
+  <meta name="keywords" content="topological data analysis, homology, persistent homology, simplicial complexes, GENEOs, handwritten notes">
+  <meta name="author" content="Lucia Domenichelli">
+  <link crossorigin="anonymous" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css" integrity="sha256-WtmxyqkuTOqD680wiOlzYvI5sH2BREkKrwvB1r2JzRc=" rel="preload stylesheet" as="style">
+  <link rel="stylesheet" href="/assets/css/site-theme.css">
+  <link rel="stylesheet" href="/assets/css/winter-school-reader.css">
+  <link rel="canonical" href="https://ldomenichelli.github.io/posts/post4/">
+  <link rel="icon" href="/favicon-dithered.ico">
+  <meta name="theme-color" content="#edf2f5">
+  <meta property="og:title" content="Topological Data Analysis 🌐 | Handwritten Notes">
+  <meta property="og:description" content="Seven original handwritten Topological Data Analysis lecture sheets in a continuous reader, with the source PDF available to download.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ldomenichelli.github.io/posts/post4/">
+  <meta property="og:image" content="https://ldomenichelli.github.io/posts/post4/img/topo.jpeg">
+  <meta property="og:site_name" content="lucia's room">
+  <meta property="article:modified_time" content="2026-08-27T00:00:00+02:00">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Topological Data Analysis 🌐 | Handwritten Notes">
+  <meta name="twitter:description" content="Seven original handwritten Topological Data Analysis lecture sheets in a continuous reader, with the source PDF available to download.">
+  <meta name="twitter:image" content="https://ldomenichelli.github.io/posts/post4/img/topo.jpeg">
+  <style>
+    /* There are only seven sheets. Keeping their intrinsic dimensions in layout
+       prevents jumps while the unusually tall images load lazily. */
+    .tda-reader-page .ws-reader-page-item {
+      contain-intrinsic-size: none;
+      content-visibility: visible;
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ldomenichelli.github.io/posts/post4/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://ldomenichelli.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Notes",
+          "item": "https://ldomenichelli.github.io/posts/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Topological Data Analysis",
+          "item": "https://ldomenichelli.github.io/posts/post4/"
+        }
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://ldomenichelli.github.io/posts/post4/#article",
+      "url": "https://ldomenichelli.github.io/posts/post4/",
+      "headline": "Topological Data Analysis 🌐 | Handwritten Notes",
+      "description": "Original handwritten Topological Data Analysis lecture notes from Prof. Patrizio Frosini's University of Pisa course, with a continuous reader and PDF download.",
+      "inLanguage": "en",
+      "dateModified": "2026-08-27",
+      "author": {
+        "@type": "Person",
+        "name": "Lucia Domenichelli",
+        "url": "https://ldomenichelli.github.io/about/"
+      },
+      "contributor": {
+        "@type": "Person",
+        "name": "Patrizio Frosini"
+      },
+      "keywords": [
+        "topological data analysis",
+        "simplicial complexes",
+        "persistent homology",
+        "natural pseudodistance",
+        "GENEOs"
+      ],
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ldomenichelli.github.io/posts/post4/"
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://ldomenichelli.github.io/posts/post4/img/topo.jpeg"
+      },
+      "encoding": {
+        "@type": "MediaObject",
+        "contentUrl": "https://ldomenichelli.github.io/tdafull.pdf",
+        "encodingFormat": "application/pdf",
+        "name": "Topological Data Analysis handwritten notes"
+      }
+    }
+  ]
+}
+  </script>
+  <script src="/assets/js/analytics.js" async></script>
+  <script src="/assets/js/winter-school-reader.js" defer></script>
+</head>
+<body class="dark ws-reader-page tda-reader-page" id="top">
+  <a class="ws-skip-link" href="#note-pages">Skip to the notes</a>
+
+  <header class="ws-reader-bar">
+    <div class="ws-reader-bar-inner">
+      <a class="ws-reader-back" href="/posts/" aria-label="Back to all notes">← <span>All notes</span></a>
+      <div class="ws-reader-heading">
+        <p class="ws-reader-speaker">Prof. Patrizio Frosini</p>
+        <h1>Topological Data Analysis</h1>
+      </div>
+      <div class="ws-reader-tools">
+        <span class="ws-reader-progress" aria-hidden="true"><span data-current-page>1</span> / <span data-total-pages>7</span></span>
+        <a class="ws-reader-download" data-note-download="tda" href="/tdafull.pdf" download="lucia-domenichelli-topological-data-analysis-notes.pdf">Download PDF ↓</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="ws-reader-main" id="note-pages">
+    <p class="ws-reader-intro"><a href="/posts/">University of Pisa notes</a> · January 2025 · Scroll to read</p>
+    <section class="ws-reader-summary" aria-labelledby="reader-summary-title">
+      <h2 id="reader-summary-title">About these notes</h2>
+      <p>The seven original handwritten lecture sheets are shown directly from the source PDF. Scroll through them below or keep the original with the PDF download.</p>
+      <ul aria-label="Topics covered">
+        <li>Simplicial complexes and homology</li>
+        <li>Persistent homology and persistence diagrams</li>
+        <li>Natural pseudodistance and GENEOs</li>
+      </ul>
+    </section>
+
+    <ol class="ws-reader-pages" aria-label="7 handwritten Topological Data Analysis lecture sheets">
+      <li class="ws-reader-page-item" id="page-1" data-note-page="1">
+        <figure class="ws-reader-sheet" aria-labelledby="page-1-caption">
+          <img src="/posts/post4/pages/page-01.jpg" width="1188" height="11286" alt="Handwritten Topological Data Analysis notes, lecture sheet 1 of 7." loading="eager" fetchpriority="high" decoding="async">
+          <figcaption id="page-1-caption">Lecture sheet 1 of 7</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-2" data-note-page="2">
+        <figure class="ws-reader-sheet" aria-labelledby="page-2-caption">
+          <img src="/posts/post4/pages/page-02.jpg" width="890" height="11344" alt="Handwritten Topological Data Analysis notes, lecture sheet 2 of 7." loading="lazy" decoding="async">
+          <figcaption id="page-2-caption">Lecture sheet 2 of 7</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-3" data-note-page="3">
+        <figure class="ws-reader-sheet" aria-labelledby="page-3-caption">
+          <img src="/posts/post4/pages/page-03.jpg" width="1188" height="12346" alt="Handwritten Topological Data Analysis notes, lecture sheet 3 of 7." loading="lazy" decoding="async">
+          <figcaption id="page-3-caption">Lecture sheet 3 of 7</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-4" data-note-page="4">
+        <figure class="ws-reader-sheet" aria-labelledby="page-4-caption">
+          <img src="/posts/post4/pages/page-04.jpg" width="890" height="12348" alt="Handwritten Topological Data Analysis notes, lecture sheet 4 of 7." loading="lazy" decoding="async">
+          <figcaption id="page-4-caption">Lecture sheet 4 of 7</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-5" data-note-page="5">
+        <figure class="ws-reader-sheet" aria-labelledby="page-5-caption">
+          <img src="/posts/post4/pages/page-05.jpg" width="890" height="9226" alt="Handwritten Topological Data Analysis notes, lecture sheet 5 of 7." loading="lazy" decoding="async">
+          <figcaption id="page-5-caption">Lecture sheet 5 of 7</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-6" data-note-page="6">
+        <figure class="ws-reader-sheet" aria-labelledby="page-6-caption">
+          <img src="/posts/post4/pages/page-06.jpg" width="890" height="8428" alt="Handwritten Topological Data Analysis notes, lecture sheet 6 of 7." loading="lazy" decoding="async">
+          <figcaption id="page-6-caption">Lecture sheet 6 of 7</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-7" data-note-page="7">
+        <figure class="ws-reader-sheet" aria-labelledby="page-7-caption">
+          <img src="/posts/post4/pages/page-07.jpg" width="890" height="7272" alt="Handwritten Topological Data Analysis notes, lecture sheet 7 of 7." loading="lazy" decoding="async">
+          <figcaption id="page-7-caption">Lecture sheet 7 of 7</figcaption>
+        </figure>
+      </li>
+    </ol>
+
+    <nav class="ws-reader-end" aria-label="Reader actions">
+      <a href="/posts/">← Back to all notes</a>
+      <a href="/tdafull.pdf" download="lucia-domenichelli-topological-data-analysis-notes.pdf">Download the original PDF ↓</a>
+    </nav>
+  </main>
+</body>
+</html>

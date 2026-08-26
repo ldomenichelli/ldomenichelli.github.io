@@ -163,9 +163,9 @@
     "title": "Time Series 📈"
   },
   {
-    "content": "Here are my notes from the lectures on &ldquo;Topological Data Analysis&rdquo; that was held from Prof. Patrizio Frosini at UniPi in Jan 2025.\n",
+    "content": "Original handwritten Topological Data Analysis lecture notes from Prof. Patrizio Frosini's University of Pisa course in January 2025. Topics include simplicial complexes, homology, persistent homology, persistence diagrams, natural pseudodistance, and GENEOs. Read all seven lecture sheets in a continuous scrolling reader or download the PDF.\n",
     "permalink": "https://ldomenichelli.github.io/posts/post4/",
-    "summary": "<p>Here are my notes from the lectures on &ldquo;Topological Data Analysis&rdquo; that was held from Prof. Patrizio Frosini at UniPi in Jan 2025.</p>\n<embed src=\"/tdafull.pdf\" width=\"100%\" height=\"800px\" type=\"application/pdf\">",
+    "summary": "<p>Seven original handwritten Topological Data Analysis lecture sheets in a continuous scrolling reader, with PDF download.</p>",
     "title": "Topological Data Analysis 🌐"
   }
 ]
