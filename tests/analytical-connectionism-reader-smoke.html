@@ -61,6 +61,21 @@
         slug: 'misra',
         pages: 5,
         pdf: '/Misra.pdf'
+      },
+      {
+        slug: 'cagnetta',
+        pages: 7,
+        pdf: '/cagnetta.pdf'
+      },
+      {
+        slug: 'loureiro',
+        pages: 7,
+        pdf: '/Bruno-1.pdf'
+      },
+      {
+        slug: 'smith',
+        pages: 3,
+        pdf: '/Kenny%20smith.pdf'
       }
     ];
 
@@ -95,7 +110,7 @@
       assert(doc.title.includes('Analytical Connectionism Summer School Notes'), 'landing page has a search-focused title');
       assert(doc.querySelector('meta[name="description"]').content.includes('summer school'), 'landing page describes the summer school');
       assert(Boolean(doc.querySelector('.ac-overview')), 'landing page exposes a crawlable event overview');
-      assert(doc.querySelectorAll('.ac-topic-list li').length === 5, 'landing page summarizes all five lecture notebooks');
+      assert(doc.querySelectorAll('.ac-topic-list li').length === 8, 'landing page summarizes all eight lecture notebooks');
       assert(doc.querySelector('meta[property="og:image"]').content.endsWith('analytical-connectionism-2026-notes-social.png'), 'landing page uses the notebook social image');
       assert(doc.scrollingElement.scrollWidth <= win.innerWidth + 1, `landing page has no horizontal overflow at ${frameWidth}px`);
 
@@ -150,7 +165,7 @@
       assert(new Set(images.map((image) => image.alt)).size === note.pages, `${note.slug} pages have unique accessible names`);
       assert(images.slice(1).every((image) => image.loading === 'lazy'), `${note.slug} defers off-screen page images`);
       assert(images[0].complete && images[0].naturalWidth > 0, `${note.slug} loads and decodes its first note page`);
-      if (note.slug === 'summerfield' || note.slug === 'misra') {
+      if (['summerfield', 'misra', 'cagnetta', 'loureiro', 'smith'].includes(note.slug)) {
         const pageAssets = await Promise.all(images.map(async (image) => {
           const response = await win.fetch(image.getAttribute('src'));
           if (!response.ok) throw new Error(`Could not load ${image.getAttribute('src')}`);

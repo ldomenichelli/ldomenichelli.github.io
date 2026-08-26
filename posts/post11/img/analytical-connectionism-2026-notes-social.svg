@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
   <title id="title">Handwritten notes from the 2026 School on Analytical Connectionism</title>
-  <description id="description">A collage of five notebook pages from lectures by Paul Smolensky, Caroline Rowland, Michael Biehl, Chris Summerfield, and Kanishka Misra in Gothenburg.</description>
+  <description id="description">A collage of handwritten lecture notebook pages from the 2026 School on Analytical Connectionism in Gothenburg.</description>
   <defs>
     <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
       <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#1f5b6d" stroke-opacity="0.1" stroke-width="1"/>

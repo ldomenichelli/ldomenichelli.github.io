@@ -1,0 +1,195 @@
+/* Entry cards that replace nested PDF viewers on the winter-school notes page. */
+
+.winter-note-reader {
+  align-items: stretch;
+  background:
+    linear-gradient(135deg, rgba(21, 94, 107, 0.07), transparent 58%),
+    var(--note-surface-muted, #f1eee5);
+  border: 1px solid var(--note-border, #c8c0b5);
+  display: grid;
+  gap: clamp(1rem, 3vw, 1.5rem);
+  grid-template-columns: minmax(92px, 0.28fr) minmax(0, 1fr);
+  margin: 1.25rem 0 2rem;
+  overflow: hidden;
+  padding: clamp(1rem, 3vw, 1.4rem);
+  position: relative;
+}
+
+.winter-note-reader::after {
+  border-right: 1px solid rgba(21, 94, 107, 0.14);
+  content: "";
+  height: 7rem;
+  position: absolute;
+  right: 1.1rem;
+  top: -1.75rem;
+  transform: rotate(28deg);
+}
+
+.winter-note-reader-visual {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 128px;
+  position: relative;
+}
+
+.winter-note-reader-sheet {
+  aspect-ratio: 4 / 3;
+  background:
+    linear-gradient(rgba(21, 94, 107, 0.1) 1px, transparent 1px),
+    var(--note-surface, #fffdf8);
+  background-size: 100% 18px;
+  border: 1px solid var(--note-border-strong, #756a61);
+  box-shadow:
+    7px 7px 0 var(--note-surface, #fffdf8),
+    8px 8px 0 var(--note-border, #c8c0b5);
+  display: block;
+  max-width: 150px;
+  position: relative;
+  transform: rotate(-1.5deg);
+  width: 100%;
+}
+
+.winter-note-reader-sheet::before,
+.winter-note-reader-sheet::after {
+  background: var(--note-accent, #155e6b);
+  content: "";
+  height: 2px;
+  left: 14%;
+  opacity: 0.72;
+  position: absolute;
+  top: 38%;
+  width: 54%;
+}
+
+.winter-note-reader-sheet::after {
+  opacity: 0.42;
+  top: 56%;
+  width: 68%;
+}
+
+.winter-note-reader-count {
+  background: var(--note-accent-strong, #113f47);
+  bottom: 0.3rem;
+  color: #fffdf8;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.055em;
+  padding: 0.3rem 0.5rem;
+  position: absolute;
+  right: 0;
+  text-transform: uppercase;
+}
+
+.winter-note-reader-copy {
+  align-self: center;
+  min-width: 0;
+}
+
+body.note-page .post-content .winter-note-reader-kicker {
+  color: var(--note-accent, #155e6b);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.105em;
+  margin: 0 0 0.25rem;
+  text-transform: uppercase;
+}
+
+body.note-page .post-content .winter-note-reader-title {
+  color: var(--note-text, #28231f);
+  font-size: clamp(1rem, 2.5vw, 1.18rem);
+  font-weight: 700;
+  line-height: 1.35;
+  margin: 0;
+}
+
+body.note-page .post-content .winter-note-reader-description {
+  color: var(--note-body, #4b443e);
+  font-size: 0.86rem;
+  line-height: 1.6;
+  margin: 0.55rem 0 0;
+}
+
+.winter-note-reader-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 0.9rem;
+}
+
+body.note-page .post-content .winter-note-reader-action {
+  align-items: center;
+  border: 1px solid var(--note-border-strong, #756a61);
+  color: var(--note-accent-strong, #113f47);
+  display: inline-flex;
+  font-size: 0.74rem;
+  font-weight: 700;
+  justify-content: center;
+  letter-spacing: 0.025em;
+  min-height: 42px;
+  padding: 0.48rem 0.72rem;
+  text-decoration: none;
+}
+
+body.note-page .post-content .winter-note-reader-action.is-primary {
+  background: var(--note-accent-strong, #113f47);
+  border-color: var(--note-accent-strong, #113f47);
+  color: #fffdf8;
+}
+
+body.note-page .post-content .winter-note-reader-action:hover {
+  background: rgba(21, 94, 107, 0.09);
+  border-color: var(--note-accent, #155e6b);
+  color: var(--note-accent-strong, #113f47);
+}
+
+body.note-page .post-content .winter-note-reader-action.is-primary:hover {
+  background: var(--note-accent, #155e6b);
+  color: #fffdf8;
+}
+
+@media screen and (max-width: 620px) {
+  .winter-note-reader {
+    grid-template-columns: 78px minmax(0, 1fr);
+    padding: 0.9rem;
+  }
+
+  .winter-note-reader-visual {
+    min-height: 104px;
+  }
+
+  .winter-note-reader-count {
+    bottom: 0;
+    font-size: 0.6rem;
+    right: -0.15rem;
+  }
+
+  .winter-note-reader-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  body.note-page .post-content .winter-note-reader-action {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .winter-note-reader {
+    grid-template-columns: 1fr;
+  }
+
+  .winter-note-reader-visual {
+    display: none;
+  }
+}
+
+@media print {
+  .winter-note-reader {
+    break-inside: avoid;
+  }
+
+  .winter-note-reader-action {
+    color: #000 !important;
+  }
+}

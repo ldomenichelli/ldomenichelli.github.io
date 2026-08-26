@@ -1,0 +1,491 @@
+/* Continuous page readers for the 2025 HPLT x NLPL Winter School notes. */
+
+:root {
+  --ws-reader-bar-height: 72px;
+  background: #edf3f5;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--ws-reader-bar-height) + 1rem);
+}
+
+body.ws-reader-page {
+  --ws-reader-bg: #edf3f5;
+  --ws-reader-paper: #fffdf8;
+  --ws-reader-paper-muted: #f4f1e9;
+  --ws-reader-ink: #202a30;
+  --ws-reader-copy: #4b5961;
+  --ws-reader-muted: #68757c;
+  --ws-reader-rule: rgba(38, 77, 92, 0.26);
+  --ws-reader-rule-soft: rgba(38, 77, 92, 0.09);
+  --ws-reader-blue: #155e6b;
+  --ws-reader-blue-dark: #113f47;
+  --ws-reader-red: #a23d34;
+  --theme: var(--ws-reader-bg);
+  --entry: var(--ws-reader-paper);
+  --primary: var(--ws-reader-ink);
+  --secondary: var(--ws-reader-muted);
+  --content: var(--ws-reader-copy);
+  --border: var(--ws-reader-rule);
+  background:
+    radial-gradient(circle at 14% 3%, rgba(255, 255, 255, 0.94), transparent 30rem),
+    radial-gradient(circle at 88% 18%, rgba(162, 61, 52, 0.055), transparent 24rem),
+    linear-gradient(180deg, #e8f1f5 0, var(--ws-reader-bg) 28rem, #f7f5ee 100%);
+  color: var(--ws-reader-copy);
+  color-scheme: light;
+  isolation: isolate;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-x: clip;
+  padding-top: var(--ws-reader-bar-height);
+}
+
+body.ws-reader-page::before {
+  background:
+    linear-gradient(var(--ws-reader-rule-soft) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(38, 77, 92, 0.055) 1px, transparent 1px);
+  background-size: 32px 32px;
+  content: "";
+  inset: 0;
+  opacity: 0.54;
+  pointer-events: none;
+  position: fixed;
+  z-index: -1;
+}
+
+.ws-reader-page ::selection {
+  background: rgba(21, 94, 107, 0.2);
+  color: var(--ws-reader-ink);
+}
+
+.ws-reader-page a {
+  color: var(--ws-reader-blue);
+}
+
+.ws-reader-page a:hover {
+  color: var(--ws-reader-red);
+}
+
+.ws-reader-page :focus-visible {
+  outline: 3px solid var(--ws-reader-blue);
+  outline-offset: 3px;
+}
+
+.ws-skip-link {
+  background: var(--ws-reader-ink);
+  border: 1px solid var(--ws-reader-paper);
+  border-radius: 0.2rem;
+  color: var(--ws-reader-paper) !important;
+  font-size: 0.82rem;
+  font-weight: 700;
+  inset-inline-start: 1rem;
+  padding: 0.65rem 0.9rem;
+  position: fixed;
+  top: 0;
+  transform: translateY(calc(-100% - 1rem));
+  transition: transform 140ms ease-out;
+  z-index: 100;
+}
+
+.ws-skip-link:focus,
+.ws-skip-link:focus-visible {
+  outline-color: var(--ws-reader-paper);
+  transform: translateY(0.75rem);
+}
+
+.ws-reader-bar {
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  background: rgba(255, 253, 248, 0.93);
+  border-bottom: 1px solid var(--ws-reader-rule);
+  box-shadow: 0 8px 28px rgba(32, 42, 48, 0.08);
+  color: var(--ws-reader-ink);
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 20;
+}
+
+.ws-reader-bar-inner {
+  align-items: center;
+  display: grid;
+  gap: 0.75rem clamp(0.8rem, 2.5vw, 2rem);
+  grid-template-columns: minmax(0, 1fr) minmax(13rem, 2.35fr) minmax(0, 1fr);
+  margin: 0 auto;
+  max-width: 1180px;
+  min-width: 0;
+  padding: 0.7rem clamp(0.85rem, 3vw, 2rem);
+}
+
+.ws-reader-back,
+.ws-reader-download {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--ws-reader-rule);
+  border-radius: 0.2rem;
+  color: var(--ws-reader-blue-dark) !important;
+  display: inline-flex;
+  font-size: 0.73rem;
+  font-weight: 700;
+  gap: 0.38rem;
+  justify-content: center;
+  letter-spacing: 0.035em;
+  line-height: 1.2;
+  min-height: 44px;
+  padding: 0.48rem 0.7rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ws-reader-back {
+  justify-self: start;
+}
+
+.ws-reader-back:hover,
+.ws-reader-download:hover {
+  background: rgba(232, 241, 245, 0.72);
+  border-color: rgba(162, 61, 52, 0.54);
+  color: var(--ws-reader-red) !important;
+}
+
+.ws-reader-heading {
+  min-width: 0;
+  text-align: center;
+}
+
+.ws-reader-speaker {
+  color: var(--ws-reader-red);
+  font-size: 0.66rem;
+  font-weight: 750;
+  letter-spacing: 0.105em;
+  line-height: 1.25;
+  margin: 0 0 0.12rem;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+
+.ws-reader-heading h1 {
+  color: var(--ws-reader-ink);
+  display: -webkit-box;
+  font-size: clamp(0.94rem, 1.8vw, 1.17rem);
+  letter-spacing: -0.022em;
+  line-height: 1.2;
+  margin: 0;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.ws-reader-tools {
+  align-items: center;
+  display: flex;
+  gap: 0.7rem;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.ws-reader-progress {
+  color: var(--ws-reader-copy);
+  flex: 0 0 auto;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.025em;
+  white-space: nowrap;
+}
+
+.ws-reader-main {
+  margin: 0 auto;
+  max-width: 850px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  padding: clamp(1.5rem, 5vw, 3.25rem) clamp(0.65rem, 4vw, 2rem) 5rem;
+  position: relative;
+  width: 100%;
+}
+
+.ws-reader-intro {
+  color: var(--ws-reader-muted);
+  font-size: 0.76rem;
+  letter-spacing: 0.055em;
+  line-height: 1.55;
+  margin: 0 auto clamp(1.65rem, 5vw, 3rem);
+  max-width: 65ch;
+  text-align: center;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.ws-reader-intro a {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+
+.ws-reader-summary {
+  background: rgba(255, 253, 248, 0.82);
+  border: 1px solid var(--ws-reader-rule);
+  border-top: 3px solid var(--ws-reader-blue);
+  box-shadow: 7px 7px 0 rgba(38, 77, 92, 0.07);
+  margin: 0 auto clamp(2.3rem, 7vw, 5rem);
+  max-width: 780px;
+  min-width: 0;
+  padding: clamp(1rem, 3vw, 1.45rem);
+}
+
+.ws-reader-summary h2 {
+  color: var(--ws-reader-ink);
+  font-size: clamp(1.12rem, 3vw, 1.5rem);
+  letter-spacing: -0.024em;
+  line-height: 1.22;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.ws-reader-summary p {
+  color: var(--ws-reader-copy);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin: 0.78rem 0 0;
+}
+
+.ws-reader-summary ul {
+  display: grid;
+  gap: 0.48rem 1.2rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+}
+
+.ws-reader-summary li {
+  border-left: 2px solid rgba(21, 94, 107, 0.42);
+  color: var(--ws-reader-copy);
+  font-size: 0.79rem;
+  line-height: 1.5;
+  min-width: 0;
+  padding-left: 0.62rem;
+}
+
+.ws-reader-pages {
+  display: grid;
+  gap: clamp(2.2rem, 7vw, 5.25rem);
+  list-style: none;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
+.ws-reader-page-item {
+  contain-intrinsic-size: auto min(600px, 60vw);
+  content-visibility: auto;
+  margin: 0;
+  max-width: 100%;
+  min-width: 0;
+  position: relative;
+  scroll-margin-top: calc(var(--ws-reader-bar-height) + 1rem);
+}
+
+.ws-reader-sheet {
+  margin: 0 auto;
+  max-width: 780px;
+  min-width: 0;
+  position: relative;
+  width: 100%;
+}
+
+.ws-reader-sheet img {
+  background: #fff;
+  border: 1px solid rgba(38, 77, 92, 0.2);
+  border-radius: 0;
+  box-shadow: 0 16px 30px rgba(32, 42, 48, 0.1);
+  display: block;
+  height: auto;
+  margin: 0;
+  max-width: 100%;
+  object-fit: contain;
+  width: 100%;
+}
+
+.ws-reader-sheet figcaption {
+  color: rgba(75, 89, 97, 0.78);
+  font-size: 0.69rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  margin-top: 0.58rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.ws-reader-page-item[data-reader-current="true"] .ws-reader-sheet figcaption {
+  color: var(--ws-reader-blue-dark);
+}
+
+.ws-reader-end {
+  align-items: center;
+  border-top: 1px solid var(--ws-reader-rule);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem 1.5rem;
+  justify-content: center;
+  margin-top: clamp(3.4rem, 9vw, 6.5rem);
+  padding-top: 1.5rem;
+}
+
+.ws-reader-end a {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+@media screen and (max-width: 800px) {
+  :root {
+    --ws-reader-bar-height: 120px;
+  }
+
+  .ws-reader-bar-inner {
+    gap: 0.48rem 0.75rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding-block: 0.55rem;
+  }
+
+  .ws-reader-heading {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .ws-reader-back {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .ws-reader-tools {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .ws-reader-main {
+    padding-inline: clamp(0.45rem, 2.5vw, 1rem);
+  }
+
+  .ws-reader-summary ul {
+    grid-template-columns: 1fr;
+  }
+
+  .ws-reader-pages {
+    gap: clamp(1.8rem, 9vw, 3.2rem);
+  }
+
+  .ws-reader-sheet img {
+    box-shadow: 0 10px 22px rgba(32, 42, 48, 0.09);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .ws-reader-back,
+  .ws-reader-download {
+    font-size: 0.65rem;
+    min-height: 40px;
+    padding: 0.38rem 0.5rem;
+  }
+
+  .ws-reader-back span {
+    display: none;
+  }
+
+  .ws-reader-tools {
+    gap: 0.45rem;
+  }
+
+  .ws-reader-progress {
+    font-size: 0.68rem;
+  }
+
+  .ws-reader-summary {
+    box-shadow: 4px 4px 0 rgba(38, 77, 92, 0.07);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    scroll-behavior: auto;
+  }
+
+  .ws-skip-link {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  body.ws-reader-page::before {
+    display: none;
+  }
+
+  .ws-reader-bar {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .ws-reader-page-item[data-reader-current="true"] .ws-reader-sheet figcaption {
+    font-weight: 700;
+  }
+}
+
+@media print {
+  :root {
+    background: #fff;
+  }
+
+  .ws-reader-bar,
+  .ws-reader-intro,
+  .ws-reader-summary,
+  .ws-reader-end,
+  .ws-reader-sheet figcaption,
+  .ws-skip-link {
+    display: none;
+  }
+
+  body.ws-reader-page,
+  body.ws-reader-page::before {
+    background: #fff;
+  }
+
+  body.ws-reader-page {
+    padding-top: 0;
+  }
+
+  .ws-reader-main {
+    max-width: none;
+    padding: 0;
+  }
+
+  .ws-reader-pages {
+    display: block;
+  }
+
+  .ws-reader-page-item {
+    break-after: page;
+    contain: none;
+    content-visibility: visible;
+  }
+
+  .ws-reader-page-item:last-child {
+    break-after: auto;
+  }
+
+  .ws-reader-sheet {
+    max-width: none;
+  }
+
+  .ws-reader-sheet img {
+    border: 0;
+    box-shadow: none;
+    filter: none;
+    max-height: 100vh;
+  }
+}

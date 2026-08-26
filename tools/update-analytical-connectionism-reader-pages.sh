@@ -15,6 +15,7 @@ done
 render_note() {
   local slug=$1
   local pdf_name=$2
+  local preview_name=${3:-}
   local pdf_path="$repo_dir/$pdf_name"
   local public_pdf_path="$repo_dir/public/$pdf_name"
   local reader_html="$repo_dir/posts/post11/read/$slug/index.html"
@@ -82,6 +83,19 @@ render_note() {
     fi
   done
 
+  if [[ -n "$preview_name" ]]; then
+    local source_preview="$repo_dir/posts/post11/img/$preview_name"
+    local public_preview="$repo_dir/public/posts/post11/img/$preview_name"
+
+    cp -- "$source_dir/page-01.jpg" "$source_preview"
+    cp -- "$source_preview" "$public_preview"
+
+    if ! cmp -s -- "$source_preview" "$public_preview"; then
+      echo "The source/public preview copies differ for $slug." >&2
+      exit 1
+    fi
+  fi
+
   local markup_count
   local image_markup_count
   markup_count=$(grep -Eo 'data-note-page="[0-9]+"' "$reader_html" | wc -l)
@@ -118,3 +132,6 @@ render_note "rowland" "Carolin Rowland.pdf"
 render_note "biehl" "Biehl.pdf"
 render_note "summerfield" "Chris Sommerfield.pdf"
 render_note "misra" "Misra.pdf"
+render_note "cagnetta" "cagnetta.pdf" "cagnetta-notes.jpg"
+render_note "loureiro" "Bruno-1.pdf" "loureiro-notes.jpg"
+render_note "smith" "Kenny smith.pdf" "smith-notes.jpg"

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en" dir="auto">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+  <meta name="robots" content="index, follow">
+  <title>Bruno Loureiro — What Makes Neural Nets Good Learners? | 2026 Notes</title>
+  <meta name="description" content="Handwritten notes from Bruno Loureiro’s What Makes Neural Nets Good Learners? lecture at the 2026 School on Analytical Connectionism in Gothenburg.">
+  <meta name="author" content="Lucia Domenichelli">
+  <link crossorigin="anonymous" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css" integrity="sha256-WtmxyqkuTOqD680wiOlzYvI5sH2BREkKrwvB1r2JzRc=" rel="preload stylesheet" as="style">
+  <link rel="stylesheet" href="/assets/css/site-theme.css">
+  <link rel="stylesheet" href="/assets/css/analytical-connectionism-reader.css">
+  <link rel="canonical" href="https://ldomenichelli.github.io/posts/post11/read/loureiro/">
+  <link rel="icon" href="/favicon-dithered.ico">
+  <meta name="theme-color" content="#e9e2ca">
+  <meta property="og:title" content="Bruno Loureiro — What Makes Neural Nets Good Learners? | 2026 Notes">
+  <meta property="og:description" content="Handwritten notes on empirical risk minimization, high-dimensional asymptotics, feature learning, two-layer networks, and random matrix theory.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ldomenichelli.github.io/posts/post11/read/loureiro/">
+  <meta property="og:image" content="https://ldomenichelli.github.io/posts/post11/img/analytical-connectionism-2026-notes-social.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Handwritten lecture notebooks from the 2026 School on Analytical Connectionism in Gothenburg">
+  <meta property="og:site_name" content="lucia's room">
+  <meta property="article:published_time" content="2026-08-26T00:00:00+02:00">
+  <meta property="article:modified_time" content="2026-08-26T00:00:00+02:00">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bruno Loureiro — What Makes Neural Nets Good Learners? | 2026 Notes">
+  <meta name="twitter:description" content="Handwritten notes on empirical risk minimization, high-dimensional asymptotics, feature learning, two-layer networks, and random matrix theory.">
+  <meta name="twitter:image" content="https://ldomenichelli.github.io/posts/post11/img/analytical-connectionism-2026-notes-social.png">
+  <meta name="twitter:image:alt" content="Handwritten lecture notebooks from the 2026 School on Analytical Connectionism in Gothenburg">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://ldomenichelli.github.io/posts/post11/read/loureiro/#breadcrumb",
+          "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://ldomenichelli.github.io/"},
+            {"@type": "ListItem", "position": 2, "name": "Notes", "item": "https://ldomenichelli.github.io/posts/"},
+            {"@type": "ListItem", "position": 3, "name": "2026 Analytical Connectionism Summer School Notes", "item": "https://ldomenichelli.github.io/posts/post11/"},
+            {"@type": "ListItem", "position": 4, "name": "Bruno Loureiro — What makes neural nets good learners? Lessons from high-dimensional asymptotics of two-layer networks", "item": "https://ldomenichelli.github.io/posts/post11/read/loureiro/"}
+          ]
+        },
+        {
+          "@type": "Article",
+          "@id": "https://ldomenichelli.github.io/posts/post11/read/loureiro/#article",
+          "url": "https://ldomenichelli.github.io/posts/post11/read/loureiro/",
+          "headline": "Bruno Loureiro — What makes neural nets good learners? Lessons from high-dimensional asymptotics of two-layer networks | 2026 Lecture Notes",
+          "description": "Handwritten notes on empirical risk minimization, high-dimensional asymptotics, feature learning, two-layer networks, and random matrix theory.",
+          "inLanguage": "en",
+          "datePublished": "2026-08-26T00:00:00+02:00",
+          "dateModified": "2026-08-26T00:00:00+02:00",
+          "author": {"@type": "Person", "name": "Lucia Domenichelli", "url": "https://ldomenichelli.github.io/about/"},
+          "contributor": {"@type": "Person", "name": "Bruno Loureiro"},
+          "keywords": ["two-layer neural networks", "high-dimensional asymptotics", "empirical risk minimization", "feature learning", "random matrix theory"],
+          "isPartOf": {"@id": "https://ldomenichelli.github.io/posts/post11/#article"},
+          "mainEntityOfPage": {"@type": "WebPage", "@id": "https://ldomenichelli.github.io/posts/post11/read/loureiro/"},
+          "image": {"@type": "ImageObject", "url": "https://ldomenichelli.github.io/posts/post11/img/analytical-connectionism-2026-notes-social.png", "width": 1200, "height": 630},
+          "encoding": {"@type": "MediaObject", "contentUrl": "https://ldomenichelli.github.io/Bruno-1.pdf", "encodingFormat": "application/pdf"}
+        }
+      ]
+    }
+  </script>
+  <script src="/assets/js/analytics.js" async></script>
+  <script src="/assets/js/analytical-connectionism-reader.js" defer></script>
+</head>
+<body class="dark ac-reader-page" id="top">
+  <a class="ac-skip-link" href="#note-pages">Skip to the notes</a>
+
+  <header class="ac-reader-bar">
+    <div class="ac-reader-bar-inner">
+      <a class="ac-reader-back" href="/posts/post11/" aria-label="Back to all Analytical Connectionism notebooks">← <span>All notebooks</span></a>
+      <div class="ac-reader-heading">
+        <p class="ac-reader-speaker">Bruno Loureiro</p>
+        <h1>What makes neural nets good learners? Lessons from high-dimensional asymptotics of two-layer networks</h1>
+      </div>
+      <div class="ac-reader-tools">
+        <span class="ac-reader-progress" aria-hidden="true"><span data-current-page>1</span> / 7</span>
+        <a class="ac-reader-download" data-note-download="loureiro" href="/Bruno-1.pdf" download="bruno-loureiro-neural-nets-good-learners.pdf">Download PDF ↓</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="ac-reader-main" id="note-pages">
+    <p class="ac-reader-intro"><a href="/posts/post11/">2026 School on Analytical Connectionism · Gothenburg</a> · Scroll to read</p>
+    <section class="ac-reader-summary" aria-labelledby="reader-summary-title">
+      <h2 id="reader-summary-title">About these Bruno Loureiro lecture notes</h2>
+      <p>
+        These notes ask why neural networks learn so effectively from data through
+        the lens of high-dimensional asymptotics. They move from empirical risk
+        minimization and kernel limits to feature learning in two-layer and
+        quadratic neural networks.
+      </p>
+      <ul aria-label="Topics in the Bruno Loureiro notes">
+        <li>Empirical risk minimization and generalization</li>
+        <li>High-dimensional learning and kernel limitations</li>
+        <li>Two-layer networks and feature learning</li>
+        <li>Marchenko–Pastur laws and spectral transitions</li>
+        <li>Quadratic networks and spiked random matrices</li>
+      </ul>
+    </section>
+    <ol class="ac-reader-pages" aria-label="7 pages of handwritten notes from Bruno Loureiro's lecture">
+      <li class="ac-reader-page-item" id="page-1" data-note-page="1">
+        <figure class="ac-reader-sheet" aria-labelledby="page-1-caption"><img src="/posts/post11/read/loureiro/pages/page-01.jpg" width="445" height="594" alt="Page 1 of 7 of Lucia Domenichelli's handwritten notes from Bruno Loureiro's lecture." loading="eager" fetchpriority="high" decoding="async"><figcaption id="page-1-caption">Page 1 of 7</figcaption></figure>
+      </li>
+      <li class="ac-reader-page-item" id="page-2" data-note-page="2">
+        <figure class="ac-reader-sheet" aria-labelledby="page-2-caption"><img src="/posts/post11/read/loureiro/pages/page-02.jpg" width="445" height="594" alt="Page 2 of 7 of Lucia Domenichelli's handwritten notes from Bruno Loureiro's lecture." loading="lazy" decoding="async"><figcaption id="page-2-caption">Page 2 of 7</figcaption></figure>
+      </li>
+      <li class="ac-reader-page-item" id="page-3" data-note-page="3">
+        <figure class="ac-reader-sheet" aria-labelledby="page-3-caption"><img src="/posts/post11/read/loureiro/pages/page-03.jpg" width="445" height="594" alt="Page 3 of 7 of Lucia Domenichelli's handwritten notes from Bruno Loureiro's lecture." loading="lazy" decoding="async"><figcaption id="page-3-caption">Page 3 of 7</figcaption></figure>
+      </li>
+      <li class="ac-reader-page-item" id="page-4" data-note-page="4">
+        <figure class="ac-reader-sheet" aria-labelledby="page-4-caption"><img src="/posts/post11/read/loureiro/pages/page-04.jpg" width="445" height="594" alt="Page 4 of 7 of Lucia Domenichelli's handwritten notes from Bruno Loureiro's lecture." loading="lazy" decoding="async"><figcaption id="page-4-caption">Page 4 of 7</figcaption></figure>
+      </li>
+      <li class="ac-reader-page-item" id="page-5" data-note-page="5">
+        <figure class="ac-reader-sheet" aria-labelledby="page-5-caption"><img src="/posts/post11/read/loureiro/pages/page-05.jpg" width="445" height="594" alt="Page 5 of 7 of Lucia Domenichelli's handwritten notes from Bruno Loureiro's lecture." loading="lazy" decoding="async"><figcaption id="page-5-caption">Page 5 of 7</figcaption></figure>
+      </li>
+      <li class="ac-reader-page-item" id="page-6" data-note-page="6">
+        <figure class="ac-reader-sheet" aria-labelledby="page-6-caption"><img src="/posts/post11/read/loureiro/pages/page-06.jpg" width="445" height="594" alt="Page 6 of 7 of Lucia Domenichelli's handwritten notes from Bruno Loureiro's lecture." loading="lazy" decoding="async"><figcaption id="page-6-caption">Page 6 of 7</figcaption></figure>
+      </li>
+      <li class="ac-reader-page-item" id="page-7" data-note-page="7">
+        <figure class="ac-reader-sheet" aria-labelledby="page-7-caption"><img src="/posts/post11/read/loureiro/pages/page-07.jpg" width="445" height="594" alt="Page 7 of 7 of Lucia Domenichelli's handwritten notes from Bruno Loureiro's lecture." loading="lazy" decoding="async"><figcaption id="page-7-caption">Page 7 of 7</figcaption></figure>
+      </li>
+    </ol>
+    <nav class="ac-reader-end" aria-label="End of notebook actions">
+      <a href="/posts/post11/">← All notebooks</a>
+      <a href="/Bruno-1.pdf" download="bruno-loureiro-neural-nets-good-learners.pdf">Download PDF ↓</a>
+      <a href="#top">Back to top ↑</a>
+    </nav>
+  </main>
+</body>
+</html>
