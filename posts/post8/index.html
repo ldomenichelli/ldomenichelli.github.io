@@ -2,1263 +2,1174 @@
 <html lang="en" dir="auto">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
   <meta name="robots" content="index, follow">
-  <title>Statistical Learning and Large Data 📊 | lucia's room</title>
-  <meta
-    name="keywords"
-    content="statistical learning, large data, clustering, PCA, cross-validation, bootstrap, ridge, lasso, sufficient dimension reduction, screening"
-  >
-  <meta
-    name="description"
-    content="A digital mathematical notebook rebuilt from the Statistical Learning and Large Data slide deck: clustering, PCA, classification, smoothing, resampling, penalization, supervised dimension reduction, and ultrahigh-dimensional screening."
-  >
-  <meta name="author" content="Lucia">
-  <link
-    crossorigin="anonymous"
-    href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css"
-    integrity="sha256-WtmxyqkuTOqD680wiOlzYvI5sH2BREkKrwvB1r2JzRc="
-    rel="preload stylesheet"
-    as="style"
-  >
+  <title>Statistical Learning and Large Data 📊 | Original Course Notes</title>
+  <meta name="description" content="Original annotated lecture slides for the Statistical Learning and Large Data course at Sant’Anna School of Advanced Studies in Pisa, presented as a continuous 172-page reader with the source PDF available to download.">
+  <meta name="keywords" content="statistical learning, large data, cluster analysis, principal component analysis, classification, regularization, feature selection">
+  <meta name="author" content="Lucia Domenichelli">
+  <link crossorigin="anonymous" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css" integrity="sha256-WtmxyqkuTOqD680wiOlzYvI5sH2BREkKrwvB1r2JzRc=" rel="preload stylesheet" as="style">
+  <link rel="stylesheet" href="/assets/css/site-theme.css">
+  <link rel="stylesheet" href="/assets/css/winter-school-reader.css">
   <link rel="canonical" href="https://ldomenichelli.github.io/posts/post8/">
-  <link rel="icon" href="https://ldomenichelli.github.io/favicon-dithered.ico">
-  <link rel="icon" type="image/png" sizes="16x16" href="https://ldomenichelli.github.io/favicon-16x16-dithered.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="https://ldomenichelli.github.io/favicon-32x32-dithered.png">
-  <link rel="apple-touch-icon" href="https://ldomenichelli.github.io/apple-touch-icon-dithered.png">
-  <link rel="mask-icon" href="https://ldomenichelli.github.io/safari-pinned-tab.svg">
-  <meta name="theme-color" content="#f7f5ee">
-  <meta name="msapplication-TileColor" content="#f7f5ee">
-  <link rel="alternate" hreflang="en" href="https://ldomenichelli.github.io/posts/post8/">
-  <noscript>
-    <style>
-      #theme-toggle,
-      .top-link {
-        display: none;
-      }
-    </style>
-  </noscript>
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
-    integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X"
-    crossorigin="anonymous"
-  >
-  <script
-    defer
-    src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"
-    integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4"
-    crossorigin="anonymous"
-  ></script>
-  <script
-    defer
-    src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
-    integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"
-    crossorigin="anonymous"
-    onload='renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:true},{left:"$",right:"$",display:false},{left:"\\(",right:"\\)",display:false},{left:"\\[",right:"\\]",display:true}]})'
-  ></script>
-  <meta property="og:title" content="Statistical Learning and Large Data 📊">
-  <meta
-    property="og:description"
-    content="A digital mathematical notebook rebuilt from the Statistical Learning and Large Data slide deck: clustering, PCA, classification, smoothing, resampling, penalization, supervised dimension reduction, and ultrahigh-dimensional screening."
-  >
+  <link rel="icon" href="/favicon-dithered.ico">
+  <meta name="theme-color" content="#edf2f5">
+  <meta property="og:title" content="Statistical Learning and Large Data 📊 | Original Course Notes">
+  <meta property="og:description" content="Original annotated lecture slides for the Statistical Learning and Large Data course at Sant’Anna School of Advanced Studies in Pisa, presented as a continuous 172-page reader with the source PDF available to download.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://ldomenichelli.github.io/posts/post8/">
-  <meta property="og:image" content="https://ldomenichelli.github.io/logo-dithered.png">
-  <meta property="article:section" content="posts">
+  <meta property="og:image" content="https://ldomenichelli.github.io/posts/post8/pages/page-001.jpg">
   <meta property="og:site_name" content="lucia's room">
+  <meta property="article:modified_time" content="2026-08-27T00:00:00+02:00">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://ldomenichelli.github.io/logo-dithered.png">
-  <meta name="twitter:title" content="Statistical Learning and Large Data 📊">
-  <meta
-    name="twitter:description"
-    content="A digital mathematical notebook rebuilt from the Statistical Learning and Large Data slide deck: clustering, PCA, classification, smoothing, resampling, penalization, supervised dimension reduction, and ultrahigh-dimensional screening."
-  >
+  <meta name="twitter:title" content="Statistical Learning and Large Data 📊 | Original Course Notes">
+  <meta name="twitter:description" content="Original annotated lecture slides for the Statistical Learning and Large Data course at Sant’Anna School of Advanced Studies in Pisa, presented as a continuous 172-page reader with the source PDF available to download.">
+  <meta name="twitter:image" content="https://ldomenichelli.github.io/posts/post8/pages/page-001.jpg">
   <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
       "@type": "BreadcrumbList",
+      "@id": "https://ldomenichelli.github.io/posts/post8/#breadcrumb",
       "itemListElement": [
         {
           "@type": "ListItem",
           "position": 1,
-          "name": "",
-          "item": "https://ldomenichelli.github.io/posts/"
+          "name": "Home",
+          "item": "https://ldomenichelli.github.io/"
         },
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Statistical Learning and Large Data 📊",
+          "name": "Notes",
+          "item": "https://ldomenichelli.github.io/posts/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Statistical Learning and Large Data",
           "item": "https://ldomenichelli.github.io/posts/post8/"
         }
       ]
-    }
-  </script>
-  <script type="application/ld+json">
+    },
     {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": "Statistical Learning and Large Data 📊",
-      "name": "Statistical Learning and Large Data 📊",
-      "description": "A digital mathematical notebook rebuilt from the Statistical Learning and Large Data slide deck: clustering, PCA, classification, smoothing, resampling, penalization, supervised dimension reduction, and ultrahigh-dimensional screening.",
-      "keywords": [
-        "clustering",
-        "PCA",
-        "cross-validation",
-        "bootstrap",
-        "ridge",
-        "lasso",
-        "sufficient dimension reduction",
-        "screening"
-      ],
-      "articleBody": "Statistical Learning and Large Data moves from unsupervised classification and principal components to supervised classification, smoothing, cross-validation, bootstrap and permutation methods, then into penalization, feature selection, supervised dimension reduction, and sure independence screening in ultrahigh-dimensional regimes.",
-      "wordCount": "3600",
+      "@type": "Article",
+      "@id": "https://ldomenichelli.github.io/posts/post8/#article",
+      "url": "https://ldomenichelli.github.io/posts/post8/",
+      "headline": "Statistical Learning and Large Data 📊 | Original Course Notes",
+      "description": "Original annotated lecture slides for the Statistical Learning and Large Data course at Sant’Anna School of Advanced Studies in Pisa, presented as a continuous 172-page reader with the source PDF available to download.",
       "inLanguage": "en",
-      "datePublished": "0001-01-01T00:00:00Z",
-      "dateModified": "0001-01-01T00:00:00Z",
+      "dateModified": "2026-08-27",
       "author": {
         "@type": "Person",
-        "name": "Lucia"
+        "name": "Lucia Domenichelli",
+        "url": "https://ldomenichelli.github.io/about/"
       },
+      "contributor": {
+        "@type": "Person",
+        "name": "Prof. Chiaromonte"
+      },
+      "keywords": [
+        "statistical learning",
+        "large data",
+        "cluster analysis",
+        "principal component analysis",
+        "classification",
+        "regularization",
+        "feature selection"
+      ],
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://ldomenichelli.github.io/posts/post8/"
       },
-      "publisher": {
-        "@type": "Organization",
-        "name": "lucia's room",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://ldomenichelli.github.io/favicon-dithered.ico"
-        }
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://ldomenichelli.github.io/posts/post8/pages/page-001.jpg"
+      },
+      "encoding": {
+        "@type": "MediaObject",
+        "contentUrl": "https://ldomenichelli.github.io/SLLD_new.pdf",
+        "encodingFormat": "application/pdf",
+        "name": "Statistical Learning and Large Data original course notes"
       }
     }
+  ]
+}
   </script>
-  <link rel="stylesheet" href="/assets/css/site-theme.css">
-  <link rel="stylesheet" href="/assets/css/tda-notes.css">
-  <link rel="stylesheet" href="/assets/css/slld-notes.css">
-  <link rel="stylesheet" href="/assets/css/notes-minimal.css">
+  <script src="/assets/js/analytics.js" async></script>
+  <script src="/assets/js/winter-school-reader.js" defer></script>
 </head>
-<body class="dark note-page tda-notes-page slld-notes-page" id="top">
-  <header class="header">
-    <nav class="nav">
-      <div class="logo">
-        <a href="https://ldomenichelli.github.io/" accesskey="h" title="lucia's room (Alt + H)">
-          lucia's room
-        </a>
-        <div class="logo-switches">
-          <ul class="lang-switch">
-            <li>|</li>
-          </ul>
-        </div>
+<body class="dark ws-reader-page slld-reader-page" id="top">
+  <a class="ws-skip-link" href="#note-pages">Skip to the notes</a>
+
+  <header class="ws-reader-bar">
+    <div class="ws-reader-bar-inner">
+      <a class="ws-reader-back" href="/posts/" aria-label="Back to all notes">← <span>All notes</span></a>
+      <div class="ws-reader-heading">
+        <p class="ws-reader-speaker">Prof. Chiaromonte</p>
+        <h1>Statistical Learning and Large Data</h1>
       </div>
-      <button id="menu-trigger" aria-haspopup="menu" aria-label="Menu Button">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentcolor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="feather feather-menu"
-        >
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-      </button>
-      <ul class="menu hidden">
-        <li><a href="https://ldomenichelli.github.io/about/" title="about"><span>about</span></a></li>
-        <li><a href="https://ldomenichelli.github.io/posts/" title="notes"><span>notes</span></a></li><li><a href=https://ldomenichelli.github.io/projects/ title=projects><span>projects</span></a></li>
-        <li><a href="https://ldomenichelli.github.io/random/" title="hobbies"><span>hobbies</span></a></li>
-      </ul>
-    </nav>
+      <div class="ws-reader-tools">
+        <span class="ws-reader-progress" aria-hidden="true"><span data-current-page>1</span> / <span data-total-pages>172</span></span>
+        <a class="ws-reader-download" data-note-download="slld" href="/SLLD_new.pdf" download="lucia-domenichelli-statistical-learning-large-data-notes.pdf">Download PDF ↓</a>
+      </div>
+    </div>
   </header>
 
-  <main class="main">
-    <article class="post-single">
-      <header class="post-header">
-        <div class="breadcrumbs">
-          <a href="https://ldomenichelli.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://ldomenichelli.github.io/posts/"></a>
-        </div>
-        <h1 class="post-title">Statistical Learning and Large Data 📊</h1>
-        <div class="post-description">A digital mathematical notebook rebuilt from the full slide deck</div>
-        <div class="post-meta">Lucia</div>
-      </header>
-
-      <div class="post-content">
-        <div class="tda-notebook" data-tda-page>
-          <section class="tda-hero">
-            <div class="slld-hero-grid">
-              <div class="tda-hero-copy">
-                <p class="tda-kicker">Digital Mathematical Notebook</p>
-                <h1 class="tda-display">Statistical Learning and Large Data</h1>
-                <p class="tda-hero-intro">
-                  This page follows the 172-slide course deck in its original order: clustering, principal components,
-                  supervised classification, nonparametric smoothing, cross-validation, resampling, large-feature linear
-                  models, penalization, supervised dimension reduction, and ultrahigh-dimensional screening.
-                </p>
-                <p class="tda-hero-meta">
-                  The PDF is the main source throughout. Short connective text is added only to make the slide sequence
-                  readable as one continuous study page rather than a slide dump.
-                </p>
-                <div class="tda-hero-actions">
-                  <a class="tda-button is-primary" href="/SLLD_new.pdf" target="_blank" rel="noopener">Open original PDF</a>
-                </div>
-                <p class="tda-hero-note">
-                  A single review marker remains in the late feature-screening block, where the final covariate-information
-                  notation is harder to read cleanly from the slides than the surrounding ideas.
-                </p>
-              </div>
-
-              <div class="tda-callout is-intuition">
-                <strong class="tda-callout-title">Course arc</strong>
-                <p>
-                  The first half is about learning tasks and computational assessment: unsupervised structure, dimension
-                  reduction, classification, smoothing, and resampling. The second half shifts to what changes when the
-                  feature space itself becomes large, unstable, or ultra-high dimensional.
-                </p>
-                <div class="slld-hero-strip">
-                  <div class="slld-strip-item">
-                    <strong>Unsupervised geometry</strong>
-                    <p>Cluster analysis, PCA, and an MDS addendum organize the opening lectures.</p>
-                  </div>
-                  <div class="slld-strip-item">
-                    <strong>Prediction and assessment</strong>
-                    <p>Classification, smoothing, cross-validation, bootstrap, and permutation logic form the middle.</p>
-                  </div>
-                  <div class="slld-strip-item">
-                    <strong>High-dimensional regimes</strong>
-                    <p>Ridge, LASSO, subset selection, SDR, SIS, and ISIS address large or ultra-large feature spaces.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <details class="tda-source-drawer">
-            <summary>Source map and reconstruction notes</summary>
-            <p>
-              The notebook follows the slide blocks in sequence: Cluster Analysis; Principal Components Analysis with an
-              MDS addendum; Supervised Classification; Non-parametric Regression and Density Estimation; Cross-Validation;
-              Resampling; Linear Models in Large Feature Spaces; Penalizations via Ridge and LASSO; Traditional Feature
-              Selection; Supervised Dimension Reduction; and Feature Screening for ultra-large spaces.
-            </p>
-            <p>
-              Textbook references that appear directly on the slides are kept in the reading section at the end. Where a
-              slide is mainly visual, the page recreates the mathematical point in new SVG figures or explorable widgets
-              rather than embedding the slide image.
-            </p>
-          </details>
-
-          <div class="tda-jump" data-tda-jump></div>
-
-          <div class="tda-layout">
-            <aside class="tda-sidebar">
-              <div class="tda-toc-card">
-                <div>
-                  <p class="tda-sidebar-label">Lecture Map</p>
-                  <div class="tda-toc-links" data-tda-toc></div>
-                </div>
-              </div>
-            </aside>
-
-            <div class="tda-main">
-              <section class="tda-section" id="cluster-analysis" data-tda-section data-tda-label="1. Cluster Analysis">
-                <header class="tda-section-header">
-                  <p class="tda-lecture-meta">Opening block • Unsupervised classification</p>
-                  <h2>Cluster analysis</h2>
-                  <p class="tda-section-intro">
-                    The deck begins with unsupervised classification: there are no labels to predict, only a cloud of
-                    points in feature space and the question of whether a useful partition or hierarchy emerges from
-                    dissimilarity.
-                  </p>
-                </header>
-
-                <div class="tda-grid-two">
-                  <article class="tda-callout is-definition">
-                    <strong class="tda-callout-title">Partitioning versus nesting</strong>
-                    <p>
-                      Hierarchical clustering does not return one partition and one value of \(K\). It returns a nested
-                      sequence of merges summarized by a dendrogram, and the cut height determines the partition read off
-                      from that tree.
-                    </p>
-                  </article>
-
-                  <article class="tda-callout is-remark">
-                    <strong class="tda-callout-title">K-means is different</strong>
-                    <p>
-                      K-means fixes a target number of clusters \(K\) in advance and optimizes a partition directly:
-                      $$\sum_{k=1}^{K}\sum_{i:\,C(i)=k}\lVert x_i-\mu_k\rVert^2.$$
-                      It is fast and practical, but the final solution depends strongly on initialization and only reaches
-                      a local minimum.
-                    </p>
-                  </article>
-                </div>
-
-                <p>
-                  The slides separate three decisions that are often blurred together: choosing a point-to-point distance,
-                  choosing a linkage rule between clusters, and choosing how many groups to retain. Hierarchical clustering
-                  uses the first two to build a nested family of partitions. K-means skips the linkage step and alternates
-                  assignment and centroid updates instead.
-                </p>
-
-                <div class="tda-formula">
-                  <p>
-                    The silhouette diagnostic appears as the main quality score for a given partition:
-                    $$d_{i,C}=\frac{1}{\#(C)}\sum_{\ell\in C}d(x_i,x_\ell), \qquad
-                    a_i=d_{i,C(i)}, \qquad
-                    b_i=\min_{C\neq C(i)} d_{i,C},$$
-                    $$\operatorname{sil}_i=\frac{b_i-a_i}{\max\{a_i,b_i\}}, \qquad
-                    \operatorname{Sil}(K)=\frac{1}{N}\sum_{i=1}^{N}\operatorname{sil}_i.$$
-                  </p>
-                </div>
-
-                <p>
-                  High silhouette values mean the partition is coherent, but the slides explicitly warn that the criterion
-                  is <em>not</em> monotone in \(K\). Later pages add other ways to choose the number of clusters:
-                  dissimilarity curves, stability or reproducibility measures, and BIC when a mixture model is available.
-                </p>
-
-                <table class="slld-method-table">
-                  <thead>
-                    <tr>
-                      <th>Method</th>
-                      <th>Core idea</th>
-                      <th>What the slides stress</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><strong>Hierarchical</strong></td>
-                      <td>Merge clusters step by step using a linkage rule.</td>
-                      <td>Produces a dendrogram and a nested family of partitions, not one final answer.</td>
-                    </tr>
-                    <tr>
-                      <td><strong>K-means</strong></td>
-                      <td>Alternate centroid updates with reassignment.</td>
-                      <td>Optimizes within-cluster sum of squares, depends on initialization, and needs \(K\).</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Variants</strong></td>
-                      <td>PAM, self-organizing maps, fuzzy \(k\)-means, Gaussian mixtures.</td>
-                      <td>Useful when prototypes, soft partitions, or model-based interpretations matter.</td>
-                    </tr>
-                  </tbody>
-                </table>
-
-                <section class="tda-widget" data-widget="cluster-explorer">
-                  <div class="tda-widget-head">
-                    <h3>Cluster explorer</h3>
-                    <p class="tda-widget-caption">
-                      Compare a direct \(K\)-means partition with a hierarchical cut and read the silhouette widths next to it.
-                    </p>
-                  </div>
-                  <div class="slld-widget-grid">
-                    <div class="tda-widget-canvas" data-canvas></div>
-                    <div class="tda-widget-copy">
-                      <div class="slld-control-block">
-                        <h4>Method</h4>
-                        <div class="slld-chip-row">
-                          <button class="tda-widget-button is-active" type="button" data-cluster-method="kmeans">K-means</button>
-                          <button class="tda-widget-button" type="button" data-cluster-method="hierarchical">Hierarchical cut</button>
-                        </div>
-                      </div>
-                      <div class="slld-control-block">
-                        <h4>Number of clusters</h4>
-                        <div class="slld-slider-row">
-                          <label for="cluster-k">
-                            <span>\(K\)</span>
-                            <span data-cluster-k-label>3</span>
-                          </label>
-                          <input id="cluster-k" type="range" min="2" max="5" step="1" value="3" data-cluster-k>
-                        </div>
-                      </div>
-                      <p class="slld-inline-note">
-                        The widget stays close to the slides: partition quality is shown through silhouette widths rather
-                        than through a generic clustering score.
-                      </p>
-                    </div>
-                  </div>
-                  <p class="tda-widget-summary" data-summary></p>
-                </section>
-              </section>
-
-              <section class="tda-section" id="pca-and-mds" data-tda-section data-tda-label="2. PCA and MDS">
-                <header class="tda-section-header">
-                  <p class="tda-lecture-meta">Second block • Unsupervised dimension reduction</p>
-                  <h2>Principal components analysis and an MDS addendum</h2>
-                  <p class="tda-section-intro">
-                    PCA enters as a general-purpose reduction technique: capture the main directions of variation, build a
-                    low-dimensional representation, and create composite predictors without using a response.
-                  </p>
-                </header>
-
-                <div class="tda-grid-two">
-                  <article class="tda-callout is-definition">
-                    <strong class="tda-callout-title">Centered cloud, rotated coordinates</strong>
-                    <p>
-                      The slides treat location as irrelevant and center each feature first. Writing the centered sample
-                      variance-covariance matrix as \(S\) (the deck suppresses the usual \(1/(n-1)\) factor), PCA uses the
-                      eigen-decomposition
-                      $$S=\sum_{m=1}^{p}\lambda_m\phi_m\phi_m^{\top}, \qquad \lambda_1\ge \cdots \ge \lambda_p\ge 0.$$
-                    </p>
-                  </article>
-
-                  <article class="tda-callout is-example">
-                    <strong class="tda-callout-title">Scores and loadings</strong>
-                    <p>
-                      The loadings are the coordinates of each eigenvector \(\phi_m\) in the original basis. The scores are
-                      the values of the new composite feature on each observation:
-                      $$z_{im}=\phi_m^{\top}x_i.$$
-                    </p>
-                  </article>
-                </div>
-
-                <p>
-                  The geometric point is simple and powerful: for any dimension \(m\), the first \(m\) principal directions
-                  define the \(m\)-dimensional linear subspace that lies closest to the data cloud in a least-squares sense.
-                  That is why the slides move naturally from eigenvalues to scree plots, biplots, and cumulative explained
-                  variance.
-                </p>
-
-                <div class="tda-formula">
-                  <p>
-                    Percentage of variance explained appears explicitly as
-                    $$\operatorname{PVE}_m=\frac{\lambda_m}{\sum_{k=1}^{p}\lambda_k}, \qquad
-                    \operatorname{CPVE}_m=\sum_{j=1}^{m}\operatorname{PVE}_j.$$
-                  </p>
-                </div>
-
-                <p>
-                  A short addendum then introduces multidimensional scaling. In the Euclidean case, the deck notes that MDS
-                  reduces to another eigen-decomposition problem, so it sits naturally next to PCA as a geometry-first view
-                  of dimension reduction before the supervised material begins.
-                </p>
-
-                <section class="tda-widget" data-widget="pca-explorer">
-                  <div class="tda-widget-head">
-                    <h3>PCA explorer</h3>
-                    <p class="tda-widget-caption">
-                      Toggle raw units versus standardized features and see how the principal directions and the retained
-                      reconstruction change.
-                    </p>
-                  </div>
-                  <div class="slld-widget-grid">
-                    <div class="tda-widget-canvas" data-canvas></div>
-                    <div class="tda-widget-copy">
-                      <div class="slld-control-block">
-                        <h4>Feature scaling</h4>
-                        <div class="slld-chip-row">
-                          <button class="tda-widget-button is-active" type="button" data-pca-scale="raw">Raw units</button>
-                          <button class="tda-widget-button" type="button" data-pca-scale="standardized">Standardized</button>
-                        </div>
-                      </div>
-                      <div class="slld-control-block">
-                        <h4>Retained components</h4>
-                        <div class="slld-chip-row">
-                          <button class="tda-widget-button is-active" type="button" data-pca-retain="1">Keep 1</button>
-                          <button class="tda-widget-button" type="button" data-pca-retain="2">Keep 2</button>
-                        </div>
-                      </div>
-                      <p class="slld-inline-note">
-                        This mirrors the deck’s warning that scaling is not an afterthought: unlike regression coefficients,
-                        PCA reacts non-trivially when features are measured on very different scales.
-                      </p>
-                    </div>
-                  </div>
-                  <p class="tda-widget-summary" data-summary></p>
-                </section>
-              </section>
-
-              <section class="tda-section" id="supervised-classification" data-tda-section data-tda-label="3. Supervised Classification">
-                <header class="tda-section-header">
-                  <p class="tda-lecture-meta">Third block • Labeled prediction</p>
-                  <h2>Supervised classification</h2>
-                  <p class="tda-section-intro">
-                    The page now moves from unlabeled structure to labeled prediction. Here the slides are careful about
-                    model choice, thresholding, and the gap between training error and test error.
-                  </p>
-                </header>
-
-                <article class="tda-callout is-definition">
-                  <strong class="tda-callout-title">Classification setup</strong>
-                  <p>
-                    Observe pairs \((x_i,y_i)\) with a categorical response \(Y\in\{1,\dots,K\}\). The goal is prediction:
-                    build a rule \(x\mapsto \widehat y(x)\) with low misclassification on new data, not merely low error on
-                    the training sample used to fit the classifier.
-                  </p>
-                </article>
-
-                <p>
-                  Four model families anchor the lecture block: logistic regression, LDA, QDA, and \(K\)-nearest neighbors.
-                  Logistic regression models posterior class probabilities directly in the binary case. LDA and QDA instead
-                  model the class-conditional feature distributions \(f_k(x)\), then approximate the Bayes classifier through
-                  discriminant functions. KNN drops the parametric model and classifies by local majority vote.
-                </p>
-
-                <div class="tda-formula">
-                  <p>
-                    Binary logistic regression:
-                    $$\log\frac{p(x)}{1-p(x)}=\beta_0+\beta^{\top}x.$$
-                    LDA assumes
-                    $$X\mid Y=k\sim N_p(\mu_k,\Sigma),$$
-                    leading to the familiar linear discriminant score
-                    $$\delta_k(x)=x^{\top}\Sigma^{-1}\mu_k-\frac{1}{2}\mu_k^{\top}\Sigma^{-1}\mu_k+\log\pi_k.$$
-                    QDA keeps the Gaussian assumption but allows a separate covariance \(\Sigma_k\) for each class.
-                  </p>
-                </div>
-
-                <div class="slld-figure-grid">
-                  <figure class="tda-figure">
-                    <svg class="slld-static-svg" viewBox="0 0 420 250" role="img" aria-label="Linear and quadratic decision boundaries">
-                      <rect x="28" y="24" width="150" height="150" rx="12" fill="rgba(125,166,214,0.05)" stroke="rgba(255,255,255,0.06)"></rect>
-                      <rect x="240" y="24" width="150" height="150" rx="12" fill="rgba(136,180,142,0.04)" stroke="rgba(255,255,255,0.06)"></rect>
-                      <ellipse cx="92" cy="112" rx="38" ry="62" transform="rotate(28 92 112)" fill="rgba(216,182,110,0.12)" stroke="rgba(216,182,110,0.9)" stroke-width="2"></ellipse>
-                      <ellipse cx="142" cy="88" rx="30" ry="54" transform="rotate(-22 142 88)" fill="rgba(125,166,214,0.13)" stroke="rgba(125,166,214,0.95)" stroke-width="2"></ellipse>
-                      <line x1="38" y1="34" x2="170" y2="164" stroke="rgba(198,136,159,0.95)" stroke-width="2.4" stroke-dasharray="7 6"></line>
-                      <line x1="170" y1="32" x2="72" y2="174" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-dasharray="3 6"></line>
-                      <path d="M256 48 C298 18, 334 22, 360 54 C378 78, 380 112, 360 142 C336 174, 284 174, 258 138 C235 108, 232 72, 256 48 Z" fill="rgba(125,166,214,0.14)" stroke="rgba(125,166,214,0.95)" stroke-width="2"></path>
-                      <path d="M254 146 C284 104, 322 88, 358 122" fill="none" stroke="rgba(216,182,110,0.9)" stroke-width="2.4"></path>
-                      <path d="M250 132 C290 70, 338 60, 376 110" fill="none" stroke="rgba(136,180,142,0.95)" stroke-width="2.4"></path>
-                      <text x="42" y="197">Linear Bayes boundary: LDA is often closer.</text>
-                      <text x="246" y="197">Curved Bayes boundary: QDA can adapt better.</text>
-                    </svg>
-                    <figcaption>
-                      A clean restatement of the slide comparison between Bayes, LDA, and QDA boundaries: linear structure
-                      favors LDA, while unequal class covariances can make a quadratic boundary more appropriate.
-                    </figcaption>
-                  </figure>
-
-                  <article class="tda-callout is-remark">
-                    <strong class="tda-callout-title">Assessment is not just accuracy</strong>
-                    <p>
-                      The classification block spends real time on confusion matrices, ROC curves, sensitivity, specificity,
-                      and predictive values. That matters especially when classes are unbalanced: low overall error can hide
-                      poor detection of the minority class, so threshold choice and class-specific rates become essential.
-                    </p>
-                  </article>
-                </div>
-
-                <table class="slld-method-table">
-                  <thead>
-                    <tr>
-                      <th>Procedure</th>
-                      <th>Bias / flexibility</th>
-                      <th>What the deck emphasizes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><strong>Logistic regression</strong></td>
-                      <td>Linear decision surface in feature space.</td>
-                      <td>Probability modeling and threshold tuning.</td>
-                    </tr>
-                    <tr>
-                      <td><strong>LDA</strong></td>
-                      <td>Lower variance under a shared-covariance Gaussian model.</td>
-                      <td>Can outperform QDA when the true boundary is close to linear or data are limited.</td>
-                    </tr>
-                    <tr>
-                      <td><strong>QDA</strong></td>
-                      <td>More flexible, but with higher variance.</td>
-                      <td>Useful when covariance structure differs substantially across classes.</td>
-                    </tr>
-                    <tr>
-                      <td><strong>KNN</strong></td>
-                      <td>Nonparametric and local.</td>
-                      <td>Works through neighborhoods rather than a fitted parametric discriminant.</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </section>
-
-              <section class="tda-section" id="smoothing" data-tda-section data-tda-label="4. Smoothing and Nonparametric Regression">
-                <header class="tda-section-header">
-                  <p class="tda-lecture-meta">Fourth block • Flexible regression without a fixed equation</p>
-                  <h2>Nonparametric regression, smoothing, and kernel density estimation</h2>
-                  <p class="tda-section-intro">
-                    Once the response is continuous, the slides pause the parametric model-building game and ask what
-                    happens if the data themselves suggest the systematic shape.
-                  </p>
-                </header>
-
-                <div class="tda-grid-two">
-                  <article class="tda-callout is-definition">
-                    <strong class="tda-callout-title">LOWESS</strong>
-                    <p>
-                      LOWESS fits local weighted least-squares models around each target point. The main tuning choice is
-                      the fraction \(q\in(0,1)\) of the sample used in each neighborhood, together with the local polynomial
-                      degree and the weighting function.
-                    </p>
-                  </article>
-
-                  <article class="tda-callout is-remark">
-                    <strong class="tda-callout-title">What smoothing does not give you</strong>
-                    <p>
-                      The slides explicitly list the drawback: a smoother does not hand back one explicit global equation for
-                      the regression function. It is excellent for visualization, diagnosis, and local signal extraction, but
-                      less convenient when a compact parametric law is the end goal.
-                    </p>
-                  </article>
-                </div>
-
-                <p>
-                  LOWESS appears twice in the deck: first as a direct regression tool, then as a diagnostic companion to
-                  parametric regression, where plotting residuals against predictors or fitted values can reveal mean
-                  patterns that a postulated model missed. The same lecture then turns to kernel density estimation, where
-                  the tuning question becomes bandwidth selection rather than local span.
-                </p>
-
-                <div class="tda-formula">
-                  <p>
-                    Kernel density estimation is written in the usual form
-                    $$\widehat f_h(x)=\frac{1}{nh}\sum_{i=1}^{n}K\!\left(\frac{x-x_i}{h}\right),$$
-                    and the slides use the bandwidth \(h\) to illustrate the bias-variance dilemma: large \(h\) reduces
-                    variance but oversmooths the structure, while small \(h\) preserves detail at the cost of instability.
-                  </p>
-                </div>
-
-                <section class="tda-widget" data-widget="smoothing-explorer">
-                  <div class="tda-widget-head">
-                    <h3>Smoothing explorer</h3>
-                    <p class="tda-widget-caption">
-                      Switch between the LOWESS regression view and the kernel-density view to see how one tuning parameter
-                      controls smoothness in both settings.
-                    </p>
-                  </div>
-                  <div class="slld-widget-grid">
-                    <div class="tda-widget-canvas" data-canvas></div>
-                    <div class="tda-widget-copy">
-                      <div class="slld-control-block">
-                        <h4>Mode</h4>
-                        <div class="slld-chip-row">
-                          <button class="tda-widget-button is-active" type="button" data-smooth-mode="lowess">LOWESS</button>
-                          <button class="tda-widget-button" type="button" data-smooth-mode="kde">Kernel density</button>
-                        </div>
-                      </div>
-                      <div class="slld-control-block">
-                        <h4>Tuning parameter</h4>
-                        <div class="slld-slider-row">
-                          <label for="smooth-param">
-                            <span>Value</span>
-                            <span data-smooth-param-label>0.28</span>
-                          </label>
-                          <input id="smooth-param" type="range" min="0.15" max="0.70" step="0.01" value="0.28" data-smooth-param>
-                        </div>
-                      </div>
-                      <p class="slld-inline-note">
-                        LOWESS and KDE are different procedures, but the same notebook section uses them to teach the same
-                        modeling lesson: flexibility must be tuned rather than assumed.
-                      </p>
-                    </div>
-                  </div>
-                  <p class="tda-widget-summary" data-summary></p>
-                </section>
-              </section>
-
-              <section class="tda-section" id="cross-validation" data-tda-section data-tda-label="5. Cross-Validation">
-                <header class="tda-section-header">
-                  <p class="tda-lecture-meta">Fifth block • Model assessment for prediction</p>
-                  <h2>Cross-validation</h2>
-                  <p class="tda-section-intro">
-                    The cross-validation lecture is framed as a computational replacement for analytic formulas when the
-                    question is out-of-sample predictive accuracy.
-                  </p>
-                </header>
-
-                <p>
-                  The slides make a clean distinction between in-sample error and out-of-sample error. For flexible
-                  procedures, the training sample can be fit extremely closely while true predictive performance remains much
-                  worse. Cross-validation estimates the out-of-sample criterion directly by repeatedly withholding part of the
-                  data during fitting.
-                </p>
-
-                <div class="tda-formula">
-                  <p>
-                    For regression, the in-sample criterion is
-                    $$\operatorname{MSE}_{\mathrm{in}}=\frac{1}{n}\sum_{i=1}^{n}(y_i-\widehat y_i)^2,$$
-                    while \(k\)-fold cross-validation estimates out-of-sample error by averaging foldwise test errors:
-                    $$\operatorname{CV}_k=\frac{1}{k}\sum_{j=1}^{k}\operatorname{MSE}_j.$$
-                  </p>
-                </div>
-
-                <article class="tda-callout is-remark">
-                  <strong class="tda-callout-title">Model assessment versus model selection</strong>
-                  <p>
-                    The same cross-validation curve can be used in two different ways. First, to estimate predictive
-                    accuracy for a fixed method. Second, to choose a tuning parameter or model size by minimizing the
-                    estimated out-of-sample error. The slides keep those roles conceptually separate even though the same
-                    computation supports both.
-                  </p>
-                </article>
-
-                <p>
-                  As \(k\) increases toward leave-one-out, the training folds become larger and the overestimation bias of
-                  out-of-sample error drops, but the variance of the estimate increases because the folds overlap much more.
-                  The deck presents the familiar practical compromise: values around five or ten often balance cost,
-                  variance, and bias well.
-                </p>
-              </section>
-
-              <section class="tda-section" id="resampling" data-tda-section data-tda-label="6. Resampling">
-                <header class="tda-section-header">
-                  <p class="tda-lecture-meta">Sixth block • Sampling variability by computation</p>
-                  <h2>Bootstrap, permutation methods, and resampling logic</h2>
-                  <p class="tda-section-intro">
-                    The resampling lecture shifts from predictive assessment to uncertainty assessment: not “how well will
-                    this predict?” but “how variable is this estimator, and what would its sampling distribution look like?”
-                  </p>
-                </header>
-
-                <p>
-                  In the one-sample nonparametric bootstrap, the empirical distribution \(\widehat F_n\) stands in for the
-                  unknown data-generating distribution \(F\). Resampling with replacement from the observed data generates
-                  pseudo-samples that mimic the variability of the statistic across repeated samples of size \(n\).
-                </p>
-
-                <div class="tda-formula">
-                  <p>
-                    If \(\widehat\theta^{*(1)},\dots,\widehat\theta^{*(B)}\) are the bootstrap replicates of a statistic,
-                    the bootstrap standard-error estimate is their empirical standard deviation, and the percentile interval
-                    uses the empirical quantiles of the bootstrap distribution:
-                    $$[\widehat G^{-1}(\alpha/2),\,\widehat G^{-1}(1-\alpha/2)].$$
-                  </p>
-                </div>
-
-                <p>
-                  The deck then broadens the picture: multi-sample bootstrap for two-population problems, parametric
-                  bootstrap when a parametric family is credible, and random permutations when the goal is a null
-                  distribution under no association rather than a sampling distribution around the observed effect.
-                </p>
-
-                <section class="tda-widget" data-widget="resampling-explorer">
-                  <div class="tda-widget-head">
-                    <h3>Resampling explorer</h3>
-                    <p class="tda-widget-caption">
-                      Move between cross-validation, bootstrap, and permutation views to keep their targets clearly distinct.
-                    </p>
-                  </div>
-                  <div class="slld-widget-grid">
-                    <div class="tda-widget-canvas" data-canvas></div>
-                    <div class="tda-widget-copy">
-                      <div class="slld-control-block">
-                        <h4>Mode</h4>
-                        <div class="slld-chip-row">
-                          <button class="tda-widget-button is-active" type="button" data-resample-mode="cv">Cross-validation</button>
-                          <button class="tda-widget-button" type="button" data-resample-mode="bootstrap">Bootstrap</button>
-                          <button class="tda-widget-button" type="button" data-resample-mode="permutation">Permutation</button>
-                        </div>
-                      </div>
-                      <p class="slld-inline-note">
-                        The same “split and repeat” visual language hides different inferential goals. This widget keeps the
-                        contrast explicit instead of lumping all resampling together.
-                      </p>
-                    </div>
-                  </div>
-                  <p class="tda-widget-summary" data-summary></p>
-                </section>
-              </section>
-
-              <section class="tda-section" id="large-feature-review" data-tda-section data-tda-label="7. Linear Models in Large Feature Spaces">
-                <header class="tda-section-header">
-                  <p class="tda-lecture-meta">Transition block • Review before penalization</p>
-                  <h2>Linear models, multicollinearity, and what breaks when \(p\) grows</h2>
-                  <p class="tda-section-intro">
-                    Before introducing penalties, the deck revisits ordinary least squares and the classical assumptions that
-                    make it attractive.
-                  </p>
-                </header>
-
-                <div class="tda-formula">
-                  <p>
-                    The working linear model is
-                    $$y_i=\beta_0+\beta^{\top}x_i+\varepsilon_i,$$
-                    with least-squares fit
-                    $$\widehat\beta=(X^{\top}X)^{-1}X^{\top}Y, \qquad
-                    \widehat\sigma^2=\frac{\lVert Y-X\widehat\beta\rVert^2}{n-(p+1)}.$$
-                  </p>
-                </div>
-
-                <p>
-                  The slides review unbiasedness, Gauss-Markov, Gaussian error assumptions, residual diagnostics, and
-                  generalized linear models. But the real purpose of the section is to set up the failure mode that motivates
-                  the rest of the notebook: when predictors are strongly interdependent or \(p\) is large relative to \(n\),
-                  \(X^{\top}X\) becomes ill-conditioned, coefficient variance inflates, and overfitting becomes easy.
-                </p>
-
-                <div class="tda-grid-two">
-                  <article class="tda-callout is-remark">
-                    <strong class="tda-callout-title">Multicollinearity</strong>
-                    <p>
-                      Pairwise correlations, partial \(R^2\), and variance inflation factors enter here as diagnostics. The
-                      slides present ridge, LASSO, and dimension reduction as three different responses to the same
-                      instability.
-                    </p>
-                  </article>
-
-                  <article class="tda-callout is-example">
-                    <strong class="tda-callout-title">Omitted variable bias</strong>
-                    <p>
-                      A dedicated aside shows that omitting a relevant variable \(Z\) correlated with \(X\) does not just
-                      enlarge error variance: it changes the expected value of the least-squares coefficients and induces a
-                      persistent bias.
-                    </p>
-                  </article>
-                </div>
-
-                <p>
-                  This is also where the notebook separates prediction from inference, and model specification from model
-                  assessment. The later regularization slides are not sold as “fixing the true model”; they are introduced as
-                  ways to trade a small amount of bias for a large reduction in variance and overfitting.
-                </p>
-              </section>
-
-              <section class="tda-section" id="ridge-and-lasso" data-tda-section data-tda-label="8. Ridge and LASSO">
-                <header class="tda-section-header">
-                  <p class="tda-lecture-meta">Main high-dimensional block • Penalized least squares</p>
-                  <h2>Ridge regression and LASSO</h2>
-                  <p class="tda-section-intro">
-                    Penalization appears as constrained least squares: shrink the coefficient vector to stabilize estimation,
-                    improve out-of-sample accuracy, and sometimes force sparsity.
-                  </p>
-                </header>
-
-                <div class="tda-formula">
-                  <p>
-                    The two canonical penalties are
-                    $$\widehat\beta_{\mathrm{ridge}}=\arg\min_{\beta}\{\lVert Y-X\beta\rVert^2+\lambda\lVert\beta\rVert_2^2\},$$
-                    $$\widehat\beta_{\mathrm{lasso}}=\arg\min_{\beta}\{\lVert Y-X\beta\rVert^2+\lambda\lVert\beta\rVert_1\}.$$
-                    The slides repeatedly note that features should be scaled first, because unlike ordinary least squares,
-                    these procedures are not scale-equivariant.
-                  </p>
-                </div>
-
-                <p>
-                  Ridge is introduced historically as a response to multicollinearity. LASSO arrives later as a sparse
-                  alternative that can perform soft feature selection. Both improve accuracy by shrinking the coefficient
-                  vector, but they do so with different geometry: the Euclidean ball of ridge keeps all coefficients alive,
-                  while the diamond-shaped \(L^1\) constraint makes exact zeros much more likely.
-                </p>
-
-                <div class="tda-grid-two">
-                  <article class="tda-callout is-intuition">
-                    <strong class="tda-callout-title">Bias-variance trade-off</strong>
-                    <p>
-                      The slides visualize out-of-sample MSE as the sum of squared bias and variance. As \(\lambda\)
-                      increases, variance drops, bias rises, and the best value must be found computationally, usually with
-                      cross-validation.
-                    </p>
-                  </article>
-
-                  <article class="tda-callout is-remark">
-                    <strong class="tda-callout-title">Beyond convex penalties</strong>
-                    <p>
-                      The deck briefly points beyond ridge and LASSO toward Elastic Net, fused and grouped penalties, and
-                      non-convex options such as SCAD and related oracle-property literature.
-                    </p>
-                  </article>
-                </div>
-
-                <section class="tda-widget" data-widget="regularization-explorer">
-                  <div class="tda-widget-head">
-                    <h3>Regularization explorer</h3>
-                    <p class="tda-widget-caption">
-                      Watch the least-squares optimum move inside either a circular ridge constraint or a diamond-shaped
-                      LASSO constraint while the coefficients shrink.
-                    </p>
-                  </div>
-                  <div class="slld-widget-grid">
-                    <div class="tda-widget-canvas" data-canvas></div>
-                    <div class="tda-widget-copy">
-                      <div class="slld-control-block">
-                        <h4>Penalty</h4>
-                        <div class="slld-chip-row">
-                          <button class="tda-widget-button is-active" type="button" data-regularizer="ridge">Ridge</button>
-                          <button class="tda-widget-button" type="button" data-regularizer="lasso">LASSO</button>
-                        </div>
-                      </div>
-                      <div class="slld-control-block">
-                        <h4>Penalty strength</h4>
-                        <div class="slld-slider-row">
-                          <label for="regularization-lambda">
-                            <span>\(\lambda\)</span>
-                            <span data-regularization-lambda-label>0.70</span>
-                          </label>
-                          <input
-                            id="regularization-lambda"
-                            type="range"
-                            min="0.05"
-                            max="2.40"
-                            step="0.05"
-                            value="0.70"
-                            data-regularization-lambda
-                          >
-                        </div>
-                      </div>
-                      <p class="slld-inline-note">
-                        The left panel follows the exact visual language of the slides: residual contours plus a changing
-                        constraint set, not a generic coefficient dashboard.
-                      </p>
-                    </div>
-                  </div>
-                  <p class="tda-widget-summary" data-summary></p>
-                </section>
-              </section>
-
-              <section class="tda-section" id="feature-selection" data-tda-section data-tda-label="9. Traditional Feature Selection">
-                <header class="tda-section-header">
-                  <p class="tda-lecture-meta">Follow-up block • Hard selection and model criteria</p>
-                  <h2>Traditional feature selection</h2>
-                  <p class="tda-section-intro">
-                    After penalization, the deck returns to the older feature-selection viewpoint: explicitly choose which
-                    predictors stay in the model and which disappear.
-                  </p>
-                </header>
-
-                <p>
-                  Best subset and stepwise procedures are treated as “hard” selection methods. In the slide geometry this is
-                  an \(L^0\)-style constraint: count nonzero coefficients, tune the allowed model size by cross-validation or
-                  model-selection criteria, and then refit on the surviving variables.
-                </p>
-
-                <div class="tda-grid-two">
-                  <article class="tda-callout is-definition">
-                    <strong class="tda-callout-title">Feature selection versus dimension reduction</strong>
-                    <p>
-                      Selection keeps a subset of the original coordinates. Dimension reduction instead builds new composite
-                      predictors as linear combinations. The notebook keeps those ideas separate because the high-dimensional
-                      slides use both.
-                    </p>
-                  </article>
-
-                  <article class="tda-callout is-example">
-                    <strong class="tda-callout-title">Criteria in the slides</strong>
-                    <p>
-                      The selection block explicitly includes \(C_p\), AIC, BIC, adjusted \(R^2\), and cross-validated test
-                      error. That is the right place to keep model selection distinct from the later use of cross-validation
-                      for penalty tuning.
-                    </p>
-                  </article>
-                </div>
-
-                <p>
-                  The lecture then connects these classical ideas to modern mixed-integer optimization. MIP-BOOST appears as
-                  a concrete example: exact \(L^0\) selection made computationally viable by careful tuning, warm starts, and
-                  whitening to handle collinearity more effectively than a naive subset search.
-                </p>
-              </section>
-
-              <section class="tda-section" id="supervised-dimension-reduction" data-tda-section data-tda-label="10. Supervised Dimension Reduction">
-                <header class="tda-section-header">
-                  <p class="tda-lecture-meta">Late block • Composite predictors with supervision</p>
-                  <h2>Supervised dimension reduction</h2>
-                  <p class="tda-section-intro">
-                    Principal component regression is not the end of the story because the response variable may care about
-                    directions that do not explain the most feature variance. The slides therefore introduce supervised
-                    dimension reduction.
-                  </p>
-                </header>
-
-                <div class="slld-figure-grid">
-                  <figure class="tda-figure">
-                    <svg class="slld-static-svg" viewBox="0 0 420 210" role="img" aria-label="SDR pipeline from high-dimensional predictors to a low-dimensional subspace">
-                      <rect x="32" y="42" width="96" height="112" rx="16" fill="rgba(125,166,214,0.13)" stroke="rgba(125,166,214,0.95)"></rect>
-                      <rect x="166" y="62" width="86" height="72" rx="16" fill="rgba(216,182,110,0.12)" stroke="rgba(216,182,110,0.92)"></rect>
-                      <rect x="292" y="72" width="88" height="54" rx="16" fill="rgba(136,180,142,0.12)" stroke="rgba(136,180,142,0.94)"></rect>
-                      <path d="M128 98 L166 98" stroke="rgba(255,255,255,0.74)" stroke-width="2.2" stroke-linecap="round"></path>
-                      <path d="M252 98 L292 98" stroke="rgba(255,255,255,0.74)" stroke-width="2.2" stroke-linecap="round"></path>
-                      <text x="56" y="76">High-dimensional</text>
-                      <text x="56" y="100">predictors</text>
-                      <text x="56" y="124">\(X\in\mathbb{R}^p\)</text>
-                      <text x="184" y="86">Projection</text>
-                      <text x="183" y="110">\(A^{\top}X\)</text>
-                      <text x="308" y="102">Model for \(Y\)</text>
-                      <text x="181" y="150">central subspace of dimension \(d\)</text>
-                    </svg>
-                    <figcaption>
-                      The slide logic in one diagram: estimate a low-dimensional subspace that retains the information in
-                      \(X\) relevant for the dependence of \(Y\) on the predictors.
-                    </figcaption>
-                  </figure>
-
-                  <article class="tda-callout is-definition">
-                    <strong class="tda-callout-title">Central subspace</strong>
-                    <p>
-                      Sufficient dimension reduction is formulated through the smallest subspace
-                      \(\mathcal S_{Y\mid X}\) such that
-                      $$Y \perp X \mid A^{\top}X, \qquad \mathcal S_{Y\mid X}=\operatorname{span}(A_{p\times d}).$$
-                      The structural dimension \(d\) is part of the inferential problem, not a tuning afterthought.
-                    </p>
-                  </article>
-                </div>
-
-                <p>
-                  The simplest SDR method in the deck is sliced inverse regression. Instead of regressing \(Y\) on \(X\),
-                  look at the inverse regression of \(X\) on \(Y\), slice the response, compute slice means \(\bar X_h\), and
-                  build
-                  $$M=\sum_{h=1}^{H}\frac{n_h}{n}\bar X_h\bar X_h^{\top},$$
-                  then perform an eigen-analysis of \(S^{-1}M\). Under the stated linearity conditions, the leading
-                  eigenspaces recover directions inside the central subspace.
-                </p>
-
-                <p>
-                  The same block reinterprets LDA as supervised dimension reduction for categorical responses: the
-                  between-class covariance is rescaled by within-class covariance, and the resulting discriminant directions
-                  serve both for visualization and for classification.
-                </p>
-
-                <article class="tda-callout is-remark">
-                  <strong class="tda-callout-title">Choosing \(d\)</strong>
-                  <p>
-                    The slides list several routes: diagnostics and scree-like plots from eigenvalues, sequential tests for
-                    tail eigenvalues, BIC-like criteria when likelihoods are available, and bootstrap-based stability
-                    assessment inspired by Ye and Weiss.
-                  </p>
-                </article>
-              </section>
-
-              <section class="tda-section" id="feature-screening" data-tda-section data-tda-label="11. Feature Screening in Ultra-Large Spaces">
-                <header class="tda-section-header">
-                  <p class="tda-lecture-meta">Final block • \(p \gg n\) and new asymptotics</p>
-                  <h2>Sure independence screening and ultrahigh-dimensional feature spaces</h2>
-                  <p class="tda-section-intro">
-                    The last lecture block changes asymptotic scale entirely: \(p\) may grow with \(n\), even very quickly,
-                    so full-model fitting and even one-shot penalization can become unstable or computationally unrealistic.
-                  </p>
-                </header>
-
-                <p>
-                  The slides first explain why the usual least-squares “re-mapping” through \(X^{\top}X\) becomes
-                  unreliable. As dimension rises, spurious correlations grow, \(X^{\top}X\) becomes singular or nearly so,
-                  and trying to account for all predictor interdependence can hurt more than it helps.
-                </p>
-
-                <div class="tda-formula">
-                  <p>
-                    Fan and Lv’s SIS proposal therefore starts from marginal utilities only:
-                    $$\omega=X^{\top}Y\propto r_{X,Y},$$
-                    rank the predictors by \(|\omega_j|\), keep the top \(d\ll p\) variables, and apply a heavier selection
-                    method on that reduced set. Under suitable assumptions and \(d=n/\log n\), the slides summarize the sure
-                    screening property as
-                    $$\Pr(M^{\ast}\subseteq M_d)\to 1 \qquad \text{as } n\to\infty.$$
-                  </p>
-                </div>
-
-                <p>
-                  A key conceptual point is that screening is meant to be conservative. The target is not an immediately
-                  tiny model. The target is to avoid false negatives early, then let LASSO, SCAD, Dantzig, or another
-                  follow-up selector refine the reduced set. The iterative version ISIS appears precisely because some
-                  relevant variables have weak marginal traces and only become visible after partial residualization.
-                </p>
-
-                <section class="tda-widget" data-widget="screening-explorer">
-                  <div class="tda-widget-head">
-                    <h3>Screening explorer</h3>
-                    <p class="tda-widget-caption">
-                      Compare a one-pass marginal ranking with a single residual iteration to see why the deck treats ISIS as
-                      a rescue mechanism for weaker signals.
-                    </p>
-                  </div>
-                  <div class="slld-widget-grid">
-                    <div class="tda-widget-canvas" data-canvas></div>
-                    <div class="tda-widget-copy">
-                      <div class="slld-control-block">
-                        <h4>Procedure</h4>
-                        <div class="slld-chip-row">
-                          <button class="tda-widget-button is-active" type="button" data-screen-mode="sis">SIS</button>
-                          <button class="tda-widget-button" type="button" data-screen-mode="isis">Iterative idea</button>
-                        </div>
-                      </div>
-                      <div class="slld-control-block">
-                        <h4>Retained variables</h4>
-                        <div class="slld-slider-row">
-                          <label for="screen-d">
-                            <span>Top \(d\)</span>
-                            <span data-screen-d-label>4</span>
-                          </label>
-                          <input id="screen-d" type="range" min="2" max="6" step="1" value="4" data-screen-d>
-                        </div>
-                      </div>
-                      <p class="slld-inline-note">
-                        The toy example is deliberately small, but the logic is the same one emphasized in the slides:
-                        marginal learning first, structured selection second.
-                      </p>
-                    </div>
-                  </div>
-                  <p class="tda-widget-summary" data-summary></p>
-                </section>
-
-                <div class="tda-grid-two">
-                  <article class="tda-callout is-remark">
-                    <strong class="tda-callout-title">New asymptotics</strong>
-                    <p>
-                      The deck highlights the shift from fixed \(p\) to \(p=p(n)\), sometimes with
-                      \(\log p = O(n^{\alpha})\). That perspective is what makes “screen first, select later” a genuinely
-                      statistical idea rather than just a computational shortcut.
-                    </p>
-                  </article>
-
-                  <article class="tda-callout is-review">
-                    <strong class="tda-callout-title">Review marker</strong>
-                    <p>
-                      The final research-slide extension on covariate information numbers is clearly about a model-free
-                      marginal utility for screening, and the paper reference is readable. The exact density-information
-                      notation in that final formula block is harder to transcribe confidently from the deck, so the page
-                      keeps the idea but does not overcommit to every symbol there.
-                    </p>
-                  </article>
-                </div>
-              </section>
-
-              <section class="tda-section" id="examples-and-takeaways" data-tda-section data-tda-label="12. Examples, Takeaways, and Reading">
-                <header class="tda-section-header">
-                  <p class="tda-lecture-meta">Closing section • What the deck leaves you with</p>
-                  <h2>Examples, key takeaways, and further reading</h2>
-                  <p class="tda-section-intro">
-                    The slide deck closes by mixing textbook material with research-oriented examples. The page keeps that
-                    same balance: concrete datasets, a compact recap, and the references that actually appear in the slides.
-                  </p>
-                </header>
-
-                <div class="slld-dataset-grid">
-                  <article class="slld-dataset-card">
-                    <strong>Clustering diagnostics</strong>
-                    <p>Silhouette plots, Gaussian-mixture partitions, and stability-based checks appear as the main unsupervised examples.</p>
-                  </article>
-                  <article class="slld-dataset-card">
-                    <strong>Leukemia gene expression</strong>
-                    <p>The SIS material revisits the classic Golub leukemia data to compare sparsity, screening, and classification error.</p>
-                  </article>
-                  <article class="slld-dataset-card">
-                    <strong>Transcriptomic screening</strong>
-                    <p>The final CIS extension is motivated by transcriptomic data, where \(p \gg n\) is the norm rather than the exception.</p>
-                  </article>
-                </div>
-
-                <div class="slld-why-grid">
-                  <article class="slld-why-item">
-                    <strong>Learning tasks stay distinct</strong>
-                    <p>Unsupervised grouping, supervised prediction, density estimation, and dimension reduction are related but not interchangeable.</p>
-                  </article>
-                  <article class="slld-why-item">
-                    <strong>Assessment is computational</strong>
-                    <p>Cross-validation, bootstrap, and permutation methods are presented as replacements for analytic formulas when those formulas are too narrow.</p>
-                  </article>
-                  <article class="slld-why-item">
-                    <strong>Large \(p\) is not large \(n\)</strong>
-                    <p>The second half of the deck is about feature-space size and instability, not only about having many observations.</p>
-                  </article>
-                  <article class="slld-why-item">
-                    <strong>Selection and reduction are separate</strong>
-                    <p>Subset selection, shrinkage, PCA, SIR, and SIS solve related problems with different geometric and statistical trade-offs.</p>
-                  </article>
-                </div>
-
-                <div class="slld-reading-grid">
-                  <article class="slld-reading-card">
-                    <strong>Course and textbook spine</strong>
-                    <p>
-                      <a href="https://www.statlearning.com/" target="_blank" rel="noopener">Introduction to Statistical Learning</a>
-                      is the explicit backbone cited across the clustering, classification, cross-validation, and regularization blocks.
-                    </p>
-                  </article>
-                  <article class="slld-reading-card">
-                    <strong>Broader penalization context</strong>
-                    <p>
-                      The slides cite <em>Elements of Statistical Learning</em>, Tibshirani’s original LASSO paper, Elastic Net,
-                      grouped penalties, fused LASSO, and non-convex penalties such as SCAD.
-                    </p>
-                  </article>
-                  <article class="slld-reading-card">
-                    <strong>Supervised dimension reduction</strong>
-                    <p>
-                      Key references include Li (1991) for SIR, Cook’s <em>Regression Graphics</em>, and the later SDR review
-                      literature cited directly in the slides.
-                    </p>
-                  </article>
-                  <article class="slld-reading-card">
-                    <strong>Ultra-high-dimensional screening</strong>
-                    <p>
-                      Fan and Lv (2008) anchor the SIS section, followed by extensions to GLMs, model-free screening, and
-                      the later SIS software package reference.
-                    </p>
-                  </article>
-                </div>
-              </section>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <footer class="post-footer">
-        <ul class="post-tags">
-          <li><a href="https://ldomenichelli.github.io/tags/statistics/">Statistics</a></li>
-          <li><a href="https://ldomenichelli.github.io/tags/machine-learning/">Machine Learning</a></li>
-        </ul>
-        <nav class="paginav">
-          <a class="prev" href="https://ldomenichelli.github.io/posts/post2/">
-            <span class="title">« Prev</span><br><span>Optimal Transport 🕷️ and Wasserstein distance</span>
-          </a>
-          <a class="next" href="https://ldomenichelli.github.io/posts/post9/">
-            <span class="title">Next »</span><br><span>Time Series 📈</span>
-          </a>
-        </nav>
-      </footer>
-    </article>
+  <main class="ws-reader-main" id="note-pages">
+    <p class="ws-reader-intro"><a href="/posts/">Sant’Anna School of Advanced Studies, Pisa</a> · Scroll to read</p>
+    <section class="ws-reader-summary" aria-labelledby="reader-summary-title">
+      <h2 id="reader-summary-title">About these notes</h2>
+      <p>Original annotated lecture slides for the Statistical Learning and Large Data course at Sant’Anna School of Advanced Studies in Pisa, presented as a continuous 172-page reader with the source PDF available to download.</p>
+      <ul aria-label="Topics covered">
+        <li>Cluster analysis and principal components</li>
+        <li>Supervised classification and smoothing</li>
+        <li>Cross-validation, bootstrap, and permutation methods</li>
+        <li>Penalization, dimension reduction, and feature screening</li>
+      </ul>
+    </section>
+
+    <ol class="ws-reader-pages" aria-label="172 pages from Statistical Learning and Large Data">
+      <li class="ws-reader-page-item" id="page-1" data-note-page="1">
+        <figure class="ws-reader-sheet" aria-labelledby="page-1-caption">
+          <img src="/posts/post8/pages/page-001.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 1 of 172." loading="eager" fetchpriority="high" decoding="async">
+          <figcaption id="page-1-caption">Page 1 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-2" data-note-page="2">
+        <figure class="ws-reader-sheet" aria-labelledby="page-2-caption">
+          <img src="/posts/post8/pages/page-002.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 2 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-2-caption">Page 2 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-3" data-note-page="3">
+        <figure class="ws-reader-sheet" aria-labelledby="page-3-caption">
+          <img src="/posts/post8/pages/page-003.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 3 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-3-caption">Page 3 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-4" data-note-page="4">
+        <figure class="ws-reader-sheet" aria-labelledby="page-4-caption">
+          <img src="/posts/post8/pages/page-004.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 4 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-4-caption">Page 4 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-5" data-note-page="5">
+        <figure class="ws-reader-sheet" aria-labelledby="page-5-caption">
+          <img src="/posts/post8/pages/page-005.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 5 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-5-caption">Page 5 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-6" data-note-page="6">
+        <figure class="ws-reader-sheet" aria-labelledby="page-6-caption">
+          <img src="/posts/post8/pages/page-006.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 6 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-6-caption">Page 6 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-7" data-note-page="7">
+        <figure class="ws-reader-sheet" aria-labelledby="page-7-caption">
+          <img src="/posts/post8/pages/page-007.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 7 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-7-caption">Page 7 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-8" data-note-page="8">
+        <figure class="ws-reader-sheet" aria-labelledby="page-8-caption">
+          <img src="/posts/post8/pages/page-008.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 8 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-8-caption">Page 8 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-9" data-note-page="9">
+        <figure class="ws-reader-sheet" aria-labelledby="page-9-caption">
+          <img src="/posts/post8/pages/page-009.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 9 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-9-caption">Page 9 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-10" data-note-page="10">
+        <figure class="ws-reader-sheet" aria-labelledby="page-10-caption">
+          <img src="/posts/post8/pages/page-010.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 10 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-10-caption">Page 10 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-11" data-note-page="11">
+        <figure class="ws-reader-sheet" aria-labelledby="page-11-caption">
+          <img src="/posts/post8/pages/page-011.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 11 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-11-caption">Page 11 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-12" data-note-page="12">
+        <figure class="ws-reader-sheet" aria-labelledby="page-12-caption">
+          <img src="/posts/post8/pages/page-012.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 12 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-12-caption">Page 12 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-13" data-note-page="13">
+        <figure class="ws-reader-sheet" aria-labelledby="page-13-caption">
+          <img src="/posts/post8/pages/page-013.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 13 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-13-caption">Page 13 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-14" data-note-page="14">
+        <figure class="ws-reader-sheet" aria-labelledby="page-14-caption">
+          <img src="/posts/post8/pages/page-014.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 14 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-14-caption">Page 14 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-15" data-note-page="15">
+        <figure class="ws-reader-sheet" aria-labelledby="page-15-caption">
+          <img src="/posts/post8/pages/page-015.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 15 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-15-caption">Page 15 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-16" data-note-page="16">
+        <figure class="ws-reader-sheet" aria-labelledby="page-16-caption">
+          <img src="/posts/post8/pages/page-016.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 16 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-16-caption">Page 16 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-17" data-note-page="17">
+        <figure class="ws-reader-sheet" aria-labelledby="page-17-caption">
+          <img src="/posts/post8/pages/page-017.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 17 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-17-caption">Page 17 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-18" data-note-page="18">
+        <figure class="ws-reader-sheet" aria-labelledby="page-18-caption">
+          <img src="/posts/post8/pages/page-018.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 18 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-18-caption">Page 18 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-19" data-note-page="19">
+        <figure class="ws-reader-sheet" aria-labelledby="page-19-caption">
+          <img src="/posts/post8/pages/page-019.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 19 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-19-caption">Page 19 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-20" data-note-page="20">
+        <figure class="ws-reader-sheet" aria-labelledby="page-20-caption">
+          <img src="/posts/post8/pages/page-020.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 20 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-20-caption">Page 20 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-21" data-note-page="21">
+        <figure class="ws-reader-sheet" aria-labelledby="page-21-caption">
+          <img src="/posts/post8/pages/page-021.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 21 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-21-caption">Page 21 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-22" data-note-page="22">
+        <figure class="ws-reader-sheet" aria-labelledby="page-22-caption">
+          <img src="/posts/post8/pages/page-022.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 22 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-22-caption">Page 22 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-23" data-note-page="23">
+        <figure class="ws-reader-sheet" aria-labelledby="page-23-caption">
+          <img src="/posts/post8/pages/page-023.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 23 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-23-caption">Page 23 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-24" data-note-page="24">
+        <figure class="ws-reader-sheet" aria-labelledby="page-24-caption">
+          <img src="/posts/post8/pages/page-024.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 24 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-24-caption">Page 24 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-25" data-note-page="25">
+        <figure class="ws-reader-sheet" aria-labelledby="page-25-caption">
+          <img src="/posts/post8/pages/page-025.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 25 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-25-caption">Page 25 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-26" data-note-page="26">
+        <figure class="ws-reader-sheet" aria-labelledby="page-26-caption">
+          <img src="/posts/post8/pages/page-026.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 26 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-26-caption">Page 26 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-27" data-note-page="27">
+        <figure class="ws-reader-sheet" aria-labelledby="page-27-caption">
+          <img src="/posts/post8/pages/page-027.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 27 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-27-caption">Page 27 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-28" data-note-page="28">
+        <figure class="ws-reader-sheet" aria-labelledby="page-28-caption">
+          <img src="/posts/post8/pages/page-028.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 28 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-28-caption">Page 28 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-29" data-note-page="29">
+        <figure class="ws-reader-sheet" aria-labelledby="page-29-caption">
+          <img src="/posts/post8/pages/page-029.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 29 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-29-caption">Page 29 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-30" data-note-page="30">
+        <figure class="ws-reader-sheet" aria-labelledby="page-30-caption">
+          <img src="/posts/post8/pages/page-030.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 30 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-30-caption">Page 30 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-31" data-note-page="31">
+        <figure class="ws-reader-sheet" aria-labelledby="page-31-caption">
+          <img src="/posts/post8/pages/page-031.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 31 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-31-caption">Page 31 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-32" data-note-page="32">
+        <figure class="ws-reader-sheet" aria-labelledby="page-32-caption">
+          <img src="/posts/post8/pages/page-032.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 32 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-32-caption">Page 32 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-33" data-note-page="33">
+        <figure class="ws-reader-sheet" aria-labelledby="page-33-caption">
+          <img src="/posts/post8/pages/page-033.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 33 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-33-caption">Page 33 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-34" data-note-page="34">
+        <figure class="ws-reader-sheet" aria-labelledby="page-34-caption">
+          <img src="/posts/post8/pages/page-034.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 34 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-34-caption">Page 34 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-35" data-note-page="35">
+        <figure class="ws-reader-sheet" aria-labelledby="page-35-caption">
+          <img src="/posts/post8/pages/page-035.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 35 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-35-caption">Page 35 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-36" data-note-page="36">
+        <figure class="ws-reader-sheet" aria-labelledby="page-36-caption">
+          <img src="/posts/post8/pages/page-036.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 36 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-36-caption">Page 36 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-37" data-note-page="37">
+        <figure class="ws-reader-sheet" aria-labelledby="page-37-caption">
+          <img src="/posts/post8/pages/page-037.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 37 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-37-caption">Page 37 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-38" data-note-page="38">
+        <figure class="ws-reader-sheet" aria-labelledby="page-38-caption">
+          <img src="/posts/post8/pages/page-038.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 38 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-38-caption">Page 38 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-39" data-note-page="39">
+        <figure class="ws-reader-sheet" aria-labelledby="page-39-caption">
+          <img src="/posts/post8/pages/page-039.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 39 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-39-caption">Page 39 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-40" data-note-page="40">
+        <figure class="ws-reader-sheet" aria-labelledby="page-40-caption">
+          <img src="/posts/post8/pages/page-040.jpg" width="1404" height="1330" alt="Original annotated Statistical Learning and Large Data course material, page 40 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-40-caption">Page 40 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-41" data-note-page="41">
+        <figure class="ws-reader-sheet" aria-labelledby="page-41-caption">
+          <img src="/posts/post8/pages/page-041.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 41 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-41-caption">Page 41 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-42" data-note-page="42">
+        <figure class="ws-reader-sheet" aria-labelledby="page-42-caption">
+          <img src="/posts/post8/pages/page-042.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 42 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-42-caption">Page 42 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-43" data-note-page="43">
+        <figure class="ws-reader-sheet" aria-labelledby="page-43-caption">
+          <img src="/posts/post8/pages/page-043.jpg" width="1404" height="1214" alt="Original annotated Statistical Learning and Large Data course material, page 43 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-43-caption">Page 43 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-44" data-note-page="44">
+        <figure class="ws-reader-sheet" aria-labelledby="page-44-caption">
+          <img src="/posts/post8/pages/page-044.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 44 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-44-caption">Page 44 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-45" data-note-page="45">
+        <figure class="ws-reader-sheet" aria-labelledby="page-45-caption">
+          <img src="/posts/post8/pages/page-045.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 45 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-45-caption">Page 45 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-46" data-note-page="46">
+        <figure class="ws-reader-sheet" aria-labelledby="page-46-caption">
+          <img src="/posts/post8/pages/page-046.jpg" width="1404" height="1026" alt="Original annotated Statistical Learning and Large Data course material, page 46 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-46-caption">Page 46 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-47" data-note-page="47">
+        <figure class="ws-reader-sheet" aria-labelledby="page-47-caption">
+          <img src="/posts/post8/pages/page-047.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 47 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-47-caption">Page 47 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-48" data-note-page="48">
+        <figure class="ws-reader-sheet" aria-labelledby="page-48-caption">
+          <img src="/posts/post8/pages/page-048.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 48 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-48-caption">Page 48 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-49" data-note-page="49">
+        <figure class="ws-reader-sheet" aria-labelledby="page-49-caption">
+          <img src="/posts/post8/pages/page-049.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 49 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-49-caption">Page 49 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-50" data-note-page="50">
+        <figure class="ws-reader-sheet" aria-labelledby="page-50-caption">
+          <img src="/posts/post8/pages/page-050.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 50 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-50-caption">Page 50 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-51" data-note-page="51">
+        <figure class="ws-reader-sheet" aria-labelledby="page-51-caption">
+          <img src="/posts/post8/pages/page-051.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 51 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-51-caption">Page 51 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-52" data-note-page="52">
+        <figure class="ws-reader-sheet" aria-labelledby="page-52-caption">
+          <img src="/posts/post8/pages/page-052.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 52 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-52-caption">Page 52 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-53" data-note-page="53">
+        <figure class="ws-reader-sheet" aria-labelledby="page-53-caption">
+          <img src="/posts/post8/pages/page-053.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 53 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-53-caption">Page 53 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-54" data-note-page="54">
+        <figure class="ws-reader-sheet" aria-labelledby="page-54-caption">
+          <img src="/posts/post8/pages/page-054.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 54 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-54-caption">Page 54 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-55" data-note-page="55">
+        <figure class="ws-reader-sheet" aria-labelledby="page-55-caption">
+          <img src="/posts/post8/pages/page-055.jpg" width="1404" height="1751" alt="Original annotated Statistical Learning and Large Data course material, page 55 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-55-caption">Page 55 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-56" data-note-page="56">
+        <figure class="ws-reader-sheet" aria-labelledby="page-56-caption">
+          <img src="/posts/post8/pages/page-056.jpg" width="1404" height="1078" alt="Original annotated Statistical Learning and Large Data course material, page 56 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-56-caption">Page 56 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-57" data-note-page="57">
+        <figure class="ws-reader-sheet" aria-labelledby="page-57-caption">
+          <img src="/posts/post8/pages/page-057.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 57 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-57-caption">Page 57 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-58" data-note-page="58">
+        <figure class="ws-reader-sheet" aria-labelledby="page-58-caption">
+          <img src="/posts/post8/pages/page-058.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 58 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-58-caption">Page 58 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-59" data-note-page="59">
+        <figure class="ws-reader-sheet" aria-labelledby="page-59-caption">
+          <img src="/posts/post8/pages/page-059.jpg" width="1404" height="1689" alt="Original annotated Statistical Learning and Large Data course material, page 59 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-59-caption">Page 59 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-60" data-note-page="60">
+        <figure class="ws-reader-sheet" aria-labelledby="page-60-caption">
+          <img src="/posts/post8/pages/page-060.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 60 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-60-caption">Page 60 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-61" data-note-page="61">
+        <figure class="ws-reader-sheet" aria-labelledby="page-61-caption">
+          <img src="/posts/post8/pages/page-061.jpg" width="1404" height="1425" alt="Original annotated Statistical Learning and Large Data course material, page 61 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-61-caption">Page 61 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-62" data-note-page="62">
+        <figure class="ws-reader-sheet" aria-labelledby="page-62-caption">
+          <img src="/posts/post8/pages/page-062.jpg" width="1404" height="1228" alt="Original annotated Statistical Learning and Large Data course material, page 62 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-62-caption">Page 62 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-63" data-note-page="63">
+        <figure class="ws-reader-sheet" aria-labelledby="page-63-caption">
+          <img src="/posts/post8/pages/page-063.jpg" width="1404" height="1244" alt="Original annotated Statistical Learning and Large Data course material, page 63 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-63-caption">Page 63 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-64" data-note-page="64">
+        <figure class="ws-reader-sheet" aria-labelledby="page-64-caption">
+          <img src="/posts/post8/pages/page-064.jpg" width="1404" height="1039" alt="Original annotated Statistical Learning and Large Data course material, page 64 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-64-caption">Page 64 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-65" data-note-page="65">
+        <figure class="ws-reader-sheet" aria-labelledby="page-65-caption">
+          <img src="/posts/post8/pages/page-065.jpg" width="742" height="990" alt="Original annotated Statistical Learning and Large Data course material, page 65 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-65-caption">Page 65 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-66" data-note-page="66">
+        <figure class="ws-reader-sheet" aria-labelledby="page-66-caption">
+          <img src="/posts/post8/pages/page-066.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 66 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-66-caption">Page 66 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-67" data-note-page="67">
+        <figure class="ws-reader-sheet" aria-labelledby="page-67-caption">
+          <img src="/posts/post8/pages/page-067.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 67 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-67-caption">Page 67 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-68" data-note-page="68">
+        <figure class="ws-reader-sheet" aria-labelledby="page-68-caption">
+          <img src="/posts/post8/pages/page-068.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 68 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-68-caption">Page 68 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-69" data-note-page="69">
+        <figure class="ws-reader-sheet" aria-labelledby="page-69-caption">
+          <img src="/posts/post8/pages/page-069.jpg" width="1404" height="1065" alt="Original annotated Statistical Learning and Large Data course material, page 69 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-69-caption">Page 69 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-70" data-note-page="70">
+        <figure class="ws-reader-sheet" aria-labelledby="page-70-caption">
+          <img src="/posts/post8/pages/page-070.jpg" width="1404" height="1020" alt="Original annotated Statistical Learning and Large Data course material, page 70 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-70-caption">Page 70 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-71" data-note-page="71">
+        <figure class="ws-reader-sheet" aria-labelledby="page-71-caption">
+          <img src="/posts/post8/pages/page-071.jpg" width="1404" height="1252" alt="Original annotated Statistical Learning and Large Data course material, page 71 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-71-caption">Page 71 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-72" data-note-page="72">
+        <figure class="ws-reader-sheet" aria-labelledby="page-72-caption">
+          <img src="/posts/post8/pages/page-072.jpg" width="742" height="990" alt="Original annotated Statistical Learning and Large Data course material, page 72 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-72-caption">Page 72 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-73" data-note-page="73">
+        <figure class="ws-reader-sheet" aria-labelledby="page-73-caption">
+          <img src="/posts/post8/pages/page-073.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 73 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-73-caption">Page 73 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-74" data-note-page="74">
+        <figure class="ws-reader-sheet" aria-labelledby="page-74-caption">
+          <img src="/posts/post8/pages/page-074.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 74 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-74-caption">Page 74 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-75" data-note-page="75">
+        <figure class="ws-reader-sheet" aria-labelledby="page-75-caption">
+          <img src="/posts/post8/pages/page-075.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 75 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-75-caption">Page 75 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-76" data-note-page="76">
+        <figure class="ws-reader-sheet" aria-labelledby="page-76-caption">
+          <img src="/posts/post8/pages/page-076.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 76 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-76-caption">Page 76 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-77" data-note-page="77">
+        <figure class="ws-reader-sheet" aria-labelledby="page-77-caption">
+          <img src="/posts/post8/pages/page-077.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 77 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-77-caption">Page 77 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-78" data-note-page="78">
+        <figure class="ws-reader-sheet" aria-labelledby="page-78-caption">
+          <img src="/posts/post8/pages/page-078.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 78 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-78-caption">Page 78 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-79" data-note-page="79">
+        <figure class="ws-reader-sheet" aria-labelledby="page-79-caption">
+          <img src="/posts/post8/pages/page-079.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 79 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-79-caption">Page 79 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-80" data-note-page="80">
+        <figure class="ws-reader-sheet" aria-labelledby="page-80-caption">
+          <img src="/posts/post8/pages/page-080.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 80 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-80-caption">Page 80 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-81" data-note-page="81">
+        <figure class="ws-reader-sheet" aria-labelledby="page-81-caption">
+          <img src="/posts/post8/pages/page-081.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 81 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-81-caption">Page 81 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-82" data-note-page="82">
+        <figure class="ws-reader-sheet" aria-labelledby="page-82-caption">
+          <img src="/posts/post8/pages/page-082.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 82 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-82-caption">Page 82 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-83" data-note-page="83">
+        <figure class="ws-reader-sheet" aria-labelledby="page-83-caption">
+          <img src="/posts/post8/pages/page-083.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 83 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-83-caption">Page 83 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-84" data-note-page="84">
+        <figure class="ws-reader-sheet" aria-labelledby="page-84-caption">
+          <img src="/posts/post8/pages/page-084.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 84 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-84-caption">Page 84 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-85" data-note-page="85">
+        <figure class="ws-reader-sheet" aria-labelledby="page-85-caption">
+          <img src="/posts/post8/pages/page-085.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 85 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-85-caption">Page 85 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-86" data-note-page="86">
+        <figure class="ws-reader-sheet" aria-labelledby="page-86-caption">
+          <img src="/posts/post8/pages/page-086.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 86 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-86-caption">Page 86 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-87" data-note-page="87">
+        <figure class="ws-reader-sheet" aria-labelledby="page-87-caption">
+          <img src="/posts/post8/pages/page-087.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 87 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-87-caption">Page 87 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-88" data-note-page="88">
+        <figure class="ws-reader-sheet" aria-labelledby="page-88-caption">
+          <img src="/posts/post8/pages/page-088.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 88 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-88-caption">Page 88 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-89" data-note-page="89">
+        <figure class="ws-reader-sheet" aria-labelledby="page-89-caption">
+          <img src="/posts/post8/pages/page-089.jpg" width="1404" height="1069" alt="Original annotated Statistical Learning and Large Data course material, page 89 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-89-caption">Page 89 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-90" data-note-page="90">
+        <figure class="ws-reader-sheet" aria-labelledby="page-90-caption">
+          <img src="/posts/post8/pages/page-090.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 90 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-90-caption">Page 90 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-91" data-note-page="91">
+        <figure class="ws-reader-sheet" aria-labelledby="page-91-caption">
+          <img src="/posts/post8/pages/page-091.jpg" width="742" height="990" alt="Original annotated Statistical Learning and Large Data course material, page 91 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-91-caption">Page 91 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-92" data-note-page="92">
+        <figure class="ws-reader-sheet" aria-labelledby="page-92-caption">
+          <img src="/posts/post8/pages/page-092.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 92 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-92-caption">Page 92 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-93" data-note-page="93">
+        <figure class="ws-reader-sheet" aria-labelledby="page-93-caption">
+          <img src="/posts/post8/pages/page-093.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 93 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-93-caption">Page 93 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-94" data-note-page="94">
+        <figure class="ws-reader-sheet" aria-labelledby="page-94-caption">
+          <img src="/posts/post8/pages/page-094.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 94 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-94-caption">Page 94 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-95" data-note-page="95">
+        <figure class="ws-reader-sheet" aria-labelledby="page-95-caption">
+          <img src="/posts/post8/pages/page-095.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 95 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-95-caption">Page 95 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-96" data-note-page="96">
+        <figure class="ws-reader-sheet" aria-labelledby="page-96-caption">
+          <img src="/posts/post8/pages/page-096.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 96 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-96-caption">Page 96 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-97" data-note-page="97">
+        <figure class="ws-reader-sheet" aria-labelledby="page-97-caption">
+          <img src="/posts/post8/pages/page-097.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 97 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-97-caption">Page 97 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-98" data-note-page="98">
+        <figure class="ws-reader-sheet" aria-labelledby="page-98-caption">
+          <img src="/posts/post8/pages/page-098.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 98 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-98-caption">Page 98 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-99" data-note-page="99">
+        <figure class="ws-reader-sheet" aria-labelledby="page-99-caption">
+          <img src="/posts/post8/pages/page-099.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 99 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-99-caption">Page 99 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-100" data-note-page="100">
+        <figure class="ws-reader-sheet" aria-labelledby="page-100-caption">
+          <img src="/posts/post8/pages/page-100.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 100 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-100-caption">Page 100 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-101" data-note-page="101">
+        <figure class="ws-reader-sheet" aria-labelledby="page-101-caption">
+          <img src="/posts/post8/pages/page-101.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 101 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-101-caption">Page 101 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-102" data-note-page="102">
+        <figure class="ws-reader-sheet" aria-labelledby="page-102-caption">
+          <img src="/posts/post8/pages/page-102.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 102 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-102-caption">Page 102 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-103" data-note-page="103">
+        <figure class="ws-reader-sheet" aria-labelledby="page-103-caption">
+          <img src="/posts/post8/pages/page-103.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 103 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-103-caption">Page 103 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-104" data-note-page="104">
+        <figure class="ws-reader-sheet" aria-labelledby="page-104-caption">
+          <img src="/posts/post8/pages/page-104.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 104 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-104-caption">Page 104 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-105" data-note-page="105">
+        <figure class="ws-reader-sheet" aria-labelledby="page-105-caption">
+          <img src="/posts/post8/pages/page-105.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 105 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-105-caption">Page 105 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-106" data-note-page="106">
+        <figure class="ws-reader-sheet" aria-labelledby="page-106-caption">
+          <img src="/posts/post8/pages/page-106.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 106 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-106-caption">Page 106 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-107" data-note-page="107">
+        <figure class="ws-reader-sheet" aria-labelledby="page-107-caption">
+          <img src="/posts/post8/pages/page-107.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 107 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-107-caption">Page 107 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-108" data-note-page="108">
+        <figure class="ws-reader-sheet" aria-labelledby="page-108-caption">
+          <img src="/posts/post8/pages/page-108.jpg" width="1404" height="1071" alt="Original annotated Statistical Learning and Large Data course material, page 108 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-108-caption">Page 108 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-109" data-note-page="109">
+        <figure class="ws-reader-sheet" aria-labelledby="page-109-caption">
+          <img src="/posts/post8/pages/page-109.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 109 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-109-caption">Page 109 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-110" data-note-page="110">
+        <figure class="ws-reader-sheet" aria-labelledby="page-110-caption">
+          <img src="/posts/post8/pages/page-110.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 110 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-110-caption">Page 110 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-111" data-note-page="111">
+        <figure class="ws-reader-sheet" aria-labelledby="page-111-caption">
+          <img src="/posts/post8/pages/page-111.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 111 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-111-caption">Page 111 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-112" data-note-page="112">
+        <figure class="ws-reader-sheet" aria-labelledby="page-112-caption">
+          <img src="/posts/post8/pages/page-112.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 112 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-112-caption">Page 112 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-113" data-note-page="113">
+        <figure class="ws-reader-sheet" aria-labelledby="page-113-caption">
+          <img src="/posts/post8/pages/page-113.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 113 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-113-caption">Page 113 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-114" data-note-page="114">
+        <figure class="ws-reader-sheet" aria-labelledby="page-114-caption">
+          <img src="/posts/post8/pages/page-114.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 114 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-114-caption">Page 114 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-115" data-note-page="115">
+        <figure class="ws-reader-sheet" aria-labelledby="page-115-caption">
+          <img src="/posts/post8/pages/page-115.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 115 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-115-caption">Page 115 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-116" data-note-page="116">
+        <figure class="ws-reader-sheet" aria-labelledby="page-116-caption">
+          <img src="/posts/post8/pages/page-116.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 116 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-116-caption">Page 116 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-117" data-note-page="117">
+        <figure class="ws-reader-sheet" aria-labelledby="page-117-caption">
+          <img src="/posts/post8/pages/page-117.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 117 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-117-caption">Page 117 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-118" data-note-page="118">
+        <figure class="ws-reader-sheet" aria-labelledby="page-118-caption">
+          <img src="/posts/post8/pages/page-118.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 118 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-118-caption">Page 118 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-119" data-note-page="119">
+        <figure class="ws-reader-sheet" aria-labelledby="page-119-caption">
+          <img src="/posts/post8/pages/page-119.jpg" width="1404" height="1105" alt="Original annotated Statistical Learning and Large Data course material, page 119 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-119-caption">Page 119 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-120" data-note-page="120">
+        <figure class="ws-reader-sheet" aria-labelledby="page-120-caption">
+          <img src="/posts/post8/pages/page-120.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 120 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-120-caption">Page 120 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-121" data-note-page="121">
+        <figure class="ws-reader-sheet" aria-labelledby="page-121-caption">
+          <img src="/posts/post8/pages/page-121.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 121 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-121-caption">Page 121 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-122" data-note-page="122">
+        <figure class="ws-reader-sheet" aria-labelledby="page-122-caption">
+          <img src="/posts/post8/pages/page-122.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 122 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-122-caption">Page 122 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-123" data-note-page="123">
+        <figure class="ws-reader-sheet" aria-labelledby="page-123-caption">
+          <img src="/posts/post8/pages/page-123.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 123 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-123-caption">Page 123 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-124" data-note-page="124">
+        <figure class="ws-reader-sheet" aria-labelledby="page-124-caption">
+          <img src="/posts/post8/pages/page-124.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 124 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-124-caption">Page 124 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-125" data-note-page="125">
+        <figure class="ws-reader-sheet" aria-labelledby="page-125-caption">
+          <img src="/posts/post8/pages/page-125.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 125 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-125-caption">Page 125 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-126" data-note-page="126">
+        <figure class="ws-reader-sheet" aria-labelledby="page-126-caption">
+          <img src="/posts/post8/pages/page-126.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 126 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-126-caption">Page 126 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-127" data-note-page="127">
+        <figure class="ws-reader-sheet" aria-labelledby="page-127-caption">
+          <img src="/posts/post8/pages/page-127.jpg" width="1404" height="1327" alt="Original annotated Statistical Learning and Large Data course material, page 127 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-127-caption">Page 127 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-128" data-note-page="128">
+        <figure class="ws-reader-sheet" aria-labelledby="page-128-caption">
+          <img src="/posts/post8/pages/page-128.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 128 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-128-caption">Page 128 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-129" data-note-page="129">
+        <figure class="ws-reader-sheet" aria-labelledby="page-129-caption">
+          <img src="/posts/post8/pages/page-129.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 129 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-129-caption">Page 129 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-130" data-note-page="130">
+        <figure class="ws-reader-sheet" aria-labelledby="page-130-caption">
+          <img src="/posts/post8/pages/page-130.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 130 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-130-caption">Page 130 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-131" data-note-page="131">
+        <figure class="ws-reader-sheet" aria-labelledby="page-131-caption">
+          <img src="/posts/post8/pages/page-131.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 131 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-131-caption">Page 131 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-132" data-note-page="132">
+        <figure class="ws-reader-sheet" aria-labelledby="page-132-caption">
+          <img src="/posts/post8/pages/page-132.jpg" width="742" height="990" alt="Original annotated Statistical Learning and Large Data course material, page 132 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-132-caption">Page 132 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-133" data-note-page="133">
+        <figure class="ws-reader-sheet" aria-labelledby="page-133-caption">
+          <img src="/posts/post8/pages/page-133.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 133 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-133-caption">Page 133 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-134" data-note-page="134">
+        <figure class="ws-reader-sheet" aria-labelledby="page-134-caption">
+          <img src="/posts/post8/pages/page-134.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 134 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-134-caption">Page 134 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-135" data-note-page="135">
+        <figure class="ws-reader-sheet" aria-labelledby="page-135-caption">
+          <img src="/posts/post8/pages/page-135.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 135 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-135-caption">Page 135 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-136" data-note-page="136">
+        <figure class="ws-reader-sheet" aria-labelledby="page-136-caption">
+          <img src="/posts/post8/pages/page-136.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 136 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-136-caption">Page 136 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-137" data-note-page="137">
+        <figure class="ws-reader-sheet" aria-labelledby="page-137-caption">
+          <img src="/posts/post8/pages/page-137.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 137 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-137-caption">Page 137 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-138" data-note-page="138">
+        <figure class="ws-reader-sheet" aria-labelledby="page-138-caption">
+          <img src="/posts/post8/pages/page-138.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 138 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-138-caption">Page 138 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-139" data-note-page="139">
+        <figure class="ws-reader-sheet" aria-labelledby="page-139-caption">
+          <img src="/posts/post8/pages/page-139.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 139 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-139-caption">Page 139 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-140" data-note-page="140">
+        <figure class="ws-reader-sheet" aria-labelledby="page-140-caption">
+          <img src="/posts/post8/pages/page-140.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 140 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-140-caption">Page 140 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-141" data-note-page="141">
+        <figure class="ws-reader-sheet" aria-labelledby="page-141-caption">
+          <img src="/posts/post8/pages/page-141.jpg" width="1611" height="1806" alt="Original annotated Statistical Learning and Large Data course material, page 141 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-141-caption">Page 141 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-142" data-note-page="142">
+        <figure class="ws-reader-sheet" aria-labelledby="page-142-caption">
+          <img src="/posts/post8/pages/page-142.jpg" width="1404" height="1450" alt="Original annotated Statistical Learning and Large Data course material, page 142 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-142-caption">Page 142 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-143" data-note-page="143">
+        <figure class="ws-reader-sheet" aria-labelledby="page-143-caption">
+          <img src="/posts/post8/pages/page-143.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 143 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-143-caption">Page 143 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-144" data-note-page="144">
+        <figure class="ws-reader-sheet" aria-labelledby="page-144-caption">
+          <img src="/posts/post8/pages/page-144.jpg" width="1429" height="1040" alt="Original annotated Statistical Learning and Large Data course material, page 144 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-144-caption">Page 144 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-145" data-note-page="145">
+        <figure class="ws-reader-sheet" aria-labelledby="page-145-caption">
+          <img src="/posts/post8/pages/page-145.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 145 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-145-caption">Page 145 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-146" data-note-page="146">
+        <figure class="ws-reader-sheet" aria-labelledby="page-146-caption">
+          <img src="/posts/post8/pages/page-146.jpg" width="1404" height="1406" alt="Original annotated Statistical Learning and Large Data course material, page 146 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-146-caption">Page 146 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-147" data-note-page="147">
+        <figure class="ws-reader-sheet" aria-labelledby="page-147-caption">
+          <img src="/posts/post8/pages/page-147.jpg" width="742" height="990" alt="Original annotated Statistical Learning and Large Data course material, page 147 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-147-caption">Page 147 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-148" data-note-page="148">
+        <figure class="ws-reader-sheet" aria-labelledby="page-148-caption">
+          <img src="/posts/post8/pages/page-148.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 148 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-148-caption">Page 148 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-149" data-note-page="149">
+        <figure class="ws-reader-sheet" aria-labelledby="page-149-caption">
+          <img src="/posts/post8/pages/page-149.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 149 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-149-caption">Page 149 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-150" data-note-page="150">
+        <figure class="ws-reader-sheet" aria-labelledby="page-150-caption">
+          <img src="/posts/post8/pages/page-150.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 150 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-150-caption">Page 150 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-151" data-note-page="151">
+        <figure class="ws-reader-sheet" aria-labelledby="page-151-caption">
+          <img src="/posts/post8/pages/page-151.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 151 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-151-caption">Page 151 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-152" data-note-page="152">
+        <figure class="ws-reader-sheet" aria-labelledby="page-152-caption">
+          <img src="/posts/post8/pages/page-152.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 152 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-152-caption">Page 152 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-153" data-note-page="153">
+        <figure class="ws-reader-sheet" aria-labelledby="page-153-caption">
+          <img src="/posts/post8/pages/page-153.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 153 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-153-caption">Page 153 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-154" data-note-page="154">
+        <figure class="ws-reader-sheet" aria-labelledby="page-154-caption">
+          <img src="/posts/post8/pages/page-154.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 154 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-154-caption">Page 154 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-155" data-note-page="155">
+        <figure class="ws-reader-sheet" aria-labelledby="page-155-caption">
+          <img src="/posts/post8/pages/page-155.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 155 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-155-caption">Page 155 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-156" data-note-page="156">
+        <figure class="ws-reader-sheet" aria-labelledby="page-156-caption">
+          <img src="/posts/post8/pages/page-156.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 156 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-156-caption">Page 156 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-157" data-note-page="157">
+        <figure class="ws-reader-sheet" aria-labelledby="page-157-caption">
+          <img src="/posts/post8/pages/page-157.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 157 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-157-caption">Page 157 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-158" data-note-page="158">
+        <figure class="ws-reader-sheet" aria-labelledby="page-158-caption">
+          <img src="/posts/post8/pages/page-158.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 158 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-158-caption">Page 158 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-159" data-note-page="159">
+        <figure class="ws-reader-sheet" aria-labelledby="page-159-caption">
+          <img src="/posts/post8/pages/page-159.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 159 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-159-caption">Page 159 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-160" data-note-page="160">
+        <figure class="ws-reader-sheet" aria-labelledby="page-160-caption">
+          <img src="/posts/post8/pages/page-160.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 160 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-160-caption">Page 160 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-161" data-note-page="161">
+        <figure class="ws-reader-sheet" aria-labelledby="page-161-caption">
+          <img src="/posts/post8/pages/page-161.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 161 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-161-caption">Page 161 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-162" data-note-page="162">
+        <figure class="ws-reader-sheet" aria-labelledby="page-162-caption">
+          <img src="/posts/post8/pages/page-162.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 162 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-162-caption">Page 162 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-163" data-note-page="163">
+        <figure class="ws-reader-sheet" aria-labelledby="page-163-caption">
+          <img src="/posts/post8/pages/page-163.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 163 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-163-caption">Page 163 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-164" data-note-page="164">
+        <figure class="ws-reader-sheet" aria-labelledby="page-164-caption">
+          <img src="/posts/post8/pages/page-164.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 164 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-164-caption">Page 164 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-165" data-note-page="165">
+        <figure class="ws-reader-sheet" aria-labelledby="page-165-caption">
+          <img src="/posts/post8/pages/page-165.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 165 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-165-caption">Page 165 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-166" data-note-page="166">
+        <figure class="ws-reader-sheet" aria-labelledby="page-166-caption">
+          <img src="/posts/post8/pages/page-166.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 166 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-166-caption">Page 166 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-167" data-note-page="167">
+        <figure class="ws-reader-sheet" aria-labelledby="page-167-caption">
+          <img src="/posts/post8/pages/page-167.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 167 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-167-caption">Page 167 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-168" data-note-page="168">
+        <figure class="ws-reader-sheet" aria-labelledby="page-168-caption">
+          <img src="/posts/post8/pages/page-168.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 168 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-168-caption">Page 168 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-169" data-note-page="169">
+        <figure class="ws-reader-sheet" aria-labelledby="page-169-caption">
+          <img src="/posts/post8/pages/page-169.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 169 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-169-caption">Page 169 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-170" data-note-page="170">
+        <figure class="ws-reader-sheet" aria-labelledby="page-170-caption">
+          <img src="/posts/post8/pages/page-170.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 170 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-170-caption">Page 170 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-171" data-note-page="171">
+        <figure class="ws-reader-sheet" aria-labelledby="page-171-caption">
+          <img src="/posts/post8/pages/page-171.jpg" width="1404" height="992" alt="Original annotated Statistical Learning and Large Data course material, page 171 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-171-caption">Page 171 of 172</figcaption>
+        </figure>
+      </li>
+      <li class="ws-reader-page-item" id="page-172" data-note-page="172">
+        <figure class="ws-reader-sheet" aria-labelledby="page-172-caption">
+          <img src="/posts/post8/pages/page-172.jpg" width="742" height="990" alt="Original annotated Statistical Learning and Large Data course material, page 172 of 172." loading="lazy" decoding="async">
+          <figcaption id="page-172-caption">Page 172 of 172</figcaption>
+        </figure>
+      </li>
+    </ol>
+
+    <nav class="ws-reader-end" aria-label="Reader actions">
+      <a href="/posts/">← Back to all notes</a>
+      <a href="/SLLD_new.pdf" download="lucia-domenichelli-statistical-learning-large-data-notes.pdf">Download the original PDF ↓</a>
+      <a href="#top">Back to top ↑</a>
+    </nav>
   </main>
-
-  <footer class="footer" style="padding-top:18px;padding-bottom:18px">
-    <div class="social-icons" style="padding-bottom:0">
-      <a style="border-bottom:none" href="https://x.com/workerplacemint" rel="me" title="Twitter">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentcolor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
-        </svg>
-      </a>
-      <a style="border-bottom:none" href="https://github.com/ldomenichelli" rel="me" title="Github">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentcolor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77 5.44 5.44 0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path>
-        </svg>
-      </a>
-      <a style="border-bottom:none" href="mailto:ldomenichelli2@gmail.com" rel="me" title="Email">
-        <svg
-          viewBox="0 0 24 21"
-          fill="none"
-          stroke="currentcolor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-          <polyline points="22,6 12,13 2,6"></polyline>
-        </svg>
-      </a>
-    </div>
-    <span>&copy; 2025 <a href="https://ldomenichelli.github.io/">lucia's room</a></span>
-    <span>• Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/adityatelange/hugo-PaperMod/">PaperMod</a></span>
-    <span>• <a href="/privacy">Privacy Policy</a></span>
-  </footer>
-
-  <script type="module">
-    import { enhanceSlldNotesPage } from "/assets/js/slld-notes.js";
-    enhanceSlldNotesPage();
-  </script>
-<script src="/assets/js/pocket-bird.js" defer></script></body>
+</body>
 </html>

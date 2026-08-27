@@ -151,9 +151,9 @@
     "title": "Pensieri del tè 🍵"
   },
   {
-    "content": "Here are the slides and notes on the course hold by Prof. Chiaromonte at Sant&rsquo;Anna University, Pisa. ",
+    "content": "Original annotated lecture slides for the Statistical Learning and Large Data course at Sant&rsquo;Anna School of Advanced Studies in Pisa. Topics include cluster analysis, principal components, supervised classification, smoothing, resampling, penalization, dimension reduction, and feature screening. Read all 172 pages in a continuous scrolling reader or download the source PDF. ",
     "permalink": "https://ldomenichelli.github.io/posts/post8/",
-    "summary": "<p>Here are the slides and notes on the course hold by Prof. Chiaromonte at Sant&rsquo;Anna University, Pisa.\n<embed src=\"/SLLD_new.pdf\" width=\"100%\" height=\"800px\" type=\"application/pdf\"></p>",
+    "summary": "<p>Original annotated Statistical Learning and Large Data course material in a continuous 172-page reader, with PDF download.</p>",
     "title": "Statistical Learning and Large Data 📊"
   },
   {

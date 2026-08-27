@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SLLD Scrolling Reader Smoke Test</title>
+  <style>
+    body {
+      background: #111;
+      color: #f5f5f5;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      margin: 0;
+      padding: 16px;
+    }
+
+    iframe {
+      border: 0;
+      height: 800px;
+    }
+
+    pre {
+      line-height: 1.45;
+      margin: 0 0 16px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body data-test-status="RUNNING">
+  <pre id="log">Running...</pre>
+  <iframe id="frame" title="SLLD notes page under test"></iframe>
+  <script>
+    const frame = document.querySelector('#frame');
+    const logElement = document.querySelector('#log');
+    const results = [];
+    const params = new URLSearchParams(window.location.search);
+    const frameWidth = Number(params.get('width') || '1280');
+    frame.style.width = `${frameWidth}px`;
+
+    function log(message) {
+      results.push(message);
+      logElement.textContent = results.join('\n');
+    }
+
+    function assert(condition, message) {
+      if (!condition) {
+        throw new Error(message);
+      }
+      log(`PASS ${message}`);
+    }
+
+    function loadFrame(path) {
+      return new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => reject(new Error(`Timed out loading ${path}`)), 30000);
+        frame.addEventListener('load', () => {
+          clearTimeout(timeout);
+          resolve();
+        }, { once: true });
+        frame.src = path;
+      });
+    }
+
+    async function fetchAsset(win, path, expectedType) {
+      const response = await win.fetch(path);
+      assert(response.ok, `${path} responds successfully`);
+      const asset = await response.blob();
+      assert(asset.size > 0, `${path} is not empty`);
+      assert(asset.type === expectedType, `${path} is served as ${expectedType}`);
+    }
+
+    async function checkReader() {
+      await loadFrame('/posts/post8/');
+      const doc = frame.contentDocument;
+      const win = frame.contentWindow;
+      const pages = Array.from(doc.querySelectorAll('[data-note-page]'));
+      const images = pages.map((page) => page.querySelector('img'));
+      const download = doc.querySelector('a[href="/SLLD_new.pdf"][download]');
+      const readerBar = doc.querySelector('.ws-reader-bar');
+      const representativeImages = [
+        images[0],
+        images[Math.floor((images.length - 1) / 2)],
+        images[images.length - 1]
+      ];
+      const boundedElements = [
+        doc.querySelector('.ws-reader-bar-inner'),
+        doc.querySelector('.ws-reader-back'),
+        doc.querySelector('.ws-reader-heading'),
+        download,
+        doc.querySelector('.ws-reader-summary'),
+        ...images
+      ];
+
+      assert(pages.length === 172, 'reader contains exactly 172 note pages');
+      assert(images.every(Boolean), 'every note page contains an image');
+      assert(pages.every((page) => page.querySelectorAll('img').length === 1), 'every note page contains exactly one page image');
+      assert(images.every((image) => {
+        const src = image.getAttribute('src');
+        return typeof src === 'string' && src.toLowerCase().endsWith('.jpg');
+      }), 'every note page uses a JPEG');
+      assert(pages.every((page, index) => page.getAttribute('data-note-page') === String(index + 1)), 'note page numbers are ordered from 1 through 172');
+      assert(images.every((image) => Number(image.getAttribute('width')) > 0 && Number(image.getAttribute('height')) > 0), 'all page images declare valid intrinsic dimensions');
+      assert(images.every((image) => {
+        const alt = image.getAttribute('alt');
+        return typeof alt === 'string' && alt.trim().length > 0;
+      }), 'all page images have accessible names');
+      assert(new Set(images.map((image) => image.getAttribute('alt'))).size === 172, 'all page-image accessible names are unique');
+
+      assert(images[0].getAttribute('loading') === 'eager', 'first page is explicitly loaded eagerly');
+      assert(images[0].getAttribute('fetchpriority') === 'high', 'first page has high fetch priority');
+      assert(images.slice(1).every((image) => image.getAttribute('loading') === 'lazy'), 'remaining pages are lazy-loaded');
+      assert(images[0].complete && images[0].naturalWidth > 0, 'first page loads and decodes successfully');
+
+      assert(Boolean(download), 'reader exposes a direct /SLLD_new.pdf download');
+      assert(download.getAttribute('href') === '/SLLD_new.pdf' && download.hasAttribute('download'), 'PDF action remains a file download');
+      assert(!doc.querySelector('iframe, object, embed'), 'reader has no nested PDF viewport');
+      assert(!doc.querySelector('.tda-notebook, [data-tda-section], .slld-widget, [data-widget]'), 'reader has no old transcription or interactive SLLD UI');
+      assert(!doc.querySelector('script[src*="slld-notes.js"]'), 'reader no longer loads the SLLD transcription script');
+      assert(Boolean(readerBar), 'reader includes its persistent control bar');
+      assert(win.getComputedStyle(readerBar).position === 'fixed', 'reader controls remain fixed while scrolling');
+
+      const tops = pages.map((page) => page.offsetTop);
+      assert(tops.every((top, index) => index === 0 || top > tops[index - 1]), 'note pages flow in continuous document order');
+      assert(doc.scrollingElement.scrollHeight > win.innerHeight, 'reader scrolls vertically');
+      assert(doc.scrollingElement.scrollWidth <= win.innerWidth + 1, `reader has no horizontal overflow at ${frameWidth}px`);
+      assert(boundedElements.every((element) => {
+        if (!element) {
+          return false;
+        }
+
+        const bounds = element.getBoundingClientRect();
+        return bounds.left >= -1 && bounds.right <= win.innerWidth + 1;
+      }), `reader controls, summary, and sheets stay inside the ${frameWidth}px viewport`);
+
+      await Promise.all(representativeImages.map((image) => fetchAsset(win, image.getAttribute('src'), 'image/jpeg')));
+      await fetchAsset(win, '/SLLD_new.pdf', 'application/pdf');
+    }
+
+    async function run() {
+      assert(frameWidth === 390 || frameWidth === 1280, 'test viewport is a supported 390px or 1280px width');
+      await checkReader();
+      log(`PASS SLLD reader smoke test completed at ${frameWidth}px`);
+      document.body.dataset.testStatus = 'PASS';
+    }
+
+    run().catch((error) => {
+      log(`FAIL ${error.message}`);
+      document.body.dataset.testStatus = 'FAIL';
+    });
+  </script>
+</body>
+</html>
