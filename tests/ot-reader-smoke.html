@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Optimal Transport Scrolling Reader Smoke Test</title>
+  <style>
+    body {
+      background: #111;
+      color: #f5f5f5;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      margin: 0;
+      padding: 16px;
+    }
+
+    iframe {
+      border: 0;
+      height: 800px;
+    }
+
+    pre {
+      line-height: 1.45;
+      margin: 0 0 16px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body data-test-status="RUNNING">
+  <pre id="log">Running...</pre>
+  <iframe id="frame" title="Optimal Transport notes page under test"></iframe>
+  <script>
+    const frame = document.querySelector('#frame');
+    const logElement = document.querySelector('#log');
+    const results = [];
+    const params = new URLSearchParams(window.location.search);
+    const frameWidth = Number(params.get('width') || '1280');
+    frame.style.width = `${frameWidth}px`;
+
+    function log(message) {
+      results.push(message);
+      logElement.textContent = results.join('\n');
+    }
+
+    function assert(condition, message) {
+      if (!condition) {
+        throw new Error(message);
+      }
+      log(`PASS ${message}`);
+    }
+
+    function loadFrame(path) {
+      return new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => reject(new Error(`Timed out loading ${path}`)), 30000);
+        frame.addEventListener('load', () => {
+          clearTimeout(timeout);
+          resolve();
+        }, { once: true });
+        frame.src = path;
+      });
+    }
+
+    async function fetchAsset(win, path, expectedType) {
+      const response = await win.fetch(path);
+      assert(response.ok, `${path} responds successfully`);
+      const asset = await response.blob();
+      assert(asset.size > 0, `${path} is not empty`);
+      assert(asset.type === expectedType, `${path} is served as ${expectedType}`);
+    }
+
+    async function checkReader() {
+      await loadFrame('/posts/post2/');
+      const doc = frame.contentDocument;
+      const win = frame.contentWindow;
+      const pages = Array.from(doc.querySelectorAll('[data-note-page]'));
+      const images = pages.map((page) => page.querySelector('img'));
+      const image = images[0];
+      const download = doc.querySelector('a[href="/ot.pdf"][download]');
+      const readerBar = doc.querySelector('.ws-reader-bar');
+      const sheet = doc.querySelector('.ws-reader-sheet');
+      const boundedElements = [
+        doc.querySelector('.ws-reader-bar-inner'),
+        doc.querySelector('.ws-reader-back'),
+        doc.querySelector('.ws-reader-heading'),
+        doc.querySelector('.ws-reader-tools'),
+        download,
+        doc.querySelector('.ws-reader-summary'),
+        sheet,
+        image
+      ];
+
+      assert(pages.length === 1, 'reader contains exactly one note page');
+      assert(images.length === 1 && Boolean(image), 'reader contains exactly one page image');
+      assert(pages[0].querySelectorAll('img').length === 1, 'the note page contains exactly one image');
+      assert(pages[0].getAttribute('data-note-page') === '1', 'note page is numbered 1');
+      assert(image.getAttribute('src').toLowerCase().endsWith('.jpg'), 'note page uses a JPEG');
+      assert(Number(image.getAttribute('width')) === 890 && Number(image.getAttribute('height')) === 4772, 'page image declares its 890 by 4772 intrinsic dimensions');
+
+      const accessibleNames = images.map((pageImage) => (pageImage.getAttribute('alt') || '').trim());
+      assert(accessibleNames.every(Boolean), 'page image has an accessible name');
+      assert(new Set(accessibleNames).size === images.length, 'page-image accessible name is unique');
+
+      assert(image.getAttribute('loading') === 'eager', 'page image is explicitly loaded eagerly');
+      assert(image.getAttribute('fetchpriority') === 'high', 'page image has high fetch priority');
+      assert(image.getAttribute('decoding') === 'async', 'page image requests asynchronous decoding');
+      assert(image.complete && image.naturalWidth === 890 && image.naturalHeight === 4772, 'page image loads successfully at its intrinsic dimensions');
+
+      assert(Boolean(download), 'reader exposes a direct /ot.pdf download');
+      assert(download.getAttribute('href') === '/ot.pdf' && download.hasAttribute('download'), 'PDF action remains a file download');
+      assert(!doc.querySelector('iframe, object, embed'), 'reader has no nested PDF viewport');
+      assert(!doc.querySelector('.tda-notebook, [data-tda-section], .ot-widget, [data-widget]'), 'reader has no old transcription or interactive Optimal Transport UI');
+      assert(!doc.querySelector('script[src*="ot-notes.js"]'), 'reader no longer loads the Optimal Transport transcription script');
+      assert(Boolean(readerBar), 'reader includes its persistent control bar');
+      assert(win.getComputedStyle(readerBar).position === 'fixed', 'reader controls remain fixed while scrolling');
+
+      assert(doc.scrollingElement.scrollHeight > win.innerHeight, 'reader scrolls vertically');
+      assert(doc.scrollingElement.scrollWidth <= win.innerWidth + 1, `reader has no horizontal overflow at ${frameWidth}px`);
+      assert(boundedElements.every((element) => {
+        if (!element) {
+          return false;
+        }
+
+        const bounds = element.getBoundingClientRect();
+        return bounds.left >= -1 && bounds.right <= win.innerWidth + 1;
+      }), `reader controls, summary, and sheet stay inside the ${frameWidth}px viewport`);
+
+      await fetchAsset(win, image.getAttribute('src'), 'image/jpeg');
+      await fetchAsset(win, '/ot.pdf', 'application/pdf');
+    }
+
+    async function run() {
+      assert(frameWidth === 390 || frameWidth === 1280, 'test viewport is a supported 390px or 1280px width');
+      await checkReader();
+      log(`PASS Optimal Transport reader smoke test completed at ${frameWidth}px`);
+      document.body.dataset.testStatus = 'PASS';
+    }
+
+    run().catch((error) => {
+      log(`FAIL ${error.message}`);
+      document.body.dataset.testStatus = 'FAIL';
+    });
+  </script>
+</body>
+</html>
