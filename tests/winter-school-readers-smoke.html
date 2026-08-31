@@ -68,7 +68,7 @@
     }
 
     async function checkLanding() {
-      await loadFrame('/posts/post5/');
+      await loadFrame('/posts/hplt-nlpl-winter-school/');
       const doc = frame.contentDocument;
       const win = frame.contentWindow;
 
@@ -79,7 +79,7 @@
         const card = doc.querySelector(`[data-note-reader="${note.slug}"]`);
         const open = doc.querySelector(`[data-note-open="${note.slug}"]`);
         const download = doc.querySelector(`[data-note-download="${note.slug}"]`);
-        const readerPath = `/posts/post5/read/${note.slug}/`;
+        const readerPath = `/posts/hplt-nlpl-winter-school/read/${note.slug}/`;
 
         assert(Boolean(card && open && download), `${note.slug} exposes reader and download actions`);
         assert(open.getAttribute('href') === readerPath, `${note.slug} opens an HTML reader route`);
@@ -91,7 +91,7 @@
     }
 
     async function checkReader(note) {
-      await loadFrame(`/posts/post5/read/${note.slug}/`);
+      await loadFrame(`/posts/hplt-nlpl-winter-school/read/${note.slug}/`);
       const doc = frame.contentDocument;
       const win = frame.contentWindow;
       const pages = Array.from(doc.querySelectorAll('[data-note-page]'));

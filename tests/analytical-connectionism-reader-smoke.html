@@ -103,7 +103,7 @@
     }
 
     async function checkNotebookLinks() {
-      await loadFrame('/posts/post11/');
+      await loadFrame('/posts/analytical-connectionism-summer-school-2026/');
       const doc = frame.contentDocument;
       const win = frame.contentWindow;
 
@@ -118,7 +118,7 @@
         const preview = doc.querySelector(`[data-note-preview="${note.slug}"]`);
         const open = doc.querySelector(`[data-note-open="${note.slug}"]`);
         const download = doc.querySelector(`[data-note-download="${note.slug}"]`);
-        const readerPath = `/posts/post11/read/${note.slug}/`;
+        const readerPath = `/posts/analytical-connectionism-summer-school-2026/read/${note.slug}/`;
 
         assert(Boolean(preview && open && download), `${note.slug} card exposes preview, open, and download actions`);
         assert(preview.getAttribute('href') === readerPath, `${note.slug} cover opens the scrolling reader`);
@@ -133,14 +133,14 @@
       await loadFrame('/');
       const doc = frame.contentDocument;
       const win = frame.contentWindow;
-      const feature = doc.querySelector('a[href="/posts/post11/"][title*="summer school notes"]');
+      const feature = doc.querySelector('a[href="/posts/analytical-connectionism-summer-school-2026/"][title*="summer school notes"]');
 
       assert(Boolean(feature), 'homepage links directly to the Analytical Connectionism notes');
       assert(doc.scrollingElement.scrollWidth <= win.innerWidth + 1, `homepage has no horizontal overflow at ${frameWidth}px`);
     }
 
     async function checkReader(note) {
-      await loadFrame(`/posts/post11/read/${note.slug}/`);
+      await loadFrame(`/posts/analytical-connectionism-summer-school-2026/read/${note.slug}/`);
       const doc = frame.contentDocument;
       const win = frame.contentWindow;
       const pages = Array.from(doc.querySelectorAll('[data-note-page]'));

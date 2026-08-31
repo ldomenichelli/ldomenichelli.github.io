@@ -13,41 +13,41 @@
     <language>en-us</language><atom:link href="https://ldomenichelli.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>2026 Analytical Connectionism Summer School Notes</title>
-      <link>https://ldomenichelli.github.io/posts/post11/</link>
+      <link>https://ldomenichelli.github.io/posts/analytical-connectionism-summer-school-2026/</link>
       <pubDate>Tue, 18 Aug 2026 00:00:00 +0200</pubDate>
 
-      <guid>https://ldomenichelli.github.io/posts/post11/</guid>
+      <guid>https://ldomenichelli.github.io/posts/analytical-connectionism-summer-school-2026/</guid>
       <description>Handwritten lecture notes from the 2026 School on Analytical Connectionism summer school in Gothenburg.</description>
       <content:encoded><![CDATA[
         <p>Handwritten lecture notes from the 2026 School on Analytical Connectionism in Gothenburg.</p>
         <ul>
-          <li><a href="https://ldomenichelli.github.io/posts/post11/read/smolensky/">Paul Smolensky — From Brain Signals to Language</a></li>
-          <li><a href="https://ldomenichelli.github.io/posts/post11/read/rowland/">Caroline Rowland — The Puzzle of Language Acquisition</a></li>
-          <li><a href="https://ldomenichelli.github.io/posts/post11/read/biehl/">Michael Biehl — Statistical Physics of Learning</a></li>
-          <li><a href="https://ldomenichelli.github.io/posts/post11/read/summerfield/">Chris Summerfield — Curriculum Learning in Natural and Artificial Intelligence</a></li>
-          <li><a href="https://ldomenichelli.github.io/posts/post11/read/misra/">Kanishka Misra — The Role of Input in Shaping Linguistic Generalizations</a></li>
-          <li><a href="https://ldomenichelli.github.io/posts/post11/read/cagnetta/">Francesco Cagnetta — From Correlations to Grammar</a></li>
-          <li><a href="https://ldomenichelli.github.io/posts/post11/read/loureiro/">Bruno Loureiro — What Makes Neural Nets Good Learners?</a></li>
-          <li><a href="https://ldomenichelli.github.io/posts/post11/read/smith/">Kenny Smith — How Learning and Use Shape Evolving Linguistic Systems</a></li>
+          <li><a href="https://ldomenichelli.github.io/posts/analytical-connectionism-summer-school-2026/read/smolensky/">Paul Smolensky — From Brain Signals to Language</a></li>
+          <li><a href="https://ldomenichelli.github.io/posts/analytical-connectionism-summer-school-2026/read/rowland/">Caroline Rowland — The Puzzle of Language Acquisition</a></li>
+          <li><a href="https://ldomenichelli.github.io/posts/analytical-connectionism-summer-school-2026/read/biehl/">Michael Biehl — Statistical Physics of Learning</a></li>
+          <li><a href="https://ldomenichelli.github.io/posts/analytical-connectionism-summer-school-2026/read/summerfield/">Chris Summerfield — Curriculum Learning in Natural and Artificial Intelligence</a></li>
+          <li><a href="https://ldomenichelli.github.io/posts/analytical-connectionism-summer-school-2026/read/misra/">Kanishka Misra — The Role of Input in Shaping Linguistic Generalizations</a></li>
+          <li><a href="https://ldomenichelli.github.io/posts/analytical-connectionism-summer-school-2026/read/cagnetta/">Francesco Cagnetta — From Correlations to Grammar</a></li>
+          <li><a href="https://ldomenichelli.github.io/posts/analytical-connectionism-summer-school-2026/read/loureiro/">Bruno Loureiro — What Makes Neural Nets Good Learners?</a></li>
+          <li><a href="https://ldomenichelli.github.io/posts/analytical-connectionism-summer-school-2026/read/smith/">Kenny Smith — How Learning and Use Shape Evolving Linguistic Systems</a></li>
         </ul>
       ]]></content:encoded>
     </item>
 
     <item>
       <title>ACL San Diego 2026</title>
-      <link>https://ldomenichelli.github.io/posts/post10/</link>
+      <link>https://ldomenichelli.github.io/posts/acl-san-diego-2026/</link>
       <pubDate>Fri, 03 Jul 2026 00:00:00 +0200</pubDate>
 
-      <guid>https://ldomenichelli.github.io/posts/post10/</guid>
+      <guid>https://ldomenichelli.github.io/posts/acl-san-diego-2026/</guid>
       <description>Here are the notes from the ACL 2026 tutorial I attended in San Diego: multi-agent LLM systems, small agents, consensus, black-box and white-box collaboration, healthcare, and science.</description>
     </item>
 
     <item>
       <title>❄️ HPLT × NLPL Winter School</title>
-      <link>https://ldomenichelli.github.io/posts/post5/</link>
+      <link>https://ldomenichelli.github.io/posts/hplt-nlpl-winter-school/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
 
-      <guid>https://ldomenichelli.github.io/posts/post5/</guid>
+      <guid>https://ldomenichelli.github.io/posts/hplt-nlpl-winter-school/</guid>
       <description>&lt;h1 id=&#34;-day1--monday-10feb2025&#34;&gt;🗓 Day 1 — Monday, 10 Feb 2025&lt;/h1&gt;
 &lt;h3 id=&#34;-what-is-commoncrawl&#34;&gt;🌍 What Is &lt;strong&gt;Common Crawl&lt;/strong&gt;?&lt;/h3&gt;
 &lt;p&gt;Common Crawl is a &lt;strong&gt;huge, free snapshot of the public web&lt;/strong&gt;.&lt;br&gt;
@@ -68,10 +68,10 @@ A non‑profit updates it every month, storing:&lt;/p&gt;
 
     <item>
       <title>ACL Vienna 2025 🇦🇹</title>
-      <link>https://ldomenichelli.github.io/posts/post3/</link>
+      <link>https://ldomenichelli.github.io/posts/acl-vienna-2025/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
 
-      <guid>https://ldomenichelli.github.io/posts/post3/</guid>
+      <guid>https://ldomenichelli.github.io/posts/acl-vienna-2025/</guid>
       <description>&lt;p&gt;Here are the notes from some talks I attented at ACL 2025 in Vienna!&lt;/p&gt;
 &lt;details id=&#34;talk-eye&#34;&gt;
   &lt;summary&gt;  Eye-tracking &lt;/summary&gt;
@@ -88,55 +88,55 @@ A non‑profit updates it every month, storing:&lt;/p&gt;
 
     <item>
       <title>Embeddings space 𖦹ׂ ₊˚⊹⋆</title>
-      <link>https://ldomenichelli.github.io/posts/post1/</link>
+      <link>https://ldomenichelli.github.io/posts/embeddings-space/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
 
-      <guid>https://ldomenichelli.github.io/posts/post1/</guid>
+      <guid>https://ldomenichelli.github.io/posts/embeddings-space/</guid>
       <description>&lt;p&gt;Understanding the &lt;strong&gt;curse of dimensionality&lt;/strong&gt; requires more than just examining the representational aspect of data. A key insight lies in the concept of &lt;strong&gt;intrinsic dimensionality (ID)&lt;/strong&gt;—the number of degrees of freedom within a data manifold or subspace. This ID is often independent of the dimensionality of the space in which the data is embedded. As a result, ID serves as a foundation for dimensionality reduction, which improves similarity measures and enhances the scalability of machine learning and data mining methods.&lt;/p&gt;</description>
     </item>
 
     <item>
       <title>Geometric Deep Learning</title>
-      <link>https://ldomenichelli.github.io/posts/post7/</link>
+      <link>https://ldomenichelli.github.io/posts/geometric-deep-learning/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
 
-      <guid>https://ldomenichelli.github.io/posts/post7/</guid>
+      <guid>https://ldomenichelli.github.io/posts/geometric-deep-learning/</guid>
       <description>Some notes on geometric deep learning</description>
     </item>
 
     <item>
       <title>Optimal Transport 🕷️ and Wasserstein distance</title>
-      <link>https://ldomenichelli.github.io/posts/post2/</link>
+      <link>https://ldomenichelli.github.io/posts/optimal-transport-and-wasserstein-distance/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
 
-      <guid>https://ldomenichelli.github.io/posts/post2/</guid>
+      <guid>https://ldomenichelli.github.io/posts/optimal-transport-and-wasserstein-distance/</guid>
       <description>One original handwritten Optimal Transport and Wasserstein distance sheet in a continuous scrolling reader, with PDF download.</description>
     </item>
 
     <item>
       <title>Statistical Learning and Large Data 📊</title>
-      <link>https://ldomenichelli.github.io/posts/post8/</link>
+      <link>https://ldomenichelli.github.io/posts/statistical-learning-and-large-data/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
 
-      <guid>https://ldomenichelli.github.io/posts/post8/</guid>
+      <guid>https://ldomenichelli.github.io/posts/statistical-learning-and-large-data/</guid>
       <description>Original annotated Statistical Learning and Large Data course material in a continuous 172-page reader, with PDF download.</description>
     </item>
 
     <item>
       <title>Time Series 📈</title>
-      <link>https://ldomenichelli.github.io/posts/post9/</link>
+      <link>https://ldomenichelli.github.io/posts/time-series/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
 
-      <guid>https://ldomenichelli.github.io/posts/post9/</guid>
+      <guid>https://ldomenichelli.github.io/posts/time-series/</guid>
       <description>&lt;p&gt;A digital mathematical notebook on time series: stochastic processes, dependence, stationarity, ACF and PACF, ARIMA, ETS, state-space models, Kalman filtering, spectral ideas, and forecast evaluation.&lt;/p&gt;</description>
     </item>
 
     <item>
       <title>Topological Data Analysis 🌐</title>
-      <link>https://ldomenichelli.github.io/posts/post4/</link>
+      <link>https://ldomenichelli.github.io/posts/topological-data-analysis/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
 
-      <guid>https://ldomenichelli.github.io/posts/post4/</guid>
+      <guid>https://ldomenichelli.github.io/posts/topological-data-analysis/</guid>
       <description>Original handwritten Topological Data Analysis lecture notes in a continuous scrolling reader, with PDF download.</description>
     </item>
 

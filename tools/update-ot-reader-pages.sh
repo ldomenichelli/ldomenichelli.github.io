@@ -6,10 +6,10 @@ script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 repo_dir=$(CDPATH= cd -- "$script_dir/.." && pwd)
 pdf_path="$repo_dir/ot.pdf"
 public_pdf_path="$repo_dir/public/ot.pdf"
-reader_html="$repo_dir/posts/post2/index.html"
-public_reader_html="$repo_dir/public/posts/post2/index.html"
-source_dir="$repo_dir/posts/post2/pages"
-public_dir="$repo_dir/public/posts/post2/pages"
+reader_html="$repo_dir/posts/optimal-transport-and-wasserstein-distance/index.html"
+public_reader_html="$repo_dir/public/posts/optimal-transport-and-wasserstein-distance/index.html"
+source_dir="$repo_dir/posts/optimal-transport-and-wasserstein-distance/pages"
+public_dir="$repo_dir/public/posts/optimal-transport-and-wasserstein-distance/pages"
 
 for command_name in pdfinfo pdftocairo cmp; do
   if ! command -v "$command_name" >/dev/null 2>&1; then
@@ -26,7 +26,7 @@ fi
 
 for html_path in "$reader_html" "$public_reader_html"; do
   markup_count=$(grep -Eo 'data-note-page="[0-9]+"' "$html_path" | wc -l)
-  image_markup_count=$(grep -Eo 'src="/posts/post2/pages/page-[0-9]+\.jpg"' "$html_path" | wc -l)
+  image_markup_count=$(grep -Eo 'src="/posts/optimal-transport-and-wasserstein-distance/pages/page-[0-9]+\.jpg"' "$html_path" | wc -l)
   if ((markup_count != 1 || image_markup_count != 1)); then
     echo "$html_path must contain exactly one OT reader entry and JPEG reference." >&2
     exit 1

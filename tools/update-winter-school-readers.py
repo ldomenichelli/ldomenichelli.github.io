@@ -18,7 +18,7 @@ from pathlib import Path
 REPO_DIR = Path(__file__).resolve().parent.parent
 PUBLISHED_DATE = "2025-02-10"
 MODIFIED_DATE = "2026-08-26"
-SOCIAL_IMAGE = "/posts/post5/img/winter.png"
+SOCIAL_IMAGE = "/posts/hplt-nlpl-winter-school/img/winter.png"
 
 
 @dataclass(frozen=True)
@@ -195,8 +195,8 @@ def jpeg_dimensions(path: Path) -> tuple[int, int]:
 
 def render_pages(note: Note, page_count: int) -> list[tuple[Path, int, int]]:
     pdf_path = REPO_DIR / note.pdf_name
-    pages_dir = REPO_DIR / "posts" / "post5" / "read" / note.slug / "pages"
-    public_pages_dir = REPO_DIR / "public" / "posts" / "post5" / "read" / note.slug / "pages"
+    pages_dir = REPO_DIR / "posts" / "hplt-nlpl-winter-school" / "read" / note.slug / "pages"
+    public_pages_dir = REPO_DIR / "public" / "posts" / "hplt-nlpl-winter-school" / "read" / note.slug / "pages"
     pages_dir.mkdir(parents=True, exist_ok=True)
     public_pages_dir.mkdir(parents=True, exist_ok=True)
 
@@ -257,7 +257,7 @@ def page_markup(note: Note, pages: list[tuple[Path, int, int]]) -> str:
             "Domenichelli's HPLT × NLPL Winter School notes.",
             quote=True,
         )
-        image_url = f"/posts/post5/read/{note.slug}/pages/{page_path.name}"
+        image_url = f"/posts/hplt-nlpl-winter-school/read/{note.slug}/pages/{page_path.name}"
         items.append(
             f'''      <li class="ws-reader-page-item" id="page-{page_number}" data-note-page="{page_number}">
         <figure class="ws-reader-sheet" aria-labelledby="page-{page_number}-caption">
@@ -271,7 +271,7 @@ def page_markup(note: Note, pages: list[tuple[Path, int, int]]) -> str:
 
 def reader_html(note: Note, pages: list[tuple[Path, int, int]]) -> str:
     total = len(pages)
-    canonical = f"https://ldomenichelli.github.io/posts/post5/read/{note.slug}/"
+    canonical = f"https://ldomenichelli.github.io/posts/hplt-nlpl-winter-school/read/{note.slug}/"
     pdf_url = f"/{note.pdf_name}"
     absolute_pdf_url = f"https://ldomenichelli.github.io/{note.pdf_name}"
     absolute_social_image = f"https://ldomenichelli.github.io{SOCIAL_IMAGE}"
@@ -300,7 +300,7 @@ def reader_html(note: Note, pages: list[tuple[Path, int, int]]) -> str:
                         "@type": "ListItem",
                         "position": 3,
                         "name": "HPLT × NLPL Winter School",
-                        "item": "https://ldomenichelli.github.io/posts/post5/",
+                        "item": "https://ldomenichelli.github.io/posts/hplt-nlpl-winter-school/",
                     },
                     {
                         "@type": "ListItem",
@@ -328,7 +328,7 @@ def reader_html(note: Note, pages: list[tuple[Path, int, int]]) -> str:
                 "keywords": list(note.keywords),
                 "isPartOf": {
                     "@type": "BlogPosting",
-                    "@id": "https://ldomenichelli.github.io/posts/post5/",
+                    "@id": "https://ldomenichelli.github.io/posts/hplt-nlpl-winter-school/",
                 },
                 "mainEntityOfPage": {"@type": "WebPage", "@id": canonical},
                 "image": {"@type": "ImageObject", "url": absolute_social_image},
@@ -386,7 +386,7 @@ def reader_html(note: Note, pages: list[tuple[Path, int, int]]) -> str:
 
   <header class="ws-reader-bar">
     <div class="ws-reader-bar-inner">
-      <a class="ws-reader-back" href="/posts/post5/#{note.section_anchor}" aria-label="Back to all HPLT and NLPL Winter School notes">← <span>All winter school notes</span></a>
+      <a class="ws-reader-back" href="/posts/hplt-nlpl-winter-school/#{note.section_anchor}" aria-label="Back to all HPLT and NLPL Winter School notes">← <span>All winter school notes</span></a>
       <div class="ws-reader-heading">
         <p class="ws-reader-speaker">{escaped_speaker}</p>
         <h1>{escaped_title}</h1>
@@ -399,7 +399,7 @@ def reader_html(note: Note, pages: list[tuple[Path, int, int]]) -> str:
   </header>
 
   <main class="ws-reader-main" id="note-pages">
-    <p class="ws-reader-intro"><a href="/posts/post5/">HPLT × NLPL Winter School</a> · {escaped_day} · Scroll to read</p>
+    <p class="ws-reader-intro"><a href="/posts/hplt-nlpl-winter-school/">HPLT × NLPL Winter School</a> · {escaped_day} · Scroll to read</p>
     <section class="ws-reader-summary" aria-labelledby="reader-summary-title">
       <h2 id="reader-summary-title">About these notes</h2>
       <p>{escaped_summary}</p>
@@ -411,7 +411,7 @@ def reader_html(note: Note, pages: list[tuple[Path, int, int]]) -> str:
 {page_markup(note, pages)}
     </ol>
     <nav class="ws-reader-end" aria-label="End of notes actions">
-      <a href="/posts/post5/#{note.section_anchor}">← All winter school notes</a>
+      <a href="/posts/hplt-nlpl-winter-school/#{note.section_anchor}">← All winter school notes</a>
       <a href="{pdf_url}" download="{download_name}">Download PDF ↓</a>
       <a href="#top">Back to top ↑</a>
     </nav>
@@ -434,7 +434,7 @@ def landing_card(note: Note, page_count: int) -> str:
     <p class="winter-note-reader-title">{html.escape(note.title)}</p>
     <p class="winter-note-reader-description">Read every page in the site’s native scroll, without a nested PDF viewport.</p>
     <div class="winter-note-reader-actions">
-      <a class="winter-note-reader-action is-primary" data-note-open="{note.slug}" href="/posts/post5/read/{note.slug}/" target="_blank" rel="noopener">Read notes →</a>
+      <a class="winter-note-reader-action is-primary" data-note-open="{note.slug}" href="/posts/hplt-nlpl-winter-school/read/{note.slug}/" target="_blank" rel="noopener">Read notes →</a>
       <a class="winter-note-reader-action" data-note-download="{note.slug}" href="/{note.pdf_name}" download="hplt-nlpl-{note.slug}-notes.pdf">Download PDF ↓</a>
     </div>
   </div>
@@ -443,8 +443,8 @@ def landing_card(note: Note, page_count: int) -> str:
 
 
 def update_landing_page(page_counts: dict[str, int]) -> None:
-    landing_path = REPO_DIR / "posts" / "post5" / "index.html"
-    public_landing_path = REPO_DIR / "public" / "posts" / "post5" / "index.html"
+    landing_path = REPO_DIR / "posts" / "hplt-nlpl-winter-school" / "index.html"
+    public_landing_path = REPO_DIR / "public" / "posts" / "hplt-nlpl-winter-school" / "index.html"
     source = landing_path.read_text(encoding="utf-8")
 
     if "/assets/css/winter-school-notes.css" not in source:
@@ -469,7 +469,7 @@ def update_landing_page(page_counts: dict[str, int]) -> None:
     maria_replacement = maria_intro + landing_card(maria, page_counts[maria.slug])
     source, maria_replacements = maria_pattern.subn(maria_replacement, source, count=1)
     if maria_replacements == 0 and f'data-note-reader="{maria.slug}"' not in source:
-        raise RuntimeError("Could not replace the maria.pdf embed on post5")
+        raise RuntimeError("Could not replace the maria.pdf embed on hplt-nlpl-winter-school")
 
     for note in NOTES:
         if note.slug == "generalization":
@@ -490,7 +490,7 @@ def update_landing_page(page_counts: dict[str, int]) -> None:
         )
         source, replacements = embed_pattern.subn(card, source, count=1)
         if replacements != 1:
-            raise RuntimeError(f"Could not replace the {note.pdf_name} embed on post5")
+            raise RuntimeError(f"Could not replace the {note.pdf_name} embed on hplt-nlpl-winter-school")
 
     toc_entry = '<li><a href=#-generalization>📍 Pitfalls in Measuring Generalization</a></li>'
     if toc_entry not in source:
@@ -503,13 +503,13 @@ def update_landing_page(page_counts: dict[str, int]) -> None:
 
     source = source.replace("## 📍 *Generalization*", "📍 Pitfalls in Measuring Generalization")
     if re.search(r"<(?:iframe|object|embed)\b", source, re.IGNORECASE):
-        raise RuntimeError("post5 still contains a nested document viewport")
+        raise RuntimeError("hplt-nlpl-winter-school still contains a nested document viewport")
 
     landing_path.write_text(source, encoding="utf-8")
     public_landing_path.parent.mkdir(parents=True, exist_ok=True)
     public_landing_path.write_text(source, encoding="utf-8")
     if landing_path.read_bytes() != public_landing_path.read_bytes():
-        raise RuntimeError("Root/public post5 landing pages differ")
+        raise RuntimeError("Root/public hplt-nlpl-winter-school landing pages differ")
 
     for search_path in (REPO_DIR / "index.json", REPO_DIR / "public" / "index.json"):
         search_source = search_path.read_text(encoding="utf-8")
@@ -518,7 +518,7 @@ def update_landing_page(page_counts: dict[str, int]) -> None:
         )
         search_path.write_text(search_source, encoding="utf-8")
 
-    print("Updated post5 to open all five PDFs as continuous readers")
+    print("Updated hplt-nlpl-winter-school to open all five PDFs as continuous readers")
 
 
 def build_note(note: Note, skip_images: bool) -> None:
@@ -526,7 +526,7 @@ def build_note(note: Note, skip_images: bool) -> None:
     if not pdf_path.is_file():
         raise FileNotFoundError(pdf_path)
     page_count = pdf_page_count(pdf_path)
-    pages_dir = REPO_DIR / "posts" / "post5" / "read" / note.slug / "pages"
+    pages_dir = REPO_DIR / "posts" / "hplt-nlpl-winter-school" / "read" / note.slug / "pages"
 
     if skip_images:
         rendered = sorted(pages_dir.glob("page-*.jpg"))
@@ -539,8 +539,8 @@ def build_note(note: Note, skip_images: bool) -> None:
         pages = render_pages(note, page_count)
 
     markup = reader_html(note, pages)
-    reader_path = REPO_DIR / "posts" / "post5" / "read" / note.slug / "index.html"
-    public_reader_path = REPO_DIR / "public" / "posts" / "post5" / "read" / note.slug / "index.html"
+    reader_path = REPO_DIR / "posts" / "hplt-nlpl-winter-school" / "read" / note.slug / "index.html"
+    public_reader_path = REPO_DIR / "public" / "posts" / "hplt-nlpl-winter-school" / "read" / note.slug / "index.html"
     reader_path.parent.mkdir(parents=True, exist_ok=True)
     public_reader_path.parent.mkdir(parents=True, exist_ok=True)
     reader_path.write_text(markup, encoding="utf-8")

@@ -1,0 +1,131 @@
+% Formula transcription of Notebook 12.pdf.
+% Compile with: pdflatex notebook-12-formulas.tex
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[margin=1in]{geometry}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+
+\newcommand{\R}{\mathbb{R}}
+
+\title{TPR Activation Steering: Formula Sheet}
+\author{Notes by Lucia Domenichelli}
+\date{27 August 2026}
+
+\begin{document}
+
+\maketitle
+
+\section*{TPR representation}
+
+The hidden state is
+
+\[
+  h \in \R^{4096}.
+\]
+
+After TPRization, the representation is arranged as
+
+\[
+  u
+  =
+  \begin{bmatrix}
+    u_{\mathrm{agent}} \\
+    u_{\mathrm{patient}} \\
+    u_{\mathrm{roles}}
+  \end{bmatrix},
+  \qquad
+  u \in \R^{3 \times 32} \cong \R^{96}.
+\]
+
+The linear readout is
+
+\[
+  u = Ah + c,
+  \qquad
+  A \in \R^{96 \times 4096}.
+\]
+
+\section*{Desired activation change}
+
+For the agent component, the notebook considers the change
+
+\[
+  \Delta u_{\mathrm{agent}}
+  = C_{\mathrm{prisoner}} - C_{\mathrm{baby}}.
+\]
+
+Keeping the patient and role components unchanged gives
+
+\[
+  \Delta u
+  =
+  \begin{bmatrix}
+    C_{\mathrm{prisoner}} - C_{\mathrm{baby}} \\
+    0 \\
+    0
+  \end{bmatrix}.
+\]
+
+\section*{Hidden-state update}
+
+The corresponding hidden-state displacement satisfies
+
+\[
+  \Delta u = A\,\Delta h.
+\]
+
+Using the Moore--Penrose pseudoinverse,
+
+\[
+  \Delta h
+  = A^{+}\Delta u
+  = A^{\mathsf T}\!\left(AA^{\mathsf T}\right)^{-1}\Delta u.
+\]
+
+There can be several displacements
+
+\[
+  \Delta h_1,\ \Delta h_2,\ \ldots
+  \qquad\text{such that}\qquad
+  A\,\Delta h_i = \Delta u.
+\]
+
+The pseudoinverse selects the minimum-norm solution:
+
+\[
+  \Delta h^{A}
+  =
+  \underset{\Delta h}{\operatorname{arg\,min}}
+  \lVert \Delta h \rVert_2
+  \qquad
+  \text{subject to}
+  \qquad
+  A\,\Delta h = \Delta u.
+\]
+
+The notebook also records
+
+\[
+  AA^{+} \simeq I_{96}.
+\]
+
+Finally, the steered hidden state is
+
+\[
+  h_{\mathrm{steered}} = h + \alpha\,\Delta h.
+\]
+
+\section*{Source note}
+
+This document is a cleaned, formula-focused transcription of
+\texttt{Notebook 12.pdf}. The ordering and notation follow the handwritten
+source.
+
+\end{document}

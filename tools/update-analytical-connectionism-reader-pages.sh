@@ -18,9 +18,9 @@ render_note() {
   local preview_name=${3:-}
   local pdf_path="$repo_dir/$pdf_name"
   local public_pdf_path="$repo_dir/public/$pdf_name"
-  local reader_html="$repo_dir/posts/post11/read/$slug/index.html"
-  local source_dir="$repo_dir/posts/post11/read/$slug/pages"
-  local public_dir="$repo_dir/public/posts/post11/read/$slug/pages"
+  local reader_html="$repo_dir/posts/analytical-connectionism-summer-school-2026/read/$slug/index.html"
+  local source_dir="$repo_dir/posts/analytical-connectionism-summer-school-2026/read/$slug/pages"
+  local public_dir="$repo_dir/public/posts/analytical-connectionism-summer-school-2026/read/$slug/pages"
   local page_count
 
   page_count=$(pdfinfo "$pdf_path" | awk -F: '/^Pages:/{gsub(/[[:space:]]/, "", $2); print $2; exit}')
@@ -84,8 +84,8 @@ render_note() {
   done
 
   if [[ -n "$preview_name" ]]; then
-    local source_preview="$repo_dir/posts/post11/img/$preview_name"
-    local public_preview="$repo_dir/public/posts/post11/img/$preview_name"
+    local source_preview="$repo_dir/posts/analytical-connectionism-summer-school-2026/img/$preview_name"
+    local public_preview="$repo_dir/public/posts/analytical-connectionism-summer-school-2026/img/$preview_name"
 
     cp -- "$source_dir/page-01.jpg" "$source_preview"
     cp -- "$source_preview" "$public_preview"
@@ -106,7 +106,7 @@ render_note() {
   fi
 
   image_markup_count=$(
-    awk -v prefix="/posts/post11/read/$slug/pages/page-" '
+    awk -v prefix="/posts/analytical-connectionism-summer-school-2026/read/$slug/pages/page-" '
       index($0, "src=\"" prefix) && index($0, ".jpg\"") { count += 1 }
       END { print count + 0 }
     ' "$reader_html"

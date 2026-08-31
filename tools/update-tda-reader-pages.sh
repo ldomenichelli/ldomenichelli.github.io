@@ -6,10 +6,10 @@ script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 repo_dir=$(CDPATH= cd -- "$script_dir/.." && pwd)
 pdf_path="$repo_dir/tdafull.pdf"
 public_pdf_path="$repo_dir/public/tdafull.pdf"
-reader_html="$repo_dir/posts/post4/index.html"
-public_reader_html="$repo_dir/public/posts/post4/index.html"
-source_dir="$repo_dir/posts/post4/pages"
-public_dir="$repo_dir/public/posts/post4/pages"
+reader_html="$repo_dir/posts/topological-data-analysis/index.html"
+public_reader_html="$repo_dir/public/posts/topological-data-analysis/index.html"
+source_dir="$repo_dir/posts/topological-data-analysis/pages"
+public_dir="$repo_dir/public/posts/topological-data-analysis/pages"
 
 for command_name in pdfinfo pdftocairo cmp; do
   if ! command -v "$command_name" >/dev/null 2>&1; then
@@ -26,7 +26,7 @@ fi
 
 for html_path in "$reader_html" "$public_reader_html"; do
   markup_count=$(grep -Eo 'data-note-page="[0-9]+"' "$html_path" | wc -l)
-  image_markup_count=$(grep -Eo '/posts/post4/pages/page-[0-9]+\.jpg' "$html_path" | wc -l)
+  image_markup_count=$(grep -Eo '/posts/topological-data-analysis/pages/page-[0-9]+\.jpg' "$html_path" | wc -l)
 
   if ((markup_count != page_count || image_markup_count != page_count)); then
     echo "$html_path must contain one reader entry and JPEG reference for each of the $page_count PDF pages." >&2

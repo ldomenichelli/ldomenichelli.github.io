@@ -109,8 +109,8 @@ def numbered_page(path: Path) -> int:
 
 
 def render_pages(pdf_path: Path, page_count: int) -> list[tuple[Path, int, int]]:
-    pages_dir = REPO_DIR / "posts" / "post8" / "pages"
-    public_pages_dir = REPO_DIR / "public" / "posts" / "post8" / "pages"
+    pages_dir = REPO_DIR / "posts" / "statistical-learning-and-large-data" / "pages"
+    public_pages_dir = REPO_DIR / "public" / "posts" / "statistical-learning-and-large-data" / "pages"
     pages_dir.mkdir(parents=True, exist_ok=True)
     public_pages_dir.mkdir(parents=True, exist_ok=True)
 
@@ -157,8 +157,8 @@ def render_pages(pdf_path: Path, page_count: int) -> list[tuple[Path, int, int]]
 
 
 def existing_pages(page_count: int) -> list[tuple[Path, int, int]]:
-    pages_dir = REPO_DIR / "posts" / "post8" / "pages"
-    public_pages_dir = REPO_DIR / "public" / "posts" / "post8" / "pages"
+    pages_dir = REPO_DIR / "posts" / "statistical-learning-and-large-data" / "pages"
+    public_pages_dir = REPO_DIR / "public" / "posts" / "statistical-learning-and-large-data" / "pages"
     rendered = sorted(pages_dir.glob("page-*.jpg"), key=numbered_page)
     public_rendered = sorted(public_pages_dir.glob("page-*.jpg"), key=numbered_page)
 
@@ -196,7 +196,7 @@ def page_markup(pages: list[tuple[Path, int, int]]) -> str:
         items.append(
             f'''      <li class="ws-reader-page-item" id="page-{page_number}" data-note-page="{page_number}">
         <figure class="ws-reader-sheet" aria-labelledby="page-{page_number}-caption">
-          <img src="/posts/post8/pages/{page_path.name}" width="{width}" height="{height}" alt="{alt}" {loading}>
+          <img src="/posts/statistical-learning-and-large-data/pages/{page_path.name}" width="{width}" height="{height}" alt="{alt}" {loading}>
           <figcaption id="page-{page_number}-caption">Page {page_number} of {total}</figcaption>
         </figure>
       </li>'''
@@ -206,10 +206,10 @@ def page_markup(pages: list[tuple[Path, int, int]]) -> str:
 
 def reader_html(pages: list[tuple[Path, int, int]]) -> str:
     total = len(pages)
-    canonical = "https://ldomenichelli.github.io/posts/post8/"
+    canonical = "https://ldomenichelli.github.io/posts/statistical-learning-and-large-data/"
     pdf_url = f"/{PDF_NAME}"
     absolute_pdf_url = f"https://ldomenichelli.github.io/{PDF_NAME}"
-    social_image = "https://ldomenichelli.github.io/posts/post8/pages/page-001.jpg"
+    social_image = "https://ldomenichelli.github.io/posts/statistical-learning-and-large-data/pages/page-001.jpg"
     topics = "\n".join(f"        <li>{html.escape(topic)}</li>" for topic in TOPICS)
     structured_data = {
         "@context": "https://schema.org",
@@ -358,8 +358,8 @@ def build(skip_images: bool) -> None:
         raise RuntimeError("Root/public copies differ for SLLD_new.pdf")
 
     markup = reader_html(pages)
-    reader_path = REPO_DIR / "posts" / "post8" / "index.html"
-    public_reader_path = REPO_DIR / "public" / "posts" / "post8" / "index.html"
+    reader_path = REPO_DIR / "posts" / "statistical-learning-and-large-data" / "index.html"
+    public_reader_path = REPO_DIR / "public" / "posts" / "statistical-learning-and-large-data" / "index.html"
     reader_path.write_text(markup, encoding="utf-8")
     public_reader_path.write_text(markup, encoding="utf-8")
     if reader_path.read_bytes() != public_reader_path.read_bytes():

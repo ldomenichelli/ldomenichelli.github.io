@@ -76,7 +76,7 @@ body.ac-school-page {
 
 .ac-background-sheet.is-smolensky {
   animation: ac-drift-left 32s ease-in-out infinite alternate;
-  background-image: url("/posts/post11/img/smolensky-notes.jpg");
+  background-image: url("/posts/analytical-connectionism-summer-school-2026/img/smolensky-notes.jpg");
   height: 850px;
   left: -9rem;
   top: 4rem;
@@ -86,7 +86,7 @@ body.ac-school-page {
 
 .ac-background-sheet.is-rowland {
   animation: ac-drift-right 36s ease-in-out infinite alternate;
-  background-image: url("/posts/post11/img/rowland-notes.jpg");
+  background-image: url("/posts/analytical-connectionism-summer-school-2026/img/rowland-notes.jpg");
   height: 700px;
   right: -7rem;
   top: 29rem;
@@ -96,7 +96,7 @@ body.ac-school-page {
 
 .ac-background-sheet.is-biehl {
   animation: ac-drift-low 40s ease-in-out infinite alternate;
-  background-image: url("/posts/post11/img/biehl-notes.jpg");
+  background-image: url("/posts/analytical-connectionism-summer-school-2026/img/biehl-notes.jpg");
   bottom: -8rem;
   height: 700px;
   left: 20%;
@@ -106,7 +106,7 @@ body.ac-school-page {
 
 .ac-background-sheet.is-smolensky-two {
   animation: none;
-  background-image: url("/posts/post11/img/smolensky-notes-2.jpg");
+  background-image: url("/posts/analytical-connectionism-summer-school-2026/img/smolensky-notes-2.jpg");
   height: 815px;
   opacity: 0.19;
   right: -10rem;
@@ -117,7 +117,7 @@ body.ac-school-page {
 
 .ac-background-sheet.is-rowland-two {
   animation: none;
-  background-image: url("/posts/post11/img/rowland-notes-2.jpg");
+  background-image: url("/posts/analytical-connectionism-summer-school-2026/img/rowland-notes-2.jpg");
   height: 670px;
   left: -10rem;
   opacity: 0.19;
@@ -128,7 +128,7 @@ body.ac-school-page {
 
 .ac-background-sheet.is-biehl-two {
   animation: none;
-  background-image: url("/posts/post11/img/biehl-notes-2.jpg");
+  background-image: url("/posts/analytical-connectionism-summer-school-2026/img/biehl-notes-2.jpg");
   height: 670px;
   opacity: 0.19;
   right: -9rem;
