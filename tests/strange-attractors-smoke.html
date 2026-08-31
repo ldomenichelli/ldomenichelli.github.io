@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Strange attractors smoke test</title>
+  <style>
+    html, body { margin: 0; background: #101410; color: #d8ef72; font: 14px/1.5 monospace; }
+    #result { box-sizing: border-box; margin: 0; min-height: 3rem; padding: 1rem; white-space: pre-wrap; }
+    iframe { border: 0; display: block; height: 1200px; }
+  </style>
+</head>
+<body>
+<pre id="result">RUNNING</pre>
+<iframe id="page" title="Strange attractors page under test"></iframe>
+<script>
+  (async () => {
+    const result = document.querySelector('#result');
+    const frame = document.querySelector('#page');
+    const width = Number(new URLSearchParams(location.search).get('width')) || 390;
+    const failures = [];
+    const runtimeErrors = [];
+    const check = (condition, message) => { if (!condition) failures.push(message); };
+
+    window.addEventListener('error', event => runtimeErrors.push(event.message));
+    window.addEventListener('unhandledrejection', event => runtimeErrors.push(String(event.reason)));
+
+    frame.style.width = `${width}px`;
+    frame.src = '/projects/strange-attractors/';
+    await new Promise((resolve, reject) => {
+      frame.addEventListener('load', resolve, { once: true });
+      setTimeout(() => reject(new Error('page load timeout')), 8000);
+    });
+
+    const doc = frame.contentDocument;
+    const win = frame.contentWindow;
+    const plots = [...doc.querySelectorAll('.attractor-plot img')];
+    await Promise.all(plots.map(img => img.complete ? Promise.resolve() : new Promise(resolve => {
+      img.addEventListener('load', resolve, { once: true });
+      img.addEventListener('error', resolve, { once: true });
+    })));
+
+    check(doc.body.classList.contains('attractor-page'), 'missing attractor page scope');
+    check(doc.querySelectorAll('h1').length === 1, 'page must have exactly one h1');
+    check(doc.querySelectorAll('.attractor-card').length === 3, 'expected three attractor cards');
+    check(plots.length === 3 && plots.every(img => img.naturalWidth > 0 && img.alt), 'plots must load and have alt text');
+    check(doc.querySelector('.language-fortran')?.textContent.includes('subroutine rk4_step'), 'Fortran solver is not visible');
+
+    for (const id of ['gallery', 'lorenz', 'rossler', 'thomas', 'fortran', 'run-it']) {
+      check(Boolean(doc.getElementById(id)), `missing fragment #${id}`);
+    }
+
+    const sourceResponse = await win.fetch('/projects/strange-attractors/strange-attractors.f90');
+    const source = await sourceResponse.text();
+    check(sourceResponse.ok && source.includes('program strange_attractors'), 'downloadable Fortran source is unavailable');
+    check(source.includes('case (1)') && source.includes('case (2)') && source.includes('case (3)'), 'source does not contain all three systems');
+
+    const cssResponse = await win.fetch('/assets/css/strange-attractors.css');
+    check(cssResponse.ok, 'attractor stylesheet is unavailable');
+
+    const codeStyle = win.getComputedStyle(doc.querySelector('.language-fortran'));
+    check(codeStyle.whiteSpace === 'pre', 'Fortran whitespace is not preserved');
+    check(codeStyle.wordBreak === 'normal', 'Fortran code is being broken inside tokens');
+
+    const root = doc.documentElement;
+    check(root.scrollWidth <= root.clientWidth + 1, `horizontal overflow: ${root.scrollWidth}px > ${root.clientWidth}px`);
+    check(runtimeErrors.length === 0, `runtime errors: ${runtimeErrors.join('; ')}`);
+
+    if (failures.length) {
+      result.textContent = `FAIL (${width}px)\n${failures.join('\n')}`;
+      result.style.color = '#ff9aa9';
+      document.title = 'FAIL — Strange attractors';
+    } else {
+      result.textContent = `PASS (${width}px)\n3 Fortran-generated plots, source, fragments, and layout verified`;
+      document.title = 'PASS — Strange attractors';
+    }
+  })().catch(error => {
+    document.querySelector('#result').textContent = `FAIL\n${error.stack || error}`;
+    document.title = 'FAIL — Strange attractors';
+  });
+</script>
+</body>
+</html>

@@ -6,13 +6,17 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
   <meta name="robots" content="index, follow">
   <title>Strange Attractors | lucia's room</title>
-  <meta name="description" content="Project page for Strange Attractors.">
+  <meta name="description" content="Lorenz, Rössler, and Thomas strange attractors integrated with Fortran 2008 and rendered as SVG.">
   <meta name="author" content="Lucia">
+  <meta name="theme-color" content="#0c100d">
   <link rel="canonical" href="https://ldomenichelli.github.io/projects/strange-attractors/">
   <link crossorigin="anonymous" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css" integrity="sha256-WtmxyqkuTOqD680wiOlzYvI5sH2BREkKrwvB1r2JzRc=" rel="preload stylesheet" as="style">
   <link rel="icon" href="https://ldomenichelli.github.io/favicon-dithered.ico">
-<script src="/assets/js/analytics.js" async></script><link rel="stylesheet" href="/assets/css/site-theme.css"></head>
-<body class="page dark" id="top">
+<script src="/assets/js/analytics.js" async></script><link rel="stylesheet" href="/assets/css/site-theme.css">
+  <link rel="stylesheet" href="/assets/css/strange-attractors.css">
+<link rel="stylesheet" href="/assets/css/site-shell.css">
+</head>
+<body class="page dark attractor-page" id="top">
 <header class="header">
 <nav class="nav">
 <div class="logo">
@@ -33,18 +37,135 @@
 </nav>
 </header>
 <main class="main">
-<article class="post-single">
-<header class="post-header">
+<article class="post-single attractor-lab">
+<header class="post-header attractor-hero">
+<div class="breadcrumbs"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/projects/">Projects</a></div>
+<p class="attractor-kicker">numerical field note · Fortran 2008</p>
 <h1 class="post-title">Strange Attractors</h1>
+<p class="attractor-lede">Three deterministic systems, one small RK4 solver, and trajectories that never quite repeat. Every line you see below was integrated and drawn by the downloadable Fortran program.</p>
+<div class="attractor-actions">
+<a class="attractor-button" href="#gallery">enter the phase space <span aria-hidden="true">↓</span></a>
+<a class="attractor-button attractor-button-muted" href="/projects/strange-attractors/strange-attractors.f90" download>download .f90</a>
+</div>
 </header>
-<div class="post-content">
-<p>Coming soon.</p>
-<p>This page will collect visual notes on nonlinear systems, iterative maps, and attractor geometry.</p>
+
+<div class="post-content attractor-content">
+<section class="attractor-note" aria-labelledby="deterministic-chaos">
+<div>
+<p class="attractor-label">the experiment</p>
+<h2 id="deterministic-chaos">Deterministic equations, unpredictable paths</h2>
+</div>
+<p>A strange attractor is not a random cloud. It is the long-term geometry traced by a nonlinear dynamical system. Nearby initial states separate rapidly, yet the orbit remains confined to a recognisable shape: chaos with structure.</p>
+</section>
+
+<section class="attractor-gallery" id="gallery" aria-label="Fortran-generated attractor gallery">
+<figure class="attractor-card attractor-card-featured" id="lorenz">
+<div class="attractor-plot">
+<img src="/projects/strange-attractors/img/lorenz.svg" width="960" height="720" alt="The two-lobed Lorenz attractor plotted in the x–z plane." decoding="async">
+<span class="plot-corner" aria-hidden="true">x / z</span>
+</div>
+<figcaption>
+<div class="attractor-heading"><span>01</span><h2>Lorenz</h2></div>
+<p>The classic butterfly. The orbit circles one unstable lobe, crosses the centre, then coils around the other—without settling into a periodic loop.</p>
+<div class="parameter-line"><span>σ = 10</span><span>ρ = 28</span><span>β = 8/3</span><span>Δt = 0.005</span></div>
+</figcaption>
+</figure>
+
+<div class="attractor-pair">
+<figure class="attractor-card" id="rossler">
+<div class="attractor-plot">
+<img src="/projects/strange-attractors/img/rossler.svg" width="960" height="720" alt="The spiral-shaped Rössler attractor plotted in the x–y plane." loading="lazy" decoding="async">
+<span class="plot-corner" aria-hidden="true">x / y</span>
+</div>
+<figcaption>
+<div class="attractor-heading"><span>02</span><h2>Rössler</h2></div>
+<p>A mostly planar spiral that stretches outward before a nonlinear fold returns it to the centre.</p>
+<div class="parameter-line"><span>a = 0.2</span><span>b = 0.2</span><span>c = 5.7</span></div>
+</figcaption>
+</figure>
+
+<figure class="attractor-card" id="thomas">
+<div class="attractor-plot">
+<img src="/projects/strange-attractors/img/thomas.svg" width="960" height="720" alt="The woven Thomas cyclically symmetric attractor plotted in the x–z plane." loading="lazy" decoding="async">
+<span class="plot-corner" aria-hidden="true">x / z</span>
+</div>
+<figcaption>
+<div class="attractor-heading"><span>03</span><h2>Thomas</h2></div>
+<p>Three cyclic sine couplings make a soft, woven orbit whose symmetry only becomes clear over time.</p>
+<div class="parameter-line"><span>b = 0.208186</span><span>cyclic symmetry</span></div>
+</figcaption>
+</figure>
+</div>
+</section>
+
+<section class="fortran-section" id="fortran">
+<div class="fortran-copy">
+<p class="attractor-label">under the hood</p>
+<h2>The curve is the program’s output</h2>
+<p>The source uses 64-bit reals and a fourth-order Runge–Kutta step. It discards an initial transient, keeps 30,000 states, projects two coordinates, and writes each plot directly as SVG. There is no browser-side numerical solver or plotting dependency.</p>
+<div class="equation-stack" aria-label="Lorenz differential equations">
+<span><i>ẋ</i> = σ(<i>y</i> − <i>x</i>)</span>
+<span><i>ẏ</i> = <i>x</i>(ρ − <i>z</i>) − <i>y</i></span>
+<span><i>ż</i> = <i>xy</i> − β<i>z</i></span>
+</div>
+</div>
+
+<div class="fortran-code-card">
+<div class="code-toolbar"><span>core solver · strange-attractors.f90</span><a href="/projects/strange-attractors/strange-attractors.f90" download>full source</a></div>
+<pre aria-label="Fortran Runge–Kutta and attractor equations"><code class="language-fortran">subroutine rk4_step(system_id, state, dt)
+  integer, intent(in) :: system_id
+  real(dp), intent(inout) :: state(3)
+  real(dp), intent(in) :: dt
+  real(dp) :: k1(3), k2(3), k3(3), k4(3)
+
+  call velocity(system_id, state,                 k1)
+  call velocity(system_id, state + 0.5_dp*dt*k1, k2)
+  call velocity(system_id, state + 0.5_dp*dt*k2, k3)
+  call velocity(system_id, state + dt*k3,        k4)
+
+  state = state + dt*(k1 + 2*k2 + 2*k3 + k4)/6
+end subroutine rk4_step
+
+subroutine velocity(system_id, state, rate)
+  integer, intent(in) :: system_id
+  real(dp), intent(in) :: state(3)
+  real(dp), intent(out) :: rate(3)
+  real(dp) :: x, y, z
+
+  x = state(1); y = state(2); z = state(3)
+
+  select case (system_id)
+  case (1) ! Lorenz
+    rate = [10*(y - x), x*(28 - z) - y, &amp;
+            x*y - (8.0_dp/3.0_dp)*z]
+  case (2) ! Rossler
+    rate = [-y - z, x + 0.2_dp*y, &amp;
+            0.2_dp + z*(x - 5.7_dp)]
+  case (3) ! Thomas
+    rate = [sin(y) - 0.208186_dp*x, &amp;
+            sin(z) - 0.208186_dp*y, &amp;
+            sin(x) - 0.208186_dp*z]
+  end select
+end subroutine velocity</code></pre>
+</div>
+</section>
+
+<section class="run-section" id="run-it">
+<div>
+<p class="attractor-label">reproduce it</p>
+<h2>Compile, run, inspect</h2>
+<p>A modern Fortran compiler is the only requirement. Running the executable writes all three SVG files into the current directory.</p>
+</div>
+<pre class="terminal-block" aria-label="Commands to compile and run the Fortran program"><code><span aria-hidden="true">$</span> gfortran -std=f2008 -O2 strange-attractors.f90 -o strange-attractors
+<span aria-hidden="true">$</span> ./strange-attractors
+Wrote lorenz.svg, rossler.svg, and thomas.svg</code></pre>
+<a class="source-download" href="/projects/strange-attractors/strange-attractors.f90" download><span>strange-attractors.f90</span><small>complete, dependency-free source · Fortran 2008</small><b aria-hidden="true">↓</b></a>
+</section>
 </div>
 </article>
 </main>
 <footer class="footer" style="padding-top:18px;padding-bottom:18px">
-<span>&copy; 2025 <a href="https://ldomenichelli.github.io/">lucia's room</a></span>
+<span>&copy; 2026 <a href="https://ldomenichelli.github.io/">lucia's room</a></span>
 <span>•
 <a href="/privacy">Privacy Policy</a></span>
 </footer>
@@ -53,5 +174,6 @@
   b.addEventListener('click',()=>m.classList.toggle('hidden'));
   document.body.addEventListener('click',e=>{if(!b.contains(e.target))m.classList.add('hidden')});
 </script>
-<script src="/assets/js/pocket-bird.js" defer></script></body>
+<script src="/assets/js/pocket-bird.js" defer></script><script src="/assets/js/site-shell.js" defer></script>
+</body>
 </html>

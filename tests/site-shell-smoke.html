@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Site shell smoke test</title>
+  <style>
+    html,
+    body {
+      background: #111;
+      color: #f5f5f5;
+      font: 14px/1.5 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      margin: 0;
+    }
+
+    body {
+      padding: 16px;
+    }
+
+    #log {
+      margin: 0 0 16px;
+      white-space: pre-wrap;
+    }
+
+    iframe {
+      border: 0;
+      display: block;
+      height: 1000px;
+    }
+  </style>
+</head>
+<body data-test-status="RUNNING">
+  <pre id="log">Running...</pre>
+  <iframe id="frame" title="Site page under test"></iframe>
+  <script>
+    const frame = document.querySelector('#frame');
+    const logElement = document.querySelector('#log');
+    const results = [];
+    const params = new URLSearchParams(window.location.search);
+    const frameWidth = Number(params.get('width') || '1280');
+    frame.style.width = `${frameWidth}px`;
+
+    const routes = [
+      { path: '/', active: null },
+      { path: '/posts/', active: 'notes', intro: true },
+      { path: '/projects/', active: 'projects', intro: true },
+      { path: '/random/', active: 'hobbies', intro: true },
+      { path: '/games/', active: 'projects', intro: true },
+      { path: '/projects/strange-attractors/', active: 'projects', check: 'attractor' },
+      { path: '/posts/acl-san-diego-2026/', active: 'notes', check: 'acl' },
+      { path: '/posts/embeddings-space/', active: 'notes' },
+      { path: '/chamber-of-music/', active: 'hobbies', check: 'chamber' },
+      { path: '/random/tea/', active: 'hobbies', check: 'tea' },
+      { path: '/random/quantum/', active: 'hobbies', check: 'quantum' },
+      { path: '/privacy/', active: null }
+    ];
+
+    const canonicalNav = [
+      ['about', '/about/'],
+      ['notes', '/posts/'],
+      ['projects', '/projects/'],
+      ['hobbies', '/random/']
+    ];
+
+    function log(message) {
+      results.push(message);
+      logElement.textContent = results.join('\n');
+    }
+
+    function assert(condition, message) {
+      if (!condition) throw new Error(message);
+      log(`PASS ${message}`);
+    }
+
+    function loadFrame(path) {
+      return new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => reject(new Error(`Timed out loading ${path}`)), 15000);
+        frame.addEventListener('load', () => {
+          clearTimeout(timeout);
+          resolve();
+        }, { once: true });
+        frame.src = path;
+      });
+    }
+
+    function isVisible(element, win) {
+      if (!element) return false;
+      const style = win.getComputedStyle(element);
+      const rect = element.getBoundingClientRect();
+      return style.display !== 'none' &&
+        style.visibility !== 'hidden' &&
+        Number(style.opacity) !== 0 &&
+        rect.width > 0 &&
+        rect.height > 0;
+    }
+
+    function parseColour(colour) {
+      const values = colour.match(/[\d.]+/g);
+      if (!values || values.length < 3) return null;
+      return values.slice(0, 3).map(Number);
+    }
+
+    function luminance(colour) {
+      const rgb = parseColour(colour);
+      if (!rgb) return 0;
+      return rgb.map((value) => {
+        const channel = value / 255;
+        return channel <= 0.03928 ? channel / 12.92 : Math.pow((channel + 0.055) / 1.055, 2.4);
+      }).reduce((sum, value, index) => sum + value * [0.2126, 0.7152, 0.0722][index], 0);
+    }
+
+    function pathOf(link) {
+      return new URL(link.href, window.location.origin).pathname;
+    }
+
+    function checkAssets(doc, route) {
+      const theme = doc.querySelector('link[href="/assets/css/site-theme.css"]');
+      const shell = doc.querySelector('link[href="/assets/css/site-shell.css"]');
+      const script = doc.querySelector('script[src="/assets/js/site-shell.js"]');
+
+      assert(Boolean(theme && theme.sheet), `${route} loads the site theme stylesheet`);
+      assert(Boolean(shell && shell.sheet), `${route} loads the shared shell stylesheet`);
+      assert(Boolean(script), `${route} loads the shared shell script`);
+    }
+
+    function checkNavigation(doc, win, route, expectedActive) {
+      const header = doc.querySelector('body > .header');
+      const nav = header && header.querySelector('.nav[aria-label="Primary"]');
+      const logo = header && header.querySelector('.logo a');
+      const menu = header && header.querySelector('#site-menu.menu');
+      const links = menu ? Array.from(menu.querySelectorAll(':scope > li > a')) : [];
+
+      assert(Boolean(header && nav && menu), `${route} exposes the normalized primary navigation`);
+      assert(isVisible(logo, win), `${route} keeps the site logo visible`);
+      assert(logo.textContent.trim().toLowerCase() === "lucia's room" && pathOf(logo) === '/', `${route} uses the canonical home logo`);
+      assert(links.length === canonicalNav.length, `${route} has exactly four primary links`);
+      assert(links.every((link, index) => {
+        const [label, path] = canonicalNav[index];
+        return link.textContent.trim().toLowerCase() === label && pathOf(link) === path;
+      }), `${route} uses the canonical nav labels, order, and destinations`);
+
+      if (win.innerWidth >= 900) {
+        assert([logo].concat(links).every((element) => {
+          const rect = element.getBoundingClientRect();
+          return isVisible(element, win) && rect.left >= -2 && rect.right <= win.innerWidth + 2;
+        }), `${route} keeps every desktop navigation item inside the viewport`);
+      } else {
+        const trigger = header && header.querySelector('#menu-trigger');
+        const triggerRect = trigger && trigger.getBoundingClientRect();
+        assert(
+          isVisible(trigger, win) &&
+          triggerRect.left >= -2 &&
+          triggerRect.right <= win.innerWidth + 2 &&
+          !isVisible(menu, win),
+          `${route} starts with a collapsed, usable mobile menu`
+        );
+        trigger.click();
+        assert(isVisible(menu, win), `${route} opens its mobile menu from the shared control`);
+        doc.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+        assert(!isVisible(menu, win) && doc.activeElement === trigger, `${route} closes its mobile menu with Escape and restores focus`);
+        trigger.click();
+        assert(isVisible(menu, win), `${route} reopens its mobile menu after keyboard dismissal`);
+        trigger.click();
+        assert(!isVisible(menu, win), `${route} closes its mobile menu from the shared control`);
+      }
+
+      const current = links.filter((link) => link.getAttribute('aria-current') === 'page');
+      if (expectedActive) {
+        assert(current.length === 1 && current[0].textContent.trim().toLowerCase() === expectedActive, `${route} marks ${expectedActive} as the active section`);
+      } else {
+        assert(current.length === 0, `${route} has no false active section`);
+      }
+    }
+
+    function checkFooter(doc, win, route) {
+      const footer = doc.querySelector('body > .footer.site-footer');
+      const privacy = footer && footer.querySelector('a[href="/privacy/"]');
+      const home = footer && footer.querySelector('a[href="/"]');
+
+      assert(isVisible(footer, win), `${route} keeps the normalized footer visible`);
+      assert(Boolean(home && privacy), `${route} footer exposes canonical home and privacy links`);
+      assert(footer.children.length === 3 && footer.textContent.includes('© 2025–2026'), `${route} footer uses the normalized compact content`);
+      assert(!/Hugo|PaperMod|Privacy Policy/.test(footer.textContent), `${route} footer contains no legacy generator copy`);
+      assert(!footer.hasAttribute('style'), `${route} footer has no stale inline layout`);
+    }
+
+    function checkOverflow(doc, win, route) {
+      const scrollWidth = Math.max(doc.documentElement.scrollWidth, doc.body.scrollWidth);
+      assert(scrollWidth <= win.innerWidth + 2, `${route} has no material horizontal overflow at ${frameWidth}px`);
+
+      const bounded = [
+        doc.querySelector('body > .header'),
+        doc.querySelector('body > .main, body > .games-landing'),
+        doc.querySelector('body > .footer'),
+        doc.querySelector('.section-intro'),
+        doc.querySelector('body > .main > .post-single'),
+        doc.querySelector('body > .main > .post-entry'),
+        doc.querySelector('body > .games-landing > .game-card')
+      ].filter(Boolean);
+
+      assert(bounded.every((element) => {
+        const rect = element.getBoundingClientRect();
+        return rect.left >= -2 && rect.right <= win.innerWidth + 2;
+      }), `${route} shared shell stays inside the ${frameWidth}px viewport`);
+    }
+
+    function checkSectionIntro(doc, win, route) {
+      const intro = doc.querySelector('.section-intro');
+      const heading = intro && intro.querySelector('h1, h2');
+      const introStyle = intro && win.getComputedStyle(intro);
+
+      assert(doc.body.classList.contains('section-landing'), `${route} identifies itself as a section landing`);
+      assert(isVisible(intro, win) && Boolean(heading), `${route} exposes a visible section introduction`);
+      assert(introStyle.borderTopStyle !== 'none' && Number.parseFloat(introStyle.borderTopWidth) >= 1, `${route} section introduction uses the shared paper surface`);
+      assert(Number.parseFloat(introStyle.borderTopLeftRadius) <= 2, `${route} section introduction keeps the shared square geometry`);
+    }
+
+    function checkChamber(doc, win) {
+      const article = doc.querySelector('.post-single');
+      const heading = doc.querySelector('.chamber-intro h1');
+      const room = doc.querySelector('.chamber-room');
+      const articleStyle = win.getComputedStyle(article);
+      const headingStyle = win.getComputedStyle(heading);
+      const roomStyle = win.getComputedStyle(room);
+
+      assert(isVisible(article, win) && isVisible(heading, win), 'Chamber of Music has a visible reading surface and title');
+      assert(luminance(articleStyle.backgroundColor) > 0.7, 'Chamber of Music uses a light outer reading surface');
+      assert(luminance(headingStyle.color) < 0.25, 'Chamber of Music title has dark readable ink');
+      assert(luminance(roomStyle.backgroundColor) < 0.1, 'Chamber of Music keeps its intentional dark inner room');
+    }
+
+    function checkAttractor(doc, win) {
+      const lab = doc.querySelector('.attractor-lab');
+      const rootStyle = win.getComputedStyle(doc.documentElement);
+      const bodyStyle = win.getComputedStyle(doc.body);
+      const labStyle = win.getComputedStyle(lab);
+
+      assert(doc.body.classList.contains('attractor-page') && isVisible(lab, win), 'attractor page keeps its scoped lab');
+      assert(luminance(rootStyle.backgroundColor) > 0.65 && bodyStyle.backgroundImage.includes('gradient'), 'attractor page uses the light shared outer room');
+      assert(luminance(labStyle.backgroundColor) < 0.08, 'attractor lab keeps its deliberate dark canvas');
+      assert(Number.parseFloat(labStyle.borderTopWidth) >= 1, 'attractor lab is visually contained inside the shared room');
+    }
+
+    function checkAcl(doc, win) {
+      const article = doc.querySelector('.post-single');
+      const style = win.getComputedStyle(article);
+
+      assert(doc.body.classList.contains('acl26-page') && isVisible(article, win), 'ACL page keeps its mint editorial scope');
+      assert(Number.parseFloat(style.borderTopLeftRadius) <= 2.1, 'ACL article adopts the squared site geometry');
+      assert(Number.parseFloat(style.borderTopWidth) >= 2 && style.borderTopStyle !== 'none', 'ACL article uses the shared strong paper border');
+      assert(style.boxShadow !== 'none', 'ACL article uses the shared offset paper shadow');
+    }
+
+    function checkQuantum(doc) {
+      const menu = doc.querySelector('#site-menu');
+      const links = Array.from(menu.querySelectorAll('a'));
+      const labels = links.map((link) => link.textContent.trim().toLowerCase());
+
+      assert(!links.some((link) => link.getAttribute('href')?.includes('ZgotmplZ')), 'Quantum page removes the broken legacy template link');
+      assert(!labels.includes('suggested pages') && labels.join('|') === 'about|notes|projects|hobbies', 'Quantum page replaces its legacy navigation labels');
+      assert(!doc.querySelector('body > .header .logo img'), 'Quantum page removes its obsolete header image');
+    }
+
+    function checkTea(doc) {
+      const stylesheet = doc.querySelector('link[href="/assets/css/hobby-pages.css"][data-hobby-pages="true"]');
+      assert(doc.body.classList.contains('hobby-tea'), 'Tea page exposes its scoped hobby styling without waiting for JavaScript');
+      assert(Boolean(stylesheet && stylesheet.sheet), 'Tea page loads its hobby stylesheet directly in the document head');
+    }
+
+    async function checkRoute(config) {
+      await loadFrame(config.path);
+      const doc = frame.contentDocument;
+      const win = frame.contentWindow;
+
+      assert(Boolean(doc && doc.body), `${config.path} returns an HTML document`);
+      checkAssets(doc, config.path);
+      checkNavigation(doc, win, config.path, config.active);
+      checkFooter(doc, win, config.path);
+
+      if (config.intro) checkSectionIntro(doc, win, config.path);
+      if (config.check === 'chamber') checkChamber(doc, win);
+      if (config.check === 'attractor') checkAttractor(doc, win);
+      if (config.check === 'acl') checkAcl(doc, win);
+      if (config.check === 'quantum') checkQuantum(doc);
+      if (config.check === 'tea') checkTea(doc);
+
+      checkOverflow(doc, win, config.path);
+    }
+
+    async function run() {
+      assert([390, 768, 1280].includes(frameWidth), 'test width is 390px, 768px, or 1280px');
+
+      for (const route of routes) {
+        await checkRoute(route);
+      }
+
+      const cssResponse = await frame.contentWindow.fetch('/assets/css/site-shell.css');
+      const css = await cssResponse.text();
+      const jsResponse = await frame.contentWindow.fetch('/assets/js/site-shell.js');
+      const js = await jsResponse.text();
+      assert(cssResponse.ok && css.includes('--shell-canvas'), 'shared shell CSS asset is available');
+      assert(jsResponse.ok && js.includes("aria-current"), 'shared shell JS asset is available');
+
+      log(`PASS site shell smoke test completed across ${routes.length} routes at ${frameWidth}px`);
+      document.body.dataset.testStatus = 'PASS';
+      document.title = `PASS — Site shell (${frameWidth}px)`;
+    }
+
+    run().catch((error) => {
+      log(`FAIL ${error.message}`);
+      document.body.dataset.testStatus = 'FAIL';
+      document.title = `FAIL — Site shell (${frameWidth}px)`;
+    });
+  </script>
+</body>
+</html>

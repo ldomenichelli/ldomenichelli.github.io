@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en" dir="auto">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+  <meta name="robots" content="index, follow">
+  <title>Privacy | lucia's room</title>
+  <meta name="description" content="A plain-language description of the visit counter and third-party requests used on lucia's room.">
+  <meta name="author" content="Lucia Domenichelli">
+  <meta name="theme-color" content="#dfe6d8">
+  <meta name="msapplication-TileColor" content="#dfe6d8">
+  <link rel="canonical" href="https://ldomenichelli.github.io/privacy/">
+  <link rel="icon" href="https://ldomenichelli.github.io/favicon-dithered.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ldomenichelli.github.io/favicon-16x16-dithered.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ldomenichelli.github.io/favicon-32x32-dithered.png">
+  <link rel="apple-touch-icon" href="https://ldomenichelli.github.io/apple-touch-icon-dithered.png">
+  <meta property="og:title" content="Privacy">
+  <meta property="og:description" content="A plain-language description of the visit counter and third-party requests used on lucia's room.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ldomenichelli.github.io/privacy/">
+  <meta property="og:image" content="https://ldomenichelli.github.io/logo-dithered.png">
+  <meta property="og:site_name" content="lucia's room">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Privacy">
+  <meta name="twitter:description" content="How the site's small visit counter works and which external services it contacts.">
+  <meta name="twitter:image" content="https://ldomenichelli.github.io/logo-dithered.png">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Privacy",
+      "description": "A plain-language description of the visit counter and third-party requests used on lucia's room.",
+      "url": "https://ldomenichelli.github.io/privacy/",
+      "inLanguage": "en",
+      "author": {
+        "@type": "Person",
+        "name": "Lucia Domenichelli"
+      }
+    }
+  </script>
+  <link crossorigin="anonymous" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css" integrity="sha256-WtmxyqkuTOqD680wiOlzYvI5sH2BREkKrwvB1r2JzRc=" rel="preload stylesheet" as="style">
+  <link rel="stylesheet" href="/assets/css/site-theme.css">
+  <link rel="stylesheet" href="/assets/css/site-shell.css">
+</head>
+<body class="page dark privacy-page" id="top">
+  <header class="header">
+    <nav class="nav" aria-label="Primary">
+      <div class="logo">
+        <a href="/" accesskey="h" title="lucia's room (Alt + H)">lucia's room</a>
+      </div>
+      <button id="menu-trigger" aria-haspopup="menu" aria-controls="site-menu" aria-expanded="false" aria-label="Menu Button">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+      <ul class="menu hidden" id="site-menu">
+        <li><a href="/about/" title="about"><span>about</span></a></li>
+        <li><a href="/posts/" title="notes"><span>notes</span></a></li>
+        <li><a href="/projects/" title="projects"><span>projects</span></a></li>
+        <li><a href="/random/" title="hobbies"><span>hobbies</span></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main">
+    <article class="post-single">
+      <header class="post-header">
+        <div class="breadcrumbs"><a href="/">Home</a>&nbsp;»&nbsp;<span>Privacy</span></div>
+        <h1 class="post-title">Privacy</h1>
+        <p class="post-description">What the site's small visit counter does when it is loaded.</p>
+        <div class="post-meta">Last reviewed <time datetime="2026-08-31">31 August 2026</time></div>
+      </header>
+
+      <div class="post-content">
+        <p>This page describes the behavior visible in the site's current local source code. It is meant to make that behavior understandable, not to make promises about services operated by other organizations.</p>
+
+        <section aria-labelledby="visit-counter">
+          <h2 id="visit-counter">The visit counter</h2>
+          <p>Some pages load <code>/assets/js/analytics.js</code>. When loaded, that script turns the current page path into a counter key and requests the <code>hit</code> endpoint at <code>api.countapi.xyz</code>. It reads the returned visit value and writes that value to the browser's developer console.</p>
+          <p>After a successful response, the script adds an image saying “You are visitor number …”. The image is loaded from <code>img.shields.io</code>, so showing the badge creates a second request to that service. If the CountAPI request fails, the script logs an error and does not create the badge.</p>
+          <p>This privacy page does not load the visit-counter script.</p>
+        </section>
+
+        <section aria-labelledby="local-code">
+          <h2 id="local-code">What the local script stores</h2>
+          <p>The local counter script contains no code that sets cookies or writes to local or session storage. It sends the site namespace and transformed page path in the CountAPI request URL. As with ordinary web requests, the external services can receive connection and request information supplied by the browser. Their handling and retention of that information are outside this site's local code.</p>
+        </section>
+
+        <section aria-labelledby="external-sites">
+          <h2 id="external-sites">External sites</h2>
+          <p>Notes and project pages may link to other websites. Following one of those links takes you to a service with its own practices and policies.</p>
+        </section>
+
+        <section aria-labelledby="contact">
+          <h2 id="contact">Questions</h2>
+          <p>If you have a question about this page or the site's code, email <a href="mailto:ldomenichelli2@gmail.com">ldomenichelli2@gmail.com</a>.</p>
+        </section>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer site-footer">
+    <span>&copy; 2025–2026 <a href="/">lucia's room</a></span>
+    <span aria-hidden="true">•</span>
+    <a href="/privacy/" aria-current="page">privacy</a>
+  </footer>
+
+  <script>
+    (function () {
+      var button = document.querySelector('#menu-trigger');
+      var menu = document.querySelector('.menu');
+      if (!button || !menu) return;
+      button.addEventListener('click', function () {
+        menu.classList.toggle('hidden');
+      });
+      document.body.addEventListener('click', function (event) {
+        if (!button.contains(event.target) && !menu.contains(event.target)) {
+          menu.classList.add('hidden');
+        }
+      });
+    }());
+  </script>
+  <script src="/assets/js/pocket-bird.js" defer></script>
+  <script src="/assets/js/site-shell.js" defer></script>
+</body>
+</html>

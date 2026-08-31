@@ -1,0 +1,401 @@
+/* Shared site chrome.
+   Page styles may change their content palette, but the room around the page
+   stays recognisably Lucia's: sage canvas, typewriter UI, square paper edges. */
+
+:root {
+  --shell-canvas: #dfe6d8;
+  --shell-canvas-deep: #d5dfd0;
+  --shell-paper: #fbf6df;
+  --shell-paper-deep: #f2e8c7;
+  --shell-ink: #22140f;
+  --shell-muted: #60433a;
+  --shell-rule: #4f241f;
+  --shell-rule-soft: #9c6246;
+  --shell-accent: #1f5b6d;
+  --shell-shadow: 6px 6px 0 rgba(79, 36, 31, 0.18);
+  --shell-gutter: clamp(16px, 3.5vw, 48px);
+  --shell-width: 1184px;
+}
+
+html {
+  scroll-padding-top: 88px;
+}
+
+body > .header {
+  backdrop-filter: blur(10px);
+  background: rgba(223, 230, 216, 0.96) !important;
+  border-bottom: 1px solid rgba(79, 36, 31, 0.28) !important;
+  box-shadow: none !important;
+  box-sizing: border-box;
+  color: var(--shell-ink);
+  min-height: 72px;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+body > .header .nav {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: clamp(0.8rem, 2.5vw, 2rem);
+  margin: 0 auto;
+  max-width: var(--shell-width);
+  min-height: 72px;
+  padding: 0 var(--shell-gutter);
+  width: 100%;
+}
+
+body > .header .logo {
+  align-items: center;
+  display: flex;
+  flex: none;
+}
+
+body > .header .logo-switches,
+body > .header .logo img {
+  display: none !important;
+}
+
+body > .header .logo a {
+  background: var(--shell-paper) !important;
+  border: 2px solid var(--shell-rule) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: var(--shell-ink) !important;
+  display: inline-flex;
+  font-size: 0.93rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+  padding: 0.72rem 0.78rem;
+  text-decoration: none;
+  text-transform: lowercase;
+  white-space: nowrap;
+}
+
+body > .header .logo a:hover,
+body > .header .logo a:focus-visible {
+  background: var(--shell-paper-deep) !important;
+  color: var(--shell-accent) !important;
+}
+
+body > .header .menu,
+body > .header #menu {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(0.75rem, 2vw, 1.2rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+body > .header .menu li,
+body > .header #menu li {
+  margin: 0;
+}
+
+body > .header .menu a,
+body > .header #menu a {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: var(--shell-ink) !important;
+  display: inline-flex;
+  font-size: 0.87rem;
+  gap: 0.45rem;
+  padding: 0.45rem 0;
+  text-decoration: none;
+  text-transform: lowercase;
+}
+
+body > .header .menu a::before,
+body > .header #menu a::before {
+  color: var(--shell-accent) !important;
+  content: "*";
+  display: inline;
+}
+
+body > .header .menu a:hover,
+body > .header #menu a:hover {
+  color: var(--shell-accent) !important;
+}
+
+body > .header .menu a[aria-current="page"] span,
+body > .header #menu a[aria-current="page"] span,
+body > .header .menu .active,
+body > .header #menu .active {
+  background: transparent !important;
+  color: var(--shell-ink) !important;
+  text-decoration: underline;
+  text-decoration-color: var(--shell-rule);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+body > .header #menu-trigger {
+  background: var(--shell-paper) !important;
+  border: 1px solid var(--shell-rule) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: var(--shell-ink) !important;
+  margin-left: auto;
+}
+
+body > .header #menu-trigger:hover {
+  background: var(--shell-paper-deep) !important;
+  color: var(--shell-accent) !important;
+}
+
+body > .header #menu-trigger svg {
+  display: block;
+}
+
+body > .header #menu-trigger::before {
+  content: none !important;
+}
+
+.breadcrumbs {
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+body > .footer {
+  align-items: center;
+  background: var(--shell-canvas) !important;
+  border-top: 2px solid var(--shell-rule-soft) !important;
+  box-shadow: none !important;
+  box-sizing: border-box;
+  color: var(--shell-muted) !important;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.7rem;
+  gap: 0.35rem 0.65rem;
+  justify-content: center;
+  margin: clamp(3rem, 8vw, 6rem) auto 0 !important;
+  max-width: 840px;
+  min-height: 80px;
+  padding: 1.25rem var(--shell-gutter) !important;
+  text-align: center;
+  width: calc(100% - 2 * var(--shell-gutter));
+}
+
+body > .footer .social-icons,
+body > .footer span:has(a[href*="gohugo.io"]),
+body > .footer span:has(a[href*="PaperMod"]) {
+  display: none !important;
+}
+
+body > .footer a {
+  background: transparent !important;
+  color: var(--shell-accent) !important;
+  text-decoration: none;
+}
+
+body > .footer a:hover {
+  color: var(--shell-ink) !important;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.top-link {
+  background: var(--shell-paper) !important;
+  border: 1px solid var(--shell-rule) !important;
+  border-radius: 0 !important;
+  color: var(--shell-ink) !important;
+}
+
+/* Shared section landing vocabulary. */
+body.section-landing > .main,
+body.section-landing > .games-landing {
+  max-width: calc(920px + var(--gap) * 2);
+}
+
+body.section-landing .section-intro {
+  background: var(--shell-paper);
+  border: 2px solid var(--shell-rule);
+  border-radius: 0;
+  box-shadow: var(--shell-shadow);
+  box-sizing: border-box;
+  margin: 0 0 1.35rem;
+  padding: clamp(1.15rem, 3vw, 1.8rem);
+  width: 100%;
+}
+
+body.section-landing .section-intro .section-kicker {
+  color: var(--shell-accent);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin: 0 0 0.45rem;
+  text-transform: uppercase;
+}
+
+body.section-landing .section-intro h1,
+body.section-landing .section-intro h2 {
+  color: var(--shell-ink);
+  font-size: clamp(1.65rem, 4vw, 2.35rem);
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  margin: 0;
+  text-transform: lowercase;
+}
+
+body.section-landing .section-intro > p:last-child,
+body.section-landing .section-intro blockquote,
+body.section-landing .section-intro blockquote p {
+  color: var(--shell-muted);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+body.section-landing .section-intro blockquote {
+  background: transparent;
+  border: 0;
+  border-left: 1px solid var(--shell-rule-soft);
+  border-radius: 0;
+  margin-top: 0.7rem;
+  padding: 0 0 0 0.8rem;
+}
+
+body.section-projects .section-page {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+body.section-projects .section-page > .post-content {
+  margin: 0;
+}
+
+/* Repairs one older page whose dark card inherited the light theme's ink. */
+body.chamber-page .post-single {
+  background: var(--shell-paper) !important;
+  border: 2px solid var(--shell-rule) !important;
+  box-shadow: var(--shell-shadow) !important;
+}
+
+body.chamber-page .chamber-intro h1 {
+  color: var(--shell-ink) !important;
+}
+
+body.chamber-page .chamber-room {
+  background: #20231f;
+  border: 1px solid var(--shell-rule);
+  box-sizing: border-box;
+  padding: clamp(0.8rem, 2vw, 1.25rem);
+}
+
+/* A project can be dark inside without replacing the site's outer room. */
+html:has(body.attractor-page) {
+  background: var(--shell-canvas);
+}
+
+body.attractor-page {
+  background:
+    radial-gradient(circle at 24% 20%, rgba(138, 38, 56, 0.06) 0 1px, transparent 1px),
+    radial-gradient(circle at 74% 42%, rgba(31, 91, 109, 0.07) 0 1px, transparent 1px),
+    linear-gradient(180deg, #edf1e8 0%, var(--shell-canvas-deep) 100%) !important;
+  background-size: 8px 8px, 12px 12px, auto !important;
+}
+
+body.attractor-page::before {
+  background: transparent !important;
+}
+
+body.attractor-page .attractor-lab {
+  background: var(--at-bg);
+  border: 2px solid var(--shell-rule);
+  box-shadow: var(--shell-shadow);
+  padding: clamp(0.8rem, 2.2vw, 1.5rem);
+}
+
+/* The mint note keeps its palette, but adopts the same paper geometry. */
+body.acl26-page .post-single {
+  border: 2px solid var(--shell-rule) !important;
+  border-radius: 2px !important;
+  box-shadow: var(--shell-shadow) !important;
+}
+
+@media screen and (min-width: 900px) {
+  body > .header .menu.hidden,
+  body > .header #menu.hidden {
+    display: flex;
+  }
+
+  body > .header #menu-trigger {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 899px) {
+  :root {
+    --shell-gutter: clamp(14px, 4vw, 24px);
+  }
+
+  body > .header .nav {
+    min-height: 66px;
+  }
+
+  body > .header #menu-trigger {
+    display: inline-flex !important;
+  }
+
+  body > .header .menu,
+  body > .header #menu {
+    background: var(--shell-paper);
+    border: 1px solid var(--shell-rule);
+    box-shadow: var(--shell-shadow);
+    box-sizing: border-box;
+    flex-basis: 100%;
+    gap: 0.25rem 0.9rem;
+    margin-bottom: 0.75rem;
+    padding: 0.65rem 0.8rem;
+  }
+
+  body > .header .menu.hidden,
+  body > .header #menu.hidden {
+    display: none !important;
+  }
+
+  body:has(> .header) > .main,
+  body:has(> .header) > .games-landing,
+  body:has(> .header) > .game-shell-wrap {
+    box-sizing: border-box;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: var(--shell-gutter) !important;
+    padding-right: var(--shell-gutter) !important;
+    width: 100% !important;
+  }
+
+  body.attractor-page .attractor-lab {
+    padding: 10px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  body > .header .logo a {
+    font-size: 0.82rem;
+    padding: 0.64rem 0.68rem;
+  }
+
+  body > .footer {
+    width: calc(100% - 2 * var(--shell-gutter));
+  }
+}
+
+@media print {
+  body > .header,
+  body > .footer {
+    display: none !important;
+  }
+}
