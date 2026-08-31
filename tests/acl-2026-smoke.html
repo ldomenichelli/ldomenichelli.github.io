@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ACL 2026 Notes Smoke Test</title>
+  <style>
+    body { background: #111; color: #f5f5f5; font-family: monospace; margin: 0; padding: 16px; }
+    iframe { border: 0; height: 900px; }
+    pre { line-height: 1.45; white-space: pre-wrap; }
+  </style>
+</head>
+<body data-test-status="RUNNING">
+  <pre id="log">Running...</pre>
+  <iframe id="frame" title="ACL 2026 notes page under test"></iframe>
+  <script>
+    const frame = document.querySelector('#frame');
+    const logElement = document.querySelector('#log');
+    const results = [];
+    const params = new URLSearchParams(window.location.search);
+    const frameWidth = Number(params.get('width') || '1280');
+    frame.style.width = `${frameWidth}px`;
+
+    function log(message) {
+      results.push(message);
+      logElement.textContent = results.join('\n');
+    }
+
+    function assert(condition, message) {
+      if (!condition) throw new Error(message);
+      log(`PASS ${message}`);
+    }
+
+    function loadFrame(path) {
+      return new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => reject(new Error(`Timed out loading ${path}`)), 15000);
+        frame.addEventListener('load', () => {
+          clearTimeout(timeout);
+          resolve();
+        }, { once: true });
+        frame.src = path;
+      });
+    }
+
+    async function run() {
+      assert(frameWidth === 390 || frameWidth === 1280, 'test width is supported');
+      await loadFrame('/posts/acl-san-diego-2026/');
+
+      const doc = frame.contentDocument;
+      const win = frame.contentWindow;
+      const bodyStyle = win.getComputedStyle(doc.body);
+      const post = doc.querySelector('.post-single');
+      const wrap = doc.querySelector('.acl26-wrap');
+      const tutorial = doc.querySelector('a[href="https://xuanwang91.github.io/2026-07-02-acl26-tutorial"]');
+      const stylesheet = doc.querySelector('link[href="/assets/css/acl-2026.css"]');
+      const legacyAnchors = [
+        'talk-multi-agent-llm-systems',
+        'at-a-glance',
+        'why-multi-agent-systems',
+        'small-language-model-agents',
+        'consensus-is-not-truth',
+        'black-box-and-white-box-collaboration',
+        'agents-in-healthcare-and-biomedicine',
+        'agents-in-science',
+        'what-im-taking-away',
+        'terms-to-search',
+        'references-and-links'
+      ];
+
+      assert(doc.body.classList.contains('acl26-page'), 'page uses the ACL visual scope');
+      assert(bodyStyle.getPropertyValue('--acl-page').trim() === '#d9efe3', 'page exposes the mint background token');
+      assert(bodyStyle.backgroundImage.includes('gradient'), 'page renders the mint gradient');
+      assert(Boolean(post && wrap), 'page exposes its article and editorial wrapper');
+      assert(Boolean(stylesheet && stylesheet.sheet), 'ACL stylesheet loads');
+      assert(doc.querySelectorAll('h1').length === 1, 'page has one top-level heading');
+      assert(wrap.querySelectorAll('h1').length === 0 && wrap.querySelectorAll('h2').length === 8, 'article uses a clean h2 hierarchy');
+      assert(wrap.querySelectorAll('ul, ol, details, summary').length === 0, 'article body is prose-first without list stacks');
+      assert(legacyAnchors.every((id) => Boolean(doc.getElementById(id))), 'legacy deep-link anchors remain available');
+      assert(Array.from(wrap.querySelectorAll('a[href^="#"]')).every((link) => doc.querySelector(link.getAttribute('href'))), 'all local section links resolve');
+      assert(Boolean(tutorial && tutorial.target === '_blank' && tutorial.relList.contains('noopener')), 'tutorial link opens safely');
+      assert(doc.scrollingElement.scrollWidth <= win.innerWidth + 1, `page has no horizontal overflow at ${frameWidth}px`);
+
+      const bounded = [post, wrap, doc.querySelector('.acl26-hero'), doc.querySelector('.acl26-nav')];
+      assert(bounded.every((element) => {
+        const rect = element.getBoundingClientRect();
+        return rect.left >= -1 && rect.right <= win.innerWidth + 1;
+      }), `main editorial layout fits inside the ${frameWidth}px viewport`);
+
+      const cssResponse = await win.fetch('/assets/css/acl-2026.css');
+      assert(cssResponse.ok && (await cssResponse.text()).includes('--acl-page: #d9efe3'), 'mint stylesheet asset is available');
+
+      const redirectResponse = await win.fetch('/posts/post10/');
+      const redirectHtml = await redirectResponse.text();
+      assert(redirectResponse.ok && redirectHtml.includes('/posts/acl-san-diego-2026/'), 'legacy post10 route still points to the renamed page');
+
+      log(`PASS ACL 2026 notes smoke test completed at ${frameWidth}px`);
+      document.body.dataset.testStatus = 'PASS';
+    }
+
+    run().catch((error) => {
+      log(`FAIL ${error.message}`);
+      document.body.dataset.testStatus = 'FAIL';
+    });
+  </script>
+</body>
+</html>

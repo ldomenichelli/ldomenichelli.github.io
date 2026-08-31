@@ -28,8 +28,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="https://ldomenichelli.github.io/favicon-32x32-dithered.png">
   <link rel="apple-touch-icon" href="https://ldomenichelli.github.io/apple-touch-icon-dithered.png">
   <link rel="mask-icon" href="https://ldomenichelli.github.io/safari-pinned-tab.svg">
-  <meta name="theme-color" content="#2e2e33">
-  <meta name="msapplication-TileColor" content="#2e2e33">
+  <meta name="theme-color" content="#dcefe5">
+  <meta name="msapplication-TileColor" content="#dcefe5">
   <link rel="alternate" hreflang="en" href="https://ldomenichelli.github.io/posts/acl-san-diego-2026/">
   <noscript>
     <style>
@@ -67,7 +67,7 @@
   <meta property="og:url" content="https://ldomenichelli.github.io/posts/acl-san-diego-2026/">
   <meta property="og:image" content="https://ldomenichelli.github.io/logo-dithered.png">
   <meta property="article:published_time" content="2026-07-03T00:00:00+02:00">
-  <meta property="article:modified_time" content="2026-07-03T00:00:00+02:00">
+  <meta property="article:modified_time" content="2026-08-31T00:00:00+02:00">
   <meta property="article:section" content="posts">
   <meta property="article:tag" content="ACL">
   <meta property="article:tag" content="NLP">
@@ -118,10 +118,10 @@
         "biomedical agents"
       ],
       "articleBody": "Here are the notes from the ACL 2026 tutorial I attended in San Diego. The first one I wrote up is Towards Effective and Efficient Multi-Agent Language Model Systems: Foundations, Prospects, and Applications. The tutorial covered small language model agents, efficient consensus, black-box and white-box collaboration, biomedical agents, AI co-scientists, and scientific discovery workflows. The main through-line is that agentic AI is moving from more agents to better controlled, more verifiable systems.",
-      "wordCount": "1800",
+      "wordCount": "1149",
       "inLanguage": "en",
       "datePublished": "2026-07-03T00:00:00+02:00",
-      "dateModified": "2026-07-03T00:00:00+02:00",
+      "dateModified": "2026-08-31T00:00:00+02:00",
       "author": {
         "@type": "Person",
         "name": "Lucia Domenichelli"
@@ -142,8 +142,9 @@
   </script>
   <script src="/assets/js/analytics.js" async></script>
   <link rel="stylesheet" href="/assets/css/site-theme.css">
+  <link rel="stylesheet" href="/assets/css/acl-2026.css">
 </head>
-<body class="dark" id="top">
+<body class="dark acl26-page" id="top">
   <header class="header">
     <nav class="nav">
       <div class="logo">
@@ -188,168 +189,227 @@
         <div class="breadcrumbs">
           <a href="https://ldomenichelli.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://ldomenichelli.github.io/posts/"></a>
         </div>
-        <h1 class="post-title">ACL San Diego 2026</h1>
-        <div class="post-meta">Lucia Domenichelli · July 3, 2026</div>
+        <h1 class="post-title">ACL 2026 · San Diego</h1>
+        <div class="post-description">Tutorial notes on multi-agent language model systems</div>
+        <div class="post-meta">Lucia Domenichelli · July 3, 2026 · revised August 31, 2026</div>
       </header>
 
       <div class="post-content">
-        <p>Here are the notes from some talks I attended at ACL 2026 in San Diego!</p>
+        <div class="acl26-wrap" id="talk-multi-agent-llm-systems">
+          <section class="acl26-hero" aria-labelledby="acl26-title">
+            <div class="acl26-hero-copy">
+              <p class="acl26-kicker">ACL 2026 tutorial notes · San Diego</p>
+              <h2 class="acl26-display" id="acl26-title">When more agents are not the answer</h2>
+              <p class="acl26-lede">
+                I went into <em>Towards Effective and Efficient Multi-Agent Language Model Systems</em> expecting a
+                tutorial about agents talking to one another. The more interesting story was about everything around
+                that conversation: routing, memory, tools, controllers, feedback, and evaluation.
+              </p>
+              <p class="acl26-hero-note">
+                Xuan Wang, Shuxiang Cao, Yuchen Zhuang, and Wenqi Shi moved from small local models to industrial
+                collaboration, biomedicine, and scientific discovery. Across those settings, the same question kept
+                returning: how do we gain specialization without multiplying cost, opacity, and failure?
+              </p>
+              <a class="acl26-source-link" href="https://xuanwang91.github.io/2026-07-02-acl26-tutorial" target="_blank" rel="noopener">
+                Open the tutorial page <span aria-hidden="true">↗</span>
+              </a>
+            </div>
 
-        <details open id="talk-multi-agent-llm-systems">
-          <summary>Multi-agent LLM systems</summary>
+            <aside class="acl26-thesis" aria-label="Main idea from the tutorial">
+              <span class="acl26-thesis-label">The through-line</span>
+              <p>
+                Agentic AI is becoming systems engineering. More agents only help when the system can decide who acts,
+                what evidence is shared, how errors are detected, and when the work is finished.
+              </p>
+            </aside>
+          </section>
 
-          <h1 id="at-a-glance">At a glance<a hidden class="anchor" aria-hidden="true" href="#at-a-glance">#</a></h1>
-          <ul>
-            <li><strong>Main tutorial:</strong> <em>Towards Effective and Efficient Multi-Agent Language Model Systems: Foundations, Prospects, and Applications</em>.</li>
-            <li><strong>Speakers:</strong> Xuan Wang, Shuxiang Cao, Yuchen Zhuang, Wenqi Shi.</li>
-            <li><strong>Core idea:</strong> the interesting part is no longer just "make agents talk"; it is making them cheaper, controllable, domain-aware, and verifiable.</li>
-            <li><strong>Big warning:</strong> more agents can also mean more token waste, more sycophancy, and more confident agreement on wrong answers.</li>
-            <li><strong>Best mental model:</strong> agentic AI is becoming systems engineering: routing, memory, tools, controllers, feedback, and evaluation.</li>
-          </ul>
+          <nav class="acl26-nav" aria-label="On this page">
+            <a href="#why-multi-agent-systems">The system</a>
+            <a href="#small-language-model-agents">Small agents</a>
+            <a href="#consensus-is-not-truth">Coordination</a>
+            <a href="#agents-in-healthcare-and-biomedicine">Biomedicine</a>
+            <a href="#agents-in-science">Science</a>
+            <a href="#what-im-taking-away">Takeaways</a>
+          </nav>
 
-          <hr>
-          <h1 id="why-multi-agent-systems">Why multi-agent systems?<a hidden class="anchor" aria-hidden="true" href="#why-multi-agent-systems">#</a></h1>
-          <p>
-            The tutorial framed multi-agent language model systems as a practical response to the limits of single,
-            giant models. A single frontier model can be powerful, but it is often expensive, closed, slow, hard to
-            personalize, and difficult to deploy near private or latency-sensitive data.
-          </p>
-          <p>
-            A multi-agent system can split work across specialized components: a planner, a tool user, a critic, a
-            domain expert, a retriever, a guard, or a small local model that handles one narrow step. The hard part is
-            deciding who does what, what information gets shared, and how the system knows when the answer is actually
-            good.
-          </p>
+          <span class="acl26-anchor-alias" id="at-a-glance" aria-hidden="true"></span>
+          <section class="acl26-section" id="why-multi-agent-systems">
+            <p class="acl26-section-label">01 · The architecture</p>
+            <h2>From one giant model to a system of specialists</h2>
+            <p>
+              A frontier model can be remarkably capable and still be the wrong component for every step. It may be
+              expensive, closed, slow, difficult to personalize, or impossible to place near private and
+              latency-sensitive data. A multi-agent system responds by separating responsibilities: one component plans,
+              another retrieves, another calls tools, another critiques, and a smaller local model may handle a narrow
+              decision close to the user.
+            </p>
+            <p>
+              This changes the central design problem. The question is no longer simply which model scores highest, but
+              how work should move through the system. Useful specialization depends on a controller that can assign the
+              task, expose only the necessary context, collect evidence, and decide whether the result deserves another
+              pass.
+            </p>
 
-          <hr>
-          <h1 id="small-language-model-agents">Small language model agents<a hidden class="anchor" aria-hidden="true" href="#small-language-model-agents">#</a></h1>
-          <p>
-            Xuan Wang's section started from a very practical question: can small language models become competitive
-            agents? Small models help with privacy, local deployment, latency, network stability, and edge use cases,
-            but their reasoning behavior is uneven. A model that looks strong on one benchmark can still fail on
-            algorithmic tasks such as sorting, planning, or compositional search.
-          </p>
-          <ul>
-            <li><strong>BeyondBench:</strong> stress-tests reasoning with verifiable answers and adjustable difficulty, instead of only relying on fixed benchmark items.</li>
-            <li><strong>EffGen:</strong> combines prompt compression, task decomposition, complexity-based routing, and memory.</li>
-            <li><strong>Debate, Train, Evolve:</strong> uses multi-agent debate and self-improvement to generate better training signals.</li>
-            <li><strong>VISTA-GYM:</strong> gives agents tool-use situations with intermediate failures, retries, and feedback loops.</li>
-          </ul>
-          <p>
-            My takeaway: small models are not just budget versions of large models. They become interesting when they
-            are placed in the right role: local, private, fast, specialized, or used as controllers around stronger
-            black-box models.
-          </p>
+            <div class="acl26-process" aria-label="A controlled agent workflow">
+              <div>
+                <span>Route</span>
+                <p>Send each step to the smallest capable model or tool.</p>
+              </div>
+              <div>
+                <span>Act</span>
+                <p>Retrieve, execute, calculate, or ask another specialist.</p>
+              </div>
+              <div>
+                <span>Check</span>
+                <p>Test the result against evidence rather than agreement alone.</p>
+              </div>
+              <div>
+                <span>Repair</span>
+                <p>Use the failure signal to revise the plan instead of looping.</p>
+              </div>
+            </div>
+          </section>
 
-          <hr>
-          <h1 id="consensus-is-not-truth">Consensus is not truth<a hidden class="anchor" aria-hidden="true" href="#consensus-is-not-truth">#</a></h1>
-          <p>
-            The multi-agent communication part focused on consensus. In debate-style systems, agents may appear to
-            deliberate, but the group can still drift toward agreement for the wrong reasons. <strong>ConsensAgent</strong>
-            was presented as an attempt to make consensus faster and less sycophantic.
-          </p>
-          <p>
-            This was one of the most useful warnings for me: a multi-agent system should not be judged only by whether
-            agents eventually agree. We also need process-level diagnostics: who changed their mind, why, how much
-            evidence was exchanged, and whether minority information survived the discussion.
-          </p>
-          <p>
-            The city-planning and political-debate examples made this concrete. These tasks have ambiguous goals,
-            incomplete information, conflicting stakeholders, and resource limits. That is exactly where naive "agent
-            debate" becomes fragile.
-          </p>
+          <section class="acl26-section" id="small-language-model-agents">
+            <p class="acl26-section-label">02 · Small agents</p>
+            <h2>Small models become useful when their role is precise</h2>
+            <p>
+              Xuan Wang began with a practical question: can small language models become competitive agents? Their
+              advantages are concrete—privacy, local deployment, lower latency, stable operation at the edge—but their
+              reasoning is uneven. A model that looks strong on a fixed benchmark can still fall apart on sorting,
+              planning, or compositional search.
+            </p>
+            <p>
+              The projects in this part form a useful sequence. <strong>BeyondBench</strong> diagnoses reasoning with
+              verifiable problems whose difficulty can change. <strong>EffGen</strong> then treats efficiency as a
+              routing problem, combining prompt compression, decomposition, memory, and complexity-aware model choice.
+              <strong>Debate, Train, Evolve</strong> turns multi-agent interaction into better training signals, while
+              <strong>VISTA-GYM</strong> places agents in tool-use situations where intermediate failures, retries, and
+              feedback are part of the task rather than exceptions.
+            </p>
+            <aside class="acl26-callout">
+              <p>
+                My takeaway: a small model is not compelling because it imitates a frontier model. It is compelling when
+                it is local, private, fast, specialized, or able to control a stronger black-box model without doing all
+                of the generation itself.
+              </p>
+            </aside>
+          </section>
 
-          <hr>
-          <h1 id="black-box-and-white-box-collaboration">Black-box and white-box collaboration<a hidden class="anchor" aria-hidden="true" href="#black-box-and-white-box-collaboration">#</a></h1>
-          <p>
-            Yuchen Zhuang's section centered on collaborative intelligence: how to bridge black-box frontier models and
-            white-box smaller models. Black-box models have the strongest general capabilities, but they are closed,
-            expensive, and hard to adapt directly. White-box models are trainable and controllable, but usually weaker
-            as generators.
-          </p>
-          <ul>
-            <li><strong>BBox-Adapter:</strong> adapts outputs by scoring and steering generations from a black-box model.</li>
-            <li><strong>Hydra:</strong> adapts inputs by selecting user-specific context more intelligently than simple retrieval.</li>
-            <li><strong>Matryoshka Pilot:</strong> treats the black-box generator as an environment and trains a controller to guide it across multiple steps.</li>
-            <li><strong>Collab-RAG / AceSearcher:</strong> connect the same idea to retrieval and search, where coordination matters as much as generation.</li>
-          </ul>
-          <p>
-            The industrial framing was useful: when you cannot fine-tune the giant model, you can still control inputs,
-            rerank outputs, add guard models, steer prompts, or train a separate controller.
-          </p>
+          <span class="acl26-anchor-alias" id="black-box-and-white-box-collaboration" aria-hidden="true"></span>
+          <section class="acl26-section" id="consensus-is-not-truth">
+            <p class="acl26-section-label">03 · Coordination</p>
+            <h2>Consensus is not the same as truth</h2>
+            <p>
+              Debate makes multi-agent systems look deliberative, yet a group can converge for the wrong reasons.
+              <strong>ConsensAgent</strong> was presented as an attempt to reach agreement more efficiently and with less
+              sycophancy. The city-planning and political-debate examples showed why this is difficult: goals are
+              ambiguous, information is incomplete, stakeholders conflict, and a confident majority can erase useful
+              minority evidence.
+            </p>
+            <p>
+              Agreement therefore needs process-level diagnostics. We should be able to see who changed their mind, what
+              evidence caused the change, how much information moved between agents, and whether the system ignored a
+              dissenting but correct signal. Otherwise, collaboration can become a polished way of repeating the same
+              error.
+            </p>
+            <p>
+              Yuchen Zhuang extended the control problem to collaboration between closed frontier models and trainable
+              white-box models. <strong>Hydra</strong> shapes the input by selecting better personal context;
+              <strong>BBox-Adapter</strong> scores and steers the output; <strong>Matryoshka Pilot</strong> trains a
+              controller around a black-box generator; and <strong>Collab-RAG</strong> with
+              <strong>AceSearcher</strong> applies the same principle to retrieval and search. Even when the largest
+              model cannot be fine-tuned, its context, outputs, and multi-step behavior can still be governed.
+            </p>
 
-          <hr>
-          <h1 id="agents-in-healthcare-and-biomedicine">Agents in healthcare and biomedicine<a hidden class="anchor" aria-hidden="true" href="#agents-in-healthcare-and-biomedicine">#</a></h1>
-          <p>
-            Wenqi Shi's section made the agent architecture more concrete. An LLM-powered agent has a "brain" for
-            reasoning and planning, but it also needs memory, tools, actions, and environmental feedback. In biomedicine,
-            that distinction is not cosmetic: the agent must retrieve domain knowledge, call specialized tools, write
-            code, inspect errors, and interact with data that may be private, heterogeneous, and noisy.
-          </p>
-          <ul>
-            <li><strong>Biomni:</strong> general biomedical agent framing, with tools and domain knowledge.</li>
-            <li><strong>Google AI co-scientist:</strong> agentic scientific ideation and hypothesis generation.</li>
-            <li><strong>ChemCrow:</strong> chemistry tools through an iterative ReAct-like loop.</li>
-            <li><strong>EHRAgent:</strong> complex tabular reasoning over electronic health records through code generation, execution feedback, debugging, and memory.</li>
-            <li><strong>MedAgentGym:</strong> code-centric biomedical reasoning environments for agent training.</li>
-          </ul>
-          <p>
-            The most memorable biomedical story was the virtual lab: a team of agents organized scientific meetings,
-            proposed a workflow, used tools such as ESM, AlphaFold-Multimer, and Rosetta, and designed candidate
-            nanobodies for SARS-CoV-2 variants. The important point was not "AI replaces the scientist"; it was that
-            agents can organize repeated, tool-heavy scientific work while humans still shape goals and evaluate what
-            matters.
-          </p>
+            <div class="acl26-spectrum" aria-label="Where control can enter a black-box system">
+              <div><span>Input</span><p>Select context and personalize evidence.</p></div>
+              <div><span>Output</span><p>Score, rerank, guard, and revise.</p></div>
+              <div><span>Process</span><p>Guide several steps with a learned controller.</p></div>
+              <div><span>Search</span><p>Coordinate retrieval instead of treating it as a prelude.</p></div>
+            </div>
+          </section>
 
-          <hr>
-          <h1 id="agents-in-science">Agents in science<a hidden class="anchor" aria-hidden="true" href="#agents-in-science">#</a></h1>
-          <p>
-            The science part broadened the same pattern: plan, act, observe, revise. In scientific discovery, an agent
-            must decide which experiment to run, allocate a limited budget, stop when evidence is sufficient, and recover
-            from errors. That makes the environment central. Without an environment, the agent can only narrate a plan;
-            with an environment, it can test, fail, repair, and learn.
-          </p>
-          <p>
-            The tutorial discussed recurring search patterns: single-loop agents, tree search, population search,
-            tournaments, debate protocols, and human- or trace-constrained workflows. This connected naturally to AI
-            co-scientists, molecular optimization, autonomous labs, quantum-computing evaluation, and scientific agent
-            gyms.
-          </p>
-          <p>
-            My strongest note from this section was that <strong>error recovery is the bottleneck</strong>. It is easy to
-            make an agent produce a plausible next step. It is harder to make it notice that the step failed for the
-            right reason, choose a better repair, and avoid looping forever.
-          </p>
+          <section class="acl26-section" id="agents-in-healthcare-and-biomedicine">
+            <p class="acl26-section-label">04 · Biomedicine</p>
+            <h2>In a real domain, the environment becomes part of the model</h2>
+            <p>
+              Wenqi Shi made the architecture tangible. A biomedical agent may have a language model as its “brain,” but
+              it also needs memory, tools, actions, and environmental feedback. It must retrieve domain knowledge, write
+              and execute code, inspect errors, and work with data that can be private, heterogeneous, and noisy.
+            </p>
+            <p>
+              The examples covered different pieces of that stack. <strong>Biomni</strong> and the
+              <strong>Google AI co-scientist</strong> frame broad biomedical ideation; <strong>ChemCrow</strong> couples
+              reasoning to chemistry tools; <strong>EHRAgent</strong> answers complex questions over electronic health
+              records through code generation, execution, debugging, and memory; and <strong>MedAgentGym</strong> turns
+              code-centric biomedical work into an environment where agent behavior can be trained rather than merely
+              prompted.
+            </p>
 
-          <hr>
-          <h1 id="what-im-taking-away">What I'm taking away<a hidden class="anchor" aria-hidden="true" href="#what-im-taking-away">#</a></h1>
-          <ul>
-            <li><strong>Agentic AI is becoming systems engineering:</strong> routing, memory, tools, controllers, evaluation, and environments are the real substance.</li>
-            <li><strong>Small models matter:</strong> not because they magically reason like frontier models, but because they can make agentic systems private, local, fast, and cheaper.</li>
-            <li><strong>Consensus can be dangerous:</strong> multi-agent agreement needs diagnostics, otherwise sycophancy can look like collaboration.</li>
-            <li><strong>Domains change the architecture:</strong> healthcare, science, robotics, and industry need different tools, constraints, and feedback signals.</li>
-            <li><strong>Long reasoning traces are not enough:</strong> robustness to perturbations, non-English reasoning, high-stakes use, and real execution feedback remain open problems.</li>
-          </ul>
+            <aside class="acl26-story">
+              <span class="acl26-story-label">The story I kept thinking about</span>
+              <p>
+                A virtual laboratory organized scientific meetings, proposed a workflow, used ESM,
+                AlphaFold-Multimer, and Rosetta, and designed candidate nanobodies for SARS-CoV-2 variants. The point was
+                not that AI replaces the scientist. It was that agents can organize repeated, tool-heavy work while
+                humans continue to set goals, judge evidence, and decide what matters.
+              </p>
+            </aside>
+          </section>
 
-          <hr>
-          <h1 id="terms-to-search">Terms worth searching<a hidden class="anchor" aria-hidden="true" href="#terms-to-search">#</a></h1>
-          <p>
-            BeyondBench, EffGen, VISTA-GYM, ConsensAgent, BBox-Adapter, Hydra personalization, Matryoshka Pilot,
-            Collab-RAG, AceSearcher, Biomni, Google AI co-scientist, ChemCrow, EHRAgent, MedAgentGym, LabOS.
-          </p>
+          <section class="acl26-section" id="agents-in-science">
+            <p class="acl26-section-label">05 · Scientific work</p>
+            <h2>Science needs environments, not just plausible plans</h2>
+            <p>
+              Scientific discovery makes the agent loop explicit: plan, act, observe, revise. An agent must choose an
+              experiment, spend a limited budget, decide when evidence is sufficient, and recover when execution fails.
+              Without an environment it can narrate a convincing workflow; with an environment it can test that workflow
+              and learn where it breaks.
+            </p>
+            <p>
+              The tutorial connected single-loop agents, tree search, population search, tournaments, debate, and
+              human- or trace-constrained workflows to AI co-scientists, molecular optimization, autonomous labs,
+              quantum-computing evaluation, and scientific agent gyms. <strong>LabOS</strong> pushes that picture toward
+              co-scientists that can see and work alongside people, not only read and write.
+            </p>
+            <aside class="acl26-callout acl26-callout--strong">
+              <p>
+                <strong>Error recovery is the bottleneck.</strong> Producing a plausible next step is easy compared with
+                noticing why a step failed, choosing the right repair, and avoiding an expensive loop. That is where an
+                agent stops being a demo and starts becoming a tool.
+              </p>
+            </aside>
+          </section>
 
-          <hr>
-          <h1 id="references-and-links">References & links<a hidden class="anchor" aria-hidden="true" href="#references-and-links">#</a></h1>
-          <ul>
-            <li>
-              <strong>Tutorial page:</strong>
-              <a href="https://xuanwang91.github.io/2026-07-02-acl26-tutorial" target="_blank" rel="noopener">
-                ACL 2026 Tutorial: Towards Effective and Efficient Multi-Agent Language Model Systems
-              </a>.
-            </li>
-            <li><strong>Notes:</strong> my notes from the tutorial and the combined tutorial slide deck.</li>
-          </ul>
-        </details>
+          <span class="acl26-anchor-alias" id="terms-to-search" aria-hidden="true"></span>
+          <section class="acl26-section acl26-conclusion" id="what-im-taking-away">
+            <p class="acl26-section-label">06 · What stayed with me</p>
+            <h2>The interesting work is between the models</h2>
+            <p>
+              Agentic AI is becoming systems engineering. The substance is in routing, memory, tool interfaces,
+              controllers, evaluation, and environments. Small models matter because they make parts of the system
+              private, local, quick, and affordable; multi-agent debate matters only when the path to consensus remains
+              inspectable.
+            </p>
+            <p>
+              The architecture also has to change with the domain. Healthcare, science, robotics, and industry do not
+              share the same tools, risks, or feedback signals. Long reasoning traces alone will not solve robustness to
+              perturbations, non-English reasoning, high-stakes use, or the need for evidence from actual execution.
+            </p>
+          </section>
+
+          <section class="acl26-further" id="references-and-links" aria-labelledby="further-reading-title">
+            <p class="acl26-section-label">Further reading</p>
+            <h2 id="further-reading-title">Continue with the tutorial</h2>
+            <p>
+              These notes draw on my notebook and the combined tutorial slide deck. The
+              <a href="https://xuanwang91.github.io/2026-07-02-acl26-tutorial" target="_blank" rel="noopener">official tutorial page</a>
+              collects the overview and speaker material in one place.
+            </p>
+          </section>
+        </div>
       </div>
 
       <footer class="post-footer">
