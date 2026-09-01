@@ -46,7 +46,6 @@
       { path: '/projects/', active: 'projects', intro: true },
       { path: '/random/', active: 'hobbies', intro: true },
       { path: '/games/', active: 'projects', intro: true },
-      { path: '/projects/strange-attractors/', active: 'projects', check: 'attractor' },
       { path: '/posts/acl-san-diego-2026/', active: 'notes', check: 'acl' },
       { path: '/posts/embeddings-space/', active: 'notes' },
       { path: '/chamber-of-music/', active: 'hobbies', check: 'chamber' },
@@ -229,18 +228,6 @@
       assert(luminance(roomStyle.backgroundColor) < 0.1, 'Chamber of Music keeps its intentional dark inner room');
     }
 
-    function checkAttractor(doc, win) {
-      const lab = doc.querySelector('.attractor-lab');
-      const rootStyle = win.getComputedStyle(doc.documentElement);
-      const bodyStyle = win.getComputedStyle(doc.body);
-      const labStyle = win.getComputedStyle(lab);
-
-      assert(doc.body.classList.contains('attractor-page') && isVisible(lab, win), 'attractor page keeps its scoped lab');
-      assert(luminance(rootStyle.backgroundColor) > 0.65 && bodyStyle.backgroundImage.includes('gradient'), 'attractor page uses the light shared outer room');
-      assert(luminance(labStyle.backgroundColor) < 0.08, 'attractor lab keeps its deliberate dark canvas');
-      assert(Number.parseFloat(labStyle.borderTopWidth) >= 1, 'attractor lab is visually contained inside the shared room');
-    }
-
     function checkAcl(doc, win) {
       const article = doc.querySelector('.post-single');
       const style = win.getComputedStyle(article);
@@ -279,7 +266,6 @@
 
       if (config.intro) checkSectionIntro(doc, win, config.path);
       if (config.check === 'chamber') checkChamber(doc, win);
-      if (config.check === 'attractor') checkAttractor(doc, win);
       if (config.check === 'acl') checkAcl(doc, win);
       if (config.check === 'quantum') checkQuantum(doc);
       if (config.check === 'tea') checkTea(doc);

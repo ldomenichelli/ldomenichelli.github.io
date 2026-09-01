@@ -294,30 +294,6 @@ body.chamber-page .chamber-room {
   padding: clamp(0.8rem, 2vw, 1.25rem);
 }
 
-/* A project can be dark inside without replacing the site's outer room. */
-html:has(body.attractor-page) {
-  background: var(--shell-canvas);
-}
-
-body.attractor-page {
-  background:
-    radial-gradient(circle at 24% 20%, rgba(138, 38, 56, 0.06) 0 1px, transparent 1px),
-    radial-gradient(circle at 74% 42%, rgba(31, 91, 109, 0.07) 0 1px, transparent 1px),
-    linear-gradient(180deg, #edf1e8 0%, var(--shell-canvas-deep) 100%) !important;
-  background-size: 8px 8px, 12px 12px, auto !important;
-}
-
-body.attractor-page::before {
-  background: transparent !important;
-}
-
-body.attractor-page .attractor-lab {
-  background: var(--at-bg);
-  border: 2px solid var(--shell-rule);
-  box-shadow: var(--shell-shadow);
-  padding: clamp(0.8rem, 2.2vw, 1.5rem);
-}
-
 /* The mint note keeps its palette, but adopts the same paper geometry. */
 body.acl26-page .post-single {
   border: 2px solid var(--shell-rule) !important;
@@ -375,10 +351,6 @@ body.acl26-page .post-single {
     padding-left: var(--shell-gutter) !important;
     padding-right: var(--shell-gutter) !important;
     width: 100% !important;
-  }
-
-  body.attractor-page .attractor-lab {
-    padding: 10px;
   }
 }
 
