@@ -1,5 +1,5 @@
 {
-  "updated": "aug 2026",
+  "updated": "sep 2026",
   "books": [
     {
       "title": "Tokyo Express",
@@ -168,6 +168,17 @@
       "cover": "img/butter.jpg",
       "color": "#f6dc35",
       "accent": "#312317"
+    },
+    {
+      "title": "The Pale King",
+      "shortTitle": "September",
+      "readMonth": "september",
+      "author": "David Foster Wallace",
+      "status": "reading",
+      "genre": "literary fiction",
+      "note": "Currently reading.",
+      "color": "#d7c9a2",
+      "accent": "#6e2136"
     }
   ]
 }
