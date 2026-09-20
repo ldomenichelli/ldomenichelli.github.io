@@ -150,7 +150,7 @@
       "shortTitle": "August",
       "readMonth": "august",
       "author": "Sebastiano Vassalli",
-      "status": "reading",
+      "status": "read",
       "genre": "historical fiction",
       "note": "A choral story of an Italian mountain village across the twentieth century.",
       "cover": "img/le_due_chiese.jpg",
@@ -162,7 +162,7 @@
       "shortTitle": "August",
       "readMonth": "august",
       "author": "Asako Yuzuki",
-      "status": "reading",
+      "status": "read",
       "genre": "literary fiction / crime",
       "note": "A Japanese novel about food, obsession, and misogyny.",
       "cover": "img/butter.jpg",
@@ -174,11 +174,26 @@
       "shortTitle": "September",
       "readMonth": "september",
       "author": "David Foster Wallace",
-      "status": "reading",
+      "status": "read",
       "genre": "literary fiction",
-      "note": "Currently reading.",
+      "note": "Read.",
       "color": "#d7c9a2",
-      "accent": "#6e2136"
+      "accent": "#6e2136",
+      "cover": "img/the_pale_king.jpg"
+    },
+    {
+      "title": "Perché imparare se le macchine sanno già tutto?",
+      "shortTitle": "September",
+      "readMonth": "september",
+      "author": "Torkel Klingberg and Åsa Wikforss",
+      "status": "bought",
+      "genre": "nonfiction / learning and AI",
+      "note": "I had to buy it because it came out so early. A bite-sized dose of ideas.",
+      "link": "https://www.feltrinellieditore.it/opera/in-difesa-del-pensiero/",
+      "linkLabel": "view on Feltrinelli",
+      "color": "#b83b32",
+      "accent": "#f6edd8",
+      "cover": "img/perche_imparare.jpg"
     }
   ]
 }
