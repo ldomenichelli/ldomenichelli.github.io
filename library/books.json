@@ -189,8 +189,6 @@
       "status": "bought",
       "genre": "nonfiction / learning and AI",
       "note": "I had to buy it because it came out so early. A bite-sized dose of ideas.",
-      "link": "https://www.feltrinellieditore.it/opera/in-difesa-del-pensiero/",
-      "linkLabel": "view on Feltrinelli",
       "color": "#b83b32",
       "accent": "#f6edd8",
       "cover": "img/perche_imparare.jpg"
@@ -202,8 +200,6 @@
       "status": "read",
       "genre": "philosophy / social criticism",
       "note": "I should read more of his work. There's also an expanded Italian edition, La società della stanchezza.",
-      "link": "https://en.wikipedia.org/wiki/The_Burnout_Society",
-      "linkLabel": "read about the book",
       "cover": "img/the_burnout_society.jpg",
       "color": "#f2eee3",
       "accent": "#303030"
