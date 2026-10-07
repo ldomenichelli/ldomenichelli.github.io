@@ -2139,3 +2139,22 @@ body.notes-index {
     padding-right: 1rem !important;
   }
 }
+
+/* One small graph-paper grid across every page, including custom readers. */
+@media screen {
+  html body,
+  html body[class] {
+    background-color: var(--reader-bg, var(--ws-reader-bg, var(--site-bg))) !important;
+    background-image:
+      linear-gradient(rgba(79, 91, 70, 0.14) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79, 91, 70, 0.14) 1px, transparent 1px) !important;
+    background-size: 16px 16px !important;
+    background-position: 0 0 !important;
+    background-repeat: repeat !important;
+  }
+
+  html body::before,
+  html body[class]::before {
+    background: none !important;
+  }
+}
