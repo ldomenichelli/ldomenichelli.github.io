@@ -288,10 +288,10 @@ body.chamber-page .chamber-intro h1 {
 }
 
 body.chamber-page .chamber-room {
-  background: #20231f;
-  border: 1px solid var(--shell-rule);
+  background: transparent;
+  border: 0;
   box-sizing: border-box;
-  padding: clamp(0.8rem, 2vw, 1.25rem);
+  padding: 0;
 }
 
 /* The mint note keeps its palette, but adopts the same paper geometry. */
