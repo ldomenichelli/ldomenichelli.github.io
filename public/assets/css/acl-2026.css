@@ -593,3 +593,9 @@ body.acl26-page::before {
     padding: 0;
   }
 }
+
+/* Conference visit and original trip photo. */
+.acl26-visit { margin-bottom: 2rem; }
+.post-content .acl26-trip-photo { max-width: 360px; margin: 1.25rem 0; }
+.post-content .acl26-trip-photo img { display: block; width: 100%; height: auto; margin: 0; }
+.acl26-trip-photo figcaption { margin-top: .5rem; font-size: .85rem; }
