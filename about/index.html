@@ -27,6 +27,7 @@
 .timeline-head{display:flex;align-items:center;gap:.65rem;margin-bottom:.55rem}
 .timeline time{font-size:.86rem;color:var(--about-text);font-variant-numeric:tabular-nums}
 .tag{font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;color:var(--about-text);border:1px solid rgba(169,196,178,.22);border-radius:999px;padding:.14rem .42rem;background:rgba(169,196,178,.08)}
+.photo-disclosure{margin:.6rem 0}.photo-disclosure>summary{display:list-item;width:fit-content;cursor:pointer;padding:.25rem .65rem;border:1px solid var(--site-border);border-radius:6px;font-size:.85rem;color:var(--site-text-muted);background:transparent}.photo-disclosure>summary:hover{color:var(--site-accent);border-color:var(--site-accent)}.photo-disclosure>summary:focus-visible{outline:2px solid var(--site-accent);outline-offset:3px}
 .news-photo{max-width:320px;margin:1rem 0}.post-content .news-photo img{display:block;width:100%;height:auto;margin:0;border:1px solid var(--about-border)}.news-photo figcaption{font-size:.85rem;color:var(--about-muted);margin-top:.4rem}.publication-item.publication-item-text{grid-template-columns:1fr}
 .publication-list{display:grid;gap:1rem;margin:0}
 .publication-item{border-top:1px solid var(--about-border);display:grid;gap:1rem;grid-template-columns:minmax(128px,20%) 1fr;padding-top:1rem}
@@ -142,19 +143,25 @@
             <div class="timeline-head"><time datetime="2026-08">16–28 Aug 2026</time><span class="tag">Summer school</span></div>
             <p>I was in Gothenburg from 16 to 28 August for the <a href="https://www.analytical-connectionism.net/school/2026/">Analytical Connectionism Summer School</a>, held at Chalmers / University of Gothenburg from 17 to 28 August.</p>
             <p><a href="/posts/analytical-connectionism-summer-school-2026/">My summer school notes</a></p>
-            <figure class="news-photo">
-              <a href="/about/img/gothenburg-2026.png" aria-label="Open full-size photo from my Gothenburg trip"><img src="/about/img/gothenburg-2026.png" alt="A sheep standing in a grassy, rocky landscape during my Gothenburg trip" width="1368" height="1824" loading="lazy"></a>
-              <figcaption>A moment from my trip to Gothenburg.</figcaption>
-            </figure>
+            <details class="photo-disclosure">
+              <summary>View photo · Gothenburg</summary>
+              <figure class="news-photo">
+                <a href="/about/img/gothenburg-2026.png" aria-label="Open full-size photo from my Gothenburg trip"><img src="/about/img/gothenburg-2026.png" alt="A sheep standing in a grassy, rocky landscape during my Gothenburg trip" width="1368" height="1824" loading="lazy"></a>
+                <figcaption>A moment from my trip to Gothenburg.</figcaption>
+              </figure>
+            </details>
           </li>
           <li>
             <div class="timeline-head"><time datetime="2026-07">Jul 2026</time><span class="tag">Oral presentation</span></div>
             <p>I gave an oral presentation of our paper “<a href="https://aclanthology.org/2026.conll-main.10/">Linguistic Profiling of Transformer Embedding Geometry</a>” at CoNLL 2026 in San Diego.</p>
             <p><a href="/posts/acl-san-diego-2026/">My notes from San Diego</a></p>
-            <figure class="news-photo">
-              <a href="/about/img/san-diego-2026.png" aria-label="Open full-size photo of San Diego"><img src="/about/img/san-diego-2026.png" alt="The waterfront statue of a sailor kissing a nurse beside an aircraft carrier in San Diego" width="960" height="1280" loading="lazy"></a>
-              <figcaption>San Diego, July 2026.</figcaption>
-            </figure>
+            <details class="photo-disclosure">
+              <summary>View photo · San Diego</summary>
+              <figure class="news-photo">
+                <a href="/about/img/san-diego-2026.png" aria-label="Open full-size photo of San Diego"><img src="/about/img/san-diego-2026.png" alt="The waterfront statue of a sailor kissing a nurse beside an aircraft carrier in San Diego" width="960" height="1280" loading="lazy"></a>
+                <figcaption>San Diego, July 2026.</figcaption>
+              </figure>
+            </details>
           </li>
           <li>
             <div class="timeline-head"><time datetime="2026">2026</time><span class="tag">Workshop</span></div>
