@@ -1,0 +1,22 @@
+# Lucia Domenichelli — research guide
+
+> Research in NLP, interpretability and representation learning. This guide summarizes the publications listed on Lucia Domenichelli’s personal website.
+
+These are brief topic summaries, not paper abstracts. Each publication is a distinct work; the conference and journal papers on data ordering should not be treated as interchangeable.
+
+## Publications
+
+- [From Weights to Representations: How Pre-Training Data Order Shapes Language Models](https://www.ilc.cnr.it/clic-it-best-student-paper-award/): Luca Dini, Lucia Domenichelli, Dominique Brunato, Felice Dell’Orletta. CLiC-it 2026. Research on pre-training data order and language-model representations. Best Student Paper Award. The linked institutional announcement verifies the title, authors and award; it is not the paper text. Detailed findings are not summarized here because the full text has not been verified.
+- [Linguistic Profiling of Transformer Embedding Geometry](https://aclanthology.org/2026.conll-main.10/): Lucia Domenichelli, Dominique Brunato, Felice Dell’Orletta. CoNLL 2026. Studies the relationship between linguistic features and token-representation geometry in BERT and GPT-2, using isotropy and intrinsic-dimensionality measures. Relevant to linguistic analysis of embedding spaces, layerwise geometry, and encoder versus decoder comparisons. Findings concern the models and English treebank examined in the paper.
+- [On the impact of pretraining data ordering in transformer encoder- and decoder-only language models](https://www.sciencedirect.com/science/article/pii/S0950705126005769): Luca Dini, Lucia Domenichelli, Dominique Brunato, Felice Dell’Orletta. Knowledge-Based Systems, 2026. Examines readability-based pretraining data order in encoder-only and decoder-only models through learning dynamics, linguistic probing, downstream tasks and representation geometry. Relevant to curriculum learning and data-order effects. Reports architecture-dependent effects rather than a universal performance improvement.
+- [The Role of Eye-Tracking Data in Encoder-Based Models: An In-depth Linguistic Analysis](https://aclanthology.org/2025.clicit-1.41/): Lucia Domenichelli, Luca Dini, Dominique Brunato, Felice Dell’Orletta. CLiC-it 2025. A linguistic analysis of the role of eye-tracking data in encoder-based models. Relevant to human reading signals and linguistic analysis of language models. See the linked paper for the experimental findings.
+- [From Human Reading to NLM Understanding: Evaluating the Role of Eye-Tracking Data in Encoder-Based Models](https://aclanthology.org/2025.acl-long.870/): Luca Dini, Lucia Domenichelli, Dominique Brunato, Felice Dell’Orletta. ACL 2025. Examines integrating Ghent Eye-Tracking Corpus features into language models, including downstream performance, attention alignment and embedding geometry. Relevant to cognitive supervision and human-model alignment. Reports preserved task performance, closer attention alignment and compressed embedding geometry in the studied settings.
+
+## Citation data
+
+- [BibTeX for all five publications](https://ldomenichelli.github.io/publications/references.bib): Full titles, ordered authors, venues, years, and verified identifiers. DOI and page fields are omitted where unverified.
+- [Author profile and publications](https://ldomenichelli.github.io/about/): Publication list with structured bibliographic metadata.
+
+## Research notes
+
+- [Notes](https://ldomenichelli.github.io/posts/): Personal study notes; these are distinct from peer-reviewed publications.
