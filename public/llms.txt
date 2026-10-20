@@ -17,6 +17,10 @@ These are brief topic summaries, not paper abstracts. Each publication is a dist
 - [BibTeX for all five publications](https://ldomenichelli.github.io/publications/references.bib): Full titles, ordered authors, venues, years, and verified identifiers. DOI and page fields are omitted where unverified.
 - [Author profile and publications](https://ldomenichelli.github.io/about/): Publication list with structured bibliographic metadata.
 
+## Seminars and slides
+
+- [From Global to Local: Intrinsic Dimensionality as a Lens on Language Model Representation](https://ldomenichelli.github.io/posts/from-global-to-local-officine-italianlp/): Seminar by Lucia Domenichelli at Officine ItaliaNLP, 29 September 2026. Covers representation geometry, intrinsic dimensionality and its estimators, and linguistic structure. [Slides (PDF)](https://ldomenichelli.github.io/assets/slides/from-global-to-local-officine-italianlp-2026.pdf).
+
 ## Research notes
 
 - [Notes](https://ldomenichelli.github.io/posts/): Personal study notes; these are distinct from peer-reviewed publications.

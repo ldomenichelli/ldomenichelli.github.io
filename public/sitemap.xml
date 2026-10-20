@@ -5,6 +5,7 @@
     <loc>https://ldomenichelli.github.io/games/</loc>
   </url><url>
     <loc>https://ldomenichelli.github.io/posts/</loc>
+    <lastmod>2026-10-20</lastmod>
   </url><url>
     <loc>https://ldomenichelli.github.io/posts/analytical-connectionism-summer-school-2026/</loc>
     <lastmod>2026-08-26</lastmod>
@@ -62,6 +63,7 @@
     <loc>https://ldomenichelli.github.io/games/abalone/</loc>
   </url><url>
     <loc>https://ldomenichelli.github.io/about/</loc>
+    <lastmod>2026-10-20</lastmod>
   </url><url>
     <loc>https://ldomenichelli.github.io/tags/abstract/</loc>
   </url><url>
@@ -117,5 +119,13 @@
     <lastmod>2026-08-27</lastmod>
   </url><url>
     <loc>https://ldomenichelli.github.io/tags/wsdistance/</loc>
+  </url>
+  <url>
+    <loc>https://ldomenichelli.github.io/posts/from-global-to-local-officine-italianlp/</loc>
+    <lastmod>2026-10-20</lastmod>
+  </url>
+  <url>
+    <loc>https://ldomenichelli.github.io/assets/slides/from-global-to-local-officine-italianlp-2026.pdf</loc>
+    <lastmod>2026-10-20</lastmod>
   </url>
 </urlset>
