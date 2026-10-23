@@ -203,6 +203,28 @@
       "cover": "img/the_burnout_society.jpg",
       "color": "#f2eee3",
       "accent": "#303030"
+    },
+    {
+      "title": "The Transparency Society",
+      "shortTitle": "Read",
+      "author": "Byung-Chul Han",
+      "status": "read",
+      "genre": "philosophy / social criticism",
+      "note": "Read.",
+      "cover": "img/the_transparency_society.png",
+      "color": "#00bcb1",
+      "accent": "#111111"
+    },
+    {
+      "title": "The Narrator",
+      "shortTitle": "Read",
+      "author": "Walter Benjamin",
+      "status": "read",
+      "genre": "literary criticism / essay",
+      "note": "Read. Italian title: Il narratore.",
+      "cover": "img/the_narrator.jpg",
+      "color": "#577b72",
+      "accent": "#e8e0c5"
     }
   ]
 }
