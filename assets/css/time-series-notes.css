@@ -1,106 +1,255 @@
-body.ts-notes-page {
-  --tda-yellow: #e6cf75;
-  --tda-orange: #e4a36f;
-  --tda-green: #8ec98a;
-  --tda-blue: #88b6e2;
-  --tda-pink: #e09dbd;
-  --tda-violet: #c1b4ef;
+/* Page-specific notebook skin; loaded after the shared note and site styles. */
+@font-face {
+  font-family: "Patrick Hand";
+  src: url("/assets/fonts/PatrickHand-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
 }
 
-body.ts-notes-page .tda-notebook::before {
-  opacity: 0.08;
+body.note-page.ts-notes-page {
+  --note-surface: #fffdf5;
+  --note-surface-muted: #f5f2e6;
+  --note-text: #253c48;
+  --note-body: #354b53;
+  --note-muted: #52666c;
+  --note-border: #d3d8cd;
+  --note-accent: #226b7a;
+  --note-accent-strong: #174b5a;
 }
 
-body.ts-notes-page .tda-display {
-  max-width: 10ch;
+/* Give the notes their own page width instead of the shared 840px article cap. */
+body.note-page.ts-notes-page .main {
+  box-sizing: border-box !important;
+  margin: 2rem auto !important;
+  max-width: 1440px !important;
+  padding: 0 !important;
+  width: calc(100% - 3rem) !important;
+  overflow: visible;
 }
 
-body.ts-notes-page .tda-callout-label,
-body.ts-notes-page .tda-figure-kicker,
-body.ts-notes-page .tda-widget-kicker {
-  display: none;
+body.note-page.ts-notes-page .post-single {
+  --site-font-stack: "Patrick Hand", "Segoe Print", "Bradley Hand", cursive;
+  box-sizing: border-box !important;
+  font-family: var(--site-font-stack);
+  font-size: 1.375rem;
+  line-height: 1.5;
+  margin: 0 !important;
+  max-width: none !important;
+  padding: clamp(1.25rem, 3vw, 3rem) !important;
+  width: 100% !important;
+  overflow: visible;
 }
 
-body.ts-notes-page .tda-callout,
-body.ts-notes-page .tda-widget,
-body.ts-notes-page .tda-figure,
-body.ts-notes-page .tda-toc-card {
-  background: rgba(14, 19, 17, 0.28);
+body.note-page.ts-notes-page :is(.post-content, .post-content p, .post-content li, .post-content dd, .post-content dt) {
+  font-size: 1.375rem;
+  line-height: 1.5;
 }
 
-body.ts-notes-page .tda-button,
-body.ts-notes-page .tda-widget-button {
-  background: rgba(20, 27, 23, 0.22);
+body.note-page.ts-notes-page :is(.tda-notebook, .tda-layout, .tda-main, .tda-section, .tda-hero-copy) {
+  min-width: 0;
 }
 
-body.ts-notes-page .tda-button.is-primary,
-body.ts-notes-page .tda-widget-button.is-active {
-  background: rgba(169, 196, 178, 0.08);
+body.note-page.ts-notes-page .tda-notebook {
+  gap: 1.75rem;
+}
+
+body.note-page.ts-notes-page .tda-hero-copy p {
+  margin: 0;
+}
+
+body.note-page.ts-notes-page .tda-display {
+  font-size: clamp(3.25rem, 6vw, 5.25rem) !important;
+  font-weight: 400;
+  line-height: 1.05 !important;
+  max-width: none;
+  margin: 0;
+  text-transform: none;
+}
+
+body.note-page.ts-notes-page :is(.tda-kicker, .tda-sidebar-label, .tda-lecture-meta, .ts-strip-label) {
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  text-transform: none;
+  margin: 0;
+}
+
+body.note-page.ts-notes-page :is(.tda-hero-meta, .ts-hero-diagram figcaption, .ts-why-item p, .tda-figure figcaption, .tda-widget-summary, .tda-widget-caption, .ts-widget-note) {
+  font-size: 1.15rem;
+  line-height: 1.4;
+}
+
+body.note-page.ts-notes-page .tda-hero {
+  padding-bottom: 1.5rem !important;
 }
 
 .ts-hero-grid {
+  align-items: center;
   display: grid;
-  gap: 0.95rem;
-  grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.88fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.85fr);
+  margin-bottom: 1.5rem;
 }
 
 .ts-hero-diagram {
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  border-radius: 14px;
   display: grid;
-  gap: 0.55rem;
+  gap: 0.6rem;
   margin: 0;
-  padding: 0.7rem;
 }
 
-.ts-hero-diagram svg {
-  background: rgba(12, 17, 15, 0.18);
-  border-radius: 12px;
+body.note-page.ts-notes-page .ts-hero-diagram figcaption {
+  font-weight: 400;
+  margin: 0;
+}
+
+body.note-page.ts-notes-page .ts-hero-diagram svg {
+  background: transparent !important;
+  border: 0 !important;
   display: block;
   height: auto;
   width: 100%;
 }
 
-.ts-strip-label {
-  color: var(--tda-ink-faint);
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
-  margin: 0;
-  text-transform: uppercase;
-}
-
-.ts-why-grid {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+body.note-page.ts-notes-page .ts-why-grid {
   display: grid;
-  gap: 0;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  padding-top: 0.85rem;
+  gap: 0.75rem 1.5rem !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  margin-top: 0.5rem;
 }
 
-.ts-why-item {
-  border-left: 1px solid rgba(255, 255, 255, 0.08);
-  display: grid;
-  gap: 0.35rem;
-  padding: 0 1rem 0.95rem;
+body.note-page.ts-notes-page .ts-why-item {
+  padding: 0.6rem 0 0 !important;
 }
 
-.ts-why-item:nth-child(3n + 1) {
-  border-left: 0;
-  padding-left: 0;
+body.note-page.ts-notes-page :is(.ts-why-item strong, .ts-reference-card strong, .tda-callout-title) {
+  font-size: 1.4rem;
+  line-height: 1.25;
 }
 
-.ts-why-item strong,
-.ts-reference-card strong {
-  color: var(--tda-ink);
-  font-size: 0.92rem;
+body.note-page.ts-notes-page .ts-why-item p {
+  margin: 0.25rem 0 0;
 }
 
-.ts-why-item p,
-.ts-reference-card p {
-  color: var(--tda-ink-soft);
-  font-size: 0.9rem;
+body.note-page.ts-notes-page .tda-layout {
+  gap: clamp(1.5rem, 3vw, 3rem);
+  grid-template-columns: 210px minmax(0, 1fr);
+  align-items: start;
+}
+
+body.note-page.ts-notes-page .tda-sidebar {
+  display: block;
+  position: sticky;
+  top: 100px;
+  max-height: calc(100dvh - 120px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+body.note-page.ts-notes-page .tda-toc-card {
+  background: transparent !important;
+  border: 0 !important;
+  border-right: 1px solid var(--note-border) !important;
+  padding: 0 1rem 0 0;
+  gap: 0.75rem;
+}
+
+body.note-page.ts-notes-page .tda-toc-card h2 {
+  font-size: 1.6rem;
+  line-height: 1.15;
+  margin: 0.3rem 0;
+  text-transform: none;
+}
+
+body.note-page.ts-notes-page .tda-toc-link {
+  font-size: 1.1rem;
+  line-height: 1.25;
+  padding: 0.35rem 0.25rem 0.35rem 0.65rem;
+}
+
+body.note-page.ts-notes-page .tda-main {
+  gap: 2.25rem;
+}
+
+body.note-page.ts-notes-page .tda-section {
+  gap: 1rem;
+  padding-top: 1.25rem;
+  scroll-margin-top: 100px;
+}
+
+body.note-page.ts-notes-page .tda-section:first-child {
+  padding-top: 0;
+}
+
+body.note-page.ts-notes-page .tda-section h2 {
+  color: var(--note-accent-strong);
+  font-size: clamp(1.9rem, 3vw, 2.65rem);
+  font-weight: 400;
+  line-height: 1.15;
+  text-transform: none;
+}
+
+body.note-page.ts-notes-page :is(.tda-section h3, .tda-section h4) {
+  font-size: 1.55rem;
+  line-height: 1.25;
+  text-transform: none;
+}
+
+body.note-page.ts-notes-page .tda-section-intro {
+  max-width: 70ch;
+}
+
+body.note-page.ts-notes-page :is(.tda-callout, .tda-proof, .tda-figure) {
+  background: transparent !important;
+  border: 0 !important;
+}
+
+body.note-page.ts-notes-page .tda-callout {
+  gap: 0.4rem;
+  padding: 0.65rem 1rem;
+}
+
+body.note-page.ts-notes-page .tda-callout p {
   margin: 0;
+}
+
+body.note-page.ts-notes-page :is(.tda-callout-label, .tda-figure-kicker, .tda-widget-kicker) {
+  display: none;
+}
+
+body.note-page.ts-notes-page .tda-widget {
+  padding: clamp(0.8rem, 2vw, 1.4rem);
+  border-top: 2px solid var(--note-accent) !important;
+}
+
+body.note-page.ts-notes-page :is(.tda-widget-canvas, .tda-figure svg) {
+  background: transparent !important;
+  border: 0 !important;
+}
+
+body.note-page.ts-notes-page :is(button, select, input) {
+  font-family: var(--site-font-stack);
+  font-size: 1.15rem;
+}
+
+body.note-page.ts-notes-page .tda-jump {
+  display: none;
+}
+
+body.note-page.ts-notes-page .tda-formula {
+  min-width: 0;
+  overflow-x: auto;
+}
+
+/* Preserve mathematical typography and allow long equations to scroll locally. */
+body.note-page.ts-notes-page .katex {
+  font-size: 0.88em;
+}
+
+body.note-page.ts-notes-page .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.35rem 0;
 }
 
 .ts-control-grid,
@@ -109,15 +258,6 @@ body.ts-notes-page .tda-widget-button.is-active {
 .ts-reference-grid {
   display: grid;
   gap: 1rem;
-}
-
-.ts-control-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.ts-checklist-grid,
-.ts-application-grid,
-.ts-reference-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
@@ -130,27 +270,21 @@ body.ts-notes-page .tda-widget-button.is-active {
   align-items: baseline;
   color: var(--tda-ink-soft);
   display: flex;
-  font-size: 0.84rem;
+  font-size: 1.15rem;
   gap: 0.65rem;
   justify-content: space-between;
 }
 
 .ts-reference-card {
-  background: transparent;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--note-border);
   display: grid;
   gap: 0.45rem;
-  padding: 0.75rem 0 0;
+  padding-top: 0.75rem;
 }
 
-.ts-reference-card a {
-  color: var(--tda-ink);
-  text-decoration-color: rgba(169, 196, 178, 0.32);
-  text-underline-offset: 0.15rem;
-}
-
-.ts-reference-card a:hover {
-  color: var(--site-accent);
+.ts-reference-card p,
+.ts-widget-note {
+  margin: 0;
 }
 
 .ts-svg-label,
@@ -215,32 +349,32 @@ body.ts-notes-page .tda-widget-button.is-active {
 }
 
 .ts-state-line {
-  stroke: rgba(136, 182, 226, 0.9);
+  stroke: #32728c;
   stroke-width: 2.4;
 }
 
 .ts-forecast-line {
-  stroke: rgba(230, 207, 117, 0.92);
+  stroke: #987010;
   stroke-width: 2.4;
 }
 
 .ts-trend-line {
-  stroke: rgba(228, 163, 111, 0.9);
+  stroke: #a0532d;
   stroke-width: 2.2;
 }
 
 .ts-seasonal-line {
-  stroke: rgba(142, 201, 138, 0.92);
+  stroke: #3d794f;
   stroke-width: 2.1;
 }
 
 .ts-remainder-line {
-  stroke: rgba(224, 157, 189, 0.86);
+  stroke: #955176;
   stroke-width: 1.9;
 }
 
 .ts-baseline-line {
-  stroke: rgba(193, 180, 239, 0.92);
+  stroke: #6e5c9b;
   stroke-dasharray: 5 5;
   stroke-width: 2.1;
 }
@@ -321,35 +455,75 @@ body.ts-notes-page .tda-widget-button.is-active {
   stroke: rgba(224, 157, 189, 0.92);
 }
 
-.ts-widget-note {
-  color: var(--tda-ink-faint);
-  font-size: 0.88rem;
-  margin: 0;
-}
 
-@media (max-width: 1080px) {
-  .ts-hero-grid,
-  .ts-control-grid {
-    grid-template-columns: 1fr;
+@media (max-width: 1100px) {
+  body.note-page.ts-notes-page .tda-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body.note-page.ts-notes-page .tda-sidebar {
+    display: none;
+  }
+
+  body.note-page.ts-notes-page .tda-jump {
+    display: block;
   }
 }
 
-@media (max-width: 900px) {
-  .ts-why-grid,
-  .ts-checklist-grid,
-  .ts-application-grid,
-  .ts-reference-grid {
-    grid-template-columns: 1fr;
+@media (max-width: 899px) {
+  body.note-page.ts-notes-page .main {
+    width: calc(100% - 1.5rem) !important;
+    margin: 1rem auto !important;
   }
 
-  .ts-why-item {
-    border-left: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 0.9rem 0 0;
+  body.note-page.ts-notes-page .post-single {
+    padding: 1.25rem !important;
   }
 
-  .ts-why-item:first-child {
-    border-top: 0;
-    padding-top: 0;
+  body.note-page.ts-notes-page .ts-hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  body.note-page.ts-notes-page .ts-hero-diagram {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  body.note-page.ts-notes-page :is(.tda-grid-two, .tda-grid-three) {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  body.note-page.ts-notes-page .ts-why-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  /* Shared mobile rules constrain every descendant; math needs its natural width. */
+  body.note-page.ts-notes-page .katex * {
+    max-width: none !important;
+  }
+}
+
+@media (max-width: 600px) {
+  body.note-page.ts-notes-page .post-single {
+    padding: 1rem !important;
+  }
+
+  body.note-page.ts-notes-page :is(.post-content, .post-content p, .post-content li) {
+    font-size: 1.25rem;
+  }
+
+  body.note-page.ts-notes-page :is(.tda-grid-two, .tda-grid-three, .ts-control-grid, .ts-checklist-grid, .ts-application-grid, .ts-reference-grid) {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  body.note-page.ts-notes-page .ts-why-item p {
+    font-size: 1.05rem;
+  }
+
+  body.note-page.ts-notes-page .tda-widget-head {
+    display: grid;
+    gap: 0.65rem;
   }
 }

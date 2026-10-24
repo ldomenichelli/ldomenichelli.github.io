@@ -1,0 +1,586 @@
+/* Shared light treatment for every research note.
+   Loaded after the base and topic styles so older dark-theme rules cannot win. */
+
+body.note-page {
+  --note-page: #f7f5ee;
+  --note-surface: #fffdf8;
+  --note-surface-muted: #f1eee5;
+  --note-text: #28231f;
+  --note-body: #4b443e;
+  --note-muted: #625a53;
+  --note-soft: #716960;
+  --note-border: #c8c0b5;
+  --note-border-strong: #756a61;
+  --note-accent: #155e6b;
+  --note-accent-strong: #113f47;
+  --site-bg: var(--note-page);
+  --site-bg-soft: var(--note-surface-muted);
+  --site-surface: var(--note-surface);
+  --site-surface-strong: var(--note-surface-muted);
+  --site-surface-alt: #e8e3d8;
+  --site-text: var(--note-text);
+  --site-text-muted: var(--note-muted);
+  --site-text-soft: var(--note-soft);
+  --site-border: var(--note-border);
+  --site-border-strong: var(--note-border-strong);
+  --site-accent: var(--note-accent);
+  --site-accent-strong: var(--note-accent-strong);
+  --site-accent-soft: rgba(21, 94, 107, 0.08);
+  --site-accent-soft-strong: rgba(21, 94, 107, 0.14);
+  --site-focus: rgba(21, 94, 107, 0.38);
+  --site-shadow: none;
+  --site-shadow-soft: none;
+  --theme: var(--note-page);
+  --entry: var(--note-surface);
+  --primary: var(--note-text);
+  --secondary: var(--note-muted);
+  --tertiary: var(--note-surface-muted);
+  --content: var(--note-body);
+  --hljs-bg: var(--note-surface-muted);
+  --code-bg: var(--note-surface-muted);
+  --border: var(--note-border);
+  --carolina_blue: var(--note-accent);
+  background: var(--note-page);
+  color: var(--note-text);
+}
+
+body.note-page::before {
+  background: none;
+}
+
+body.note-page .post-single,
+body.note-page .toc,
+body.note-page .paginav,
+body.note-page .share-buttons,
+body.note-page .post-tags a {
+  background: var(--note-surface);
+  border-color: var(--note-border);
+  box-shadow: none;
+}
+
+body.note-page .post-single {
+  border-width: 1px;
+}
+
+body.note-page .post-title,
+body.note-page .post-content h1,
+body.note-page .post-content h2,
+body.note-page .post-content h3,
+body.note-page .post-content h4,
+body.note-page .post-content h5,
+body.note-page .post-content h6 {
+  color: var(--note-text);
+}
+
+body.note-page .post-description,
+body.note-page .post-meta,
+body.note-page .breadcrumbs,
+body.note-page .post-content p,
+body.note-page .post-content li,
+body.note-page .post-content dd,
+body.note-page .post-content dt {
+  color: var(--note-body);
+}
+
+body.note-page .post-content figure,
+body.note-page .post-content ul,
+body.note-page .post-content ol,
+body.note-page .post-content dl {
+  color: var(--note-body);
+}
+
+body.note-page .post-description,
+body.note-page .post-meta,
+body.note-page .breadcrumbs {
+  color: var(--note-muted);
+}
+
+body.note-page a,
+body.note-page .post-content a {
+  color: var(--note-accent);
+}
+
+body.note-page a:hover,
+body.note-page .post-content a:hover {
+  color: var(--note-accent-strong);
+}
+
+body.note-page :focus-visible {
+  outline: 2px solid var(--note-accent);
+  outline-offset: 3px;
+}
+
+body.note-page .post-content hr {
+  background: var(--note-border);
+  height: 1px;
+}
+
+body.note-page .post-content blockquote {
+  background: var(--note-surface-muted);
+  border-color: var(--note-border);
+  border-inline-start-color: var(--note-accent);
+  box-shadow: none;
+}
+
+body.note-page .post-content code,
+body.note-page .post-content pre,
+body.note-page .post-content .highlight {
+  background: var(--note-surface-muted);
+  border-color: var(--note-border);
+  color: var(--note-text);
+}
+
+body.note-page .post-content table:not(.highlighttable) {
+  background: var(--note-surface-muted);
+  border: 1px solid var(--note-border);
+  border-radius: 0;
+  color: var(--note-body);
+}
+
+body.note-page .post-content table:not(.highlighttable) thead {
+  background: #e8e3d8;
+}
+
+body.note-page .post-content table:not(.highlighttable) th {
+  color: var(--note-text);
+}
+
+body.note-page .post-content table:not(.highlighttable) td {
+  color: var(--note-body);
+}
+
+body.note-page .post-content table:not(.highlighttable) th,
+body.note-page .post-content table:not(.highlighttable) td {
+  border-bottom-color: var(--note-border);
+}
+
+body.note-page .post-content iframe,
+body.note-page .post-content embed {
+  background: var(--note-surface-muted);
+  border: 1px solid var(--note-border);
+}
+
+/* The interactive notebooks keep their diagrams and controls, but use the
+   same quiet surfaces, typography, and contrast as the plain ACL note. */
+body.note-page.tda-notes-page {
+  --tda-paper: var(--note-surface);
+  --tda-paper-strong: var(--note-surface-muted);
+  --tda-grid-minor: transparent;
+  --tda-grid-major: transparent;
+  --tda-ink: var(--note-text);
+  --tda-ink-soft: var(--note-body);
+  --tda-ink-faint: var(--note-muted);
+  --tda-yellow: #7c5a00;
+  --tda-orange: #91471f;
+  --tda-green: #2f6b42;
+  --tda-blue: #2d6387;
+  --tda-pink: #874667;
+  --tda-violet: #5f5290;
+  --tda-danger: #8b3f3f;
+  --slld-ink-strong: var(--note-text);
+}
+
+body.note-page.tda-notes-page .main {
+  max-width: 840px !important;
+}
+
+body.note-page.tda-notes-page .post-single {
+  background: var(--note-surface) !important;
+  border-color: var(--note-border) !important;
+}
+
+body.note-page.tda-notes-page .tda-notebook::before {
+  background: none !important;
+  opacity: 0 !important;
+}
+
+body.note-page.tda-notes-page .tda-progress {
+  background: rgba(255, 253, 248, 0.96) !important;
+  border-bottom-color: var(--note-border) !important;
+}
+
+body.note-page.tda-notes-page .tda-hero {
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--note-border) !important;
+  padding: 0 0 1.2rem !important;
+}
+
+body.note-page.tda-notes-page .tda-toc-card,
+body.note-page.tda-notes-page .tda-callout,
+body.note-page.tda-notes-page .tda-widget,
+body.note-page.tda-notes-page .tda-source-drawer,
+body.note-page.tda-notes-page .tda-figure,
+body.note-page.tda-notes-page .tda-proof,
+body.note-page.tda-notes-page .tda-formula {
+  background: var(--note-surface) !important;
+  border-color: var(--note-border) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+body.note-page.tda-notes-page .tda-formula,
+body.note-page.tda-notes-page .tda-widget-canvas,
+body.note-page.tda-notes-page .tda-figure svg {
+  background: var(--note-surface-muted) !important;
+  border-color: var(--note-border) !important;
+  border-radius: 0 !important;
+}
+
+body.note-page.tda-notes-page .emb-hero-diagram,
+body.note-page.tda-notes-page .gdl-hero-diagram,
+body.note-page.tda-notes-page .ot-hero-diagram,
+body.note-page.tda-notes-page .ts-hero-diagram {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+
+body.note-page.tda-notes-page .emb-hero-diagram svg,
+body.note-page.tda-notes-page .gdl-hero-diagram svg,
+body.note-page.tda-notes-page .ot-hero-diagram svg,
+body.note-page.tda-notes-page .ts-hero-diagram svg,
+body.note-page.tda-notes-page .slld-static-svg {
+  background: var(--note-surface-muted) !important;
+  border: 1px solid var(--note-border) !important;
+  border-radius: 0 !important;
+}
+
+body.note-page.tda-notes-page .tda-button,
+body.note-page.tda-notes-page .tda-mini-button,
+body.note-page.tda-notes-page .tda-widget-button,
+body.note-page.tda-notes-page input,
+body.note-page.tda-notes-page select {
+  background: var(--note-surface-muted) !important;
+  border-color: var(--note-border) !important;
+  color: var(--note-text) !important;
+  min-height: 44px;
+}
+
+body.note-page.tda-notes-page .tda-button:hover,
+body.note-page.tda-notes-page .tda-mini-button:hover,
+body.note-page.tda-notes-page .tda-widget-button:hover,
+body.note-page.tda-notes-page .tda-widget-button.is-active {
+  background: rgba(21, 94, 107, 0.08) !important;
+  border-color: var(--note-accent) !important;
+  color: var(--note-accent-strong) !important;
+}
+
+body.note-page.tda-notes-page .tda-section + .tda-section,
+body.note-page.tda-notes-page .emb-why-grid,
+body.note-page.tda-notes-page .emb-why-item,
+body.note-page.tda-notes-page .emb-reference-card,
+body.note-page.tda-notes-page .gdl-why-grid,
+body.note-page.tda-notes-page .gdl-why-item,
+body.note-page.tda-notes-page .gdl-reference-card,
+body.note-page.tda-notes-page .ot-why-grid,
+body.note-page.tda-notes-page .ot-why-item,
+body.note-page.tda-notes-page .ot-reference-card,
+body.note-page.tda-notes-page .ot-slider-group,
+body.note-page.tda-notes-page .ot-link-card,
+body.note-page.tda-notes-page .slld-hero-strip,
+body.note-page.tda-notes-page .slld-strip-item,
+body.note-page.tda-notes-page .slld-why-item,
+body.note-page.tda-notes-page .slld-reading-card,
+body.note-page.tda-notes-page .slld-dataset-card,
+body.note-page.tda-notes-page .slld-control-block,
+body.note-page.tda-notes-page .ts-why-grid,
+body.note-page.tda-notes-page .ts-why-item,
+body.note-page.tda-notes-page .ts-reference-card {
+  border-color: var(--note-border) !important;
+}
+
+body.note-page.tda-notes-page .tda-proof-body,
+body.note-page.tda-notes-page .tda-source-embed embed,
+body.note-page.tda-notes-page .slld-method-table th,
+body.note-page.tda-notes-page .slld-method-table td {
+  border-color: var(--note-border) !important;
+}
+
+body.note-page.tda-notes-page .emb-why-grid,
+body.note-page.tda-notes-page .gdl-why-grid,
+body.note-page.tda-notes-page .ot-why-grid,
+body.note-page.tda-notes-page .ts-why-grid {
+  gap: 1rem !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+body.note-page.tda-notes-page .slld-why-grid {
+  gap: 1rem !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+body.note-page.tda-notes-page .emb-why-item,
+body.note-page.tda-notes-page .gdl-why-item,
+body.note-page.tda-notes-page .ot-why-item,
+body.note-page.tda-notes-page .slld-why-item,
+body.note-page.tda-notes-page .ts-why-item {
+  border-left: 0 !important;
+  border-top: 1px solid var(--note-border) !important;
+  padding: 0.75rem 0 0 !important;
+}
+
+body.note-page.tda-notes-page .slld-hero-strip {
+  gap: 0.75rem !important;
+  grid-template-columns: 1fr !important;
+}
+
+body.note-page.tda-notes-page .slld-strip-item,
+body.note-page.tda-notes-page .slld-strip-item:first-child {
+  border-left: 0 !important;
+  border-top: 1px solid var(--note-border) !important;
+  padding: 0.75rem 0 0 !important;
+}
+
+body.note-page.tda-notes-page .tda-display,
+body.note-page.tda-notes-page .tda-callout-title,
+body.note-page.tda-notes-page .tda-widget-summary strong,
+body.note-page.tda-notes-page .emb-why-item strong,
+body.note-page.tda-notes-page .emb-reference-card strong,
+body.note-page.tda-notes-page .gdl-why-item strong,
+body.note-page.tda-notes-page .gdl-reference-card strong,
+body.note-page.tda-notes-page .ot-why-item strong,
+body.note-page.tda-notes-page .ot-reference-card strong,
+body.note-page.tda-notes-page .slld-strip-item strong,
+body.note-page.tda-notes-page .slld-reading-card strong,
+body.note-page.tda-notes-page .slld-dataset-card strong,
+body.note-page.tda-notes-page .slld-method-table th,
+body.note-page.tda-notes-page .slld-method-table strong,
+body.note-page.tda-notes-page .ts-why-item strong,
+body.note-page.tda-notes-page .ts-reference-card strong {
+  color: var(--note-text) !important;
+}
+
+body.note-page.tda-notes-page .tda-hero-intro,
+body.note-page.tda-notes-page .tda-hero-meta,
+body.note-page.tda-notes-page .tda-hero-note,
+body.note-page.tda-notes-page .tda-section p,
+body.note-page.tda-notes-page .tda-section li,
+body.note-page.tda-notes-page .tda-callout p,
+body.note-page.tda-notes-page .tda-widget p,
+body.note-page.tda-notes-page .tda-widget li,
+body.note-page.tda-notes-page .tda-widget-summary,
+body.note-page.tda-notes-page .tda-widget-caption,
+body.note-page.tda-notes-page .tda-figure figcaption,
+body.note-page.tda-notes-page .emb-why-item p,
+body.note-page.tda-notes-page .emb-reference-card p,
+body.note-page.tda-notes-page .gdl-why-item p,
+body.note-page.tda-notes-page .gdl-reference-card p,
+body.note-page.tda-notes-page .ot-why-item p,
+body.note-page.tda-notes-page .ot-reference-card p,
+body.note-page.tda-notes-page .slld-strip-item p,
+body.note-page.tda-notes-page .slld-reading-card p,
+body.note-page.tda-notes-page .slld-dataset-card p,
+body.note-page.tda-notes-page .slld-method-table td,
+body.note-page.tda-notes-page .ts-why-item p,
+body.note-page.tda-notes-page .ts-reference-card p {
+  color: var(--note-body) !important;
+}
+
+body.note-page.tda-notes-page .tda-kicker,
+body.note-page.tda-notes-page .tda-sidebar-label,
+body.note-page.tda-notes-page .tda-lecture-meta,
+body.note-page.tda-notes-page .tda-callout-label,
+body.note-page.tda-notes-page .tda-figure-kicker,
+body.note-page.tda-notes-page .tda-widget-kicker,
+body.note-page.tda-notes-page .emb-strip-label,
+body.note-page.tda-notes-page .gdl-strip-label,
+body.note-page.tda-notes-page .ot-strip-label,
+body.note-page.tda-notes-page .ts-strip-label {
+  color: var(--note-muted) !important;
+}
+
+body.note-page.tda-notes-page .tda-toc-link {
+  color: var(--note-muted) !important;
+}
+
+body.note-page.tda-notes-page .tda-toc-link:hover,
+body.note-page.tda-notes-page .tda-toc-link.is-active {
+  border-left-color: var(--note-accent) !important;
+  color: var(--note-accent-strong) !important;
+}
+
+body.note-page.tda-notes-page .post-content svg text {
+  fill: var(--note-text);
+}
+
+body.note-page.tda-notes-page .tda-svg-label,
+body.note-page.tda-notes-page .tda-svg-title,
+body.note-page.tda-notes-page .emb-svg-label,
+body.note-page.tda-notes-page .emb-svg-number,
+body.note-page.tda-notes-page .emb-svg-title,
+body.note-page.tda-notes-page .emb-heat-label,
+body.note-page.tda-notes-page .gdl-svg-label,
+body.note-page.tda-notes-page .gdl-svg-number,
+body.note-page.tda-notes-page .gdl-svg-title,
+body.note-page.tda-notes-page .ts-svg-label,
+body.note-page.tda-notes-page .ts-svg-number,
+body.note-page.tda-notes-page .ts-svg-title,
+body.note-page.tda-notes-page .slld-static-svg text,
+body.note-page.tda-notes-page .slld-svg-label,
+body.note-page.tda-notes-page .ot-heat-mass {
+  fill: var(--note-text) !important;
+}
+
+body.note-page.tda-notes-page .tda-svg-small-label,
+body.note-page.tda-notes-page .emb-svg-small,
+body.note-page.tda-notes-page .gdl-svg-small,
+body.note-page.tda-notes-page .ts-svg-small,
+body.note-page.tda-notes-page .slld-svg-small,
+body.note-page.tda-notes-page .ot-heat-cost {
+  fill: var(--note-muted) !important;
+}
+
+body.note-page.tda-notes-page .emb-axis,
+body.note-page.tda-notes-page .gdl-axis,
+body.note-page.tda-notes-page .slld-axis,
+body.note-page.tda-notes-page .ts-axis,
+body.note-page.tda-notes-page .tda-axis-line,
+body.note-page.tda-notes-page .tda-stage-marker {
+  stroke: var(--note-border-strong) !important;
+}
+
+body.note-page.tda-notes-page .emb-grid-line,
+body.note-page.tda-notes-page .gdl-grid-line,
+body.note-page.tda-notes-page .slld-grid-line,
+body.note-page.tda-notes-page .ts-grid-line {
+  stroke: var(--note-border) !important;
+}
+
+body.note-page.tda-notes-page .emb-arrow,
+body.note-page.tda-notes-page .emb-connector,
+body.note-page.tda-notes-page .emb-pair-line,
+body.note-page.tda-notes-page .gdl-arrow,
+body.note-page.tda-notes-page .ot-flow-line,
+body.note-page.tda-notes-page .ts-arrow {
+  stroke: var(--note-accent) !important;
+}
+
+body.note-page.tda-notes-page .ts-observed-line {
+  stroke: var(--note-text) !important;
+}
+
+body.note-page.tda-notes-page .gdl-edge,
+body.note-page.tda-notes-page .slld-contour,
+body.note-page.tda-notes-page .slld-rug {
+  stroke: var(--note-soft) !important;
+}
+
+body.note-page.tda-notes-page .tda-svg-edge,
+body.note-page.tda-notes-page .tda-diagonal-line,
+body.note-page.tda-notes-page .tda-barcode-line,
+body.note-page.tda-notes-page .is-strong {
+  stroke: var(--note-text) !important;
+}
+
+body.note-page.tda-notes-page .tda-diagram-point {
+  fill: var(--note-surface-muted) !important;
+  stroke: var(--note-text) !important;
+}
+
+body.note-page.tda-notes-page .slld-line.is-muted,
+body.note-page.tda-notes-page .slld-point.is-muted,
+body.note-page.tda-notes-page .slld-bar.is-muted {
+  stroke: var(--note-soft) !important;
+}
+
+body.note-page.tda-notes-page .slld-point,
+body.note-page.tda-notes-page .slld-point.is-muted,
+body.note-page.tda-notes-page .slld-bar,
+body.note-page.tda-notes-page .slld-bar.is-muted {
+  fill: rgba(113, 105, 96, 0.16) !important;
+}
+
+body.note-page.tda-notes-page .gdl-patch {
+  fill: var(--note-surface-muted) !important;
+  stroke: var(--note-border) !important;
+}
+
+body.note-page.tda-notes-page .gdl-badge,
+body.note-page.tda-notes-page .ts-box,
+body.note-page.tda-notes-page .ts-chip {
+  fill: var(--note-surface-muted) !important;
+  stroke: var(--note-border-strong) !important;
+}
+
+@media (max-width: 899px) {
+  body.note-page.tda-notes-page .main {
+    box-sizing: border-box !important;
+    margin: 0 auto !important;
+    max-width: 100% !important;
+    padding: 1rem 24px !important;
+    width: 100% !important;
+  }
+
+  body.note-page.tda-notes-page .post-single {
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    padding: 1rem !important;
+    width: 100% !important;
+  }
+
+  body.note-page.tda-notes-page .emb-hero-grid,
+  body.note-page.tda-notes-page .gdl-hero-grid,
+  body.note-page.tda-notes-page .ot-hero-grid,
+  body.note-page.tda-notes-page .slld-hero-grid,
+  body.note-page.tda-notes-page .ts-hero-grid,
+  body.note-page.tda-notes-page .tda-hero-copy,
+  body.note-page.tda-notes-page .tda-display,
+  body.note-page.tda-notes-page .tda-hero-intro,
+  body.note-page.tda-notes-page .tda-hero-meta,
+  body.note-page.tda-notes-page .tda-hero-note {
+    max-width: 100% !important;
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  body.note-page.tda-notes-page .tda-formula,
+  body.note-page.tda-notes-page .post-content table,
+  body.note-page.tda-notes-page .post-content .katex-display {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+  }
+}
+
+@media (max-width: 520px) {
+  body.note-page.tda-notes-page .post-single {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 720px) {
+  body.note-page.tda-notes-page .tda-grid-two,
+  body.note-page.tda-notes-page .tda-grid-three,
+  body.note-page.tda-notes-page .emb-why-grid,
+  body.note-page.tda-notes-page .emb-diagnostic-grid,
+  body.note-page.tda-notes-page .emb-application-grid,
+  body.note-page.tda-notes-page .emb-reference-grid,
+  body.note-page.tda-notes-page .gdl-why-grid,
+  body.note-page.tda-notes-page .gdl-domain-grid,
+  body.note-page.tda-notes-page .gdl-application-grid,
+  body.note-page.tda-notes-page .gdl-checklist-grid,
+  body.note-page.tda-notes-page .gdl-reference-grid,
+  body.note-page.tda-notes-page .ot-why-grid,
+  body.note-page.tda-notes-page .ot-reference-grid,
+  body.note-page.tda-notes-page .ot-application-grid,
+  body.note-page.tda-notes-page .ot-widget-grid,
+  body.note-page.tda-notes-page .ot-control-grid,
+  body.note-page.tda-notes-page .slld-hero-strip,
+  body.note-page.tda-notes-page .slld-why-grid,
+  body.note-page.tda-notes-page .slld-figure-grid,
+  body.note-page.tda-notes-page .slld-widget-grid,
+  body.note-page.tda-notes-page .slld-reading-grid,
+  body.note-page.tda-notes-page .slld-dataset-grid,
+  body.note-page.tda-notes-page .ts-why-grid,
+  body.note-page.tda-notes-page .ts-control-grid,
+  body.note-page.tda-notes-page .ts-checklist-grid,
+  body.note-page.tda-notes-page .ts-application-grid,
+  body.note-page.tda-notes-page .ts-reference-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+}

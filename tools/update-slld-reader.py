@@ -21,8 +21,8 @@ SPEAKER = "Prof. Chiaromonte"
 MODIFIED_DATE = "2026-08-27"
 SUMMARY = (
     "Original annotated lecture slides for the Statistical Learning and Large Data "
-    "course at Sant’Anna School of Advanced Studies in Pisa, presented as a "
-    "continuous 172-page reader with the source PDF available to download."
+    "course at Sant’Anna School of Advanced Studies in Pisa "
+    "(the slides were provided by the professor herself :))."
 )
 TOPICS = (
     "Cluster analysis and principal components",

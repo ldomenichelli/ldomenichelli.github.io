@@ -264,8 +264,8 @@ body.ac-school-page {
 
 .ac-overview-body {
   display: grid;
-  gap: 1rem clamp(1.25rem, 3vw, 2.2rem);
-  grid-template-columns: minmax(0, 1.05fr) minmax(16rem, 0.95fr);
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .ac-school-page .post-content .ac-overview-copy p {
@@ -281,7 +281,8 @@ body.ac-school-page {
 
 .ac-school-page .post-content .ac-topic-list {
   display: grid;
-  gap: 0.5rem;
+  gap: 0.5rem clamp(1rem, 3vw, 2rem);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   list-style: none;
   margin: 0;
   padding: 0;
@@ -518,10 +519,6 @@ body.ac-school-page {
 }
 
 @media screen and (max-width: 900px) {
-  .ac-overview-body {
-    grid-template-columns: 1fr;
-  }
-
   .ac-notebook-grid {
     grid-template-columns: 1fr;
   }
@@ -550,6 +547,10 @@ body.ac-school-page {
 }
 
 @media screen and (max-width: 620px) {
+  .ac-school-page .post-content .ac-topic-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .ac-school-page .post-single {
     backdrop-filter: none;
     background: rgba(251, 246, 223, 0.94);
