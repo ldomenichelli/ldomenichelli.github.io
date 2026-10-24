@@ -129,7 +129,6 @@
   <link rel="stylesheet" href="/assets/css/tda-notes.css">
   <link rel="stylesheet" href="/assets/css/notes-minimal.css">
   <link rel="stylesheet" href="/assets/css/site-shell.css">
-  <link rel="preload" href="/assets/fonts/PatrickHand-Regular.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="/assets/css/time-series-notes.css">
 </head>
 <body class="dark note-page tda-notes-page ts-notes-page" id="top">
@@ -208,12 +207,12 @@
                   <rect x="312" y="40" width="88" height="46" rx="12" class="ts-box"></rect>
                   <rect x="312" y="108" width="88" height="46" rx="12" class="ts-box"></rect>
                   <rect x="312" y="176" width="88" height="46" rx="12" class="ts-box"></rect>
-                  <text x="40" y="55" class="ts-svg-label">process</text>
-                  <text x="40" y="129" class="ts-svg-label">sample path</text>
-                  <text x="40" y="199" class="ts-svg-label">forecast</text>
-                  <text x="330" y="60" class="ts-svg-label">dependence</text>
-                  <text x="330" y="128" class="ts-svg-label">state</text>
-                  <text x="330" y="196" class="ts-svg-label">uncertainty</text>
+                  <text x="70" y="55" text-anchor="middle" class="ts-svg-label">process</text>
+                  <text x="70" y="129" text-anchor="middle" class="ts-svg-label">sample path</text>
+                  <text x="70" y="199" text-anchor="middle" class="ts-svg-label">forecast</text>
+                  <text x="356" y="60" text-anchor="middle" class="ts-svg-label">dependence</text>
+                  <text x="356" y="128" text-anchor="middle" class="ts-svg-label">state</text>
+                  <text x="356" y="196" text-anchor="middle" class="ts-svg-label">uncertainty</text>
                   <path d="M134 59 C186 59, 220 56, 292 63" class="ts-arrow"></path>
                   <path d="M134 134 C198 134, 218 128, 292 131" class="ts-arrow"></path>
                   <path d="M134 201 C192 201, 214 198, 292 194" class="ts-arrow"></path>
@@ -225,7 +224,8 @@
                   <path d="M330 146 C346 128, 360 128, 382 142" class="ts-state-line"></path>
                   <path d="M330 206 C346 194, 360 196, 382 212" class="ts-forecast-line"></path>
                   <text x="28" y="244" class="ts-svg-small">
-                    ordered dependence is the object, not an inconvenience added after the fact
+                    <tspan x="28">ordered dependence is the object,</tspan>
+                    <tspan x="28" dy="12">not an inconvenience added after the fact</tspan>
                   </text>
                 </svg>
                 <figcaption>

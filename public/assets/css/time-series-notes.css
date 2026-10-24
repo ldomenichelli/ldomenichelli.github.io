@@ -1,12 +1,4 @@
 /* Page-specific notebook skin; loaded after the shared note and site styles. */
-@font-face {
-  font-family: "Patrick Hand";
-  src: url("/assets/fonts/PatrickHand-Regular.ttf") format("truetype");
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-
 body.note-page.ts-notes-page {
   --note-surface: #fffdf5;
   --note-surface-muted: #f5f2e6;
@@ -29,7 +21,6 @@ body.note-page.ts-notes-page .main {
 }
 
 body.note-page.ts-notes-page .post-single {
-  --site-font-stack: "Patrick Hand", "Segoe Print", "Bradley Hand", cursive;
   box-sizing: border-box !important;
   font-family: var(--site-font-stack);
   font-size: 1.375rem;
