@@ -8,6 +8,15 @@ body.note-page.ts-notes-page {
   --note-border: #d3d8cd;
   --note-accent: #226b7a;
   --note-accent-strong: #174b5a;
+  --ts-observed: #254e5c;
+  --ts-state: #377da2;
+  --ts-forecast: #946413;
+  --ts-trend: #ab5735;
+  --ts-seasonal: #427e61;
+  --ts-remainder: #915779;
+  --ts-grid: #e0e6df;
+  --ts-axis: #91a39e;
+  --ts-plot-paper: #fffef9;
 }
 
 /* Give the notes their own page width instead of the shared 840px article cap. */
@@ -278,33 +287,148 @@ body.note-page.ts-notes-page .katex-display {
   margin: 0;
 }
 
+/* Each panel keeps its own natural size, including on narrow screens. */
+body.note-page.ts-notes-page :is(.tda-widget, .tda-widget-shell, .tda-widget-canvas) {
+  min-width: 0;
+}
+
+body.note-page.ts-notes-page .tda-widget-canvas.ts-chart-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  overflow: visible;
+  padding: 0;
+}
+
+body.note-page.ts-notes-page .ts-chart-grid.is-compact {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.ts-chart-panel {
+  background: var(--ts-plot-paper);
+  border: 1px solid #dce2d9;
+  border-radius: 8px;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0.8rem 0 0.25rem;
+}
+
+.ts-chart-panel.is-wide,
+.ts-chart-legend,
+.ts-chart-note {
+  grid-column: 1 / -1;
+}
+
+body.note-page.ts-notes-page .tda-section h4.ts-chart-title {
+  color: var(--note-text);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0.75rem 0.4rem;
+  text-transform: none;
+}
+
+body.note-page.ts-notes-page .ts-plot {
+  display: block;
+  height: auto;
+  max-width: 100%;
+  overflow: visible;
+  width: 100%;
+}
+
+.ts-chart-legend {
+  align-items: center;
+  color: var(--note-body);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 12.5px;
+  gap: 0.45rem 1.15rem;
+  line-height: 1.45;
+  padding: 0 0.25rem;
+}
+
+.ts-legend-item {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.45rem;
+  max-width: 100%;
+}
+
+body.note-page.ts-notes-page .ts-legend-swatch {
+  flex: 0 0 28px;
+  height: 14px;
+  overflow: visible;
+  width: 28px;
+}
+
+body.note-page.ts-notes-page .tda-widget .ts-chart-note {
+  color: var(--note-muted);
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0 0.25rem;
+}
+
+body.note-page.ts-notes-page .tda-widget-controls {
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+body.note-page.ts-notes-page .tda-widget-button {
+  font-size: 0.95rem;
+  justify-content: center;
+  line-height: 1.3;
+  min-height: 44px;
+  padding: 0.5rem 0.7rem;
+  white-space: normal;
+}
+
+body.note-page.ts-notes-page .tda-widget-button.is-active {
+  background: #e6efea !important;
+  border-color: var(--note-accent) !important;
+  color: var(--note-accent-strong) !important;
+}
+
+body.note-page.ts-notes-page :is(.tda-widget-button, input[type="range"]):focus-visible {
+  outline: 2px solid var(--note-accent);
+  outline-offset: 3px;
+}
+
 .ts-svg-label,
 .ts-svg-small,
 .ts-svg-number,
-.ts-svg-title {
-  fill: var(--tda-ink);
+.ts-svg-title,
+.ts-axis-label {
+  fill: var(--note-text);
   font-family: var(--site-font-stack);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
-.ts-svg-label {
+.ts-svg-label,
+.ts-svg-small,
+.ts-axis-label {
   font-size: 12px;
 }
 
-.ts-svg-small {
-  fill: var(--tda-ink-soft);
-  font-size: 10.5px;
-}
-
 .ts-svg-number {
-  font-size: 10px;
+  font-size: 11.5px;
 }
 
 .ts-svg-title {
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+body.note-page.ts-notes-page .post-content .ts-axis-label {
+  fill: var(--note-muted);
 }
 
 .ts-axis,
 .ts-grid-line,
+.ts-zero-line,
+.ts-guide-line,
 .ts-observed-line,
 .ts-state-line,
 .ts-forecast-line,
@@ -312,138 +436,222 @@ body.note-page.ts-notes-page .katex-display {
 .ts-seasonal-line,
 .ts-remainder-line,
 .ts-baseline-line,
+.ts-interval-line,
+.ts-confidence-line,
+.ts-acf-stem,
+.ts-periodogram-line,
 .ts-band,
 .ts-arrow {
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
 }
 
-.ts-axis {
-  stroke: rgba(214, 226, 219, 0.52);
-  stroke-width: 1.3;
+body.note-page.ts-notes-page .ts-axis {
+  stroke: var(--ts-axis) !important;
+  stroke-width: 1;
 }
 
-.ts-grid-line {
-  stroke: rgba(255, 255, 255, 0.06);
+body.note-page.ts-notes-page .ts-grid-line {
+  stroke: var(--ts-grid) !important;
+  stroke-width: 1;
+}
+
+.ts-zero-line {
+  stroke: #a2afa7;
+  stroke-width: 1.2;
+}
+
+.ts-guide-line {
+  stroke: #8a9b95;
+  stroke-dasharray: 4 4;
   stroke-width: 1;
 }
 
 .ts-arrow {
-  stroke: rgba(169, 196, 178, 0.72);
-  stroke-width: 2.8;
+  stroke: var(--note-accent);
+  stroke-width: 1.5;
 }
 
-.ts-observed-line {
-  stroke: rgba(214, 226, 219, 0.96);
-  stroke-width: 2.4;
+body.note-page.ts-notes-page .ts-observed-line {
+  stroke: var(--ts-observed) !important;
+  stroke-width: 2;
 }
 
 .ts-state-line {
-  stroke: #32728c;
-  stroke-width: 2.4;
+  stroke: var(--ts-state);
+  stroke-width: 2;
 }
 
 .ts-forecast-line {
-  stroke: #987010;
-  stroke-width: 2.4;
+  stroke: var(--ts-forecast);
+  stroke-dasharray: 6 4;
+  stroke-width: 2.3;
 }
 
 .ts-trend-line {
-  stroke: #a0532d;
-  stroke-width: 2.2;
+  stroke: var(--ts-trend);
+  stroke-width: 2.3;
 }
 
 .ts-seasonal-line {
-  stroke: #3d794f;
-  stroke-width: 2.1;
+  stroke: var(--ts-seasonal);
+  stroke-width: 2;
 }
 
 .ts-remainder-line {
-  stroke: #955176;
-  stroke-width: 1.9;
+  stroke: var(--ts-remainder);
+  stroke-width: 1.6;
 }
 
 .ts-baseline-line {
-  stroke: #6e5c9b;
-  stroke-dasharray: 5 5;
-  stroke-width: 2.1;
+  stroke: #71618e;
+  stroke-dasharray: 5 4;
+  stroke-width: 1.8;
+}
+
+.ts-interval-line {
+  stroke: #b99043;
+  stroke-width: 1;
 }
 
 .ts-band {
-  stroke: rgba(230, 207, 117, 0.26);
+  stroke: #e4c97e;
+  stroke-opacity: 0.4;
   stroke-width: 18;
+}
+
+.ts-plot-surface {
+  fill: #f9faf5;
+  stroke: none;
+}
+
+.ts-box,
+.ts-chip {
+  fill: #edf2ec;
+  stroke: #ccd7ce;
 }
 
 .ts-bar,
 .ts-box,
 .ts-point,
-.ts-chip {
-  stroke-width: 1.2;
-}
-
-.ts-box,
-.ts-chip {
-  fill: rgba(20, 27, 23, 0.2);
-  stroke: rgba(255, 255, 255, 0.08);
+.ts-chip,
+.ts-observed-point,
+.ts-window {
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
 }
 
 .ts-bar.is-blue,
 .ts-point.is-blue,
 .ts-chip.is-blue {
-  fill: rgba(136, 182, 226, 0.24);
-  stroke: rgba(136, 182, 226, 0.98);
+  fill: #a5c6d2;
+  stroke: #37748a;
 }
 
 .ts-bar.is-green,
 .ts-point.is-green,
 .ts-chip.is-green {
-  fill: rgba(142, 201, 138, 0.22);
-  stroke: rgba(142, 201, 138, 0.98);
+  fill: #a8c8b2;
+  stroke: var(--ts-seasonal);
 }
 
 .ts-bar.is-yellow,
 .ts-point.is-yellow,
 .ts-chip.is-yellow {
-  fill: rgba(230, 207, 117, 0.22);
-  stroke: rgba(230, 207, 117, 0.98);
+  fill: #e2cb8f;
+  stroke: var(--ts-forecast);
 }
 
 .ts-bar.is-pink,
 .ts-point.is-pink,
 .ts-chip.is-pink {
-  fill: rgba(224, 157, 189, 0.22);
-  stroke: rgba(224, 157, 189, 0.98);
+  fill: #d5b1c6;
+  stroke: var(--ts-remainder);
 }
 
-.ts-range-fill {
-  fill: rgba(230, 207, 117, 0.14);
-  stroke: rgba(230, 207, 117, 0.2);
+.ts-acf-stem {
+  stroke-width: 2.5;
+}
+
+.ts-acf-stem.is-blue {
+  stroke: #37748a;
+}
+
+.ts-acf-stem.is-green,
+.ts-periodogram-line {
+  stroke: var(--ts-seasonal);
+}
+
+.ts-acf-stem.is-yellow {
+  stroke: var(--ts-forecast);
+}
+
+.ts-periodogram-line {
+  stroke-width: 2;
+}
+
+.ts-observed-point {
+  fill: var(--ts-plot-paper);
+  stroke: var(--ts-observed);
+  stroke-width: 1.4;
+}
+
+.ts-range-fill,
+.ts-interval-fill {
+  fill: #e8ce8c;
+  fill-opacity: 0.42;
+  stroke: none;
+}
+
+.ts-forecast-region {
+  fill: #f5edda;
+  fill-opacity: 0.6;
+  stroke: none;
+}
+
+.ts-confidence-fill {
+  fill: #dce7eb;
+  fill-opacity: 0.65;
+  stroke: none;
+}
+
+.ts-confidence-line {
+  stroke: #7b9eab;
+  stroke-dasharray: 4 4;
   stroke-width: 1;
 }
 
-.ts-window {
-  rx: 10px;
-}
-
 .ts-window.train {
-  fill: rgba(136, 182, 226, 0.22);
-  stroke: rgba(136, 182, 226, 0.96);
+  fill: #b5cfd8;
+  stroke: #477b8f;
 }
 
 .ts-window.validation {
-  fill: rgba(230, 207, 117, 0.22);
-  stroke: rgba(230, 207, 117, 0.96);
+  fill: #ead49a;
+  stroke: #9b762c;
 }
 
 .ts-window.test {
-  fill: rgba(142, 201, 138, 0.22);
-  stroke: rgba(142, 201, 138, 0.96);
+  fill: #b6cfb9;
+  stroke: #4c7d59;
 }
 
 .ts-window.shuffle {
-  fill: rgba(224, 157, 189, 0.2);
-  stroke: rgba(224, 157, 189, 0.92);
+  fill: #dab9cb;
+  stroke: #966080;
+}
+
+body.note-page.ts-notes-page .ts-hero-diagram .ts-hero-chart {
+  background: var(--ts-plot-paper) !important;
+  border: 1px solid #dce2d9 !important;
+  border-radius: 8px !important;
+}
+
+.ts-hero-chart .ts-svg-label,
+.ts-hero-chart .ts-svg-small {
+  font-size: 13px;
 }
 
 

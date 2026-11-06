@@ -200,33 +200,28 @@
               </div>
 
               <figure class="ts-hero-diagram">
-                <svg viewBox="0 0 420 260" role="img" aria-label="Time series hero diagram">
-                  <rect x="22" y="34" width="96" height="54" rx="12" class="ts-box"></rect>
-                  <rect x="22" y="108" width="96" height="54" rx="12" class="ts-box"></rect>
-                  <rect x="22" y="182" width="96" height="42" rx="12" class="ts-box"></rect>
-                  <rect x="312" y="40" width="88" height="46" rx="12" class="ts-box"></rect>
-                  <rect x="312" y="108" width="88" height="46" rx="12" class="ts-box"></rect>
-                  <rect x="312" y="176" width="88" height="46" rx="12" class="ts-box"></rect>
-                  <text x="70" y="55" text-anchor="middle" class="ts-svg-label">process</text>
-                  <text x="70" y="129" text-anchor="middle" class="ts-svg-label">sample path</text>
-                  <text x="70" y="199" text-anchor="middle" class="ts-svg-label">forecast</text>
-                  <text x="356" y="60" text-anchor="middle" class="ts-svg-label">dependence</text>
-                  <text x="356" y="128" text-anchor="middle" class="ts-svg-label">state</text>
-                  <text x="356" y="196" text-anchor="middle" class="ts-svg-label">uncertainty</text>
-                  <path d="M134 59 C186 59, 220 56, 292 63" class="ts-arrow"></path>
-                  <path d="M134 134 C198 134, 218 128, 292 131" class="ts-arrow"></path>
-                  <path d="M134 201 C192 201, 214 198, 292 194" class="ts-arrow"></path>
-                  <path d="M38 74 C50 62, 62 88, 76 76 S102 62, 110 79" class="ts-observed-line"></path>
-                  <path d="M38 148 C52 132, 64 144, 76 124 S102 120, 110 140" class="ts-state-line"></path>
-                  <path d="M42 208 C56 203, 72 188, 86 186" class="ts-forecast-line"></path>
-                  <path d="M86 186 C100 184, 110 190, 118 197" class="ts-band"></path>
-                  <path d="M330 79 C342 67, 356 69, 370 74" class="ts-observed-line"></path>
-                  <path d="M330 146 C346 128, 360 128, 382 142" class="ts-state-line"></path>
-                  <path d="M330 206 C346 194, 360 196, 382 212" class="ts-forecast-line"></path>
-                  <text x="28" y="244" class="ts-svg-small">
-                    <tspan x="28">ordered dependence is the object,</tspan>
-                    <tspan x="28" dy="12">not an inconvenience added after the fact</tspan>
-                  </text>
+                <svg class="ts-hero-chart" viewBox="0 0 340 282" role="img" aria-labelledby="ts-hero-title ts-hero-desc">
+                  <title id="ts-hero-title">Learning from the past, forecasting the future</title>
+                  <desc id="ts-hero-desc">An observed time series ends at a forecast origin. A dashed forecast continues into the future, surrounded by a widening uncertainty band.</desc>
+                  <text x="20" y="28" class="ts-svg-title">Learning from the past</text>
+                  <rect x="20" y="46" width="300" height="152" rx="4" class="ts-plot-surface"></rect>
+                  <rect x="216" y="46" width="104" height="152" class="ts-forecast-region"></rect>
+                  <path d="M20 66H320 M20 110H320 M20 154H320" class="ts-grid-line"></path>
+                  <path d="M216 109 C246 81, 278 70, 320 50 L320 152 C278 148, 246 137, 216 109Z" class="ts-interval-fill"></path>
+                  <path d="M20 159 L28 153 L36 166 L44 139 L52 144 L60 132 L68 147 L76 116 L84 122 L92 105 L100 116 L108 100 L116 117 L124 128 L132 113 L140 133 L148 119 L156 137 L164 106 L172 115 L180 94 L188 110 L196 87 L204 101 L216 109" class="ts-observed-line"></path>
+                  <path d="M216 109 C246 109, 278 94, 320 101" class="ts-forecast-line"></path>
+                  <path d="M216 46V198" class="ts-guide-line"></path>
+                  <circle cx="216" cy="109" r="3.5" class="ts-observed-point"></circle>
+                  <path d="M20 198H320 M315 194L320 198L315 202" class="ts-axis"></path>
+                  <text x="20" y="218" class="ts-svg-small">past</text>
+                  <text x="216" y="218" text-anchor="middle" class="ts-svg-small">now</text>
+                  <text x="320" y="218" text-anchor="end" class="ts-svg-small">future</text>
+                  <path d="M20 243H42" class="ts-observed-line"></path>
+                  <text x="49" y="247" class="ts-svg-label">observed</text>
+                  <path d="M168 243H190" class="ts-forecast-line"></path>
+                  <text x="197" y="247" class="ts-svg-label">forecast</text>
+                  <rect x="20" y="259" width="22" height="10" rx="2" class="ts-interval-fill"></rect>
+                  <text x="49" y="269" class="ts-svg-small">uncertainty grows with the horizon</text>
                 </svg>
                 <figcaption>
                   A time-series model has to separate signal, dependence, latent structure, and uncertainty while

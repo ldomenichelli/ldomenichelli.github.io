@@ -1,4 +1,5 @@
-import { buildSvg, clearChildren, createSvgElement, enhanceMathNotebookPage } from "./math-notebook.js";
+import { createSvgElement, enhanceMathNotebookPage } from "./math-notebook.js";
+import { prepareCharts, makeChart, chartLine, chartPoints, chartBand, chartCorrelations, chartLegend, observeChartSize } from "./time-series-charts.js";
 
 const EPSILON = 1e-9;
 const SEASON_LENGTH = 12;
@@ -92,17 +93,6 @@ function drawCircle(svg, cx, cy, r, className = "ts-point is-blue", attrs = {}) 
   svg.appendChild(createSvgElement("circle", { cx, cy, r, class: className, ...attrs }));
 }
 
-function pathFromPoints(points) {
-  return points
-    .map((point, index) => `${index === 0 ? "M" : "L"} ${point[0].toFixed(2)} ${point[1].toFixed(2)}`)
-    .join(" ");
-}
-
-function drawPath(svg, points, className, attrs = {}) {
-  if (points.length < 2) return;
-  svg.appendChild(createSvgElement("path", { d: pathFromPoints(points), class: className, ...attrs }));
-}
-
 function extent(values) {
   let minimum = Infinity;
   let maximum = -Infinity;
@@ -122,78 +112,8 @@ function extent(values) {
 
 function paddedExtent(seriesList, paddingFactor = 0.12) {
   const [minimum, maximum] = extent(seriesList.flat());
-  const padding = Math.max((maximum - minimum) * paddingFactor, 0.12);
+  const padding = Math.max((maximum - minimum) * paddingFactor, 1e-6);
   return [minimum - padding, maximum + padding];
-}
-
-function valuesToPoints(values, x, y, width, height, minValue, maxValue) {
-  const scaleY = height / Math.max(maxValue - minValue, EPSILON);
-  return values.map((value, index) => {
-    const px = x + (values.length === 1 ? width / 2 : (index * width) / (values.length - 1));
-    const py = y + height - (value - minValue) * scaleY;
-    return [px, py];
-  });
-}
-
-function drawChartFrame(svg, x, y, width, height, title, minValue, maxValue, options = {}) {
-  const { zeroLine = false, labelMin = null, labelMax = null } = options;
-  drawText(svg, x, y - 10, title, "ts-svg-label");
-  drawRect(svg, x, y, width, height, "ts-box", { rx: 14 });
-
-  for (let index = 1; index < 4; index += 1) {
-    const py = y + (index * height) / 4;
-    drawLine(svg, x, py, x + width, py, "ts-grid-line");
-  }
-
-  drawLine(svg, x, y + height, x + width, y + height, "ts-axis");
-  drawLine(svg, x, y, x, y + height, "ts-axis");
-
-  if (zeroLine && minValue < 0 && maxValue > 0) {
-    const zeroY = y + height - ((0 - minValue) / (maxValue - minValue)) * height;
-    drawLine(svg, x, zeroY, x + width, zeroY, "ts-grid-line", { "stroke-dasharray": "4 6" });
-  }
-
-  drawText(svg, x + width + 8, y + 10, labelMax ?? formatNumber(maxValue, 1), "ts-svg-small");
-  drawText(svg, x + width + 8, y + height, labelMin ?? formatNumber(minValue, 1), "ts-svg-small");
-}
-
-function drawLineSeries(svg, values, x, y, width, height, minValue, maxValue, className) {
-  drawPath(svg, valuesToPoints(values, x, y, width, height, minValue, maxValue), className);
-}
-
-function drawBand(svg, lower, upper, x, y, width, height, minValue, maxValue, className = "ts-range-fill") {
-  if (!lower.length || lower.length !== upper.length) return;
-  const lowerPoints = valuesToPoints(lower, x, y, width, height, minValue, maxValue);
-  const upperPoints = valuesToPoints(upper, x, y, width, height, minValue, maxValue).reverse();
-  const polygon = [...lowerPoints, ...upperPoints];
-  if (polygon.length < 4) return;
-  svg.appendChild(createSvgElement("path", { d: `${pathFromPoints(polygon)} Z`, class: className }));
-}
-
-function drawScatterSeries(svg, values, x, y, width, height, minValue, maxValue, className) {
-  valuesToPoints(values, x, y, width, height, minValue, maxValue).forEach((point) => {
-    drawCircle(svg, point[0], point[1], 3.4, className);
-  });
-}
-
-function drawBarChart(svg, values, x, y, width, height, title, className, options = {}) {
-  const { zeroCentered = true, labels = [] } = options;
-  const [minimum, maximum] = zeroCentered ? paddedExtent([values, [0]], 0.08) : paddedExtent([values], 0.08);
-  drawChartFrame(svg, x, y, width, height, title, minimum, maximum, { zeroLine: zeroCentered });
-
-  const zeroY = y + height - ((0 - minimum) / Math.max(maximum - minimum, EPSILON)) * height;
-  const barWidth = width / Math.max(values.length, 1) - 6;
-
-  values.forEach((value, index) => {
-    const barX = x + index * (width / Math.max(values.length, 1)) + 3;
-    const scaledHeight = (Math.abs(value) / Math.max(maximum - minimum, EPSILON)) * height;
-    const barY = value >= 0 ? zeroY - scaledHeight : zeroY;
-    drawRect(svg, barX, barY, Math.max(barWidth, 4), Math.max(scaledHeight, 1), className, { rx: 6 });
-
-    if (labels[index]) {
-      drawText(svg, barX + 2, y + height + 14, labels[index], "ts-svg-number");
-    }
-  });
 }
 
 function makeSeasonalNoise(index) {
@@ -213,8 +133,8 @@ function buildDecompositionSeries(length = 60, mode = "additive") {
     const { season, noise } = makeSeasonalNoise(index);
     const rem = 0.32 * noise;
     trend.push(level);
-    seasonal.push(0.95 * season);
-    remainder.push(rem);
+    seasonal.push(mode === "multiplicative" ? 1 + 0.08 * season : 1.12 * season);
+    remainder.push(mode === "multiplicative" ? 1 + 0.03 * noise : rem);
 
     if (mode === "multiplicative") {
       observed.push(level * (1 + 0.08 * season) * (1 + 0.03 * noise));
@@ -513,19 +433,20 @@ function buildKalmanScenario(length = 48) {
 
 function buildSpectralCase(caseName, length = 64) {
   const values = [];
+  const gaussian = gaussianGenerator(2026);
 
   for (let index = 0; index < length; index += 1) {
     const annual = Math.sin((2 * Math.PI * index) / 12);
     const semi = 0.6 * Math.sin((2 * Math.PI * index) / 6);
     const trend = 0.05 * index;
-    const noise = 0.18 * NOISE_TEMPLATE[index % NOISE_TEMPLATE.length];
+    const noise = 0.18 * gaussian();
 
     if (caseName === "mixed") {
       values.push(annual + semi + noise);
     } else if (caseName === "trend") {
       values.push(trend + annual + noise);
     } else if (caseName === "noise") {
-      values.push(0.5 * NOISE_TEMPLATE[index % NOISE_TEMPLATE.length] + 0.2 * NOISE_TEMPLATE[(index + 3) % NOISE_TEMPLATE.length]);
+      values.push(noise * 4);
     } else {
       values.push(annual + noise);
     }
@@ -542,31 +463,26 @@ function initDecompositionWidget(widget) {
   const state = { mode: "additive" };
 
   function render() {
-    clearChildren(canvas);
+    prepareCharts(canvas);
     const series = buildDecompositionSeries(48, state.mode);
-    const svg = buildSvg(760, 560, "tda-widget-svg");
+    const relative = state.mode === "multiplicative";
     const panels = [
-      { title: "observed", values: series.observed, className: "ts-observed-line" },
-      { title: "trend", values: series.trend, className: "ts-trend-line" },
-      { title: "seasonal", values: series.seasonal, className: "ts-seasonal-line" },
-      { title: "remainder", values: series.remainder, className: "ts-remainder-line" }
+      { title: "Observed series", values: series.observed, className: "ts-observed-line" },
+      { title: "Trend", values: series.trend, className: "ts-trend-line" },
+      { title: relative ? "Seasonal factor" : "Seasonal component", values: series.seasonal, className: "ts-seasonal-line", reference: relative ? 1 : 0 },
+      { title: relative ? "Noise factor" : "Remainder", values: series.remainder, className: "ts-remainder-line", reference: relative ? 1 : 0 }
     ];
-
-    panels.forEach((panel, index) => {
-      const column = index % 2;
-      const row = Math.floor(index / 2);
-      const x = 32 + column * 360;
-      const y = 42 + row * 240;
-      const [minValue, maxValue] = paddedExtent([panel.values], 0.15);
-      drawChartFrame(svg, x, y, 300, 150, panel.title, minValue, maxValue);
-      drawLineSeries(svg, panel.values, x + 10, y + 12, 280, 126, minValue, maxValue, panel.className);
+    panels.forEach(panel => {
+      const plot = makeChart(canvas, panel.title, {
+        xDomain: [1, series.observed.length], yDomain: paddedExtent([panel.values], 0.12),
+        reference: panel.reference ?? null, height: 220
+      });
+      chartLine(plot, panel.values, panel.className);
     });
-
-    canvas.appendChild(svg);
 
     if (summary) {
       summary.innerHTML =
-        `<strong>${state.mode === "additive" ? "Additive" : "Multiplicative"} decomposition intuition</strong>: the same observed series can be read either as level plus components or as level times relative seasonal and noise effects.<br>` +
+        `<strong>${state.mode === "additive" ? "Additive" : "Multiplicative"} decomposition intuition</strong>: the observed series is constructed from the displayed trend, seasonal, and remainder components.<br>` +
         "The multiplicative view becomes especially natural when fluctuations grow as the level grows.";
     }
   }
@@ -574,12 +490,16 @@ function initDecompositionWidget(widget) {
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
       state.mode = button.dataset.decompMode;
-      buttons.forEach((item) => item.classList.toggle("is-active", item === button));
+      buttons.forEach((item) => {
+        item.classList.toggle("is-active", item === button);
+        item.setAttribute("aria-pressed", String(item === button));
+      });
       render();
     });
   });
 
   render();
+  observeChartSize(canvas, render);
 }
 
 function initDifferencingWidget(widget) {
@@ -598,32 +518,20 @@ function initDifferencingWidget(widget) {
   }
 
   function render() {
-    clearChildren(canvas);
+    prepareCharts(canvas);
     const transformed = transformedSeries();
     const acf = computeAcf(transformed, 12).slice(1);
-    const svg = buildSvg(760, 520, "tda-widget-svg");
-
-    let [minRaw, maxRaw] = paddedExtent([raw], 0.12);
-    drawChartFrame(svg, 32, 44, 690, 130, "original series", minRaw, maxRaw);
-    drawLineSeries(svg, raw, 42, 56, 670, 102, minRaw, maxRaw, "ts-observed-line");
-
-    const [minTransformed, maxTransformed] = paddedExtent([transformed], 0.12);
-    drawChartFrame(svg, 32, 216, 690, 120, "transformed series", minTransformed, maxTransformed, { zeroLine: true });
-    drawLineSeries(svg, transformed, 42, 228, 670, 92, minTransformed, maxTransformed, "ts-state-line");
-
-    drawBarChart(
-      svg,
-      acf,
-      32,
-      382,
-      690,
-      102,
-      "sample ACF after the chosen transformation",
-      "ts-bar is-yellow",
-      { zeroCentered: true, labels: acf.map((_, index) => String(index + 1)) }
-    );
-
-    canvas.appendChild(svg);
+    const original = makeChart(canvas, "Original series", {
+      xDomain: [1, raw.length], yDomain: paddedExtent([raw]), wide: true, height: 210
+    });
+    chartLine(original, raw, "ts-observed-line");
+    const firstTime = raw.length - transformed.length + 1;
+    const changed = makeChart(canvas, "Transformed series", {
+      xDomain: [1, raw.length], yDomain: paddedExtent([transformed]), wide: true, height: 210, reference: 0
+    });
+    chartLine(changed, transformed, "ts-state-line", firstTime);
+    chartCorrelations(canvas, "ACF after transformation", acf, transformed.length, "is-yellow", true);
+    chartLegend(canvas, [["White-noise reference", "ts-confidence-fill", "fill"]], "Reference limits: ±1.96/√n. The time axis preserves the observations lost to differencing.");
 
     const labels = {
       raw: "raw series",
@@ -642,12 +550,16 @@ function initDifferencingWidget(widget) {
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
       state.mode = button.dataset.diffMode;
-      buttons.forEach((item) => item.classList.toggle("is-active", item === button));
+      buttons.forEach((item) => {
+        item.classList.toggle("is-active", item === button);
+        item.setAttribute("aria-pressed", String(item === button));
+      });
       render();
     });
   });
 
   render();
+  observeChartSize(canvas, render);
 }
 
 function initAcfWidget(widget) {
@@ -667,41 +579,18 @@ function initAcfWidget(widget) {
   }
 
   function render() {
-    clearChildren(canvas);
+    prepareCharts(canvas);
     const parameters = modelParameters();
     const series = simulateArma({ ...parameters, n: 110, burnin: 90, seed: 2026 });
     const acf = computeAcf(series, 12).slice(1);
     const pacf = computePacf(series, 12).slice(1);
-    const svg = buildSvg(760, 520, "tda-widget-svg");
-    const [minSeries, maxSeries] = paddedExtent([series], 0.15);
-
-    drawChartFrame(svg, 32, 42, 690, 150, "simulated series", minSeries, maxSeries, { zeroLine: true });
-    drawLineSeries(svg, series, 42, 54, 670, 122, minSeries, maxSeries, "ts-observed-line");
-
-    drawBarChart(
-      svg,
-      acf,
-      32,
-      244,
-      320,
-      220,
-      "ACF",
-      "ts-bar is-blue",
-      { zeroCentered: true, labels: acf.map((_, index) => String(index + 1)) }
-    );
-    drawBarChart(
-      svg,
-      pacf,
-      402,
-      244,
-      320,
-      220,
-      "PACF",
-      "ts-bar is-green",
-      { zeroCentered: true, labels: pacf.map((_, index) => String(index + 1)) }
-    );
-
-    canvas.appendChild(svg);
+    const plot = makeChart(canvas, "Simulated series", {
+      xDomain: [1, series.length], yDomain: paddedExtent([series]), wide: true, reference: 0
+    });
+    chartLine(plot, series, "ts-observed-line");
+    chartCorrelations(canvas, "Autocorrelation · ACF", acf, series.length, "is-blue");
+    chartCorrelations(canvas, "Partial autocorrelation · PACF", pacf, series.length, "is-green");
+    chartLegend(canvas, [["White-noise reference", "ts-confidence-fill", "fill"]], "Reference limits: ±1.96/√n. Both correlation panels use the same −1 to 1 scale.");
 
     if (label) {
       label.textContent = formatNumber(state.strength, 2);
@@ -722,7 +611,10 @@ function initAcfWidget(widget) {
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
       state.model = button.dataset.acfModel;
-      buttons.forEach((item) => item.classList.toggle("is-active", item === button));
+      buttons.forEach((item) => {
+        item.classList.toggle("is-active", item === button);
+        item.setAttribute("aria-pressed", String(item === button));
+      });
       render();
     });
   });
@@ -733,6 +625,7 @@ function initAcfWidget(widget) {
   });
 
   render();
+  observeChartSize(canvas, render);
 }
 
 function initForecastWidget(widget) {
@@ -748,30 +641,26 @@ function initForecastWidget(widget) {
   const truth = fullSeries.slice(72);
 
   function render() {
-    clearChildren(canvas);
+    prepareCharts(canvas);
     const { forecast, lower, upper } = forecastToyModel(train, state.model, state.horizon, SEASON_LENGTH);
     const displayedTruth = truth.slice(0, state.horizon);
-    const plotSeries = [...train, ...forecast, ...displayedTruth];
-    const [minValue, maxValue] = paddedExtent([plotSeries, lower, upper], 0.12);
-    const svg = buildSvg(760, 360, "tda-widget-svg");
-
-    drawChartFrame(svg, 32, 44, 690, 220, "training sample, forecast, and realized future", minValue, maxValue);
-    drawLineSeries(svg, train, 42, 56, 560, 190, minValue, maxValue, "ts-observed-line");
-
-    const forecastX = 42 + (560 / Math.max(train.length - 1, 1)) * (train.length - 1);
-    const horizonWidth = 150;
-    drawBand(svg, lower, upper, forecastX, 56, horizonWidth, 190, minValue, maxValue);
-    drawLineSeries(svg, [train.at(-1), ...forecast], forecastX, 56, horizonWidth, 190, minValue, maxValue, "ts-forecast-line");
-    drawLineSeries(svg, [train.at(-1), ...displayedTruth], forecastX, 56, horizonWidth, 190, minValue, maxValue, "ts-state-line");
-
-    drawText(svg, 610, 82, "forecast", "ts-svg-small");
-    drawText(svg, 610, 104, "realized future", "ts-svg-small");
-    drawLine(svg, 560, 78, 600, 78, "ts-forecast-line");
-    drawLine(svg, 560, 100, 600, 100, "ts-state-line");
-    drawRect(svg, 560, 118, 40, 16, "ts-range-fill", { rx: 8 });
-    drawText(svg, 610, 130, "80% interval", "ts-svg-small");
-
-    canvas.appendChild(svg);
+    const plot = makeChart(canvas, "Observed series and forecast", {
+      xDomain: [1, train.length + state.horizon], yDomain: paddedExtent([train, forecast, displayedTruth, lower, upper]),
+      wide: true, height: 280,
+      description: "Training observations, forecast, realized future, and an illustrative 80 percent prediction interval, sharing one time scale."
+    });
+    const boundary = plot.sx(train.length);
+    drawRect(plot.background, boundary, plot.bounds.top, plot.bounds.right - boundary, plot.bounds.bottom - plot.bounds.top, "ts-forecast-region");
+    // The band and both future paths start at the very same observed point.
+    chartBand(plot, [train.at(-1), ...lower], [train.at(-1), ...upper], train.length);
+    chartLine(plot, train, "ts-observed-line");
+    chartLine(plot, [train.at(-1), ...displayedTruth], "ts-state-line", train.length);
+    chartLine(plot, [train.at(-1), ...forecast], "ts-forecast-line", train.length);
+    drawLine(plot.layer, boundary, plot.bounds.top, boundary, plot.bounds.bottom, "ts-guide-line");
+    chartLegend(canvas, [
+      ["Observed", "ts-observed-line"], ["Forecast", "ts-forecast-line"],
+      ["Realized future", "ts-state-line"], ["80% interval", "ts-range-fill", "fill"]
+    ], "Forecast origin: t = 72. The interval is an illustrative model-based uncertainty band.");
 
     if (label) {
       label.textContent = String(state.horizon);
@@ -792,7 +681,10 @@ function initForecastWidget(widget) {
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
       state.model = button.dataset.forecastModel;
-      buttons.forEach((item) => item.classList.toggle("is-active", item === button));
+      buttons.forEach((item) => {
+        item.classList.toggle("is-active", item === button);
+        item.setAttribute("aria-pressed", String(item === button));
+      });
       render();
     });
   });
@@ -803,6 +695,7 @@ function initForecastWidget(widget) {
   });
 
   render();
+  observeChartSize(canvas, render);
 }
 
 function initSmoothingWidget(widget) {
@@ -824,21 +717,14 @@ function initSmoothingWidget(widget) {
   }
 
   function render() {
-    clearChildren(canvas);
+    prepareCharts(canvas);
     const fitted = fittedSeries();
-    const [minValue, maxValue] = paddedExtent([series, fitted], 0.12);
-    const svg = buildSvg(760, 360, "tda-widget-svg");
-
-    drawChartFrame(svg, 32, 44, 690, 220, "observed series and smoothed estimate", minValue, maxValue);
-    drawLineSeries(svg, series, 42, 56, 670, 190, minValue, maxValue, "ts-observed-line");
-    drawLineSeries(svg, fitted, 42, 56, 670, 190, minValue, maxValue, "ts-trend-line");
-
-    drawLine(svg, 74, 302, 118, 302, "ts-observed-line");
-    drawText(svg, 126, 306, "observed", "ts-svg-small");
-    drawLine(svg, 214, 302, 258, 302, "ts-trend-line");
-    drawText(svg, 266, 306, "smoothed / fitted", "ts-svg-small");
-
-    canvas.appendChild(svg);
+    const plot = makeChart(canvas, "Observed series and smoothed estimate", {
+      xDomain: [1, series.length], yDomain: paddedExtent([series, fitted]), wide: true, height: 270
+    });
+    chartLine(plot, series, "ts-observed-line");
+    chartLine(plot, fitted, "ts-trend-line");
+    chartLegend(canvas, [["Observed", "ts-observed-line"], ["Smoothed / fitted", "ts-trend-line"]]);
 
     if (label) {
       label.textContent = formatNumber(state.alpha, 2);
@@ -859,7 +745,10 @@ function initSmoothingWidget(widget) {
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
       state.model = button.dataset.smoothModel;
-      buttons.forEach((item) => item.classList.toggle("is-active", item === button));
+      buttons.forEach((item) => {
+        item.classList.toggle("is-active", item === button);
+        item.setAttribute("aria-pressed", String(item === button));
+      });
       render();
     });
   });
@@ -870,6 +759,7 @@ function initSmoothingWidget(widget) {
   });
 
   render();
+  observeChartSize(canvas, render);
 }
 
 function initKalmanWidget(widget) {
@@ -884,24 +774,18 @@ function initKalmanWidget(widget) {
   const scenario = buildKalmanScenario(48);
 
   function render() {
-    clearChildren(canvas);
+    prepareCharts(canvas);
     const { filtered } = localLevelKalman(scenario.observed, state.q, state.r);
-    const [minValue, maxValue] = paddedExtent([scenario.hidden, scenario.observed, filtered], 0.12);
-    const svg = buildSvg(760, 360, "tda-widget-svg");
-
-    drawChartFrame(svg, 32, 44, 690, 220, "hidden state, noisy observations, filtered estimate", minValue, maxValue);
-    drawLineSeries(svg, scenario.hidden, 42, 56, 670, 190, minValue, maxValue, "ts-state-line");
-    drawScatterSeries(svg, scenario.observed, 42, 56, 670, 190, minValue, maxValue, "ts-point is-yellow");
-    drawLineSeries(svg, filtered, 42, 56, 670, 190, minValue, maxValue, "ts-forecast-line");
-
-    drawLine(svg, 54, 302, 98, 302, "ts-state-line");
-    drawText(svg, 106, 306, "latent state", "ts-svg-small");
-    drawLine(svg, 212, 302, 256, 302, "ts-forecast-line");
-    drawText(svg, 264, 306, "filtered estimate", "ts-svg-small");
-    drawCircle(svg, 398, 302, 4.2, "ts-point is-yellow");
-    drawText(svg, 410, 306, "observation", "ts-svg-small");
-
-    canvas.appendChild(svg);
+    const plot = makeChart(canvas, "Hidden state and filtered estimate", {
+      xDomain: [1, scenario.hidden.length], yDomain: paddedExtent([scenario.hidden, scenario.observed, filtered]),
+      wide: true, height: 270
+    });
+    chartLine(plot, scenario.hidden, "ts-state-line");
+    chartPoints(plot, scenario.observed);
+    chartLine(plot, filtered, "ts-forecast-line");
+    chartLegend(canvas, [
+      ["Latent state", "ts-state-line"], ["Filtered estimate", "ts-forecast-line"], ["Observation", "ts-observed-point", "point"]
+    ]);
 
     if (labelR) labelR.textContent = formatNumber(state.r, 2);
     if (labelQ) labelQ.textContent = formatNumber(state.q, 2);
@@ -924,6 +808,7 @@ function initKalmanWidget(widget) {
   });
 
   render();
+  observeChartSize(canvas, render);
 }
 
 function initRollingOriginWidget(widget) {
@@ -939,52 +824,37 @@ function initRollingOriginWidget(widget) {
   const shuffledTest = [3, 9, 15, 28];
 
   function render() {
-    clearChildren(canvas);
-    const svg = buildSvg(760, 280, "tda-widget-svg");
-    drawText(svg, 32, 30, "temporal validation layout", "ts-svg-label");
-    drawLine(svg, 44, 150, 704, 150, "ts-axis");
-
-    for (let index = 0; index < 30; index += 1) {
-      const x = 44 + index * 22;
-      drawLine(svg, x, 142, x, 158, "ts-grid-line");
-      drawText(svg, x - 4, 172, String(index + 1), "ts-svg-number");
+    prepareCharts(canvas);
+    const plot = makeChart(canvas, state.mode === "rolling" ? "Training on the past, testing on the future" : "A shuffled split mixes past and future", {
+      xDomain: [0.5, 30.5], yDomain: [0, 3], yTicks: [],
+      xTicks: canvas.clientWidth < 400 ? [1, 10, 20, 30] : [1, 5, 10, 15, 20, 25, 30],
+      left: 84, wide: true, height: 235
+    });
+    function segment(start, end, row, className) {
+      drawRect(plot.layer, plot.sx(start + 0.5), plot.sy(row) - 13,
+        plot.sx(end + 0.5) - plot.sx(start + 0.5), 26, className, { rx: 3 });
     }
-
+    function row(label, value) {
+      drawText(plot.svg, plot.bounds.left - 9, plot.sy(value), label, "ts-svg-small", { "text-anchor": "end", "dominant-baseline": "middle" });
+      drawLine(plot.background, plot.bounds.left, plot.sy(value), plot.bounds.right, plot.sy(value), "ts-grid-line");
+    }
     if (state.mode === "rolling") {
       const split = splits[state.fold - 1];
-      drawRect(svg, 44 + split.trainStart * 22, 100, (split.trainEnd - split.trainStart) * 22, 28, "ts-window train", { rx: 12 });
-      drawRect(
-        svg,
-        44 + split.validationStart * 22,
-        100,
-        (split.validationEnd - split.validationStart) * 22,
-        28,
-        "ts-window validation",
-        { rx: 12 }
-      );
-      drawRect(svg, 44 + split.testStart * 22, 100, (split.testEnd - split.testStart) * 22, 28, "ts-window test", { rx: 12 });
-
-      drawText(svg, 46, 84, "train", "ts-svg-small");
-      drawText(svg, 46 + split.validationStart * 22, 84, "validation", "ts-svg-small");
-      drawText(svg, 46 + split.testStart * 22, 84, "future holdout", "ts-svg-small");
+      row("Train", 2.5);
+      row("Validate", 1.5);
+      row("Holdout", 0.5);
+      segment(split.trainStart, split.trainEnd, 2.5, "ts-window train");
+      segment(split.validationStart, split.validationEnd, 1.5, "ts-window validation");
+      segment(split.testStart, split.testEnd, 0.5, "ts-window test");
+      chartLegend(canvas, [["Training", "ts-window train", "fill"], ["Validation", "ts-window validation", "fill"], ["Future holdout", "ts-window test", "fill"]]);
     } else {
-      shuffledTrain.forEach((index) => {
-        drawRect(svg, 44 + (index - 1) * 22, 98, 18, 32, "ts-window shuffle", { rx: 9 });
-      });
-      shuffledTest.forEach((index) => {
-        drawRect(svg, 44 + (index - 1) * 22, 98, 18, 32, "ts-window validation", { rx: 9 });
-      });
-      drawText(svg, 46, 84, "mixed train/test positions", "ts-svg-small");
+      row("Train", 2.2);
+      row("Test", 0.8);
+      shuffledTrain.forEach(index => segment(index - 1, index, 2.2, "ts-window train"));
+      shuffledTest.forEach(index => segment(index - 1, index, 0.8, "ts-window shuffle"));
+      chartLegend(canvas, [["Training", "ts-window train", "fill"], ["Shuffled test", "ts-window shuffle", "fill"]]);
     }
-
-    drawRect(svg, 78, 214, 26, 14, "ts-window train", { rx: 7 });
-    drawText(svg, 112, 226, "train", "ts-svg-small");
-    drawRect(svg, 198, 214, 26, 14, "ts-window validation", { rx: 7 });
-    drawText(svg, 232, 226, "validation", "ts-svg-small");
-    drawRect(svg, 336, 214, 26, 14, state.mode === "rolling" ? "ts-window test" : "ts-window shuffle", { rx: 7 });
-    drawText(svg, 370, 226, state.mode === "rolling" ? "future holdout" : "leakage risk", "ts-svg-small");
-
-    canvas.appendChild(svg);
+    if (slider) slider.disabled = state.mode === "shuffle";
 
     if (label) {
       label.textContent = String(state.fold);
@@ -1001,7 +871,10 @@ function initRollingOriginWidget(widget) {
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
       state.mode = button.dataset.evalMode;
-      buttons.forEach((item) => item.classList.toggle("is-active", item === button));
+      buttons.forEach((item) => {
+        item.classList.toggle("is-active", item === button);
+        item.setAttribute("aria-pressed", String(item === button));
+      });
       render();
     });
   });
@@ -1012,6 +885,7 @@ function initRollingOriginWidget(widget) {
   });
 
   render();
+  observeChartSize(canvas, render);
 }
 
 function initSpectralWidget(widget) {
@@ -1022,22 +896,23 @@ function initSpectralWidget(widget) {
   const state = { caseName: "annual" };
 
   function render() {
-    clearChildren(canvas);
+    prepareCharts(canvas);
     const series = buildSpectralCase(state.caseName, 72);
     const { frequencies, powers } = computePeriodogram(series);
-    const svg = buildSvg(760, 380, "tda-widget-svg");
-    const [minSeries, maxSeries] = paddedExtent([series], 0.12);
-
-    drawChartFrame(svg, 32, 44, 320, 230, "series in time", minSeries, maxSeries, { zeroLine: true });
-    drawLineSeries(svg, series, 42, 56, 300, 200, minSeries, maxSeries, "ts-observed-line");
-
-    const powerLabels = frequencies.map((frequency) => frequency.toFixed(2));
-    drawBarChart(svg, powers.slice(0, 12), 402, 44, 320, 230, "periodogram", "ts-bar is-green", {
-      zeroCentered: false,
-      labels: powerLabels.slice(0, 12)
+    const time = makeChart(canvas, "Series in time", {
+      xDomain: [1, series.length], yDomain: paddedExtent([series]), reference: 0
     });
-
-    canvas.appendChild(svg);
+    chartLine(time, series, "ts-observed-line");
+    const spectrum = makeChart(canvas, "Periodogram", {
+      xDomain: [0, 0.5], yDomain: [0, Math.max(...powers) * 1.12], xTicks: [0, 0.25, 0.5],
+      xLabel: "Frequency · cycles / step", integerX: false,
+      description: "Periodogram power across the full frequency range, from zero to the Nyquist frequency of 0.5 cycles per step."
+    });
+    frequencies.forEach((frequency, index) => {
+      drawLine(spectrum.layer, spectrum.sx(frequency), spectrum.sy(0), spectrum.sx(frequency), spectrum.sy(powers[index]), "ts-periodogram-line");
+      drawCircle(spectrum.layer, spectrum.sx(frequency), spectrum.sy(powers[index]), 2.3, "ts-point is-green");
+    });
+    chartLegend(canvas, [["Spectral power", "ts-periodogram-line"]], "All positive frequency bins are shown; 0.5 cycles per step is the Nyquist limit.");
 
     const explanations = {
       annual: "One dominant period creates one strong peak in the spectrum.",
@@ -1054,12 +929,16 @@ function initSpectralWidget(widget) {
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
       state.caseName = button.dataset.spectralCase;
-      buttons.forEach((item) => item.classList.toggle("is-active", item === button));
+      buttons.forEach((item) => {
+        item.classList.toggle("is-active", item === button);
+        item.setAttribute("aria-pressed", String(item === button));
+      });
       render();
     });
   });
 
   render();
+  observeChartSize(canvas, render);
 }
 
 export function enhanceTimeSeriesNotesPage(root = document) {
@@ -1080,5 +959,8 @@ export function enhanceTimeSeriesNotesPage(root = document) {
   initRollingOriginWidget(page.querySelector('[data-widget="rolling-origin-demo"]'));
   initSpectralWidget(page.querySelector('[data-widget="spectral-demo"]'));
 
+  page.querySelectorAll(".tda-widget-button").forEach(button => {
+    button.setAttribute("aria-pressed", String(button.classList.contains("is-active")));
+  });
   return page;
 }

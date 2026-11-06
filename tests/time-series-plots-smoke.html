@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Time-series plots smoke test</title>
+  <style>
+    body { margin: 16px; color: #202d35; font: 14px/1.45 ui-monospace, monospace; }
+    pre { white-space: pre-wrap; }
+    iframe { display: block; border: 1px solid #ccd4d4; height: 900px; }
+  </style>
+</head>
+<body data-test-status="RUNNING">
+  <iframe id="frame" title="Time-series notes under test"></iframe>
+  <pre id="log">Running time-series plot checks…</pre>
+  <script type="module">
+    import {
+      computeAcf, computePacf, computePeriodogram, differenceSeries, forecastToyModel,
+      localLevelKalman, movingAverage, rollingOriginSplits, simpleExponentialSmoothing, simulateArma
+    } from '/assets/js/time-series-notes.js';
+
+    const frame = document.querySelector('#frame');
+    const output = document.querySelector('#log');
+    const logLines = [];
+    const runtimeErrors = [];
+    const params = new URLSearchParams(location.search);
+    const widths = params.has('width') ? [Number(params.get('width'))] : [375, 768, 1280];
+    const pagePath = params.get('page') || '/posts/time-series/';
+    const previewWidget = params.get('preview');
+    const minimumPanels = {
+      'decomposition-explorer': 4,
+      'acf-simulator': 3,
+      'differencing-demo': 3,
+      'forecast-demo': 1,
+      'smoothing-demo': 1,
+      'kalman-demo': 1,
+      'rolling-origin-demo': 1,
+      'spectral-demo': 2
+    };
+    const geometryAttributes = ['d', 'points', 'x', 'y', 'x1', 'y1', 'x2', 'y2', 'cx', 'cy', 'r', 'width', 'height', 'transform'];
+
+    function log(message) {
+      logLines.push(message);
+      output.textContent = logLines.join('\n');
+    }
+
+    function assert(condition, message) {
+      if (!condition) throw new Error(message);
+    }
+
+    const pause = (duration) => new Promise((resolve) => setTimeout(resolve, duration));
+
+    async function settle() {
+      // Control handlers redraw synchronously; timers allow related DOM updates to settle.
+      await pause(120);
+      frame.contentDocument.body.getBoundingClientRect();
+    }
+
+    async function settleResize() {
+      // ResizeObserver delivery is part of rendering, not a timer task. Two frames
+      // let the browser compute the new layout, deliver observers, and paint their changes.
+      // Keep the iframe visible so browser background-frame throttling cannot hide regressions.
+      frame.scrollIntoView({ block: 'start' });
+      frame.contentDocument.documentElement.getBoundingClientRect();
+      await new Promise((resolve) => {
+        frame.contentWindow.requestAnimationFrame(() => {
+          frame.contentWindow.requestAnimationFrame(resolve);
+        });
+      });
+      await settle();
+    }
+
+    function geometrySignature(widget) {
+      return [...widget.querySelectorAll('[data-canvas] svg.ts-plot')].map((svg) => [
+        svg.getAttribute('viewBox'),
+        ...[...svg.querySelectorAll('path, line, rect, circle, polyline, polygon')].map((node) =>
+          geometryAttributes.map((attribute) => node.getAttribute(attribute) || '').join(','))
+      ].join('|')).join('\n');
+    }
+
+    function svgBounds(node, svg) {
+      const box = node.getBBox();
+      const matrix = svg.getCTM().inverse().multiply(node.getCTM());
+      const corners = [[box.x, box.y], [box.x + box.width, box.y],
+        [box.x, box.y + box.height], [box.x + box.width, box.y + box.height]];
+      const points = corners.map(([x, y]) => {
+        const point = svg.createSVGPoint();
+        point.x = x;
+        point.y = y;
+        return point.matrixTransform(matrix);
+      });
+      return {
+        left: Math.min(...points.map((point) => point.x)),
+        right: Math.max(...points.map((point) => point.x)),
+        top: Math.min(...points.map((point) => point.y)),
+        bottom: Math.max(...points.map((point) => point.y))
+      };
+    }
+
+    function checkSvg(svg, context, checkReadability = true) {
+      const win = frame.contentWindow;
+      const viewBox = svg.viewBox.baseVal;
+      const size = svg.getBoundingClientRect();
+      assert(viewBox.width > 0 && viewBox.height > 0 && size.width > 0 && size.height > 0,
+        `${context}: SVG has visible, positive dimensions`);
+      const labelledBy = (svg.getAttribute('aria-labelledby') || '').split(/\s+/).filter(Boolean);
+      const hasName = Boolean(svg.getAttribute('aria-label')?.trim() || svg.querySelector('title')?.textContent.trim() ||
+        labelledBy.some((id) => svg.ownerDocument.getElementById(id)?.textContent.trim()));
+      assert(svg.getAttribute('role') === 'img' && svg.getAttribute('aria-hidden') !== 'true' && hasName,
+        `${context}: plot is exposed as a named accessible image`);
+      assert(size.left >= -1 && size.right <= win.innerWidth + 1,
+        `${context}: SVG stays within the ${win.innerWidth}px viewport`);
+
+      for (const node of svg.querySelectorAll('path, line, rect, circle, ellipse, polyline, polygon, text')) {
+        if (node.closest('defs, clipPath, marker')) continue;
+        for (const attribute of node.attributes) {
+          assert(!/\b(?:NaN|Infinity|undefined)\b/.test(attribute.value),
+            `${context}: ${node.tagName}.${node.getAttribute('class') || ''} has finite ${attribute.name}`);
+        }
+        const bounds = svgBounds(node, svg);
+        assert(Object.values(bounds).every(Number.isFinite), `${context}: rendered geometry is finite`);
+        const tolerance = 1.5;
+        const inside = bounds.left >= viewBox.x - tolerance && bounds.right <= viewBox.x + viewBox.width + tolerance &&
+          bounds.top >= viewBox.y - tolerance && bounds.bottom <= viewBox.y + viewBox.height + tolerance;
+        assert(inside, `${context}: ${node.tagName} ${JSON.stringify(node.textContent.trim().slice(0, 60))} stays in its viewBox (${JSON.stringify(bounds)})`);
+        if (node.tagName === 'text' && node.textContent.trim() && checkReadability) {
+          const fontSize = parseFloat(win.getComputedStyle(node).fontSize);
+          const screenMatrix = node.getScreenCTM();
+          const renderedFontSize = fontSize * Math.hypot(screenMatrix.c, screenMatrix.d);
+          assert(renderedFontSize >= 10, `${context}: label ${JSON.stringify(node.textContent.trim())} remains at least 10px (${renderedFontSize.toFixed(1)}px)`);
+        }
+      }
+    }
+
+    function checkWidget(widget, state = 'default') {
+      const name = widget.dataset.widget;
+      const width = frame.contentWindow.innerWidth;
+      const context = `${width}px ${name} / ${state}`;
+      const plots = [...widget.querySelectorAll('[data-canvas] svg.ts-plot')];
+      assert(plots.length >= minimumPanels[name], `${context}: all chart panels rendered`);
+      assert(widget.querySelector('[data-summary]')?.textContent.trim(), `${context}: explanatory summary exists`);
+      for (const element of [widget, widget.querySelector('[data-canvas]'), ...widget.querySelectorAll('button, input, select')]) {
+        const bounds = element.getBoundingClientRect();
+        assert(bounds.left >= -1 && bounds.right <= width + 1, `${context}: plot and controls stay inside the viewport`);
+      }
+      plots.forEach((svg, index) => checkSvg(svg, `${context}, panel ${index + 1}`));
+      assert(runtimeErrors.length === 0, `${context}: no browser runtime errors: ${runtimeErrors.join('; ')}`);
+    }
+
+    async function exerciseRanges(widget, mode) {
+      for (const slider of widget.querySelectorAll('input[type="range"]')) {
+        if (slider.disabled) continue;
+        const initialValue = slider.value;
+        const signatures = [];
+        for (const value of [slider.min, slider.max]) {
+          slider.value = value;
+          slider.dispatchEvent(new frame.contentWindow.Event('input', { bubbles: true }));
+          await settle();
+          checkWidget(widget, `${mode}, ${slider.getAttributeNames().find((name) => name.startsWith('data-'))}=${value}`);
+          signatures.push(geometrySignature(widget));
+        }
+        // The fold selector has no geometric effect in the random-shuffle example.
+        const inactiveFold = widget.dataset.widget === 'rolling-origin-demo' &&
+          widget.querySelector('[data-eval-mode="shuffle"]')?.classList.contains('is-active');
+        assert(inactiveFold || signatures[0] !== signatures[1], `${widget.dataset.widget} / ${mode}: slider endpoints change the plotted result`);
+        slider.value = initialValue;
+        slider.dispatchEvent(new frame.contentWindow.Event('input', { bubbles: true }));
+        await settle();
+      }
+    }
+
+    async function exerciseWidget(widget) {
+      checkWidget(widget);
+      const buttons = [...widget.querySelectorAll('button')];
+      const initialButton = buttons.find((button) => button.classList.contains('is-active') || button.getAttribute('aria-pressed') === 'true');
+      if (!buttons.length) await exerciseRanges(widget, 'default');
+      for (const button of buttons) {
+        const before = geometrySignature(widget);
+        const wasSelected = button.classList.contains('is-active') || button.getAttribute('aria-pressed') === 'true';
+        button.click();
+        await settle();
+        const selected = buttons.filter((item) => item.classList.contains('is-active') || item.getAttribute('aria-pressed') === 'true');
+        assert(selected.length === 1 && selected[0] === button, `${widget.dataset.widget}: ${button.textContent.trim()} is the only selected mode`);
+        assert(wasSelected || before !== geometrySignature(widget), `${widget.dataset.widget}: switching to ${button.textContent.trim()} redraws the plot`);
+        checkWidget(widget, button.textContent.trim());
+        await exerciseRanges(widget, button.textContent.trim());
+      }
+      initialButton?.click();
+      await settle();
+      log(`PASS ${frame.contentWindow.innerWidth}px ${widget.dataset.widget}: all modes and slider limits`);
+    }
+
+    function checkNumericalHelpers() {
+      assert(JSON.stringify(differenceSeries([3, 6, 10, 15])) === '[3,4,5]', 'first differences preserve the expected values');
+      assert(JSON.stringify(differenceSeries([1, 2, 4, 8, 16], 2)) === '[3,6,12]', 'lagged differences preserve the expected values');
+      const series = simulateArma({ phi: [0.7], theta: [], n: 64, burnin: 40, seed: 99 });
+      assert(series.length === 64 && series.every(Number.isFinite), 'AR sample is finite and has the requested length');
+      const acf = computeAcf(series, 12);
+      const pacf = computePacf(series, 12);
+      assert(acf[0] === 1 && acf.length === 13 && acf.every((value) => Math.abs(value) <= 1 + 1e-12), 'ACF begins at one and stays bounded');
+      assert(pacf[0] === 1 && pacf.length === 13 && pacf.every(Number.isFinite), 'PACF begins at one and is finite');
+      assert(movingAverage(series, 3).length === 64 && simpleExponentialSmoothing(series, 0.4).length === 64, 'smoothers retain observation alignment');
+      const filtered = localLevelKalman(series, 0.2, 0.6);
+      assert(filtered.filtered.length === 64 && filtered.variances.every((value) => Number.isFinite(value) && value >= 0), 'Kalman uncertainty is finite and nonnegative');
+      assert(rollingOriginSplits(30, 10, 4, 3).every((split) => split.trainEnd <= split.validationStart && split.validationEnd <= split.testStart), 'validation splits preserve temporal order');
+      const seasonal = Array.from({ length: 72 }, (_, index) => Math.sin(2 * Math.PI * index / 12));
+      const { frequencies, powers } = computePeriodogram(seasonal);
+      assert(frequencies.length === 36 && powers.length === 36 && frequencies.at(-1) === 0.5, 'periodogram covers the full positive frequency range');
+      const peak = powers.indexOf(Math.max(...powers));
+      assert(Math.abs(frequencies[peak] - 1 / 12) < 1e-12, 'periodogram locates a known 12-step seasonal peak');
+      for (const model of ['ar1', 'rw', 'drift', 'seasonal']) {
+        for (const horizon of [1, 12]) {
+          const { forecast, lower, upper } = forecastToyModel(seasonal.map((value, index) => value + 10 + 0.1 * index), model, horizon, 12);
+          assert(forecast.length === horizon && lower.length === horizon && upper.length === horizon &&
+            forecast.every((value, index) => Number.isFinite(value) && lower[index] <= value && value <= upper[index]), `${model}: valid forecast and interval at horizon ${horizon}`);
+        }
+      }
+      log('PASS numerical helpers: differencing, ACF/PACF, smoothing, Kalman, temporal splits, spectral peak and forecasts');
+    }
+
+    async function loadPage() {
+      frame.style.width = `${widths[0]}px`;
+      await new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => reject(new Error(`Timed out loading ${pagePath}`)), 20000);
+        frame.addEventListener('load', () => { clearTimeout(timeout); resolve(); }, { once: true });
+        frame.src = pagePath;
+      });
+      frame.contentWindow.addEventListener('error', (event) => runtimeErrors.push(event.message || 'Script error'));
+      frame.contentWindow.addEventListener('unhandledrejection', (event) => runtimeErrors.push(String(event.reason)));
+      await Promise.race([frame.contentDocument.fonts.ready, pause(5000)]);
+      await settle();
+    }
+
+    async function run() {
+      assert(widths.every((width) => Number.isFinite(width) && width >= 320 && width <= 1920), 'viewport widths are valid');
+      if (previewWidget) {
+        document.body.style.margin = '0';
+        frame.style.border = '0';
+        frame.style.height = `${Number(params.get('height') || '950')}px`;
+        output.hidden = true;
+        await loadPage();
+        const widget = [...frame.contentDocument.querySelectorAll('[data-widget]')]
+          .find((element) => element.dataset.widget === previewWidget);
+        assert(widget, `Preview widget ${previewWidget} exists`);
+        widget.scrollIntoView({ block: 'start' });
+        frame.contentWindow.scrollBy(0, -100);
+        await settle();
+        document.body.dataset.testStatus = 'PREVIEW';
+        return;
+      }
+      checkNumericalHelpers();
+      await loadPage();
+      const widgets = [...frame.contentDocument.querySelectorAll('[data-widget]')];
+      assert(widgets.length === 8 && widgets.every((widget) => minimumPanels[widget.dataset.widget]), 'all eight time-series widgets initialize');
+      for (const width of widths) {
+        const before = widgets.map(geometrySignature);
+        const previousWidth = frame.contentWindow.innerWidth;
+        frame.style.width = `${width}px`;
+        if (previousWidth !== width) await settleResize();
+        else await settle();
+        assert(frame.contentWindow.innerWidth === width, `iframe viewport resized to ${width}px`);
+        if (previousWidth !== width) {
+          assert(widgets.some((widget, index) => geometrySignature(widget) !== before[index]), `${width}px: charts adapt their geometry after resizing without a page reload`);
+        }
+        const hero = frame.contentDocument.querySelector('.ts-hero-diagram svg');
+        assert(hero, 'hero diagram exists');
+        checkSvg(hero, `${width}px hero`, false);
+        for (const widget of widgets) await exerciseWidget(widget);
+      }
+      assert(runtimeErrors.length === 0, 'no browser runtime errors during plot interactions');
+      log(`PASS time-series plots at ${widths.join(', ')}px`);
+      document.body.dataset.testStatus = 'PASS';
+    }
+
+    run().catch((error) => {
+      log(`FAIL ${error.message}`);
+      document.body.dataset.testStatus = 'FAIL';
+      console.error(error);
+    });
+  </script>
+</body>
+</html>
