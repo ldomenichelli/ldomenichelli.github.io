@@ -1,5 +1,5 @@
 {
-  "updated": "oct 2026",
+  "updated": "nov 2026",
   "books": [
     {
       "title": "Tokyo Express",
@@ -20,7 +20,7 @@
       "author": "Lin Hsin-Hui",
       "status": "read",
       "genre": "science fiction",
-      "note": "Did't like it much, I was influenced by the themes.",
+      "note": "Didn't like it much. I was drawn to the themes.",
       "cover": "img/intimita_senza_contatto.jpg",
       "color": "#7664b8",
       "accent": "#f0a5c8"
@@ -44,7 +44,7 @@
       "author": "Ryszard Kapuscinski",
       "status": "read",
       "genre": "literary reportage",
-      "note": " On the history of Iran.",
+      "note": "On the history of Iran.",
       "cover": "img/shah_in_shah.jpg",
       "color": "#4a3325",
       "accent": "#d0a36c"
@@ -68,7 +68,7 @@
       "author": "Kim Bo-young",
       "status": "read",
       "genre": "weird science fiction",
-      "note": "Once again I was influenced by the themes, Lovecraftian in nature.",
+      "note": "Once again, I was drawn to the Lovecraftian themes.",
       "cover": "img/il_mare_infetto.jpg",
       "color": "#101010",
       "accent": "#ef1140"
@@ -80,7 +80,7 @@
       "author": "Kobo Abe",
       "status": "read",
       "genre": "surreal / experimental fiction",
-      "note": "A surprise, I should read more of his work.",
+      "note": "A surprise. I should read more of his work.",
       "cover": "img/uomo_scatola.jpg",
       "color": "#1e1d18",
       "accent": "#c4a650"
@@ -104,7 +104,7 @@
       "author": "Hermann Hesse",
       "status": "read",
       "genre": "philosophical novel",
-      "note": "I'm obsessed with Hesse but the themes are very similar to Demian, so I put it on hold.",
+      "note": "I'm obsessed with Hesse, but the themes are very similar to those in Demian, so I put it on hold.",
       "cover": "img/gertrud.jpg",
       "color": "#c9a66e",
       "accent": "#fff0c6"
@@ -140,7 +140,7 @@
       "author": "Michele Mari",
       "status": "read",
       "genre": "literary fiction",
-      "note": "A book to read on holiday",
+      "note": "A book to read on holiday.",
       "cover": "img/convitati_di_pietra.jpg",
       "color": "#5b5b5b",
       "accent": "#d9d5cf"
@@ -225,6 +225,36 @@
       "cover": "img/the_narrator.jpg",
       "color": "#577b72",
       "accent": "#e8e0c5"
+    },
+    {
+      "title": "Breviario del caos",
+      "author": "Albert Caraco",
+      "status": "reading",
+      "genre": "philosophy",
+      "note": "",
+      "cover": "img/breviario_del_caos.jpg",
+      "color": "#648598",
+      "accent": "#131b20"
+    },
+    {
+      "title": "Il nesso spettrale",
+      "author": "Thomas Ligotti",
+      "status": "reading",
+      "genre": "horror / short stories",
+      "note": "",
+      "cover": "img/il_nesso_spettrale.jpg",
+      "color": "#2647a1",
+      "accent": "#f4efe2"
+    },
+    {
+      "title": "Umili prose",
+      "author": "Aleksandr Puškin",
+      "status": "reading",
+      "genre": "short stories / classics",
+      "note": "",
+      "cover": "img/umili_prose.jpg",
+      "color": "#e5dfd0",
+      "accent": "#942f36"
     }
   ]
 }

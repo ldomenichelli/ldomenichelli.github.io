@@ -136,9 +136,12 @@
       button.appendChild(image);
     }
 
-    const label = document.createElement("span");
-    label.textContent = text(book.shortTitle || book.title, "book");
-    button.appendChild(label);
+    const month = text(book.readMonth || book.month, "").trim();
+    if (month) {
+      const label = document.createElement("span");
+      label.textContent = month;
+      button.appendChild(label);
+    }
 
     button.addEventListener("click", () => {
       if (book.placeholder) {
