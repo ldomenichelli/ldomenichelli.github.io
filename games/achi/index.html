@@ -9,10 +9,12 @@
   <meta name="description" content="Playable Achi with human vs human and human vs computer modes.">
   <link crossorigin="anonymous" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css" rel="preload stylesheet" as="style">
   <link rel="stylesheet" href="/assets/css/achi.css">
-  <link rel="stylesheet" href="/assets/css/site-theme.css">
+
 <link rel="stylesheet" href="/assets/css/site-shell.css">
+  <link rel="stylesheet" href="/assets/css/games-room.css">
 </head>
-<body class="page dark achi-page" id="top">
+<body class="page game-room achi-page" id="top">
+<a class="room-skip" href="#achi-board">Skip to the board</a>
 <header class="header">
   <nav class="nav">
     <div class="logo"><a href="/" accesskey="h">lucia's room</a><div class="logo-switches"><ul class="lang-switch"><li>|</li></ul></div></div>
@@ -24,133 +26,80 @@
 </header>
 
 <main class="main">
-  <article class="post-single">
-    <header class="post-header">
-      <h1 class="post-title">Achi</h1>
-      <div class="post-meta">Playable online • Human vs Human • Human vs Computer</div>
+  <article class="post-single game-detail">
+    <header class="post-header game-heading">
+      <a class="game-back" href="/games/">← All games</a>
+      <p class="game-eyebrow">The game room / Achi</p>
+      <h1 class="post-title">Achi<span class="game-title-dot" aria-hidden="true">.</span></h1>
+      <p class="game-tagline">Three in a row. Always one move ahead.</p>
+      <p class="game-meta"><span>Alignment</span><span>3 × 3 board</span><span>White moves first</span></p>
     </header>
-
     <div class="post-content">
-      <section class="achi-shell" aria-label="Achi game area">
-        <header class="achi-header">
-          <div>
-            <h2>Achi Arena</h2>
-            <p class="achi-subtitle">Three-in-a-row on a 3×3 intersection board with placement and movement phases.</p>
-          </div>
-          <p class="achi-subtitle">White starts first</p>
-        </header>
-
-        <div class="achi-role-strip" aria-label="Roles and objective summary">
-          <section class="achi-role achi-role-white">
-            <p class="achi-role-title">White</p>
-            <p class="achi-role-text">Places 4 pieces, then slides along connected lines to create a row of 3.</p>
-          </section>
-          <section class="achi-role achi-role-black">
-            <p class="achi-role-title">Black</p>
-            <p class="achi-role-text">Mirrors the same objective. No jumping, and wins count during placement too.</p>
-          </section>
-          <section class="achi-role achi-role-objective">
-            <p class="achi-role-title">Match flow</p>
-            <div class="achi-progress-wrap">
-              <div class="achi-progress" data-placement-progress></div>
-            </div>
-            <p class="achi-role-text" data-placement-remaining>8 placements remaining</p>
-          </section>
-        </div>
-
-        <p class="achi-win-banner" data-win-banner hidden></p>
-
-        <div class="achi-main">
-          <section class="achi-board-wrap" aria-label="Board section">
-            <div class="achi-board" data-achi-board role="grid" aria-label="Achi board"></div>
-
-            <div class="achi-tabs">
-              <ul class="achi-tab-list" role="tablist" aria-label="Achi information tabs">
-                <li><button class="achi-tab" type="button" role="tab" aria-selected="true" data-tab-button="rules">Rules</button></li>
-                <li><button class="achi-tab" type="button" role="tab" aria-selected="false" data-tab-button="play">How to play</button></li>
-                <li><button class="achi-tab" type="button" role="tab" aria-selected="false" data-tab-button="tips">Strategy tips</button></li>
+      <section class="achi-shell" aria-label="Achi game">
+        <div class="achi-main game-layout">
+          <div class="achi-board-wrap">
+            <section class="game-stage" aria-label="Play Achi">
+              <div class="game-stage-header">
+                <div class="game-turn"><span class="game-turn-dot" aria-hidden="true"></span><strong data-turn>White</strong><span data-turn-label>to play</span></div>
+                <span class="game-phase" data-phase>Placement</span>
+              </div>
+              <p class="achi-status game-live-status" data-status role="status" aria-live="polite" aria-atomic="true"></p>
+              <p class="achi-thinking" data-thinking hidden>Thinking<span aria-hidden="true">…</span></p>
+              <p class="achi-win-banner game-win-banner" data-win-banner role="status" hidden></p>
+              <div class="achi-board" id="achi-board" tabindex="-1" data-achi-board role="group" aria-label="Achi board" aria-describedby="achi-board-help"></div>
+              <div class="game-board-actions">
+                <button type="button" class="achi-button game-button game-button-secondary" data-undo disabled><span aria-hidden="true">↶</span> Undo</button>
+                <button type="button" class="achi-button game-button game-button-primary" data-new-game>New game <span aria-hidden="true">↗</span></button>
+              </div>
+              <p class="game-board-help" id="achi-board-help">Tap a point to play. Keyboard: arrow keys to explore, Enter to choose, Esc to deselect.<br><a href="#achi-settings">Game settings</a> · <a href="#achi-guide">How to play</a></p>
+            </section>
+            <section class="achi-tabs game-howto" id="achi-guide" tabindex="-1" aria-label="Learn to play">
+              <h2>A minute to learn.</h2>
+              <ul class="achi-tab-list" role="tablist" aria-label="Achi guide">
+                <li role="presentation"><button class="achi-tab" type="button" role="tab" aria-selected="true" data-tab-button="rules">The rules</button></li>
+                <li role="presentation"><button class="achi-tab" type="button" role="tab" aria-selected="false" data-tab-button="play">The controls</button></li>
+                <li role="presentation"><button class="achi-tab" type="button" role="tab" aria-selected="false" data-tab-button="tips">A little strategy</button></li>
               </ul>
-
-              <section class="achi-tab-panel" data-tab-panel="rules" role="tabpanel">
-                <ul>
-                  <li>The board has 9 intersections connected by horizontal, vertical, and diagonal lines.</li>
-                  <li>Each player has 4 pieces and wins by forming an uninterrupted line of 3 of their own pieces.</li>
-                  <li>During placement, players alternate placing on any empty intersection. A line of 3 wins immediately.</li>
-                  <li>Movement begins only after all 8 pieces have been placed.</li>
-                  <li>During movement, pieces slide one step along a connected line to an adjacent empty intersection. No jumping.</li>
-                </ul>
-              </section>
-
+              <section class="achi-tab-panel" data-tab-panel="rules" role="tabpanel"><ol class="game-rule-steps">
+                  <li><strong>Place your pieces.</strong> Take turns placing one piece on an empty point. Each player has four.</li>
+                  <li><strong>Make a line of three.</strong> Horizontal, vertical or diagonal: a complete line wins, even while you are still placing.</li>
+                  <li><strong>Then keep moving.</strong> Once all eight pieces are down, slide one piece along a line to a neighbouring empty point. No jumping.</li>
+                </ol></section>
               <section class="achi-tab-panel" data-tab-panel="play" role="tabpanel" hidden>
-                <ol>
-                  <li>In placement, click any highlighted empty intersection to place your next piece.</li>
-                  <li>In movement, click one of your own pieces to see legal adjacent destinations.</li>
-                  <li>Selected pieces glow; legal destinations pulse softly.</li>
-                  <li>In Human vs Computer mode, input is locked while the AI is thinking.</li>
-                  <li>Undo in Human vs Computer mode rewinds to the most recent human-to-move state when possible.</li>
-                </ol>
+                <p>Select a piece to reveal its moves, then choose a marked point. A ring shows your selection; a small dot shows a legal destination.</p>
+                <p>Use <strong>Undo</strong> to try another idea. Against the computer, it takes you back to your previous turn. <strong>New game</strong> starts fresh with your current settings.</p>
+                <p>Keyboard players can use the arrow keys on the board, Enter or Space to select, and Escape to clear a selection.</p>
               </section>
-
-              <section class="achi-tab-panel" data-tab-panel="tips" role="tabpanel" hidden>
-                <p><strong>Placement:</strong> contest the center early and avoid handing the opponent an immediate line on move 3.</p>
-                <p><strong>Movement:</strong> look for dual threats that force one reply while your other line stays alive.</p>
-              </section>
-            </div>
-          </section>
-
-          <aside class="achi-side" aria-label="Game controls and status">
-            <section class="achi-card achi-card-setup">
-              <p class="achi-label">Mode &amp; setup</p>
+              <section class="achi-tab-panel" data-tab-panel="tips" role="tabpanel" hidden><p><strong>Own the centre.</strong> It connects to every other point, so it gives you more room to respond.</p><p><strong>Look for two threats.</strong> Build a position that can make a line in two different ways. Your opponent can only block one.</p></section>
+            </section>
+          </div>
+          <aside class="achi-side game-sidebar" id="achi-settings" tabindex="-1" aria-label="Game settings and progress">
+            <section class="achi-card achi-card-setup game-panel">
+              <p class="game-eyebrow">Make yourself at home</p>
+              <h2>Your game</h2>
               <div class="achi-grid2 achi-setup-grid">
-                <div class="achi-field">
-                  <label for="achi-mode">Mode</label>
-                  <select id="achi-mode" class="achi-select" data-mode>
-                    <option value="HUMAN_VS_HUMAN">Human vs Human</option>
-                    <option value="HUMAN_VS_COMPUTER">Human vs Computer</option>
-                  </select>
+                <div class="achi-field"><label for="achi-mode">Play with</label><select id="achi-mode" class="achi-select" data-mode><option value="HUMAN_VS_COMPUTER" selected>The computer</option><option value="HUMAN_VS_HUMAN">A friend · same device</option></select></div>
+                <div class="achi-field"><label for="achi-side">Your side</label><select id="achi-side" class="achi-select" data-side><option value="WHITE">White · first move</option><option value="BLACK">Black · second move</option></select></div>
+              </div>
+              <div class="achi-field achi-field-stack"><label for="achi-difficulty">Difficulty</label><select id="achi-difficulty" class="achi-select" data-difficulty><option value="Easy">Easy · find your feet</option><option value="Medium" selected>Medium · a little challenge</option><option value="Hard">Hard · think ahead</option></select></div>
+              <p class="game-small-note">Changing the opponent or your side starts a new game.</p>
+            </section>
+            <section class="achi-card achi-card-status game-panel">
+              <h2>On the board</h2>
+              <div class="game-players">
+                  <div class="game-player achi-player-white"><span class="game-piece-key key-white" aria-hidden="true"></span><span>White <small data-white-count>0 / 4</small></span></div>
+                  <span class="game-player-divider" aria-hidden="true">vs</span>
+                  <div class="game-player achi-player-black"><span class="game-piece-key key-black" aria-hidden="true"></span><span>Black <small data-black-count>0 / 4</small></span></div>
                 </div>
-                <div class="achi-field">
-                  <label for="achi-side">Play as</label>
-                  <select id="achi-side" class="achi-select" data-side>
-                    <option value="WHITE">White</option>
-                    <option value="BLACK">Black</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="achi-field achi-field-stack">
-                <label for="achi-difficulty">Difficulty</label>
-                <select id="achi-difficulty" class="achi-select" data-difficulty>
-                  <option value="Easy">Easy</option>
-                  <option value="Medium" selected>Medium</option>
-                  <option value="Hard">Hard</option>
-                </select>
-              </div>
+                <div class="achi-progress-wrap" aria-hidden="true"><div class="achi-progress" data-placement-progress></div></div>
+                <p class="game-small-note" data-placement-remaining>8 pieces to place</p>
+              <p class="achi-status-note game-small-note" data-objective></p>
             </section>
-
-            <section class="achi-card achi-card-status">
-              <p class="achi-label">Status</p>
-              <div class="achi-stat"><span>Turn</span><strong data-turn>White</strong></div>
-              <div class="achi-stat"><span>Phase</span><strong data-phase>Placement</strong></div>
-              <div class="achi-stat"><span>White placed</span><strong data-white-count>0 / 4</strong></div>
-              <div class="achi-stat"><span>Black placed</span><strong data-black-count>0 / 4</strong></div>
-              <p class="achi-status" data-status aria-live="polite">White to place a piece.</p>
-              <p class="achi-thinking" data-thinking aria-live="polite" hidden>Computer thinking…</p>
-              <p class="achi-status achi-status-note" data-objective></p>
-            </section>
-
-            <section class="achi-card achi-card-history">
-              <p class="achi-label">Move history</p>
-              <ol class="achi-history" data-history></ol>
-            </section>
-
-            <section class="achi-card achi-card-controls">
-              <p class="achi-label">Controls</p>
-              <div class="achi-grid2 achi-controls-grid">
-                <button class="achi-button" data-new-game>New game</button>
-                <button class="achi-button" data-undo>Undo</button>
-              </div>
-            </section>
+            <details class="achi-card achi-card-history game-panel game-history-panel">
+              <summary>Move notebook <span data-move-count>0 moves</span></summary>
+              <ol class="achi-history" data-history aria-label="Move history"></ol>
+            </details>
+            <p class="game-sidebar-note">No clock. No rush.<br>Just one good move at a time.</p>
           </aside>
         </div>
       </section>
@@ -169,6 +118,6 @@
   document.body.addEventListener('click',e=>{if(!b.contains(e.target))m.classList.add('hidden')});
 </script>
 <script type="module" src="/assets/js/achi-page.js"></script>
-<script src="/assets/js/pocket-bird.js" defer></script><script src="/assets/js/site-shell.js" defer></script>
+<script src="/assets/js/site-shell.js" defer></script>
 </body>
 </html>

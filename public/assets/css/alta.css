@@ -1,0 +1,76 @@
+:root { --alta-red: #b96150; --alta-blue: #4c79a3; }
+.alta-status-note { font-size: .78rem; margin: -2px 0 12px; }
+.alta-connection-legend { display: flex; gap: 18px; justify-content: center; align-items: center; font-size: .72rem; margin: 16px 0 4px; color: #73806b; }
+.alta-connection-legend > span { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.alta-connection-legend i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; }
+.alta-legend-blue { background: var(--alta-blue); }
+.alta-legend-red { background: var(--alta-red); }
+.alta-page .alta-board-stage { --goal-depth: clamp(28px, 4vw, 40px); position: relative; width: min(100%, 540px); aspect-ratio: 1; margin: 16px auto 20px; padding: 8px; }
+.alta-board { z-index: 1; position: absolute; inset: var(--goal-depth); display: grid; gap: 3px; }
+.alta-board::before { position: absolute; content: ''; inset: -7%; background: #eef2e8; clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); z-index: 0; pointer-events: none; }
+.alta-board.is-disabled { cursor: wait; }
+.alta-goal { z-index: 2; position: absolute; display: grid; place-items: center; border-radius: 9px; color: #fffdf5; font-size: .58rem; font-weight: 650; letter-spacing: .04em; text-transform: uppercase; }
+.alta-goal-top,.alta-goal-bottom { left: 50%; width: 30%; height: calc(var(--goal-depth) - 4px); transform: translateX(-50%); background: #517ca3; }
+.alta-goal-left,.alta-goal-right { top: 50%; width: calc(var(--goal-depth) - 4px); height: 30%; transform: translateY(-50%); background: #b86d5c; }
+.alta-goal-top { top: 0; }
+.alta-goal-bottom { bottom: 0; }
+.alta-goal-left { left: 0; }
+.alta-goal-right { right: 0; }
+.alta-goal-left span,.alta-goal-right span { writing-mode: vertical-rl; }
+.alta-board-stage[data-turn='BLUE'] .alta-goal-top,.alta-board-stage[data-turn='BLUE'] .alta-goal-bottom { box-shadow: 0 0 0 3px #517ca321; }
+.alta-board-stage[data-turn='RED'] .alta-goal-left,.alta-board-stage[data-turn='RED'] .alta-goal-right { box-shadow: 0 0 0 3px #b86d5c21; }
+.alta-page .alta-cell { position: relative; min-width: 0; min-height: 0; border-radius: 5px; border: 1px solid #c9d3bf; background: #fcfcf5; box-shadow: 0 2px 0 #bfcbb452; }
+.alta-page .alta-cell.is-owned-red { background: #f6e8e0; border-color: #d6b7a9; }
+.alta-page .alta-cell.is-owned-blue { background: #e2edf1; border-color: #aabfc8; }
+.alta-page .alta-cell.is-selected { border-color: #365c3d; background: #dce9d1; box-shadow: 0 0 0 2px #42684c; z-index: 1; }
+.alta-page .alta-cell.is-winning { background: #dde8bd; border-color: #688647; box-shadow: 0 0 0 2px #8ba66c; z-index: 1; }
+.alta-page .alta-cell.is-last-move:not(.is-selected):not(.is-winning)::after { content: ''; position: absolute; top: 3px; right: 3px; height: 4px; width: 4px; border-radius: 50%; background: #48543c; pointer-events: none; }
+.alta-page .alta-cell.is-restricted { background: repeating-linear-gradient(135deg,#e9eddf,#e9eddf 3px,#e0e6d7 3px,#e0e6d7 4px); border-color: #d2dbc6; box-shadow: none; }
+.alta-empty-hit,.alta-toggle-hit { position: absolute; inset: 0; padding: 0; width: 100%; height: 100%; min-height: 0; border: 0; border-radius: inherit; background: transparent; cursor: pointer; touch-action: manipulation; }
+.alta-empty-hit:hover:not([aria-disabled='true']),.alta-toggle-hit:hover:not([aria-disabled='true']) { background: #d0dfc67a; }
+.alta-page .alta-empty-hit:focus-visible,.alta-page .alta-toggle-hit:focus-visible { outline: 3px solid #7e6434; outline-offset: 1px; z-index: 2; }
+.alta-empty-hit[aria-disabled='true'],.alta-toggle-hit[aria-disabled='true'] { cursor: default; }
+.alta-cell-marker { position: absolute; inset: 0; display: grid; place-items: center; color: #446548; font-size: 1.3rem; font-weight: 300; pointer-events: none; }
+.alta-switch { position: absolute; inset: 5%; pointer-events: none; overflow: hidden; border-radius: 2px; }
+.alta-switch::before { content: ''; position: absolute; left: 50%; top: 50%; width: 12%; height: 140%; transform-origin: center; border-radius: 999px; }
+.alta-switch-fw::before { transform: translate(-50%, -50%) rotate(45deg); }
+.alta-switch-bw::before { transform: translate(-50%, -50%) rotate(-45deg); }
+.alta-owner-red::before { background: var(--alta-red); }
+.alta-owner-blue::before { background: var(--alta-blue); }
+.alta-switch-preview { opacity: 0; transition: opacity .15s; }
+.alta-cell.is-togglable:hover .alta-switch-preview,.alta-cell.is-togglable:focus-within .alta-switch-preview { opacity: .3; }
+.alta-switch-preview::before { background: #526647; }
+.alta-placement-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px; background: #f2f4ec; border: 1px solid #dce2d2; border-radius: 14px; margin: 12px 0 18px; }
+.alta-placement-bar.has-selection { border-color: #a2b591; background: #edf3e6; }
+.alta-placement-bar strong { font-size: .84rem; color: #2e4936; }
+.alta-placement-bar p { font-size: .72rem; line-height: 1.5; margin: 5px 0 0; max-width: 260px; }
+.alta-placement-buttons { display: flex; flex: none; gap: 6px; }
+.alta-page .alta-choice { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 48px; border: 1px solid #496c4c; border-radius: 9px; background: #43684c; color: #fffef4; padding: 8px 12px; font-size: .75rem; cursor: pointer; }
+.alta-choice > span { font-size: 1.5rem; line-height: 1; }
+.alta-page .alta-choice:hover:not(:disabled) { background: #2f5038; }
+.alta-page .alta-choice:disabled { background: #e8ede1; border-color: #d8dfd0; color: #9da893; cursor: default; }
+.alta-page .alta-cancel { border: 0; background: transparent; color: #687a5f; width: 34px; min-height: 48px; font-size: 1.5rem; padding: 0; cursor: pointer; }
+.alta-cancel:disabled { opacity: .3; cursor: default; }
+.alta-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+.alta-stat { border: 1px solid #e1e6d9; border-radius: 10px; background: #f7f8f2; padding: 11px; }
+.alta-stat span { display: block; color: #7b8471; font-size: .68rem; margin-bottom: 5px; }
+.alta-stat strong { display: block; font-size: .98rem; color: #354d3a; }
+.alta-history [data-player='RED'] { color: #a05c4b; }
+.alta-history [data-player='BLUE'] { color: #4d7190; }
+@media (max-width: 600px) {
+  .alta-page .alta-board-stage { --goal-depth: 26px; margin-top: 16px; }
+  .alta-board { gap: 2px; }
+  .alta-page .alta-cell { border-radius: 3px; }
+  .alta-goal { font-size: .51rem; border-radius: 5px; }
+  .alta-connection-legend { gap: 12px; font-size: .65rem; flex-wrap: wrap; }
+  .alta-connection-legend > span:last-child { display: none; }
+  .alta-placement-bar { flex-direction: column; align-items: stretch; padding: 13px; gap: 10px; }
+  .alta-placement-bar p { max-width: none; }
+  .alta-placement-buttons { width: 100%; }
+  .alta-page .alta-choice { flex: 1; padding: 8px; }
+  .alta-stat-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 360px) {
+  .alta-page .alta-board-stage { --goal-depth: 20px; width: calc(100% + 16px); margin-left: -8px; }
+}
+@media (prefers-reduced-motion: reduce) { .alta-page * { transition: none !important; } }

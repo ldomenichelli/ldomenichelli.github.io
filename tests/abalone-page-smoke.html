@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Abalone Page Smoke Test</title>
+  <style>body{font:14px ui-monospace,monospace;background:#111;color:#f5f5f5;margin:0;padding:16px}iframe{height:2200px;border:0}pre{white-space:pre-wrap;line-height:1.5}</style>
+</head>
+<body data-test-status="RUNNING">
+  <pre id="log">Running…</pre>
+  <iframe id="frame" src="/games/abalone/"></iframe>
+  <script>
+    const frame = document.getElementById('frame');
+    const frameWidth = Number(new URLSearchParams(location.search).get('width') || 1440);
+    frame.style.width = `${frameWidth}px`;
+    const messages = [];
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    const log = (message) => { messages.push(message); document.getElementById('log').textContent = messages.join('\n'); };
+    const assert = (condition, message) => { if (!condition) throw new Error(message); log(`PASS ${message}`); };
+    const change = (select, value) => { select.value = value; select.dispatchEvent(new Event('change', { bubbles: true })); };
+    async function waitFor(predicate, message) {
+      const deadline = performance.now() + 7000;
+      while (!predicate() && performance.now() < deadline) await sleep(30);
+      assert(predicate(), message);
+    }
+    frame.addEventListener('load', () => run().catch((error) => { log(`FAIL ${error.message}`); document.body.dataset.testStatus = 'FAIL'; }));
+    async function run() {
+      const doc = frame.contentDocument;
+      const win = frame.contentWindow;
+      const errors = [];
+      win.addEventListener('error', (event) => errors.push(event.message));
+      win.addEventListener('unhandledrejection', (event) => errors.push(String(event.reason)));
+      const board = doc.getElementById('abalone-board');
+      const mode = doc.getElementById('mode-select');
+      const side = doc.getElementById('human-side-select');
+      const undo = doc.getElementById('undo-move');
+      const reset = doc.getElementById('reset-game');
+      const history = doc.getElementById('move-history');
+      const summary = doc.getElementById('history-summary');
+      const thinking = doc.getElementById('thinking-indicator');
+      const clear = doc.getElementById('clear-selection');
+      const cell = (key) => board.querySelector(`[data-cell="${key}"]`);
+      const clickCell = (key) => cell(key).dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      const key = (node, value) => node.dispatchEvent(new KeyboardEvent('keydown', { key: value, bubbles: true }));
+      const moveCount = () => Number(summary.textContent.match(/\d+/)?.[0] || 0);
+      const playAnyMove = (color) => {
+        clear.click();
+        for (const marble of [...board.querySelectorAll(`.marble.${color}`)]) {
+          const position = marble.closest('[data-cell]').dataset.cell;
+          clickCell(position);
+          const direction = doc.querySelector('[data-direction]:not(:disabled)');
+          if (direction) { direction.click(); return; }
+          clear.click();
+        }
+        throw new Error(`No playable ${color} move found`);
+      };
+      assert(board && mode && undo && reset && history && summary, 'board and game controls render');
+      assert(board.querySelectorAll('[data-cell]').length === 61, 'board exposes all 61 accessible cells');
+      assert(board.querySelectorAll('.marble.black').length === 14 && board.querySelectorAll('.marble.white').length === 14, 'each side starts with 14 marbles');
+      assert(mode.value === 'hvc' && undo.disabled, 'computer mode opens ready for the human and with undo disabled');
+      assert(doc.documentElement.scrollWidth <= frameWidth + 1, 'page has no horizontal overflow');
+      assert(board.getBoundingClientRect().width >= Math.min(frameWidth - 76, 300), 'board remains large enough to play');
+
+      change(mode, 'hvh');
+      cell('0,-4').focus();
+      key(cell('0,-4'), 'ArrowRight');
+      assert(doc.activeElement.dataset.cell === '1,-4', 'arrow keys move focus between board cells');
+      key(doc.activeElement, 'Enter');
+      assert(cell('1,-4').getAttribute('aria-pressed') === 'true', 'Enter selects a marble');
+      key(doc.activeElement, 'Escape');
+      assert(!board.querySelector('.is-selected'), 'Escape clears the selection');
+      playAnyMove('black');
+      assert(moveCount() === 1 && !undo.disabled && history.textContent.includes('Black'), 'a direction control makes a legal move and records it');
+      undo.click();
+      assert(moveCount() === 0 && undo.disabled, 'undo restores the initial position');
+      playAnyMove('black');
+      reset.click();
+      assert(moveCount() === 0 && board.querySelectorAll('.marble').length === 28, 'new game restores the board and history');
+
+      const tabs = [...doc.querySelectorAll('[role="tab"]')];
+      tabs[0].focus();
+      key(tabs[0], 'ArrowRight');
+      assert(doc.activeElement === tabs[1] && tabs[1].getAttribute('aria-selected') === 'true', 'guide tabs support arrow-key navigation');
+      key(tabs[1], 'Home');
+      assert(tabs[0].getAttribute('aria-selected') === 'true', 'Home returns to the first guide tab');
+
+      change(mode, 'hvc');
+      playAnyMove('black');
+      assert(!thinking.classList.contains('hidden'), 'computer thinking state appears after a human move');
+      undo.click();
+      await sleep(600);
+      assert(moveCount() === 0 && thinking.classList.contains('hidden'), 'undo cancels a pending AI response');
+      playAnyMove('black');
+      await waitFor(() => moveCount() === 2 && thinking.classList.contains('hidden'), 'computer returns a legal response');
+      undo.click();
+      assert(moveCount() === 0, 'undo removes both turns against the computer');
+
+      change(side, 'W');
+      reset.click();
+      reset.click();
+      await waitFor(() => moveCount() === 1 && thinking.classList.contains('hidden'), 'repeated reset during AI opening produces exactly one move');
+      await sleep(350);
+      assert(moveCount() === 1 && undo.disabled, 'AI opening is stable and cannot leave an unplayable undo state');
+      playAnyMove('white');
+      await waitFor(() => moveCount() === 3 && thinking.classList.contains('hidden'), 'playing as White completes a human/computer turn');
+      undo.click();
+      assert(moveCount() === 1, 'paired undo preserves the AI opening when playing White');
+
+      reset.click();
+      change(mode, 'hvh');
+      await sleep(600);
+      assert(moveCount() === 0 && thinking.classList.contains('hidden'), 'switching to two players cancels the old AI request');
+      assert(errors.length === 0, 'all interactions complete without runtime errors');
+      log('PASS smoke test completed');
+      document.body.dataset.testStatus = 'PASS';
+    }
+  </script>
+</body>
+</html>

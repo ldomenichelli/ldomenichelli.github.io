@@ -103,6 +103,10 @@
 
       assert(Boolean(board && status && history && mode && side && difficulty && thinking && newGame && undo && tabRules && tabPlay && tabTips && panelRules && panelPlay && panelTips && node0 && node12 && node13 && sidebar && setupGrid && modeField && sideField), 'page renders board, controls, tabs, and key nodes');
 
+      assert(mode.value === 'HUMAN_VS_COMPUTER', 'computer mode is ready on first load');
+      changeSelect(mode, 'HUMAN_VS_HUMAN');
+      assert(doc.documentElement.scrollWidth <= frameWidth + 1, 'page has no horizontal overflow');
+
       const boardRect = board.getBoundingClientRect();
       log(`INFO board ${Math.round(boardRect.width)}x${Math.round(boardRect.height)} in frame ${frameWidth}`);
       if (frameWidth <= 480) {
@@ -132,8 +136,14 @@
       const topAtNode0 = doc.elementFromPoint(node0Rect.left + node0Rect.width / 2, node0Rect.top + node0Rect.height / 2);
       assert(topAtNode0 === node0 || node0.contains(topAtNode0), 'left edge board node stays visible and clickable');
 
-      assert(status.textContent.trim() === 'Jaguar to move.', 'initial status is correct');
+      assert(doc.querySelector('[data-turn]:not(.adugo-shell)').textContent.trim() === 'Jaguar', 'initial status is correct');
       assert(thinking.hidden === true, 'thinking indicator is hidden on initial load');
+
+      node0.focus();
+      node0.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+      assert(doc.activeElement.dataset.index === '1', 'arrow keys move board focus');
+      assert(board.querySelectorAll('[tabindex="0"]').length === 1, 'board has one keyboard entry point');
+
 
       tabPlay.click();
       await sleep(20);
@@ -151,17 +161,25 @@
       await sleep(20);
       node13.click();
       await sleep(20);
-      assert(status.textContent.trim() === 'Dogs to move.', 'board interactions advance the turn in human vs human mode');
+      assert(doc.querySelector('[data-turn]:not(.adugo-shell)').textContent.trim() === 'Dogs', 'board interactions advance the turn in human vs human mode');
       assert(history.textContent.includes('Jaguar'), 'move history records the first move');
       assert(undo.disabled === false, 'undo enables after a move');
 
       undo.click();
       await sleep(20);
-      assert(status.textContent.trim() === 'Jaguar to move.', 'undo reverts the human vs human move');
+      assert(doc.querySelector('[data-turn]:not(.adugo-shell)').textContent.trim() === 'Jaguar', 'undo reverts the human vs human move');
 
       newGame.click();
       await sleep(20);
       assert(history.textContent.includes('No moves yet.'), 'new game resets the move history');
+
+      for (const index of [12, 13, 6, 12, 13, 14, 0]) {
+        doc.querySelector(`[data-index="${index}"]`).click();
+      }
+      assert(node0.classList.contains('is-selected') && doc.querySelector('[data-index="6"]').classList.contains('is-legal'), 'dog at index zero reveals its legal destinations');
+      node0.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+      assert(!board.querySelector('.is-selected'), 'Escape clears the selection');
+      newGame.click();
 
       changeSelect(mode, 'HUMAN_VS_COMPUTER');
       await sleep(20);
@@ -180,12 +198,12 @@
       newGame.click();
       await sleep(450);
       assert(runtimeErrors.length === 0, 'resetting during an AI turn does not trigger runtime errors');
-      assert(status.textContent.trim() === 'Dogs to move.', 'new game restarts correctly when the AI plays first');
+      assert(doc.querySelector('[data-turn]:not(.adugo-shell)').textContent.trim() === 'Dogs', 'new game restarts correctly when the AI plays first');
       assert(thinking.hidden === true, 'thinking indicator clears after the AI move completes');
 
       undo.click();
       await sleep(20);
-      assert(status.textContent.trim() === 'Jaguar to move.', 'undo reverts the AI opening move for a dogs player');
+      assert(undo.disabled && doc.querySelector('[data-turn]:not(.adugo-shell)').textContent.trim() === 'Dogs', 'AI opening cannot be undone into a stuck computer turn');
 
       changeSelect(mode, 'HUMAN_VS_HUMAN');
       await sleep(20);

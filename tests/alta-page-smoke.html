@@ -104,6 +104,10 @@
       assert(Boolean(board && boardStage && status && history && mode && side && difficulty && thinking && newGame && undo && tabRules && tabPlay && tabTips && panelRules && panelPlay && panelTips && sideRail), 'page renders Alta board, controls, and guide tabs');
       assert(doc.querySelectorAll('.alta-cell').length === 57, 'board renders the full 57-cell playable diamond');
 
+      assert(mode.value === 'HUMAN_VS_COMPUTER', 'computer mode is ready on first load');
+      changeSelect(mode, 'HUMAN_VS_HUMAN');
+      assert(doc.documentElement.scrollWidth <= frameWidth + 1, 'page has no horizontal overflow');
+
       const boardRect = boardStage.getBoundingClientRect();
       log(`INFO board ${Math.round(boardRect.width)}x${Math.round(boardRect.height)} in frame ${frameWidth}`);
       if (frameWidth <= 480) {
@@ -117,6 +121,13 @@
       assert(sideRect.width >= 280, 'side rail keeps a comfortable desktop width');
       assert(status.textContent.includes('Blue to move'), 'initial status describes the opening turn');
       assert(thinking.classList.contains('hidden'), 'thinking indicator is hidden on initial load');
+
+      const firstCell = board.querySelector('[tabindex="0"]');
+      firstCell.focus();
+      firstCell.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+      assert(doc.activeElement !== firstCell && board.contains(doc.activeElement), 'arrow keys move board focus');
+      assert(board.querySelectorAll('[tabindex="0"]').length === 1, 'board has one keyboard entry point');
+
 
       click(doc, '[data-tab-button="play"]');
       await sleep(20);
@@ -178,7 +189,7 @@
 
       undo.click();
       await sleep(20);
-      assert(history.textContent.includes('No moves yet.') && thinking.classList.contains('hidden'), 'undo restores the pre-AI opening position when the human plays red');
+      assert(undo.disabled && status.textContent.includes('Red to move'), 'AI opening cannot be undone into a stuck computer turn');
 
       changeSelect(mode, 'HUMAN_VS_HUMAN');
       await sleep(20);

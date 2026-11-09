@@ -8,14 +8,16 @@ import {
   indexToCoord,
   ADJACENCY
 } from './adugo-engine.js';
-import { thinkAndPickAIMove, opposite } from './adugo-ai.js';
+import { pickAIMove, opposite } from './adugo-ai.js';
 import { MODE, computeUndoResult } from './adugo-session.js';
 import { setupTabs } from './game-tabs.js';
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const state = {
   game: createInitialState(),
   selected: null,
-  mode: MODE.HVH,
+  mode: MODE.HVC,
   humanSide: SIDES.JAGUAR,
   difficulty: 'Medium',
   isThinking: false,
@@ -24,8 +26,8 @@ const state = {
 };
 
 const BOARD_LAYOUT = Object.freeze({
-  insetPct: 9,
-  spanPct: 82
+  insetPct: 12,
+  spanPct: 76
 });
 
 const boardEl = document.querySelector('[data-adugo-board]');
@@ -45,6 +47,8 @@ const sideEl = document.querySelector('[data-side]');
 const diffEl = document.querySelector('[data-difficulty]');
 const newGameEl = document.querySelector('[data-new-game]');
 const undoEl = document.querySelector('[data-undo]');
+const moveCountEl = document.querySelector('[data-move-count]');
+const turnLabelEl = document.querySelector('[data-turn-label]');
 
 function isHumanTurn() {
   if (state.game.winner) return false;
@@ -53,7 +57,9 @@ function isHumanTurn() {
 }
 
 function canUndoPair() {
-  return state.snapshots.length > 0;
+  return state.mode === MODE.HVH
+    ? state.snapshots.length > 0
+    : state.snapshots.some((snapshot) => snapshot.turn === state.humanSide);
 }
 
 function pushSnapshot() {
@@ -74,6 +80,48 @@ function cancelPendingAI() {
   state.isThinking = false;
 }
 
+function wireBoardKeyboard() {
+  const nodes = [...boardEl.querySelectorAll('.adugo-node')];
+  boardEl.addEventListener('focusin', (event) => {
+    const active = event.target.closest('.adugo-node');
+    if (!active) return;
+    nodes.forEach((node) => { node.tabIndex = node === active ? 0 : -1; });
+  });
+  boardEl.addEventListener('keydown', (event) => {
+    const node = event.target.closest('.adugo-node');
+    if (!node) return;
+    const index = Number(node.dataset.index);
+    const { x, y } = indexToCoord(index);
+    let next = index;
+    if (event.key === 'ArrowLeft') next = y * GAME_CONFIG.size + Math.max(0, x - 1);
+    else if (event.key === 'ArrowRight') next = y * GAME_CONFIG.size + Math.min(GAME_CONFIG.size - 1, x + 1);
+    else if (event.key === 'ArrowUp') next = Math.max(0, y - 1) * GAME_CONFIG.size + x;
+    else if (event.key === 'ArrowDown') next = Math.min(GAME_CONFIG.size - 1, y + 1) * GAME_CONFIG.size + x;
+    else if (event.key === 'Home') next = event.ctrlKey ? 0 : y * GAME_CONFIG.size;
+    else if (event.key === 'End') next = event.ctrlKey ? nodes.length - 1 : (y + 1) * GAME_CONFIG.size - 1;
+    else if (event.key === 'Escape') {
+      state.selected = state.game.chainCaptureFrom ?? null;
+      render();
+    } else return;
+    event.preventDefault();
+    nodes[next].focus();
+  });
+}
+
+function addBoardCoordinates() {
+  for (let i = 0; i < GAME_CONFIG.size; i += 1) {
+    for (const axis of ['column', 'row']) {
+      const label = document.createElement('span');
+      label.className = 'adugo-coordinate';
+      label.setAttribute('aria-hidden', 'true');
+      label.textContent = axis === 'column' ? String.fromCharCode(65 + i) : String(i + 1);
+      label.style.left = `${axis === 'column' ? boardPercentAt(i) : 3.5}%`;
+      label.style.top = `${axis === 'row' ? boardPercentAt(i) : 3.5}%`;
+      boardEl.appendChild(label);
+    }
+  }
+}
+
 function buildBoard() {
   boardEl.innerHTML = '';
   for (let i = 0; i < GAME_CONFIG.size * GAME_CONFIG.size; i += 1) {
@@ -81,6 +129,7 @@ function buildBoard() {
     node.type = 'button';
     node.className = 'adugo-node';
     node.dataset.index = String(i);
+    node.tabIndex = i === GAME_CONFIG.initialJaguar ? 0 : -1;
     node.setAttribute('aria-label', `Node ${i + 1}`);
     boardEl.appendChild(node);
   }
@@ -127,6 +176,11 @@ function buildBoard() {
   }
 }
 
+function coordLabel(index) {
+  const { x, y } = indexToCoord(index);
+  return `${String.fromCharCode(65 + x)}${y + 1}`;
+}
+
 function annotateHistory() {
   historyEl.innerHTML = '';
   if (!state.game.history.length) {
@@ -138,9 +192,9 @@ function annotateHistory() {
   const items = recentHistory.map((h, idx) => {
     const li = document.createElement('li');
     li.className = 'adugo-history-item';
-    const capture = h.move.type === 'capture' ? ' ×' : '';
+    const capture = h.move.type === 'capture' ? ' · capture' : '';
     const moveNo = state.game.history.length - recentHistory.length + idx + 1;
-    li.textContent = `${moveNo}. ${prettySide(h.actorSide)} ${h.move.from + 1}→${h.move.to + 1}${capture}`;
+    li.textContent = `${moveNo}. ${prettySide(h.actorSide)} ${coordLabel(h.move.from)}→${coordLabel(h.move.to)}${capture}`;
     return li;
   });
 
@@ -149,15 +203,20 @@ function annotateHistory() {
 }
 
 function currentObjectiveText() {
-  return `Jaguar objective: capture ${GAME_CONFIG.jaguarCaptureTarget} total dogs. Dogs objective: trap the jaguar (0 legal moves).`;
+  return state.mode === MODE.HVC
+    ? (state.humanSide === SIDES.JAGUAR ? 'You are the jaguar. Find the gaps and capture all 14 dogs.' : 'You are the dogs. Close the gaps until the jaguar cannot move.')
+    : 'One hunter against a whole pack. The jaguar captures; the dogs surround.';
 }
 
 function highlightLegalTargets() {
   const nodes = boardEl.querySelectorAll('.adugo-node');
-  nodes.forEach((n) => n.classList.remove('is-legal', 'is-selected', 'is-jaguar', 'is-dog', 'is-chain'));
+  nodes.forEach((n) => n.classList.remove('is-legal', 'is-selected', 'is-jaguar', 'is-dog', 'is-chain', 'is-source', 'is-last'));
+  const interactive = isHumanTurn() && !state.isThinking;
+  const lastMove = state.game.history.at(-1)?.move;
+  boardEl.setAttribute('aria-busy', String(state.isThinking));
 
   const moves = getLegalMoves(state.game, state.game.turn);
-  const selectedMoves = state.selected
+  const selectedMoves = state.selected != null
     ? moves.filter((m) => m.from === state.selected)
     : [];
 
@@ -173,11 +232,20 @@ function highlightLegalTargets() {
       node.innerHTML = '';
     }
 
+    const occupant = idx === state.game.jaguar ? 'Jaguar' : state.game.dogs.includes(idx) ? 'Dog' : 'empty';
+    const isTarget = interactive && selectedMoves.some((move) => move.to === idx);
+    const canSelect = interactive && moves.some((move) => move.from === idx);
+    node.setAttribute('aria-label', `${coordLabel(idx)}: ${occupant}${state.selected === idx ? ', selected' : ''}${isTarget ? ', legal destination' : ''}${isTarget && selectedMoves.some((move) => move.to === idx && move.type === 'capture') ? ', capture' : ''}`);
+    node.setAttribute('aria-pressed', String(state.selected === idx));
+    node.setAttribute('aria-disabled', String(!canSelect && !isTarget));
+    if (lastMove?.to === idx || lastMove?.from === idx) node.classList.add('is-last');
+    if (canSelect && state.selected == null) node.classList.add('is-source');
+
     if (state.selected === idx) {
       node.classList.add('is-selected');
     }
 
-    if (selectedMoves.some((m) => m.to === idx)) {
+    if (isTarget) {
       node.classList.add('is-legal');
       if (selectedMoves.some((m) => m.type === 'capture' && m.to === idx)) {
         node.classList.add('is-chain');
@@ -190,24 +258,31 @@ function updateStatusPanel() {
   const remaining = Math.max(0, GAME_CONFIG.jaguarCaptureTarget - state.game.capturedDogs);
   const progressPct = (Math.min(state.game.capturedDogs, GAME_CONFIG.jaguarCaptureTarget) / GAME_CONFIG.jaguarCaptureTarget) * 100;
 
-  turnEl.textContent = prettySide(state.game.turn);
+  turnEl.textContent = prettySide(state.game.winner || state.game.turn);
+  turnLabelEl.textContent = state.game.winner ? (state.game.winner === SIDES.JAGUAR ? 'wins' : 'win') : 'to play';
+  moveCountEl.textContent = `${state.game.history.length} ${state.game.history.length === 1 ? 'move' : 'moves'}`;
   capturedEl.textContent = String(state.game.capturedDogs);
   remainingEl.textContent = String(remaining);
-  captureRemainingEl.textContent = `Remaining captures: ${remaining}`;
+  captureRemainingEl.textContent = `${remaining} ${remaining === 1 ? 'dog' : 'dogs'} left to capture`;
   captureProgressEl.style.width = `${progressPct}%`;
   objectiveEl.textContent = currentObjectiveText();
 
   shellEl.dataset.turn = state.game.turn;
 
   if (state.game.winner) {
-    statusEl.textContent = `${prettySide(state.game.winner)} win!`;
+    statusEl.textContent = state.game.winner === SIDES.JAGUAR ? 'The jaguar captured the whole pack.' : 'The dogs have surrounded the jaguar.';
     bannerEl.hidden = false;
-    bannerEl.textContent = `${prettySide(state.game.winner)} win the game.`;
+    bannerEl.textContent = `${state.game.winner === SIDES.JAGUAR ? 'The jaguar wins' : 'The dogs win'}. Well played! Try the other side?`;
+  } else if (state.isThinking) {
+    statusEl.textContent = `The computer is thinking for ${prettySide(state.game.turn)}…`;
+    bannerEl.hidden = true;
   } else if (state.game.chainCaptureFrom != null) {
-    statusEl.textContent = 'Jaguar must continue the capture chain.';
+    statusEl.textContent = 'Another jump! Choose a marked point to keep capturing.';
     bannerEl.hidden = true;
   } else {
-    statusEl.textContent = `${prettySide(state.game.turn)} to move.`;
+    statusEl.textContent = state.selected != null
+      ? `${coordLabel(state.selected)} selected · choose a marked destination.`
+      : `${state.mode === MODE.HVC ? 'Your turn' : prettySide(state.game.turn) + ' to play'} · select ${state.game.turn === SIDES.JAGUAR ? 'the golden jaguar' : 'a dog'} to see its moves.`;
     bannerEl.hidden = true;
   }
 
@@ -237,7 +312,7 @@ function selectNode(index) {
   const moves = getLegalMoves(state.game, state.game.turn);
 
   if (state.selected == null) {
-    if (occ === state.game.turn) {
+    if (occ === state.game.turn && moves.some((move) => move.from === index)) {
       state.selected = index;
     }
     render();
@@ -245,7 +320,7 @@ function selectNode(index) {
   }
 
   if (state.selected === index) {
-    state.selected = null;
+    state.selected = state.game.chainCaptureFrom ?? null;
     render();
     return;
   }
@@ -256,7 +331,9 @@ function selectNode(index) {
     return;
   }
 
-  state.selected = occ === state.game.turn ? index : null;
+  state.selected = occ === state.game.turn && moves.some((move) => move.from === index)
+    ? index
+    : state.game.chainCaptureFrom ?? null;
   render();
 }
 
@@ -275,13 +352,15 @@ async function maybeAIMove() {
   let move = null;
 
   try {
-    move = await thinkAndPickAIMove(snapshot, aiSide, state.difficulty);
+    await new Promise((resolve) => setTimeout(resolve, prefersReducedMotion ? 100 : 280));
+    if (requestId !== state.aiRequestId) return;
+    move = pickAIMove(snapshot, aiSide, state.difficulty);
   } catch (error) {
     if (requestId !== state.aiRequestId) return;
     state.isThinking = false;
     render();
-    console.error('Adugo AI move failed.', error);
-    return;
+    console.warn('Adugo AI search failed; using a legal move.', error);
+    move = getLegalMoves(state.game, aiSide)[0] ?? null;
   }
 
   if (requestId !== state.aiRequestId) return;
@@ -299,7 +378,7 @@ async function maybeAIMove() {
     candidate.type === move.type &&
     (candidate.over ?? null) === (move.over ?? null)
   )) {
-    executeMove(move, { triggerAI: false });
+    executeMove(move);
     return;
   }
 
@@ -354,14 +433,7 @@ function wireEvents() {
     selectNode(Number(node.dataset.index));
   });
 
-  boardEl.addEventListener('keydown', (event) => {
-    const node = event.target.closest('.adugo-node');
-    if (!node) return;
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      selectNode(Number(node.dataset.index));
-    }
-  });
+  wireBoardKeyboard();
 
   modeEl.addEventListener('change', () => {
     state.mode = modeEl.value;
@@ -375,7 +447,9 @@ function wireEvents() {
 
   diffEl.addEventListener('change', () => {
     state.difficulty = diffEl.value;
+    cancelPendingAI();
     render();
+    maybeAIMove();
   });
 
   newGameEl.addEventListener('click', resetGame);
@@ -399,9 +473,11 @@ function setupHelpTabs() {
 
 function init() {
   buildBoard();
+  addBoardCoordinates();
   wireEvents();
   setupHelpTabs();
   render();
+  maybeAIMove();
 }
 
 init();

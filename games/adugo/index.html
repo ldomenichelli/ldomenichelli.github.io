@@ -9,9 +9,11 @@
   <meta name="description" content="Playable Adugo (Jaguar and Dogs): human vs human or human vs computer with selectable difficulty.">
   <link crossorigin="anonymous" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css" rel="preload stylesheet" as="style">
   <link rel="stylesheet" href="/assets/css/adugo.css">
-<link rel="stylesheet" href="/assets/css/site-theme.css"><link rel="stylesheet" href="/assets/css/site-shell.css">
+<link rel="stylesheet" href="/assets/css/site-shell.css">
+  <link rel="stylesheet" href="/assets/css/games-room.css">
 </head>
-<body class="page dark" id="top">
+<body class="page game-room adugo-page" id="top">
+<a class="room-skip" href="#adugo-board">Skip to the board</a>
 <header class="header">
   <nav class="nav">
     <div class="logo"><a href="/" accesskey="h">lucia's room</a><div class="logo-switches"><ul class="lang-switch"><li>|</li></ul></div></div>
@@ -23,131 +25,83 @@
 </header>
 
 <main class="main">
-  <article class="post-single">
-    <header class="post-header">
-      <h1 class="post-title">Adugo — Jaguar and Dogs</h1>
-      <div class="post-meta">Playable online • Human vs Human • Human vs Computer</div>
+  <article class="post-single game-detail">
+    <header class="post-header game-heading">
+      <a class="game-back" href="/games/">← All games</a>
+      <p class="game-eyebrow">The game room / Adugo</p>
+      <h1 class="post-title">Adugo<span class="game-title-dot" aria-hidden="true">.</span></h1>
+      <p class="game-tagline">One jaguar. Fourteen dogs. Two ways to win.</p>
+      <p class="game-meta"><span>Hunt &amp; capture</span><span>5 × 5 board</span><span>Jaguar moves first</span></p>
     </header>
-
     <div class="post-content">
-      <section class="adugo-shell" aria-label="Adugo game area">
-        <header class="adugo-header">
-          <div>
-            <h2>Adugo Arena</h2>
-            <p class="adugo-subtitle">Asymmetrical hunt game on a line-based graph board.</p>
-          </div>
-          <p class="adugo-subtitle">Jaguar starts first</p>
-        </header>
-
-        <div class="adugo-role-strip" aria-label="Roles and objective summary">
-          <section class="adugo-role adugo-role-jaguar">
-            <p class="adugo-role-title">Jaguar</p>
-            <p class="adugo-role-text">Mobile hunter. Capture dogs by jumping.</p>
-          </section>
-          <section class="adugo-role adugo-role-dogs">
-            <p class="adugo-role-title">Dogs</p>
-            <p class="adugo-role-text">Pack defenders. Trap the jaguar.</p>
-          </section>
-          <section class="adugo-role adugo-role-objective">
-            <p class="adugo-role-title">Capture objective</p>
-            <div class="adugo-progress-wrap">
-              <div class="adugo-progress" data-capture-progress></div>
-            </div>
-            <p class="adugo-role-text" data-capture-remaining>Remaining captures: 14</p>
-          </section>
-        </div>
-
-        <p class="adugo-win-banner" data-win-banner hidden></p>
-
-        <div class="adugo-main">
-          <section class="adugo-board-wrap" aria-label="Board section">
-            <div class="adugo-board" data-adugo-board role="grid" aria-label="Adugo board"></div>
-
-            <div class="adugo-tabs">
-              <ul class="adugo-tab-list" role="tablist" aria-label="Adugo information tabs">
-                <li><button class="adugo-tab" role="tab" aria-selected="true" data-tab-button="rules">Rules</button></li>
-                <li><button class="adugo-tab" role="tab" aria-selected="false" data-tab-button="play">How to play</button></li>
-                <li><button class="adugo-tab" role="tab" aria-selected="false" data-tab-button="tips">Strategy tips</button></li>
+      <section class="adugo-shell" aria-label="Adugo game">
+        <div class="adugo-main game-layout">
+          <div class="adugo-board-wrap">
+            <section class="game-stage" aria-label="Play Adugo">
+              <div class="game-stage-header">
+                <div class="game-turn"><span class="game-turn-dot" aria-hidden="true"></span><strong data-turn>Jaguar</strong><span data-turn-label>to play</span></div>
+                <span class="game-phase">Jaguar &amp; dogs</span>
+              </div>
+              <p class="adugo-status game-live-status" data-status role="status" aria-live="polite" aria-atomic="true"></p>
+              <p class="adugo-thinking" data-thinking hidden>Thinking<span aria-hidden="true">…</span></p>
+              <p class="adugo-win-banner game-win-banner" data-win-banner role="status" hidden></p>
+              <div class="adugo-board" id="adugo-board" tabindex="-1" data-adugo-board role="group" aria-label="Adugo board" aria-describedby="adugo-board-help"></div>
+              <div class="game-board-actions">
+                <button type="button" class="adugo-button game-button game-button-secondary" data-undo disabled><span aria-hidden="true">↶</span> Undo</button>
+                <button type="button" class="adugo-button game-button game-button-primary" data-new-game>New game <span aria-hidden="true">↗</span></button>
+              </div>
+              <p class="game-board-help" id="adugo-board-help">Tap a point to play. Keyboard: arrow keys to explore, Enter to choose, Esc to deselect.<br><a href="#adugo-settings">Game settings</a> · <a href="#adugo-guide">How to play</a></p>
+            </section>
+            <section class="adugo-tabs game-howto" id="adugo-guide" tabindex="-1" aria-label="Learn to play">
+              <h2>A minute to learn.</h2>
+              <ul class="adugo-tab-list" role="tablist" aria-label="Adugo guide">
+                <li role="presentation"><button class="adugo-tab" type="button" role="tab" aria-selected="true" data-tab-button="rules">The rules</button></li>
+                <li role="presentation"><button class="adugo-tab" type="button" role="tab" aria-selected="false" data-tab-button="play">The controls</button></li>
+                <li role="presentation"><button class="adugo-tab" type="button" role="tab" aria-selected="false" data-tab-button="tips">A little strategy</button></li>
               </ul>
-
-              <section class="adugo-tab-panel" data-tab-panel="rules" role="tabpanel">
-                <ul>
-                  <li>Board is a graph: pieces move only along connected lines.</li>
-                  <li>Jaguar moves one step, or captures by jumping over an adjacent dog to an empty connected landing node.</li>
-                  <li>Dogs cannot capture; they win by trapping the jaguar so it has no legal moves.</li>
-                  <li>Jaguar continues a capture chain in the same turn when additional captures are available.</li>
-                  <li>Current variant: jaguar wins by capturing all 14 dogs.</li>
-                </ul>
-              </section>
-
-              <section class="adugo-tab-panel" data-tab-panel="play" role="tabpanel" hidden>
-                <ol>
-                  <li>Select one of your pieces (matching the current turn).</li>
-                  <li>Legal destinations glow in blue (capture landings in red).</li>
-                  <li>In Human vs Computer mode, input is locked while the AI is thinking.</li>
-                  <li>Undo in Human vs Computer mode reverts one full pair (human + AI) when possible.</li>
+              <section class="adugo-tab-panel" data-tab-panel="rules" role="tabpanel"><ol class="game-rule-steps">
+                  <li><strong>Follow the lines.</strong> Select a piece, then move to a connected empty point.</li>
+                  <li><strong>Hunt as the jaguar.</strong> Jump over an adjacent dog to an empty point beyond it. If another jump is possible, keep capturing.</li>
+                  <li><strong>Close in as the dogs.</strong> Dogs move one step and cannot jump. Surround the jaguar so it has no legal moves.</li>
                 </ol>
+                <p class="game-variant-note">This board uses the capture-all variant: the jaguar wins by capturing all 14 dogs.</p></section>
+              <section class="adugo-tab-panel" data-tab-panel="play" role="tabpanel" hidden>
+                <p>Select a piece to reveal its moves, then choose a marked point. A ring shows your selection; a small dot shows a legal destination.</p>
+                <p>Use <strong>Undo</strong> to try another idea. Against the computer, it takes you back to your previous turn. <strong>New game</strong> starts fresh with your current settings.</p>
+                <p>Keyboard players can use the arrow keys on the board, Enter or Space to select, and Escape to clear a selection.</p>
               </section>
-
-              <section class="adugo-tab-panel" data-tab-panel="tips" role="tabpanel" hidden>
-                <p><strong>Jaguar:</strong> maximize mobility, keep central lanes open, and chain captures when possible.</p>
-                <p><strong>Dogs:</strong> create a compact net, deny escape lanes, and avoid isolated dogs that can be jumped.</p>
-              </section>
-            </div>
-          </section>
-
-          <aside class="adugo-side" aria-label="Game controls and status">
-            <section class="adugo-card adugo-card-setup">
-              <p class="adugo-label">Mode &amp; setup</p>
+              <section class="adugo-tab-panel" data-tab-panel="tips" role="tabpanel" hidden><p><strong>Jaguar:</strong> keep your escape routes open. A jump that leads to another jump is worth looking for.</p><p><strong>Dogs:</strong> move as a pack. Isolated dogs are easy targets; a connected wall gives the jaguar less room.</p></section>
+            </section>
+          </div>
+          <aside class="adugo-side game-sidebar" id="adugo-settings" tabindex="-1" aria-label="Game settings and progress">
+            <section class="adugo-card adugo-card-setup game-panel">
+              <p class="game-eyebrow">Make yourself at home</p>
+              <h2>Your game</h2>
               <div class="adugo-grid2 adugo-setup-grid">
-                <div class="adugo-field">
-                  <label for="adugo-mode">Mode</label>
-                  <select id="adugo-mode" class="adugo-select" data-mode>
-                    <option value="HUMAN_VS_HUMAN">Human vs Human</option>
-                    <option value="HUMAN_VS_COMPUTER">Human vs Computer</option>
-                  </select>
+                <div class="adugo-field"><label for="adugo-mode">Play with</label><select id="adugo-mode" class="adugo-select" data-mode><option value="HUMAN_VS_COMPUTER" selected>The computer</option><option value="HUMAN_VS_HUMAN">A friend · same device</option></select></div>
+                <div class="adugo-field"><label for="adugo-side">Your side</label><select id="adugo-side" class="adugo-select" data-side><option value="JAGUAR">Jaguar · the hunter</option><option value="DOGS">Dogs · the pack</option></select></div>
+              </div>
+              <div class="adugo-field adugo-field-stack"><label for="adugo-difficulty">Difficulty</label><select id="adugo-difficulty" class="adugo-select" data-difficulty><option value="Easy">Easy · find your feet</option><option value="Medium" selected>Medium · a little challenge</option><option value="Hard">Hard · think ahead</option></select></div>
+              <p class="game-small-note">Changing the opponent or your side starts a new game.</p>
+            </section>
+            <section class="adugo-card adugo-card-status game-panel">
+              <h2>On the board</h2>
+              <div class="game-players">
+                  <div class="game-player adugo-player-jaguar"><span class="game-piece-key key-jaguar" aria-hidden="true"></span><span>Jaguar <small>Capture the pack</small></span></div>
+                  <span class="game-player-divider" aria-hidden="true">vs</span>
+                  <div class="game-player adugo-player-dogs"><span class="game-piece-key key-white" aria-hidden="true"></span><span>Dogs <small>Trap the hunter</small></span></div>
                 </div>
-                <div class="adugo-field">
-                  <label for="adugo-side">Play as</label>
-                  <select id="adugo-side" class="adugo-select" data-side>
-                    <option value="JAGUAR">Jaguar</option>
-                    <option value="DOGS">Dogs</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="adugo-field adugo-field-stack">
-                <label for="adugo-difficulty">Difficulty</label>
-                <select id="adugo-difficulty" class="adugo-select" data-difficulty>
-                  <option value="Easy">Easy</option>
-                  <option value="Medium" selected>Medium</option>
-                  <option value="Hard">Hard</option>
-                </select>
-              </div>
+                <div class="adugo-stat"><span>Dogs captured</span><strong><span data-captured>0</span> / 14</strong></div>
+                <div class="adugo-progress-wrap" aria-hidden="true"><div class="adugo-progress" data-capture-progress></div></div>
+                <p class="game-small-note" data-capture-remaining>14 dogs left to capture</p>
+                <span data-remaining hidden>14</span>
+              <p class="adugo-status-note game-small-note" data-objective></p>
             </section>
-
-            <section class="adugo-card adugo-card-status">
-              <p class="adugo-label">Status</p>
-              <div class="adugo-stat"><span>Turn</span><strong data-turn>Jaguar</strong></div>
-              <div class="adugo-stat"><span>Dogs captured</span><strong data-captured>0</strong></div>
-              <div class="adugo-stat"><span>Need to win (Jaguar)</span><strong data-remaining>14</strong></div>
-              <p class="adugo-status" data-status aria-live="polite">Jaguar to move.</p>
-              <p class="adugo-thinking" data-thinking aria-live="polite" hidden>Computer thinking…</p>
-              <p class="adugo-status adugo-status-note" data-objective></p>
-            </section>
-
-            <section class="adugo-card adugo-card-history">
-              <p class="adugo-label">Move history</p>
-              <ol class="adugo-history" data-history></ol>
-            </section>
-
-            <section class="adugo-card adugo-card-controls">
-              <p class="adugo-label">Controls</p>
-              <div class="adugo-grid2 adugo-controls-grid">
-                <button class="adugo-button" data-new-game>New game</button>
-                <button class="adugo-button" data-undo>Undo</button>
-              </div>
-            </section>
+            <details class="adugo-card adugo-card-history game-panel game-history-panel">
+              <summary>Move notebook <span data-move-count>0 moves</span></summary>
+              <ol class="adugo-history" data-history aria-label="Move history"></ol>
+            </details>
+            <p class="game-sidebar-note">No clock. No rush.<br>Just one good move at a time.</p>
           </aside>
         </div>
       </section>
@@ -166,6 +120,6 @@
   document.body.addEventListener('click',e=>{if(!b.contains(e.target))m.classList.add('hidden')});
 </script>
 <script type="module" src="/assets/js/adugo-page.js"></script>
-<script src="/assets/js/pocket-bird.js" defer></script><script src="/assets/js/site-shell.js" defer></script>
+<script src="/assets/js/site-shell.js" defer></script>
 </body>
 </html>

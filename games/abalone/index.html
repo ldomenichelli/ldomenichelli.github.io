@@ -6,13 +6,15 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
   <meta name="robots" content="index, follow">
   <title>Abalone | lucia's room</title>
-  <meta name="description" content="Playable Abalone!">
+  <meta name="description" content="A quiet game of strength and balance. Play Abalone against a friend or the computer, with move hints and three difficulty levels.">
   <link crossorigin="anonymous" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css" rel="preload stylesheet" as="style">
   <link rel="stylesheet" href="/assets/css/game-shell.css">
   <link rel="stylesheet" href="/assets/css/abalone.css">
-<link rel="stylesheet" href="/assets/css/site-theme.css"><link rel="stylesheet" href="/assets/css/site-shell.css">
+<link rel="stylesheet" href="/assets/css/site-shell.css">
+  <link rel="stylesheet" href="/assets/css/games-room.css">
 </head>
-<body class="page dark abalone-page">
+<body class="page game-room abalone-page">
+<a class="room-skip" href="#abalone-board">Skip to the game board</a>
 <header class="header">
   <nav class="nav">
     <div class="logo"><a href="/" accesskey="h">lucia's room</a><div class="logo-switches"><ul class="lang-switch"><li>|</li></ul></div></div>
@@ -26,33 +28,45 @@
 <main class="abalone-wrap">
   <section class="panel hero-panel" aria-labelledby="abalone-title">
     <div>
+      <a class="game-breadcrumb" href="/games/">← All games</a>
+      <p class="game-eyebrow">THE GAMES ROOM</p>
       <h1 id="abalone-title" class="hero-title">Abalone</h1>
-      <p class="muted">Duel on a radius-4 hex grid!! (<span id="cell-count"></span> cells).</p>
+      <p class="muted game-description">A little strength. A little strategy. Push six of your opponent’s marbles off the board.</p>
     </div>
-    <div class="meta-row"><span class="meta-pill">2 modes</span><span class="meta-pill">Human vs Human</span><span class="meta-pill">Human vs Computer</span></div>
+    <div class="meta-row game-meta"><span class="meta-pill">Marble strategy</span><span class="meta-pill">Solo or with a friend</span><span class="meta-pill">First to 6</span></div>
   </section>
 
   <section class="play-layout" aria-label="Playable board and controls">
     <div class="panel board-shell">
       <div class="board-header-row">
-        <h2>Board</h2>
+        <span class="game-eyebrow">YOUR TABLE</span>
         <p id="thinking-indicator" class="thinking hidden" aria-live="polite">Computer thinking…</p>
       </div>
       <p id="turn-indicator" class="stat turn-indicator" aria-live="polite"></p>
-      <p id="capture-indicator" class="stat muted"></p>
-      <p id="status-indicator" class="muted status-copy"></p>
+      <div id="capture-indicator" class="abalone-scoreboard" aria-label="Captured marbles"></div>
+      <p id="status-indicator" class="muted status-copy" aria-live="polite"></p>
       <div id="game-over-banner" class="game-over hidden" aria-live="assertive"></div>
-      <svg id="abalone-board" class="abalone-board" aria-label="Playable Abalone board" role="application"></svg>
+      <svg id="abalone-board" tabindex="-1" class="abalone-board" aria-label="Playable Abalone board" role="group" aria-describedby="abalone-keyboard-help"></svg>
+      <div class="abalone-move-controls">
+        <div class="abalone-selection-copy"><strong id="selection-label">Choose your marbles</strong><span id="selection-help">Tap up to 3 in a straight line.</span><button id="clear-selection" class="abalone-text-button" disabled>Clear selection</button></div>
+        <div class="abalone-direction-pad" id="direction-pad" aria-label="Move selected marbles">
+          <button data-direction="2" aria-label="Move northwest" title="Move northwest">↖</button><button data-direction="1" aria-label="Move northeast" title="Move northeast">↗</button>
+          <button data-direction="3" aria-label="Move west" title="Move west">←</button><span aria-hidden="true">MOVE</span><button data-direction="0" aria-label="Move east" title="Move east">→</button>
+          <button data-direction="4" aria-label="Move southwest" title="Move southwest">↙</button><button data-direction="5" aria-label="Move southeast" title="Move southeast">↘</button>
+        </div>
+      </div>
+      <div class="game-board-actions"><button id="undo-move" class="ghost">↶ Undo</button><button id="reset-game" class="ghost">New game</button></div>
+      <p id="abalone-keyboard-help" class="board-keyboard-help board-keyboard-hint">Keyboard: arrows to explore · Enter to select · Esc to clear.</p>
     </div>
 
     <aside class="panel side-rail" aria-label="Game controls and history">
       <div class="rail-section">
-        <h3>Mode</h3>
+        <h3>Make it your game</h3>
         <div class="control-grid">
           <label for="mode-select">Game mode</label>
           <select id="mode-select">
-            <option value="hvh">Human vs Human</option>
-            <option value="hvc">Human vs Computer</option>
+            <option value="hvh">Play with a friend</option>
+            <option value="hvc" selected>Play the computer</option>
           </select>
 
           <label for="human-side-select">Your side</label>
@@ -71,23 +85,17 @@
       </div>
 
       <div class="rail-section compact-stats">
-        <h3>Live status</h3>
+        <h3>The match</h3>
         <p id="side-status" class="muted tiny"></p>
         <p id="history-summary" class="muted tiny"></p>
       </div>
 
       <div class="rail-section history-shell">
         <h3>Move history</h3>
-        <ol id="move-history" class="history" aria-live="polite"></ol>
+        <ol id="move-history" class="history" aria-label="Move history"></ol>
       </div>
 
-      <div class="rail-section">
-        <h3>Controls</h3>
-        <div class="ui-row">
-          <button id="undo-move" class="ghost">Undo</button>
-          <button id="reset-game" class="ghost">New game</button>
-        </div>
-      </div>
+      <div class="rail-section game-quick-tip"><h3>A small nudge</h3><p class="muted">Strength comes in numbers. Three aligned marbles can push two; two can push one.</p></div>
     </aside>
   </section>
 
@@ -141,6 +149,6 @@
   document.body.addEventListener('click',e=>{if(!b.contains(e.target))m.classList.add('hidden')});
 </script>
 <script type="module" src="/assets/js/abalone-page.js"></script>
-<script src="/assets/js/pocket-bird.js" defer></script><script src="/assets/js/site-shell.js" defer></script>
+<script src="/assets/js/site-shell.js" defer></script>
 </body>
 </html>

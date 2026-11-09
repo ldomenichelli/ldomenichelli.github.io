@@ -2,7 +2,6 @@ import {
   PLAYERS,
   PHASES,
   GAME_CONFIG,
-  WINNING_LINES,
   ADJACENCY,
   createInitialState,
   cloneState,
@@ -16,15 +15,16 @@ import {
   coordLabel,
   opposite
 } from './achi-engine.js';
-import { thinkAndPickAIMove } from './achi-ai.js';
+import { pickAIMove } from './achi-ai.js';
 import { MODE, computeUndoResult } from './achi-session.js';
+import { setupTabs } from './game-tabs.js';
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const state = {
   game: createInitialState(),
   selected: null,
-  mode: MODE.HVH,
+  mode: MODE.HVC,
   humanSide: PLAYERS.WHITE,
   difficulty: 'Medium',
   isThinking: false,
@@ -55,6 +55,8 @@ const sideEl = document.querySelector('[data-side]');
 const difficultyEl = document.querySelector('[data-difficulty]');
 const newGameEl = document.querySelector('[data-new-game]');
 const undoEl = document.querySelector('[data-undo]');
+const moveCountEl = document.querySelector('[data-move-count]');
+const turnLabelEl = document.querySelector('[data-turn-label]');
 
 let winLineEl = null;
 
@@ -77,7 +79,9 @@ function isHumanTurn() {
 }
 
 function canUndo() {
-  return state.snapshots.length > 0;
+  return state.mode === MODE.HVH
+    ? state.snapshots.length > 0
+    : state.snapshots.some((snapshot) => snapshot.turn === state.humanSide);
 }
 
 function cancelPendingAI() {
@@ -90,6 +94,48 @@ function pushSnapshot() {
   if (state.snapshots.length > 200) state.snapshots.shift();
 }
 
+function wireBoardKeyboard() {
+  const nodes = [...boardEl.querySelectorAll('.achi-node')];
+  boardEl.addEventListener('focusin', (event) => {
+    const active = event.target.closest('.achi-node');
+    if (!active) return;
+    nodes.forEach((node) => { node.tabIndex = node === active ? 0 : -1; });
+  });
+  boardEl.addEventListener('keydown', (event) => {
+    const node = event.target.closest('.achi-node');
+    if (!node) return;
+    const index = Number(node.dataset.index);
+    const { x, y } = indexToCoord(index);
+    let next = index;
+    if (event.key === 'ArrowLeft') next = y * GAME_CONFIG.size + Math.max(0, x - 1);
+    else if (event.key === 'ArrowRight') next = y * GAME_CONFIG.size + Math.min(GAME_CONFIG.size - 1, x + 1);
+    else if (event.key === 'ArrowUp') next = Math.max(0, y - 1) * GAME_CONFIG.size + x;
+    else if (event.key === 'ArrowDown') next = Math.min(GAME_CONFIG.size - 1, y + 1) * GAME_CONFIG.size + x;
+    else if (event.key === 'Home') next = event.ctrlKey ? 0 : y * GAME_CONFIG.size;
+    else if (event.key === 'End') next = event.ctrlKey ? nodes.length - 1 : (y + 1) * GAME_CONFIG.size - 1;
+    else if (event.key === 'Escape') {
+      state.selected = null;
+      render();
+    } else return;
+    event.preventDefault();
+    nodes[next].focus();
+  });
+}
+
+function addBoardCoordinates() {
+  for (let i = 0; i < GAME_CONFIG.size; i += 1) {
+    for (const axis of ['column', 'row']) {
+      const label = document.createElement('span');
+      label.className = 'achi-coordinate';
+      label.setAttribute('aria-hidden', 'true');
+      label.textContent = axis === 'column' ? String.fromCharCode(65 + i) : String(i + 1);
+      label.style.left = `${axis === 'column' ? boardPercentAt(i) : 3.5}%`;
+      label.style.top = `${axis === 'row' ? boardPercentAt(i) : 3.5}%`;
+      boardEl.appendChild(label);
+    }
+  }
+}
+
 function buildBoard() {
   boardEl.innerHTML = '';
 
@@ -98,6 +144,7 @@ function buildBoard() {
     node.type = 'button';
     node.className = 'achi-node';
     node.dataset.index = String(index);
+    node.tabIndex = index === 4 ? 0 : -1;
     node.setAttribute('aria-label', `Intersection ${coordLabel(index)}`);
 
     const { x, y } = indexToCoord(index);
@@ -142,6 +189,7 @@ function buildBoard() {
   winLineEl.className = 'achi-win-line';
   winLineEl.hidden = true;
   boardEl.appendChild(winLineEl);
+  addBoardCoordinates();
 }
 
 function updateWinLine() {
@@ -171,7 +219,9 @@ function updateWinLine() {
 }
 
 function currentObjectiveText() {
-  return 'First player to align three of their own pieces horizontally, vertically, or diagonally wins. Movement begins only after all 8 pieces have been placed.';
+  return getPhase(state.game) === PHASES.PLACEMENT
+    ? 'Four pieces each. A line of three wins at any time.'
+    : 'All pieces are down. Slide along a line to make three in a row.';
 }
 
 function renderHistory() {
@@ -181,10 +231,11 @@ function renderHistory() {
     return;
   }
 
-  state.game.history.forEach((entry, index) => {
+  state.game.history.slice(-100).forEach((entry, index) => {
     const li = document.createElement('li');
     li.className = 'achi-history-item';
     const actor = prettyPlayer(entry.actor);
+    index += Math.max(0, state.game.history.length - 100);
     if (entry.move.kind === 'place') {
       li.textContent = `${index + 1}. ${actor} place ${coordLabel(entry.move.to)}`;
     } else {
@@ -200,6 +251,9 @@ function renderBoardState() {
   const phase = getPhase(state.game);
   const nodes = boardEl.querySelectorAll('.achi-node');
   const legalMoves = getLegalMoves(state.game, state.game.turn);
+  const interactive = isHumanTurn() && !state.isThinking;
+  const lastMove = state.game.history.at(-1)?.move;
+  boardEl.setAttribute('aria-busy', String(state.isThinking));
   const legalTargets = phase === PHASES.PLACEMENT
     ? new Set(legalMoves.map((move) => move.to))
     : new Set(legalMoves.filter((move) => move.from === state.selected).map((move) => move.to));
@@ -219,6 +273,13 @@ function renderBoardState() {
       node.innerHTML = `<span class="piece ${occupant === PLAYERS.WHITE ? 'white' : 'black'}" aria-hidden="true"></span>`;
     }
 
+    const canChoose = interactive && (legalTargets.has(index) || selectableSources.has(index));
+    const selected = state.selected === index;
+    node.setAttribute('aria-label', `${coordLabel(index)}: ${occupant ? prettyPlayer(occupant) + ' piece' : 'empty'}${selected ? ', selected' : ''}${interactive && legalTargets.has(index) ? ', legal destination' : ''}`);
+    node.setAttribute('aria-pressed', String(selected));
+    node.setAttribute('aria-disabled', String(!canChoose));
+    if (lastMove?.to === index || lastMove?.from === index) node.classList.add('is-last');
+
     if (state.selected === index) {
       node.classList.add('is-selected');
     }
@@ -227,15 +288,15 @@ function renderBoardState() {
       node.classList.add('is-winning');
     }
 
-    if (!state.game.winner && phase === PHASES.PLACEMENT && legalTargets.has(index)) {
+    if (interactive && phase === PHASES.PLACEMENT && legalTargets.has(index)) {
       node.classList.add('is-legal');
     }
 
-    if (!state.game.winner && phase === PHASES.MOVEMENT && state.selected == null && selectableSources.has(index)) {
+    if (interactive && phase === PHASES.MOVEMENT && state.selected == null && selectableSources.has(index)) {
       node.classList.add('is-source');
     }
 
-    if (!state.game.winner && phase === PHASES.MOVEMENT && state.selected != null && legalTargets.has(index)) {
+    if (interactive && phase === PHASES.MOVEMENT && state.selected != null && legalTargets.has(index)) {
       node.classList.add('is-legal');
     }
   });
@@ -249,14 +310,17 @@ function updateStatus() {
   const blackCount = pieceCount(state.game, PLAYERS.BLACK);
   const placed = totalPiecesPlaced(state.game);
   const placementPct = (placed / (GAME_CONFIG.piecesPerPlayer * 2)) * 100;
+  const blocked = !state.game.winner && getLegalMoves(state.game).length === 0;
 
   phaseEl.textContent = prettyPhase(phase);
-  turnEl.textContent = prettyPlayer(state.game.turn);
+  turnEl.textContent = prettyPlayer(state.game.winner || state.game.turn);
+  turnLabelEl.textContent = state.game.winner ? 'wins' : blocked ? 'has no moves' : 'to play';
+  moveCountEl.textContent = `${state.game.history.length} ${state.game.history.length === 1 ? 'move' : 'moves'}`;
   whiteCountEl.textContent = `${whiteCount} / ${GAME_CONFIG.piecesPerPlayer}`;
   blackCountEl.textContent = `${blackCount} / ${GAME_CONFIG.piecesPerPlayer}`;
   placementProgressEl.style.width = `${placementPct}%`;
   placementRemainingEl.textContent = phase === PHASES.PLACEMENT
-    ? `${GAME_CONFIG.piecesPerPlayer * 2 - placed} placements remaining`
+    ? `${GAME_CONFIG.piecesPerPlayer * 2 - placed} pieces left to place`
     : 'Placement complete'
   ;
   objectiveEl.textContent = currentObjectiveText();
@@ -267,18 +331,21 @@ function updateStatus() {
   if (state.game.winner) {
     statusEl.textContent = `${prettyPlayer(state.game.winner)} wins with three in a row.`;
     bannerEl.hidden = false;
-    bannerEl.textContent = `${prettyPlayer(state.game.winner)} wins the game.`;
+    bannerEl.textContent = `${prettyPlayer(state.game.winner)} wins. A lovely line of three! Play again?`;
+  } else if (blocked) {
+    statusEl.textContent = `${prettyPlayer(state.game.turn)} has no legal move. Undo to try another path, or start a new game.`;
+    bannerEl.hidden = true;
   } else if (state.mode === MODE.HVC && state.isThinking) {
-    statusEl.textContent = 'Computer is evaluating its next move.';
+    statusEl.textContent = `The computer is thinking for ${prettyPlayer(state.game.turn)}…`;
     bannerEl.hidden = true;
   } else if (phase === PHASES.PLACEMENT) {
-    statusEl.textContent = `${prettyPlayer(state.game.turn)} to place a piece.`;
+    statusEl.textContent = `${state.mode === MODE.HVC ? 'Your turn' : prettyPlayer(state.game.turn) + ' to play'} · place a piece on any open point.`;
     bannerEl.hidden = true;
   } else if (state.selected != null) {
     statusEl.textContent = `Selected ${coordLabel(state.selected)}. Choose an adjacent empty intersection.`;
     bannerEl.hidden = true;
   } else {
-    statusEl.textContent = `${prettyPlayer(state.game.turn)} to move.`;
+    statusEl.textContent = `${state.mode === MODE.HVC ? 'Your turn' : prettyPlayer(state.game.turn) + ' to play'} · select a piece to see its moves.`;
     bannerEl.hidden = true;
   }
 
@@ -312,7 +379,7 @@ function executeMove(move, options = { triggerAI: true }) {
 }
 
 async function maybeAIMove() {
-  if (state.mode !== MODE.HVC || state.game.winner) return;
+  if (state.mode !== MODE.HVC || state.game.winner || getLegalMoves(state.game).length === 0) return;
   const aiSide = opposite(state.humanSide);
   if (state.game.turn !== aiSide) return;
 
@@ -325,13 +392,15 @@ async function maybeAIMove() {
   let move = null;
 
   try {
-    move = await thinkAndPickAIMove(cloneState(state.game), aiSide, state.difficulty, prefersReducedMotion ? 100 : 260);
+    await new Promise((resolve) => setTimeout(resolve, prefersReducedMotion ? 100 : 260));
+    if (requestId !== state.aiRequestId) return;
+    move = pickAIMove(cloneState(state.game), aiSide, state.difficulty);
   } catch (error) {
     if (requestId !== state.aiRequestId) return;
     state.isThinking = false;
     render();
-    console.error('Achi AI move failed.', error);
-    return;
+    console.warn('Achi AI search failed; using a legal move.', error);
+    move = getLegalMoves(state.game, aiSide)[0] ?? null;
   }
 
   if (requestId !== state.aiRequestId) return;
@@ -398,7 +467,8 @@ function undoMove() {
     mode: state.mode,
     humanSide: state.humanSide,
     snapshots: state.snapshots,
-    currentGame: state.game
+    currentGame: state.game,
+    getOpponentSide: opposite
   });
 
   state.game = result.game;
@@ -417,25 +487,17 @@ function resetGame() {
 }
 
 function setupHelpTabs() {
-  const buttons = document.querySelectorAll('[data-tab-button]');
-  const panels = document.querySelectorAll('[data-tab-panel]');
-
-  buttons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const tab = button.dataset.tabButton;
-      let activePanel = null;
-      buttons.forEach((candidate) => candidate.setAttribute('aria-selected', String(candidate === button)));
-      panels.forEach((panel) => {
-        const active = panel.dataset.tabPanel === tab;
-        panel.hidden = !active;
-        if (active) activePanel = panel;
-      });
-
-      activePanel?.scrollIntoView({
-        block: 'nearest',
-        behavior: prefersReducedMotion ? 'auto' : 'smooth'
-      });
-    });
+  setupTabs({
+    buttonSelector: '[data-tab-button]',
+    panelSelector: '[data-tab-panel]',
+    buttonKey: 'tabButton',
+    panelKey: 'tabPanel',
+    setButtonState(button, active) {
+      button.setAttribute('aria-selected', String(active));
+    },
+    setPanelState(panel, active) {
+      panel.hidden = !active;
+    }
   });
 }
 
@@ -446,14 +508,7 @@ function wireEvents() {
     selectNode(Number(node.dataset.index));
   });
 
-  boardEl.addEventListener('keydown', (event) => {
-    const node = event.target.closest('.achi-node');
-    if (!node) return;
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      selectNode(Number(node.dataset.index));
-    }
-  });
+  wireBoardKeyboard();
 
   modeEl.addEventListener('change', () => {
     state.mode = modeEl.value;
@@ -467,7 +522,9 @@ function wireEvents() {
 
   difficultyEl.addEventListener('change', () => {
     state.difficulty = difficultyEl.value;
+    cancelPendingAI();
     render();
+    maybeAIMove();
   });
 
   newGameEl.addEventListener('click', resetGame);
@@ -479,6 +536,7 @@ function init() {
   wireEvents();
   setupHelpTabs();
   render();
+  maybeAIMove();
 }
 
 init();

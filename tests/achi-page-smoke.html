@@ -104,6 +104,10 @@
 
       assert(Boolean(board && status && history && phase && mode && side && difficulty && thinking && newGame && undo && tabRules && tabPlay && tabTips && panelRules && panelPlay && panelTips && node0 && node4 && node5 && sidebar && setupGrid && modeField && sideField), 'page renders board, controls, tabs, and key nodes');
 
+      assert(mode.value === 'HUMAN_VS_COMPUTER', 'computer mode is ready on first load');
+      changeSelect(mode, 'HUMAN_VS_HUMAN');
+      assert(doc.documentElement.scrollWidth <= frameWidth + 1, 'page has no horizontal overflow');
+
       const boardRect = board.getBoundingClientRect();
       log(`INFO board ${Math.round(boardRect.width)}x${Math.round(boardRect.height)} in frame ${frameWidth}`);
       if (frameWidth <= 480) {
@@ -116,7 +120,7 @@
 
       if (frameWidth > 480) {
         const sidebarRect = sidebar.getBoundingClientRect();
-        assert(sidebarRect.width >= 285, 'sidebar keeps a comfortable desktop width');
+        assert(sidebarRect.width >= 280, 'sidebar keeps a comfortable desktop width');
 
         const modeFieldRect = modeField.getBoundingClientRect();
         const sideFieldRect = sideField.getBoundingClientRect();
@@ -135,8 +139,14 @@
       const topAtNode0 = doc.elementFromPoint(node0Rect.left + node0Rect.width / 2, node0Rect.top + node0Rect.height / 2);
       assert(topAtNode0 === node0 || node0.contains(topAtNode0), 'top-left board node stays visible and clickable');
 
-      assert(status.textContent.trim() === 'White to place a piece.', 'initial status is correct');
+      assert(doc.querySelector('[data-turn]').textContent.trim() === 'White' && phase.textContent.trim() === 'Placement', 'initial status is correct');
       assert(thinking.hidden === true, 'thinking indicator is hidden on initial load');
+
+      node0.focus();
+      node0.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+      assert(doc.activeElement.dataset.index === '1', 'arrow keys move board focus');
+      assert(board.querySelectorAll('[tabindex="0"]').length === 1, 'board has one keyboard entry point');
+
 
       tabPlay.click();
       await sleep(20);
@@ -156,7 +166,7 @@
       }
 
       assert(phase.textContent.trim() === 'Movement', 'movement phase begins only after all pieces are placed');
-      assert(status.textContent.trim() === 'White to move.', 'status updates when the movement phase starts');
+      assert(doc.querySelector('[data-turn]').textContent.trim() === 'White' && phase.textContent.trim() === 'Movement', 'status updates when the movement phase starts');
 
       node5.click();
       await sleep(20);
@@ -165,18 +175,22 @@
 
       node4.click();
       await sleep(20);
-      assert(status.textContent.trim() === 'Black to move.', 'movement interaction advances the turn');
+      assert(doc.querySelector('[data-turn]').textContent.trim() === 'Black' && phase.textContent.trim() === 'Movement', 'movement interaction advances the turn');
       assert(history.textContent.includes('White C2→B2'), 'move history records movement turns');
       assert(undo.disabled === false, 'undo enables after moves');
 
       undo.click();
       await sleep(20);
-      assert(status.textContent.trim() === 'White to move.', 'undo reverts the latest movement move');
+      assert(doc.querySelector('[data-turn]').textContent.trim() === 'White' && phase.textContent.trim() === 'Movement', 'undo reverts the latest movement move');
 
       newGame.click();
       await sleep(20);
-      assert(status.textContent.trim() === 'White to place a piece.', 'new game resets to the placement phase');
+      assert(doc.querySelector('[data-turn]').textContent.trim() === 'White' && phase.textContent.trim() === 'Placement', 'new game resets to the placement phase');
       assert(history.textContent.includes('No moves yet.'), 'new game resets the move history');
+
+      for (const index of [2, 1, 5, 3, 6, 4, 7, 8]) doc.querySelector(`[data-index="${index}"]`).click();
+      assert(status.textContent.includes('no legal move') && !undo.disabled, 'blocked position explains that undo or a new game is needed');
+      newGame.click();
 
       changeSelect(mode, 'HUMAN_VS_COMPUTER');
       await sleep(20);
@@ -193,13 +207,13 @@
       assert(thinking.hidden === false, 'thinking indicator appears while the AI opens for black');
 
       await sleep(450);
-      assert(status.textContent.trim() === 'Black to place a piece.', 'AI opening move hands the turn back to the human side');
+      assert(doc.querySelector('[data-turn]').textContent.trim() === 'Black' && phase.textContent.trim() === 'Placement', 'AI opening move hands the turn back to the human side');
       assert(thinking.hidden === true, 'thinking indicator clears after the AI move completes');
       assert(history.textContent.includes('White place'), 'AI move is recorded in move history');
 
       undo.click();
       await sleep(20);
-      assert(status.textContent.trim() === 'White to place a piece.', 'undo reverts the AI opening move for a black player');
+      assert(undo.disabled && doc.querySelector('[data-turn]').textContent.trim() === 'Black', 'AI opening cannot be undone into a stuck computer turn');
 
       changeSelect(mode, 'HUMAN_VS_HUMAN');
       await sleep(20);

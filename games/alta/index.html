@@ -10,10 +10,12 @@
   <link crossorigin="anonymous" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css" rel="preload stylesheet" as="style">
   <link rel="stylesheet" href="/assets/css/game-shell.css">
   <link rel="stylesheet" href="/assets/css/alta.css">
-  <link rel="stylesheet" href="/assets/css/site-theme.css">
+
 <link rel="stylesheet" href="/assets/css/site-shell.css">
+  <link rel="stylesheet" href="/assets/css/games-room.css">
 </head>
-<body class="page dark alta-page">
+<body class="page game-room alta-page">
+<a class="room-skip" href="#alta-board">Skip to the game board</a>
 <header class="header">
   <nav class="nav">
     <div class="logo"><a href="/" accesskey="h">lucia's room</a><div class="logo-switches"><ul class="lang-switch"><li>|</li></ul></div></div>
@@ -27,41 +29,50 @@
 <main class="game-shell-wrap">
   <section class="panel game-shell-hero" aria-labelledby="alta-title">
     <div>
+      <a class="game-breadcrumb" href="/games/">← All games</a>
+      <p class="game-eyebrow">THE GAMES ROOM</p>
       <h1 id="alta-title" class="hero-title">Alta</h1>
-      <p class="muted">W. D. Troyka's switch-based connection duel on the official 61-square board.</p>
+      <p class="muted game-description">Build a connection. Flip the possibilities. One small switch can change everything.</p>
     </div>
-    <div class="meta-row"><span class="meta-pill">2 modes</span><span class="meta-pill">Human vs Human</span><span class="meta-pill">Human vs Computer</span></div>
+    <div class="meta-row game-meta"><span class="meta-pill">Connection game</span><span class="meta-pill">Solo or with a friend</span><span class="meta-pill">By W. D. Troyka</span></div>
   </section>
 
   <section class="game-shell-play" aria-label="Playable board and controls">
     <div class="panel game-shell-board-panel alta-board-panel">
       <div class="game-shell-board-header">
         <div>
-          <h2>Board</h2>
-          <p class="stat game-shell-turn" data-turn></p>
+          <span class="game-eyebrow">MAKE A CONNECTION</span>
+          <p class="stat game-shell-turn" data-turn aria-live="polite"></p>
         </div>
         <p class="game-shell-thinking hidden" data-thinking aria-live="polite">Computer thinking…</p>
       </div>
       <p class="muted game-shell-status-copy" data-status aria-live="polite"></p>
       <p class="alta-status-note muted" data-side-status></p>
+      <div class="alta-connection-legend"><span><i class="alta-legend-blue"></i>Blue ↕</span><span><i class="alta-legend-red"></i>Red ↔</span><span>Connect your two edges</span></div>
       <div class="game-shell-banner hidden" data-banner aria-live="assertive"></div>
       <div class="alta-board-stage" data-alta-stage data-turn="BLUE" data-winner="">
         <div class="alta-goal alta-goal-top" data-goal="top"><span>Blue</span></div>
         <div class="alta-goal alta-goal-bottom" data-goal="bottom"><span>Blue</span></div>
         <div class="alta-goal alta-goal-left" data-goal="left"><span>Red</span></div>
         <div class="alta-goal alta-goal-right" data-goal="right"><span>Red</span></div>
-        <div class="alta-board" data-alta-board role="group" aria-label="Playable Alta board"></div>
+        <div id="alta-board" class="alta-board" tabindex="-1" data-alta-board role="group" aria-label="Playable Alta board" aria-describedby="alta-keyboard-help"></div>
       </div>
+      <div class="alta-placement-bar" data-placement-bar>
+        <div><strong data-placement-label>Choose an empty square</strong><p class="muted tiny" data-placement-help>Then pick a diagonal, or tap your own switch to flip it.</p></div>
+        <div class="alta-placement-buttons"><button class="alta-choice alta-choice-fw" data-place-orientation="FW" disabled aria-label="Place rising diagonal"><span aria-hidden="true">╱</span> Rising</button><button class="alta-choice alta-choice-bw" data-place-orientation="BW" disabled aria-label="Place falling diagonal"><span aria-hidden="true">╲</span> Falling</button><button class="alta-cancel" data-cancel-selection disabled aria-label="Cancel square selection">×</button></div>
+      </div>
+      <div class="game-board-actions"><button id="alta-undo" class="ghost" data-undo>↶ Undo</button><button id="alta-new-game" class="ghost" data-new-game>New game</button></div>
+      <p id="alta-keyboard-help" class="board-keyboard-help board-keyboard-hint">Keyboard: arrows to explore · Enter to select · / or \ to place · Esc to clear.</p>
     </div>
 
     <aside class="panel game-shell-side" aria-label="Game controls and history">
       <div class="game-shell-section">
-        <h3>Mode</h3>
+        <h3>Make it your game</h3>
         <div class="game-shell-control-grid">
           <label for="alta-mode">Game mode</label>
           <select id="alta-mode" data-mode>
-            <option value="HUMAN_VS_HUMAN">Human vs Human</option>
-            <option value="HUMAN_VS_COMPUTER">Human vs Computer</option>
+            <option value="HUMAN_VS_HUMAN">Play with a friend</option>
+            <option value="HUMAN_VS_COMPUTER" selected>Play the computer</option>
           </select>
 
           <label for="alta-side">Your side</label>
@@ -80,7 +91,7 @@
       </div>
 
       <div class="game-shell-section compact-stats">
-        <h3>Live status</h3>
+        <h3>The match</h3>
         <p class="muted tiny" data-turn-summary></p>
         <p class="muted tiny" data-history-summary></p>
         <div class="alta-stat-grid">
@@ -91,18 +102,11 @@
         </div>
       </div>
 
-      <div class="game-shell-section">
-        <h3>Controls</h3>
-        <p class="muted tiny" data-placement-help>Click an empty square to choose one of the two diagonals.</p>
-        <div class="game-shell-button-row">
-          <button id="alta-undo" class="ghost" data-undo>Undo</button>
-          <button id="alta-new-game" class="ghost" data-new-game>New game</button>
-        </div>
-      </div>
+      <div class="game-shell-section game-quick-tip"><h3>A shared connection</h3><p class="muted">Both colours can be part of your winning path. You can only flip switches of your own colour.</p></div>
 
       <div class="game-shell-section history-shell">
         <h3>Move history</h3>
-        <ol class="game-shell-history alta-history" data-history aria-live="polite"></ol>
+        <ol class="game-shell-history alta-history" data-history aria-label="Move history"></ol>
       </div>
     </aside>
   </section>
@@ -127,9 +131,9 @@
 
     <section class="game-shell-tab-panel hidden" data-tab-panel="play" role="tabpanel">
       <ol class="rule-list">
-        <li>Click any legal empty square, then choose `/` or `\` inside that square.</li>
+        <li>Choose any available square, then use the Rising or Falling button below the board.</li>
         <li>Click one of your own switches to toggle it to the opposite diagonal.</li>
-        <li>In Human vs Computer mode, input locks while the AI is thinking.</li>
+        <li>Blue connects the top and bottom edges; Red connects the left and right edges.</li>
         <li>Undo in Human vs Computer mode rewinds a full pair of moves when possible.</li>
       </ol>
     </section>
@@ -157,6 +161,6 @@
   document.body.addEventListener('click',e=>{if(!b.contains(e.target))m.classList.add('hidden')});
 </script>
 <script type="module" src="/assets/js/alta-page.js"></script>
-<script src="/assets/js/pocket-bird.js" defer></script><script src="/assets/js/site-shell.js" defer></script>
+<script src="/assets/js/site-shell.js" defer></script>
 </body>
 </html>

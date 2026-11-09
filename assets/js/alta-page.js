@@ -10,7 +10,6 @@ import {
   applyMove,
   countSwitches,
   otherPlayer,
-  nextOrientation,
   orientationGlyph
 } from './alta-engine.js';
 import { chooseAIMove } from './alta-ai.js';
@@ -22,12 +21,14 @@ const variant = getBoardVariant();
 
 const state = {
   game: createInitialState(),
-  mode: MODE.HVH,
+  mode: MODE.HVC,
   humanSide: PLAYERS.BLUE,
   difficulty: 'Medium',
   selectedCell: null,
+  focusedCell: 'e5',
   isThinking: false,
   snapshots: [],
+  aiTimer: null,
   aiRequestId: 0
 };
 
@@ -50,6 +51,10 @@ const legalCountEl = document.querySelector('[data-legal-count]');
 const historySummaryEl = document.querySelector('[data-history-summary]');
 const turnSummaryEl = document.querySelector('[data-turn-summary]');
 const placementHelpEl = document.querySelector('[data-placement-help]');
+const placementLabelEl = document.querySelector('[data-placement-label]');
+const placementBarEl = document.querySelector('[data-placement-bar]');
+const placementButtons = [...document.querySelectorAll('[data-place-orientation]')];
+const cancelSelectionEl = document.querySelector('[data-cancel-selection]');
 
 function playerLabel(player) {
   return player === PLAYERS.RED ? 'Red' : 'Blue';
@@ -63,7 +68,7 @@ function roleLabel(player) {
 }
 
 function canUndo() {
-  return state.snapshots.length > 0;
+  return state.snapshots.length > 0 && (state.mode === MODE.HVH || state.game.history.some((entry) => entry.player === state.humanSide));
 }
 
 function isHumanTurn() {
@@ -73,6 +78,8 @@ function isHumanTurn() {
 }
 
 function cancelPendingAI() {
+  window.clearTimeout(state.aiTimer);
+  state.aiTimer = null;
   state.aiRequestId += 1;
   state.isThinking = false;
 }
@@ -86,73 +93,48 @@ function legalMovesForTurn() {
   return getLegalMoves(state.game, state.game.turn);
 }
 
-function moveBelongsToCell(move, cell) {
-  return move.cell === cell;
-}
-
 function renderBoard() {
+  const activeCell = boardEl.contains(document.activeElement) ? document.activeElement.dataset.cell : null;
+  if (activeCell) state.focusedCell = activeCell;
   const winningCells = new Set(state.game.winningPath ?? []);
-  const legalMoves = legalMovesForTurn();
   const cellMoves = new Map();
-
-  legalMoves.forEach((move) => {
+  legalMovesForTurn().forEach((move) => {
     if (!cellMoves.has(move.cell)) cellMoves.set(move.cell, []);
     cellMoves.get(move.cell).push(move);
   });
-
-  boardEl.classList.toggle('is-disabled', !isHumanTurn() || state.isThinking || Boolean(state.game.winner));
-
+  const interactive = isHumanTurn() && !state.isThinking;
+  boardEl.classList.toggle('is-disabled', !interactive);
+  boardEl.setAttribute('aria-disabled', String(!interactive));
   boardEl.innerHTML = variant.cells.map((cellData) => {
     const piece = state.game.board.get(cellData.key) ?? null;
     const moves = cellMoves.get(cellData.key) ?? [];
     const isSelected = state.selectedCell === cellData.key;
-    const isLastMove = state.game.lastMove?.cell === cellData.key;
-    const classes = [
-      'alta-cell',
-      piece ? `is-owned-${piece.owner.toLowerCase()}` : 'is-empty',
-      isSelected ? 'is-selected' : '',
-      winningCells.has(cellData.key) ? 'is-winning' : '',
-      isLastMove ? 'is-last-move' : '',
-      piece && isHumanTurn() && piece.owner === state.game.turn && !state.isThinking ? 'is-togglable' : ''
+    const toggleMove = moves.find((move) => move.type === MOVE_TYPES.TOGGLE);
+    const selectable = interactive && moves.length > 0;
+    const restricted = !piece && variant.forbiddenCellsByPlayer[state.game.turn].includes(cellData.key);
+    const classes = ['alta-cell', piece ? `is-owned-${piece.owner.toLowerCase()}` : 'is-empty',
+      isSelected ? 'is-selected' : '', winningCells.has(cellData.key) ? 'is-winning' : '',
+      state.game.lastMove?.cell === cellData.key ? 'is-last-move' : '',
+      toggleMove && interactive ? 'is-togglable' : '', restricted ? 'is-restricted' : ''
     ].filter(Boolean).join(' ');
-
-    const style = `grid-column:${cellData.gridCol};grid-row:${cellData.gridRow};`;
-
-    if (piece) {
-      const toggleMove = moves.find((move) => move.type === MOVE_TYPES.TOGGLE);
-      const mainSwitch = `
-        <span class="alta-switch alta-switch-${piece.orientation === ORIENTATIONS.FW ? 'fw' : 'bw'} alta-owner-${piece.owner.toLowerCase()}" aria-hidden="true"></span>
-      `;
-      const preview = toggleMove ? `
-        <span class="alta-switch alta-switch-preview alta-switch-${toggleMove.orientation === ORIENTATIONS.FW ? 'fw' : 'bw'}" aria-hidden="true"></span>
-      ` : '';
-      const action = toggleMove
-        ? `<button type="button" class="alta-toggle-hit" data-action="toggle" data-cell="${cellData.key}" data-orientation="${toggleMove.orientation}" aria-label="Toggle ${playerLabel(piece.owner)} switch at ${cellData.key} to ${orientationGlyph(toggleMove.orientation)}"></button>`
-        : '<div class="alta-cell-static" aria-hidden="true"></div>';
-      return `<div class="${classes}" style="${style}">${action}${preview}${mainSwitch}</div>`;
-    }
-
-    const selectable = moves.length > 0 && isHumanTurn() && !state.isThinking && !state.game.winner;
-    const baseAction = selectable
-      ? `<button type="button" class="alta-empty-hit" data-action="select" data-cell="${cellData.key}" aria-expanded="${String(isSelected)}" aria-label="Choose a switch orientation for ${cellData.key}"></button>`
-      : '<div class="alta-cell-static" aria-hidden="true"></div>';
-
-    const choices = selectable && isSelected
-      ? `
-        <button type="button" class="alta-choice alta-choice-fw alta-choice--${state.game.turn.toLowerCase()}" data-action="place" data-cell="${cellData.key}" data-orientation="${ORIENTATIONS.FW}" aria-label="Place ${playerLabel(state.game.turn)} ${orientationGlyph(ORIENTATIONS.FW)} switch at ${cellData.key}"></button>
-        <button type="button" class="alta-choice alta-choice-bw alta-choice--${state.game.turn.toLowerCase()}" data-action="place" data-cell="${cellData.key}" data-orientation="${ORIENTATIONS.BW}" aria-label="Place ${playerLabel(state.game.turn)} ${orientationGlyph(ORIENTATIONS.BW)} switch at ${cellData.key}"></button>
-      `
-      : '';
-
-    return `<div class="${classes}" style="${style}">${baseAction}${choices}</div>`;
+    const action = piece ? 'toggle' : 'select';
+    const label = piece
+      ? `${cellData.key}: ${playerLabel(piece.owner)} ${orientationGlyph(piece.orientation)} switch${toggleMove && interactive ? '. Activate to flip it' : ''}`
+      : `${cellData.key}: ${restricted ? 'reserved for the other player’s goal' : `empty square${selectable ? '. Activate to choose a diagonal' : ''}`}`;
+    const hit = `<button type="button" class="${piece ? 'alta-toggle-hit' : 'alta-empty-hit'}" data-action="${action}" data-cell="${cellData.key}" ${toggleMove ? `data-orientation="${toggleMove.orientation}"` : ''} tabindex="${cellData.key === state.focusedCell ? '0' : '-1'}" aria-disabled="${String(!selectable)}" aria-pressed="${String(isSelected)}" aria-label="${label}"></button>`;
+    const mainSwitch = piece ? `<span class="alta-switch alta-switch-${piece.orientation === ORIENTATIONS.FW ? 'fw' : 'bw'} alta-owner-${piece.owner.toLowerCase()}" aria-hidden="true"></span>` : '';
+    const preview = toggleMove && interactive ? `<span class="alta-switch alta-switch-preview alta-switch-${toggleMove.orientation === ORIENTATIONS.FW ? 'fw' : 'bw'}" aria-hidden="true"></span>` : '';
+    const marker = isSelected ? '<span class="alta-cell-marker" aria-hidden="true">+</span>' : '';
+    return `<div class="${classes}" style="grid-column:${cellData.gridCol};grid-row:${cellData.gridRow};">${hit}${preview}${mainSwitch}${marker}</div>`;
   }).join('');
+  if (activeCell) boardEl.querySelector(`[data-cell="${activeCell}"]`)?.focus({ preventScroll: true });
 }
 
 function renderHistory() {
   historyEl.innerHTML = '';
 
   if (!state.game.history.length) {
-    historyEl.innerHTML = '<li class="game-shell-history-empty">No moves yet.</li>';
+    historyEl.innerHTML = '<li class="game-shell-history-empty">No moves yet. Your connection starts here.</li>';
     return;
   }
 
@@ -173,8 +155,8 @@ function renderStatus() {
   const blueCount = countSwitches(state.game, PLAYERS.BLUE);
 
   turnEl.textContent = state.game.winner
-    ? `Winner: ${playerLabel(state.game.winner)}`
-    : `Turn: ${roleLabel(state.game.turn)}`;
+    ? `${playerLabel(state.game.winner)} wins!`
+    : state.isThinking ? 'Computer’s turn' : state.mode === MODE.HVC ? `Your turn · ${playerLabel(state.game.turn)}` : `${playerLabel(state.game.turn)} to move`;
 
   redCountEl.textContent = String(redCount);
   blueCountEl.textContent = String(blueCount);
@@ -184,11 +166,11 @@ function renderStatus() {
     ? `You are ${playerLabel(state.humanSide)} · Computer is ${playerLabel(otherPlayer(state.humanSide))}`
     : 'Both sides are human-controlled.';
   sideStatusEl.textContent = state.mode === MODE.HVC
-    ? `${playerLabel(state.humanSide)} keeps manual control. ${playerLabel(otherPlayer(state.humanSide))} is computer-controlled.`
-    : 'Both players can place or toggle locally on the same board.';
+    ? `You play ${playerLabel(state.humanSide)}. ${state.humanSide === PLAYERS.BLUE ? 'Connect the top and bottom edges.' : 'Connect the left and right edges.'}`
+    : 'Pass the board between turns.';
 
   if (state.game.winner) {
-    const winnerText = `${playerLabel(state.game.winner)} win by connecting their goal nodes.`;
+    const winnerText = `${playerLabel(state.game.winner)} wins by connecting both goal edges.`;
     statusEl.textContent = winnerText;
     bannerEl.textContent = winnerText;
     bannerEl.classList.remove('hidden');
@@ -196,26 +178,36 @@ function renderStatus() {
   } else if (state.isThinking) {
     statusEl.textContent = 'Computer is evaluating placements and toggles…';
     bannerEl.classList.add('hidden');
-    placementHelpEl.textContent = 'Input is temporarily locked while the computer is thinking.';
+    placementHelpEl.textContent = 'A new connection is taking shape.';
   } else if (!isHumanTurn()) {
     statusEl.textContent = 'Computer turn: the board will unlock after the move resolves.';
     bannerEl.classList.add('hidden');
-    placementHelpEl.textContent = 'The AI can either place a new switch or toggle one of its own.';
+    placementHelpEl.textContent = 'The computer is choosing its next switch.';
   } else if (state.selectedCell) {
     statusEl.textContent = `Choose the diagonal for ${state.selectedCell}.`;
     bannerEl.classList.add('hidden');
-    placementHelpEl.textContent = 'Click one of the two diagonals in the selected square, or click the square again to cancel.';
+    placementHelpEl.textContent = 'Choose Rising / or Falling \\ to place your switch.';
   } else {
     statusEl.textContent = `${playerLabel(state.game.turn)} to move. Place on an empty square or toggle one of your own switches.`;
     bannerEl.classList.add('hidden');
-    placementHelpEl.textContent = 'Click an empty square to choose between / and \\, or click one of your own switches to flip it.';
+    placementHelpEl.textContent = 'Then pick a diagonal, or tap your own switch to flip it.';
   }
 
   thinkingEl.classList.toggle('hidden', !(state.mode === MODE.HVC && state.isThinking));
-  sideEl.disabled = state.mode !== MODE.HVC || state.isThinking;
-  difficultyEl.disabled = state.mode !== MODE.HVC || state.isThinking;
+  sideEl.disabled = state.mode !== MODE.HVC;
+  difficultyEl.disabled = state.mode !== MODE.HVC;
   undoEl.disabled = !canUndo();
 
+  placementLabelEl.textContent = state.selectedCell ? `Place a switch at ${state.selectedCell}` : state.game.winner ? 'A connection completed' : state.isThinking ? 'Over to the computer' : 'Choose an empty square';
+  placementBarEl.classList.toggle('has-selection', Boolean(state.selectedCell));
+  placementBarEl.dataset.player = state.game.turn;
+  cancelSelectionEl.disabled = !state.selectedCell;
+  placementButtons.forEach((button) => {
+    button.disabled = !state.selectedCell || !isHumanTurn() || state.isThinking;
+    button.dataset.cell = state.selectedCell || '';
+    button.dataset.action = 'place';
+    button.dataset.orientation = button.dataset.placeOrientation;
+  });
   boardStageEl.dataset.turn = state.game.turn;
   boardStageEl.dataset.winner = state.game.winner ?? '';
 }
@@ -230,6 +222,7 @@ function render() {
 }
 
 function executeMove(move, { triggerAI = true } = {}) {
+  if (!isMoveLegal(state.game, move, state.game.turn)) return;
   pushSnapshot();
   state.game = applyMove(state.game, move);
   state.selectedCell = null;
@@ -254,7 +247,8 @@ function maybeAIMove() {
 
   const snapshot = cloneState(state.game);
 
-  window.setTimeout(() => {
+  state.aiTimer = window.setTimeout(() => {
+    if (requestId !== state.aiRequestId) return;
     let move = null;
 
     try {
@@ -267,6 +261,7 @@ function maybeAIMove() {
 
     state.isThinking = false;
 
+    if (!move || !isMoveLegal(state.game, move, aiSide)) move = getLegalMoves(state.game, aiSide)[0];
     if (move && isMoveLegal(state.game, move, aiSide)) {
       executeMove(move, { triggerAI: false });
       return;
@@ -303,14 +298,16 @@ function undoMove() {
 }
 
 function handleBoardAction(actionEl) {
-  if (!actionEl || state.isThinking || !isHumanTurn()) return;
+  if (!actionEl || actionEl.getAttribute('aria-disabled') === 'true' || state.isThinking || !isHumanTurn()) return;
 
   const { action, cell, orientation } = actionEl.dataset;
   if (!cell) return;
+  state.focusedCell = cell;
 
   if (action === 'select') {
     state.selectedCell = state.selectedCell === cell ? null : cell;
     render();
+    if (state.selectedCell) placementBarEl.scrollIntoView({ block: 'nearest', behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     return;
   }
 
@@ -353,6 +350,39 @@ function wireEvents() {
     const actionEl = event.target.closest('[data-action]');
     handleBoardAction(actionEl);
   });
+
+  placementButtons.forEach((button) => button.addEventListener('click', () => handleBoardAction(button)));
+  cancelSelectionEl.addEventListener('click', () => { state.selectedCell = null; render(); });
+  boardEl.addEventListener('focusin', (event) => {
+    if (event.target.dataset.cell) state.focusedCell = event.target.dataset.cell;
+  });
+  const keyboardAction = (event) => {
+    if (event.key === 'Escape') {
+      event.preventDefault(); state.selectedCell = null; render();
+      boardEl.querySelector(`[data-cell="${state.focusedCell}"]`)?.focus({preventScroll:true});
+      return;
+    }
+    if ((event.key === '/' || event.key === '\\') && state.selectedCell && isHumanTurn() && !state.isThinking) {
+      event.preventDefault();
+      executeMove({ type: MOVE_TYPES.PLACE, cell: state.selectedCell, orientation: event.key === '/' ? ORIENTATIONS.FW : ORIENTATIONS.BW });
+      boardEl.querySelector(`[data-cell="${state.focusedCell}"]`)?.focus({preventScroll:true});
+      return;
+    }
+    const deltas = {ArrowLeft:[0,-1], ArrowRight:[0,1], ArrowUp:[-1,0], ArrowDown:[1,0]};
+    const delta = deltas[event.key];
+    const current = event.target.closest('[data-cell]');
+    if (!delta || !current || !boardEl.contains(current)) return;
+    event.preventDefault();
+    const cell = variant.cellMap[current.dataset.cell];
+    const nextCell = variant.cells.find((candidate) => candidate.row === cell.row + delta[0] && candidate.col === cell.col + delta[1]);
+    if (!nextCell) return;
+    current.tabIndex = -1;
+    const next = boardEl.querySelector(`[data-cell="${nextCell.key}"]`);
+    next.tabIndex = 0;
+    next.focus({preventScroll:true});
+  };
+  boardEl.addEventListener('keydown', keyboardAction);
+  placementBarEl.addEventListener('keydown', keyboardAction);
 
   modeEl.addEventListener('change', () => {
     state.mode = modeEl.value;
