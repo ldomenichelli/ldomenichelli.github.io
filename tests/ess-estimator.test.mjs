@@ -66,12 +66,35 @@ test('ESS estimator behaves sensibly on synthetic clouds of different dimensions
   assert.ok(high.nHat > low.nHat + 1.2, `6D cloud should estimate clearly higher than 2D (${high.nHat} vs ${low.nHat})`);
 });
 
-test('estimateEssDimension handles below-range and above-range clamping', () => {
-  const low = estimateEssDimension(0.01, 8);
-  assert.equal(low.status, 'below-range');
-  assert.equal(low.nHat, 1);
+test('ESS inverse preserves exact dimensions, including the old s2 boundary regression', () => {
+  for (const dim of [1, 1.25, 1.5, 1.99, 2, 3, 6, 8]) {
+    const result = estimateEssDimension(expectedSimplexSkewness(dim), 8);
+    assert.equal(result.status, 'ok');
+    assert.ok(approx(result.nHat, dim, 1e-8), `${dim} inverted to ${result.nHat}`);
+  }
+  assert.equal(estimateEssDimension(2 / Math.PI, 8).nHat, 2);
+  assert.ok(estimateEssDimension(0.01, 8).nHat > 1);
+});
 
-  const high = estimateEssDimension(2, 8);
+test('ESS reports a finite lookup bound honestly and rejects impossible skewness', () => {
+  const high = estimateEssDimension(0.99, 8);
   assert.equal(high.status, 'above-range');
-  assert.equal(high.nHat, 8);
+  assert.ok(Number.isNaN(high.nHat));
+  assert.equal(high.lowerBound, 8);
+  for (const s of [-0.01, 2, NaN, Infinity]) assert.equal(estimateEssDimension(s, 8).status, 'invalid');
+  assert.equal(estimateEssDimension(0.5, 1).status, 'invalid');
+});
+
+test('ESS identifies collinear vectors and reports coincident points as undefined', () => {
+  const line = essStatistic([[-2, -4, -6], [-1, -2, -3], [0, 0, 0], [1, 2, 3], [2, 4, 6]]);
+  assert.equal(line.sHat, 0);
+  assert.equal(estimateEssDimension(line.sHat).nHat, 1);
+  assert.ok(Number.isNaN(essStatistic([[1, 1], [1, 1], [1, 1]]).sHat));
+  assert.ok(Number.isNaN(essStatistic([[1, 1], [2]]).sHat));
+});
+
+test('ESS statistic is unchanged by translation and scale', () => {
+  const points = syntheticCloud(4, 35, 8, 0);
+  const transformed = points.map((p) => p.map((v, i) => v * 5 + i * 10));
+  assert.ok(approx(essStatistic(points).sHat, essStatistic(transformed).sHat, 1e-12));
 });

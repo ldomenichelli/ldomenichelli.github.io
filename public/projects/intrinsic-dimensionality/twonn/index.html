@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Two nearest neighbours · Intrinsic dimensionality | lucia’s room</title>
+  <meta name="description" content="For each point, compare its first two neighbours. Their distance ratios reveal a dimension through a simple fitted line.">
+  <meta name="author" content="Lucia">
+  <link rel="canonical" href="https://ldomenichelli.github.io/projects/intrinsic-dimensionality/twonn/">
+  <link rel="icon" href="/favicon-dithered.ico">
+  <link rel="stylesheet" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css">
+  <link rel="stylesheet" href="/assets/css/site-shell.css">
+  <link rel="stylesheet" href="/assets/css/intrinsic-lab.css">
+  <meta name="theme-color" content="#f6f5ef">
+</head>
+<body class="page id-page" id="top">
+<a class="id-skip" href="#experiment">Skip to the interactive lab</a>
+<header class="header"><nav class="nav"><div class="logo"><a href="https://ldomenichelli.github.io/" accesskey="h" title="lucia's room (Alt + H)">lucia's room</a><div class="logo-switches"><ul class="lang-switch"><li>|</li></ul></div></div><button id="menu-trigger" aria-haspopup="menu" aria-label="Menu Button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><ul class="menu hidden"><li><a href="https://ldomenichelli.github.io/about/" title="about"><span>about</span></a></li><li><a href="https://ldomenichelli.github.io/posts/" title="notes"><span>notes</span></a></li><li><a href="https://ldomenichelli.github.io/projects/" title="projects"><span>projects</span></a></li><li><a href="https://ldomenichelli.github.io/random/" title="hobbies"><span>hobbies</span></a></li></ul></nav></header>
+<main class="main">
+<header class="id-detail-heading">
+  <a class="id-back" href="/projects/intrinsic-dimensionality/">← The dimensionality notebook</a>
+  <p class="id-eyebrow">03 / Minimal neighbourhoods</p>
+  <h1>Two nearest neighbours<span aria-hidden="true" style="color:#839674">.</span></h1>
+  <p>Two distances. A surprisingly useful ratio.</p>
+</header>
+<nav id="algorithmSwitch" class="id-method-nav" aria-label="Choose an estimator"><a class="id-method-link" href="/projects/intrinsic-dimensionality/">Overview</a><a class="id-method-link" href="/projects/intrinsic-dimensionality/mle/">MLE</a><a class="id-method-link" href="/projects/intrinsic-dimensionality/ess/">ESS</a><a class="id-method-link" href="/projects/intrinsic-dimensionality/twonn/">TwoNN</a><a class="id-method-link" href="/projects/intrinsic-dimensionality/correlation/">Correlation</a><a class="id-method-link" href="/projects/intrinsic-dimensionality/pca/">PCA / PR</a></nav>
+<section id="experiment" data-id-lab data-method="twonn" aria-label="Interactive dimensionality lab" tabindex="-1">
+  <p class="id-lab-loading">Preparing the geometry lab…</p>
+  <noscript><p>Enable JavaScript to generate samples and estimate dimension. You can still read the methods and their references below.</p></noscript>
+</section>
+<section class="id-reading" id="method-guide" aria-labelledby="guide-title">
+  <div class="id-section-heading"><div><p class="id-eyebrow">Behind the estimate</p><h2 id="guide-title">A little geometry. A clearer picture.</h2></div><a href="#experiment" class="id-small">Back to the experiment ↑</a></div>
+  <div class="id-reading-grid">
+    <article class="id-explainer">
+      <h2>How it works</h2>
+      <p>For each point, compare its first two neighbours. Their distance ratios reveal a dimension through a simple fitted line.</p>
+      <div class="id-equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="Mu equals the second neighbour distance divided by the first. Negative log of one minus the cumulative distribution of mu equals dimension times log mu."><mrow><mi>μ</mi><mo>=</mo><mfrac><msub><mi>r</mi><mn>2</mn></msub><msub><mi>r</mi><mn>1</mn></msub></mfrac><mspace width="1em"/><mo>−</mo><mi>log</mi><mo>(</mo><mn>1</mn><mo>−</mo><mi>F</mi><mo>(</mo><mi>μ</mi><mo>)</mo><mo>)</mo><mo>=</mo><mi>d</mi><mi>log</mi><mi>μ</mi></mrow></math></div>
+      <p class="id-formula-note">r₁ and r₂ are the first two neighbour distances; F is the cumulative distribution of their ratio.</p>
+      <ol class="id-steps"><li><strong>Keep only two neighbours.</strong><span>Compute μ = r₂ / r₁ for every valid sample.</span></li><li><strong>Order the ratios.</strong><span>Use their empirical cumulative distribution to form the log–log coordinates.</span></li><li><strong>Fit through the origin.</strong><span>The fitted slope is the dimension estimate. The plotted points show how well that relation holds.</span></li></ol>
+    </article>
+    <aside class="id-reading-aside">
+      <section><h3>The version in this notebook</h3><p>The fit uses the lowest 90% of the sorted ratios, following the paper’s tail-trimming convention. The empirical CDF is formed before trimming. No k setting enters this estimate.</p></section>
+      <section><h3>What to watch for</h3><p>Duplicates invalidate ratios. Noise at the nearest-neighbour scale, small samples and sharp boundaries can change the slope; a straight-looking fit is not a guarantee.</p></section>
+      <section><h3>Try this</h3><p>Compare a circle with a plane at zero noise. Then add noise to the circle and see what the two nearest neighbours resolve.</p></section>
+      <section><h3>Read the original work</h3><a class="id-source" href="https://www.nature.com/articles/s41598-017-11873-y">Estimating the intrinsic dimension of datasets by a minimal neighborhood information ↗</a><p class="id-small">Facco, d’Errico, Rodriguez & Laio · Scientific Reports 2017</p></section>
+    </aside>
+  </div>
+  <p class="id-reading-note">The plot is a view of the data. Distances, angles and covariance are computed in all generated coordinates. Noise, sampling and scale can change an estimate; the underlying noiseless manifold is only a reference.</p>
+</section>
+</main>
+<footer class="footer"><span>© 2026 <a href="/">lucia’s room</a></span><span> · <a href="/privacy/">privacy</a></span></footer>
+<script src="/assets/js/site-shell.js" defer></script>
+<script type="module">
+  import { buildAlgorithmSwitch, buildChooserCards } from '/assets/js/id-algorithms.js';
+  buildAlgorithmSwitch(document.querySelector('#algorithmSwitch'), 'twonn');
+
+  import('/assets/js/id-lab.js').catch(() => {
+    const target = document.querySelector('[data-id-lab]');
+    target.innerHTML = '<p class="id-lab-loading" role="status">The interactive lab could not load. Please reload this page. The method guide below is still available.</p>';
+  });
+</script>
+</body>
+</html>

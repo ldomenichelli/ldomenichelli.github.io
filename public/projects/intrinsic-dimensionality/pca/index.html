@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PCA participation ratio · Intrinsic dimensionality | lucia’s room</title>
+  <meta name="description" content="Read the covariance spectrum as a soft count of important axes. This measures effective linear dimension, which can differ from manifold dimension.">
+  <meta name="author" content="Lucia">
+  <link rel="canonical" href="https://ldomenichelli.github.io/projects/intrinsic-dimensionality/pca/">
+  <link rel="icon" href="/favicon-dithered.ico">
+  <link rel="stylesheet" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css">
+  <link rel="stylesheet" href="/assets/css/site-shell.css">
+  <link rel="stylesheet" href="/assets/css/intrinsic-lab.css">
+  <meta name="theme-color" content="#f6f5ef">
+</head>
+<body class="page id-page" id="top">
+<a class="id-skip" href="#experiment">Skip to the interactive lab</a>
+<header class="header"><nav class="nav"><div class="logo"><a href="https://ldomenichelli.github.io/" accesskey="h" title="lucia's room (Alt + H)">lucia's room</a><div class="logo-switches"><ul class="lang-switch"><li>|</li></ul></div></div><button id="menu-trigger" aria-haspopup="menu" aria-label="Menu Button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><ul class="menu hidden"><li><a href="https://ldomenichelli.github.io/about/" title="about"><span>about</span></a></li><li><a href="https://ldomenichelli.github.io/posts/" title="notes"><span>notes</span></a></li><li><a href="https://ldomenichelli.github.io/projects/" title="projects"><span>projects</span></a></li><li><a href="https://ldomenichelli.github.io/random/" title="hobbies"><span>hobbies</span></a></li></ul></nav></header>
+<main class="main">
+<header class="id-detail-heading">
+  <a class="id-back" href="/projects/intrinsic-dimensionality/">← The dimensionality notebook</a>
+  <p class="id-eyebrow">05 / Variance & linear structure</p>
+  <h1>PCA participation ratio<span aria-hidden="true" style="color:#839674">.</span></h1>
+  <p>How many directions carry the variance?</p>
+</header>
+<nav id="algorithmSwitch" class="id-method-nav" aria-label="Choose an estimator"><a class="id-method-link" href="/projects/intrinsic-dimensionality/">Overview</a><a class="id-method-link" href="/projects/intrinsic-dimensionality/mle/">MLE</a><a class="id-method-link" href="/projects/intrinsic-dimensionality/ess/">ESS</a><a class="id-method-link" href="/projects/intrinsic-dimensionality/twonn/">TwoNN</a><a class="id-method-link" href="/projects/intrinsic-dimensionality/correlation/">Correlation</a><a class="id-method-link" href="/projects/intrinsic-dimensionality/pca/">PCA / PR</a></nav>
+<section id="experiment" data-id-lab data-method="pca" aria-label="Interactive dimensionality lab" tabindex="-1">
+  <p class="id-lab-loading">Preparing the geometry lab…</p>
+  <noscript><p>Enable JavaScript to generate samples and estimate dimension. You can still read the methods and their references below.</p></noscript>
+</section>
+<section class="id-reading" id="method-guide" aria-labelledby="guide-title">
+  <div class="id-section-heading"><div><p class="id-eyebrow">Behind the estimate</p><h2 id="guide-title">A little geometry. A clearer picture.</h2></div><a href="#experiment" class="id-small">Back to the experiment ↑</a></div>
+  <div class="id-reading-grid">
+    <article class="id-explainer">
+      <h2>How it works</h2>
+      <p>Read the covariance spectrum as a soft count of important axes. This measures effective linear dimension, which can differ from manifold dimension.</p>
+      <div class="id-equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="The participation ratio equals the squared sum of covariance eigenvalues divided by the sum of their squares."><mrow><msub><mi>D</mi><mtext>PR</mtext></msub><mo>=</mo><mfrac><msup><mrow><mo>(</mo><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>λ</mi><mi>i</mi></msub><mo>)</mo></mrow><mn>2</mn></msup><mrow><munder><mo>∑</mo><mi>i</mi></munder><msubsup><mi>λ</mi><mi>i</mi><mn>2</mn></msubsup></mrow></mfrac></mrow></math></div>
+      <p class="id-formula-note">λᵢ are the eigenvalues of the centred sample covariance. Equal variance across D axes gives a participation ratio of D.</p>
+      <ol class="id-steps"><li><strong>Centre the data.</strong><span>Subtract the sample mean and compute the covariance in the full coordinate space.</span></li><li><strong>Inspect the spectrum.</strong><span>Each eigenvalue measures variance along a principal axis.</span></li><li><strong>Count effective directions.</strong><span>The participation ratio weights axes by variance. The 95% rank instead counts axes needed for 95% of total variance.</span></li></ol>
+    </article>
+    <aside class="id-reading-aside">
+      <section><h3>The version in this notebook</h3><p>PCA is global and linear here. The lab reports the participation ratio and the 95% explained-variance rank; neither is a nonlinear manifold-dimension estimator.</p></section>
+      <section><h3>What to watch for</h3><p>A circle has intrinsic dimension 1 but usually has a participation ratio near 2. A curved sheet can occupy three linear directions. Changing feature scales also changes the spectrum.</p></section>
+      <section><h3>Try this</h3><p>Switch between a line, circle and Swiss roll. Compare PCA with the local estimators and connect each difference to the geometry.</p></section>
+      <section><h3>Read the original work</h3><a class="id-source" href="https://ganguli-gang.stanford.edu/pdf/17.theory.measurement.pdf">A theory of multineuronal dimensionality, dynamics and measurement ↗</a><p class="id-small">Gao et al. · 2017 preprint</p></section>
+    </aside>
+  </div>
+  <p class="id-reading-note">The plot is a view of the data. Distances, angles and covariance are computed in all generated coordinates. Noise, sampling and scale can change an estimate; the underlying noiseless manifold is only a reference.</p>
+</section>
+</main>
+<footer class="footer"><span>© 2026 <a href="/">lucia’s room</a></span><span> · <a href="/privacy/">privacy</a></span></footer>
+<script src="/assets/js/site-shell.js" defer></script>
+<script type="module">
+  import { buildAlgorithmSwitch, buildChooserCards } from '/assets/js/id-algorithms.js';
+  buildAlgorithmSwitch(document.querySelector('#algorithmSwitch'), 'pca');
+
+  import('/assets/js/id-lab.js').catch(() => {
+    const target = document.querySelector('[data-id-lab]');
+    target.innerHTML = '<p class="id-lab-loading" role="status">The interactive lab could not load. Please reload this page. The method guide below is still available.</p>';
+  });
+</script>
+</body>
+</html>

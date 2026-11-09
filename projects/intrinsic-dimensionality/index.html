@@ -1,49 +1,66 @@
 <!doctype html>
-<html lang="en" dir="auto">
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-  <meta name="robots" content="index, follow">
-  <title>Intrinsic Dimensionality Algorithms | lucia's room</title>
-  <meta name="description" content="Choose and compare interactive intrinsic-dimensionality estimators: MLE and ESS.">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>The dimensionality notebook | lucia’s room</title>
+  <meta name="description" content="An interactive guide to intrinsic dimension. Explore MLE, ESS, TwoNN, correlation dimension and PCA on the same reproducible datasets.">
   <meta name="author" content="Lucia">
   <link rel="canonical" href="https://ldomenichelli.github.io/projects/intrinsic-dimensionality/">
-  <link crossorigin="anonymous" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css" integrity="sha256-WtmxyqkuTOqD680wiOlzYvI5sH2BREkKrwvB1r2JzRc=" rel="preload stylesheet" as="style">
-  <link rel="icon" href="https://ldomenichelli.github.io/favicon-dithered.ico">
-  <style>
-    .main { max-width:1080px; }
-    .project-lab .hero { margin:16px 0; }
-    .project-lab .hero h1 { margin:.1rem 0 .5rem; }
-    .project-lab .hero p { margin:.35rem 0; }
-    .project-lab .project-links { grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); }
-  </style>
-<script src="/assets/js/analytics.js" async></script><link rel="stylesheet" href="/assets/css/site-theme.css"><link rel="stylesheet" href="/assets/css/site-shell.css">
+  <link rel="icon" href="/favicon-dithered.ico">
+  <link rel="stylesheet" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css">
+  <link rel="stylesheet" href="/assets/css/site-shell.css">
+  <link rel="stylesheet" href="/assets/css/intrinsic-lab.css">
+  <meta name="theme-color" content="#f6f5ef">
 </head>
-<body class="page dark" id="top">
+<body class="page id-page" id="top">
+<a class="id-skip" href="#experiment">Skip to the interactive lab</a>
 <header class="header"><nav class="nav"><div class="logo"><a href="https://ldomenichelli.github.io/" accesskey="h" title="lucia's room (Alt + H)">lucia's room</a><div class="logo-switches"><ul class="lang-switch"><li>|</li></ul></div></div><button id="menu-trigger" aria-haspopup="menu" aria-label="Menu Button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><ul class="menu hidden"><li><a href="https://ldomenichelli.github.io/about/" title="about"><span>about</span></a></li><li><a href="https://ldomenichelli.github.io/posts/" title="notes"><span>notes</span></a></li><li><a href="https://ldomenichelli.github.io/projects/" title="projects"><span>projects</span></a></li><li><a href="https://ldomenichelli.github.io/random/" title="hobbies"><span>hobbies</span></a></li></ul></nav></header>
 <main class="main">
-  <article class="post-single project-lab">
-    <header class="post-header hero">
-      <div class="breadcrumbs"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/projects/">Projects</a></div>
-      <h1 class="post-title">Intrinsic Dimensionality Algorithms</h1>
-      <p>Trying to show how these estimators work!</p>
-    </header>
-    <div id="algorithmGrid" class="post-content project-links"></div>
-  </article>
+<a class="id-back" href="/projects/">← All projects</a>
+<section class="id-hero" aria-labelledby="notebook-title">
+  <div>
+    <p class="id-eyebrow">Geometry / An interactive notebook</p>
+    <h1 id="notebook-title">More features.<br><em>Fewer dimensions.</em></h1>
+    <p class="id-lede">Data can live in a large space and still follow a simple shape. Explore intrinsic dimensionality, one neighbourhood at a time.</p>
+    <div class="id-hero-actions"><a class="id-button" href="#experiment">Open the lab <span aria-hidden="true">↘</span></a><a href="#methods">Meet the five methods →</a></div>
+  </div>
+  <figure class="id-hero-art"><img src="/assets/img/intrinsic/roll.svg" width="560" height="390" alt="A sheet of points curled into a Swiss roll, a two-dimensional surface embedded in three-dimensional space"><figcaption>Three coordinates. A two-dimensional surface. Room to explore.</figcaption></figure>
+</section>
+<div class="id-concepts">
+  <section><h2><span class="id-concept-symbol" aria-hidden="true">D</span>The space around the data</h2><p>Ambient dimension counts the coordinates you record. A point in 3D has three, whatever shape the data follows.</p></section>
+  <section><h2><span class="id-concept-symbol" aria-hidden="true">d</span>The shape within the data</h2><p>Intrinsic dimension describes the local degrees of freedom. Along a curve, one parameter can be enough.</p></section>
+  <section><h2><span class="id-concept-symbol" aria-hidden="true">r</span>The scale you look at</h2><p>Zoom in and noise can look like extra dimensions. Zoom out and a neighbourhood can span different folds.</p></section>
+</div>
+<section aria-labelledby="lab-title">
+  <div class="id-section-heading"><div><p class="id-eyebrow">01 / Make an experiment</p><h2 id="lab-title">Same data. Different perspectives.</h2><p>Choose a shape, adjust the sample, and compare five ways of measuring dimension.</p></div><span class="id-section-note">Runs in your browser · Reproducible samples</span></div>
+  <section id="experiment" data-id-lab data-method="compare" aria-label="Interactive dimensionality lab" tabindex="-1">
+  <p class="id-lab-loading">Preparing the geometry lab…</p>
+  <noscript><p>Enable JavaScript to generate samples and estimate dimension. You can still read the methods and their references below.</p></noscript>
+</section>
+</section>
+<section id="methods" aria-labelledby="methods-title">
+  <div class="id-section-heading"><div><p class="id-eyebrow">02 / Meet the methods</p><h2 id="methods-title">Five ways to look closer.</h2><p>Each method has its own assumptions, diagnostic plot and worked explanation.</p></div><span class="id-section-note">Your experiment travels with you</span></div>
+  <div id="algorithmGrid" class="id-method-cards"><a class="id-method-card" href="/projects/intrinsic-dimensionality/mle/"><h3>Levina–Bickel MLE</h3><p>Zoom in around one point. The spacing of its neighbours tells us how quickly the local volume fills.</p><span class="id-card-footer">Explore the method →</span></a><a class="id-method-card" href="/projects/intrinsic-dimensionality/ess/"><h3>Expected simplex skewness</h3><p>Nearby vectors become less aligned as dimension grows. ESS translates their geometric spread into a local estimate.</p><span class="id-card-footer">Explore the method →</span></a><a class="id-method-card" href="/projects/intrinsic-dimensionality/twonn/"><h3>Two nearest neighbours</h3><p>For each point, compare its first two neighbours. Their distance ratios reveal a dimension through a simple fitted line.</p><span class="id-card-footer">Explore the method →</span></a><a class="id-method-card" href="/projects/intrinsic-dimensionality/correlation/"><h3>Correlation dimension</h3><p>As a ball grows, more pairs fit inside it. The scaling of that count gives a view of the geometry across distance scales.</p><span class="id-card-footer">Explore the method →</span></a><a class="id-method-card" href="/projects/intrinsic-dimensionality/pca/"><h3>PCA participation ratio</h3><p>Read the covariance spectrum as a soft count of important axes. This measures effective linear dimension, which can differ from manifold dimension.</p><span class="id-card-footer">Explore the method →</span></a></div>
+</section>
+<section class="id-reading" aria-labelledby="read-results">
+  <div class="id-reading-grid">
+    <article class="id-explainer"><h2 id="read-results">Different answers can be informative.</h2><p>A circle needs one parameter to trace, but its variance spreads over two axes. A local manifold estimator and a global linear estimator are asking different questions.</p><p>Try changing one control at a time. Keep the sample fixed while varying the neighbourhood, then regenerate to see how much sampling matters.</p><p>Each method page explains the exact estimator used here and links to its original reference.</p></article>
+    <aside class="id-reading-aside"><h3>A few good first experiments</h3><ol class="id-steps"><li><strong>Line → plane</strong><span>Start with no noise and compare one degree of freedom with two.</span></li><li><strong>Circle → PCA</strong><span>See how curved structure differs from linear variance.</span></li><li><strong>Swiss roll → larger neighbourhoods</strong><span>Explore what happens when nearby folds enter the same neighbourhood.</span></li></ol></aside>
+  </div>
+</section>
+<a class="id-back-to-top" href="#top">Back to the top ↑</a>
 </main>
-<footer class="footer" style="padding-top:18px;padding-bottom:18px">
-<span>&copy; 2025 <a href="https://ldomenichelli.github.io/">lucia's room</a></span>
-<span>•
-<a href="/privacy">Privacy Policy</a></span>
-</footer>
+<footer class="footer"><span>© 2026 <a href="/">lucia’s room</a></span><span> · <a href="/privacy/">privacy</a></span></footer>
+<script src="/assets/js/site-shell.js" defer></script>
 <script type="module">
-  import { buildChooserCards } from '/assets/js/id-algorithms.js';
-  const trigger = document.querySelector('#menu-trigger');
-  const menu = document.querySelector('.menu');
-  if (trigger && menu) trigger.addEventListener('click', () => menu.classList.toggle('hidden'));
-  buildChooserCards(document.querySelector('#algorithmGrid'));
+  import { buildAlgorithmSwitch, buildChooserCards } from '/assets/js/id-algorithms.js';
+  buildAlgorithmSwitch(document.querySelector('#algorithmSwitch'), 'compare');
+  buildChooserCards(document.querySelector("#algorithmGrid"));
+  import('/assets/js/id-lab.js').catch(() => {
+    const target = document.querySelector('[data-id-lab]');
+    target.innerHTML = '<p class="id-lab-loading" role="status">The interactive lab could not load. Please reload this page. The method guide below is still available.</p>';
+  });
 </script>
-<script src="/assets/js/pocket-bird.js" defer></script><script src="/assets/js/site-shell.js" defer></script>
 </body>
 </html>

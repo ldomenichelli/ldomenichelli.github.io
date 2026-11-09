@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Intrinsic dimensionality lab smoke test</title>
+  <style>body{margin:16px;font:14px ui-monospace,monospace}pre{white-space:pre-wrap}iframe{border:0;height:2600px}</style>
+</head>
+<body data-test-status="RUNNING">
+  <pre id="log">Running…</pre>
+  <iframe id="frame" title="Intrinsic dimensionality test page"></iframe>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const method = params.get('method') || 'mle';
+    const width = Number(params.get('width') || 1440);
+    const frame = document.getElementById('frame');
+    const messages = [];
+    const log = (message) => { messages.push(message); document.getElementById('log').textContent = messages.join('\n'); };
+    const assert = (condition, message) => { if (!condition) throw new Error(message); log(`PASS ${message}`); };
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    async function waitFor(predicate, label) {
+      const limit = performance.now() + 8000;
+      while (!predicate() && performance.now() < limit) await sleep(25);
+      assert(predicate(), label);
+    }
+    frame.style.width = `${width}px`;
+    frame.addEventListener('load', () => run().catch((error) => {
+      log(`FAIL ${error.stack || error.message}`);
+      document.body.dataset.testStatus = 'FAIL';
+    }), { once: true });
+    frame.src = `/projects/intrinsic-dimensionality/${method}/`;
+
+    async function run() {
+      const doc = frame.contentDocument;
+      const win = frame.contentWindow;
+      const errors = [];
+      win.addEventListener('error', (event) => errors.push(event.message));
+      win.addEventListener('unhandledrejection', (event) => errors.push(String(event.reason)));
+      const lab = doc.querySelector('[data-id-lab]');
+      await waitFor(() => lab?.dataset.ready === 'true', 'laboratory finishes its initial calculation');
+      let latest;
+      lab.addEventListener('idlab:updated', (event) => { latest = event.detail; });
+      const field = (name) => lab.querySelector(`[name="${name}"]`);
+      const action = (name) => lab.querySelector(`[data-action="${name}"]`);
+      const scatter = lab.querySelector('[data-scatter]');
+      const estimate = lab.querySelector('[data-estimate]');
+      const pointStatus = lab.querySelector('[data-point-status]');
+      const diagnostic = lab.querySelector('[data-diagnostic]');
+      const set = async (name, value) => {
+        const input = field(name);
+        input.value = value;
+        input.dispatchEvent(new win.Event('input', { bubbles: true }));
+        await sleep(120);
+      };
+      const key = async (value) => {
+        scatter.focus();
+        scatter.dispatchEvent(new win.KeyboardEvent('keydown', { key: value, bubbles: true }));
+        await sleep(25);
+      };
+      const numericEstimate = () => Number.parseFloat(estimate.textContent);
+      assert(lab.dataset.method === method, 'route selects the requested estimator');
+      assert(scatter && pointStatus && diagnostic && estimate, 'plot, selected-point details, estimate and diagnostic render');
+      assert(Number.isFinite(numericEstimate()), 'default experiment has a finite estimate');
+      assert(doc.documentElement.scrollWidth <= width + 1, 'page has no horizontal overflow');
+      assert(scatter.getBoundingClientRect().width >= Math.min(width - 80, 300), 'data plot remains readable at this width');
+      assert(scatter.getAttribute('tabindex') === '0' && scatter.getAttribute('aria-label'), 'data plot exposes a named keyboard entry point');
+      for (const input of lab.querySelectorAll('input:not([type="hidden"]), select')) {
+        assert(Boolean(input.labels?.length || input.getAttribute('aria-label') || input.getAttribute('aria-labelledby')), `${input.name || input.id} has an accessible label`);
+      }
+
+      const initialGeneration = lab.dataset.generation;
+      const initialEstimate = estimate.textContent;
+      const initialDiagnostic = diagnostic.innerHTML;
+      const firstStatus = pointStatus.textContent;
+      await key('ArrowRight');
+      assert(pointStatus.textContent !== firstStatus, 'arrow keys inspect another sample');
+      await key('Home');
+      assert(pointStatus.textContent === firstStatus, 'Home returns to the first sample');
+      await key('End');
+      assert(pointStatus.textContent !== firstStatus, 'End selects the last sample');
+      await key('Home');
+      assert(lab.dataset.generation === initialGeneration, 'sample inspection keeps the same dataset');
+      const rectangle = scatter.getBoundingClientRect();
+      for (const [x, y] of [[.25, .25], [.75, .75]]) {
+        scatter.dispatchEvent(new win.MouseEvent('click', { clientX: rectangle.left + rectangle.width * x, clientY: rectangle.top + rectangle.height * y, bubbles: true }));
+        if (pointStatus.textContent !== firstStatus) break;
+      }
+      assert(pointStatus.textContent !== firstStatus, 'pointer interaction selects a nearby sample');
+      await key('Home');
+      const xyView = lab.querySelector('[data-view="xy"]');
+      xyView.click();
+      assert(xyView.getAttribute('aria-pressed') === 'true', 'projection controls expose the active view');
+      assert(estimate.textContent === initialEstimate && lab.dataset.generation === initialGeneration, 'changing projection preserves full-dimensional calculations');
+
+      if (method === 'mle') {
+        const inspector = lab.querySelector('[data-inspector] details');
+        inspector.open = true;
+        assert(inspector.querySelectorAll('tbody tr').length === Number(field('k').value) - 1, 'MLE inspector exposes every term used by the selected local estimate');
+      }
+      if (method === 'ess') {
+        const inspector = lab.querySelector('[data-inspector] details');
+        inspector.open = true;
+        const beforePair = inspector.querySelector('[data-pair-terms]').textContent;
+        const pairB = inspector.querySelector('[name="pairB"]');
+        pairB.value = '2';
+        pairB.dispatchEvent(new win.Event('change', { bubbles: true }));
+        assert(inspector.querySelector('[data-pair-terms]').textContent !== beforePair, 'ESS pair inspector recalculates the angle and vector products');
+        assert(estimate.textContent === initialEstimate, 'inspecting an ESS pair preserves the estimate over all pairs');
+      }
+
+      const defaultK = Number(field('k').value);
+      await set('k', Math.min(Number(field('k').max), defaultK + 5));
+      assert(lab.dataset.generation === initialGeneration, 'changing neighborhood size reuses exactly the same sample');
+      if (method === 'mle' || method === 'ess') assert(diagnostic.innerHTML !== initialDiagnostic, 'neighborhood size updates the method diagnostic');
+      if (['twonn', 'correlation', 'pca'].includes(method)) assert(estimate.textContent === initialEstimate, 'global estimator remains independent of the inspection neighborhood');
+      await set('k', defaultK);
+      assert(estimate.textContent === initialEstimate, 'restoring k reproduces the initial estimate');
+      if (method === 'correlation') {
+        const beforeRange = diagnostic.innerHTML;
+        const originalUpper = field('correlationHigh').value;
+        await set('correlationHigh', .3);
+        assert(lab.dataset.generation === initialGeneration, 'changing the correlation fitting interval preserves the sample');
+        assert(diagnostic.innerHTML !== beforeRange, 'changing the fitting interval updates the correlation diagnostic');
+        await set('correlationHigh', originalUpper);
+        assert(estimate.textContent === initialEstimate, 'restoring the correlation interval reproduces the original slope');
+      }
+
+      const oldGeneration = lab.dataset.generation;
+      action('regenerate').click();
+      await waitFor(() => lab.dataset.generation !== oldGeneration, 'new sample generates a different dataset');
+      action('reset').click();
+      await sleep(150);
+      assert(estimate.textContent === initialEstimate, 'reset reproduces the original seeded estimate');
+
+      await set('dataset', 'circle');
+      await set('noise', 0);
+      assert(Number.isFinite(numericEstimate()), 'noiseless circle has a finite estimate');
+      if (method === 'pca') assert(numericEstimate() > 1.75 && numericEstimate() <= 2.01, 'PCA shows the two-dimensional linear span of a one-dimensional circle');
+      await set('dataset', 'line');
+      assert(Number.isFinite(numericEstimate()), 'noiseless line has a finite estimate');
+      if (method === 'pca' || method === 'ess') assert(Math.abs(numericEstimate() - 1) < .06, 'line returns dimension one');
+      await set('dataset', 'swissroll');
+      assert(Number.isFinite(numericEstimate()), 'curved manifold experiment calculates successfully');
+
+      const links = [...doc.querySelectorAll('a[href*="/projects/intrinsic-dimensionality/"]')].filter((a) => /\/(mle|ess|twonn|correlation|pca)\//.test(a.pathname));
+      assert(links.length >= 5, 'all five estimator pages are reachable');
+      assert(links.every((a) => a.search.includes('dataset=swissroll')), 'method links preserve the active experiment');
+
+      let exportedBlob;
+      let downloadedName;
+      const originalCreateObjectURL = win.URL.createObjectURL;
+      const originalAnchorClick = win.HTMLAnchorElement.prototype.click;
+      win.URL.createObjectURL = (blob) => { exportedBlob = blob; return originalCreateObjectURL(blob); };
+      win.HTMLAnchorElement.prototype.click = function () { downloadedName = this.download; };
+      try { action('export').click(); }
+      finally { win.URL.createObjectURL = originalCreateObjectURL; win.HTMLAnchorElement.prototype.click = originalAnchorClick; }
+      assert(exportedBlob && downloadedName.endsWith('.csv'), 'CSV export creates a downloadable results file');
+      const csv = await exportedBlob.text();
+      const rows = csv.trim().split(/\r?\n/);
+      assert(rows.length === 6 && rows[0].includes('dimension_estimate') && rows[0].includes('seed'), 'CSV includes all five estimates and reproducible experiment metadata');
+      assert(['mle', 'ess', 'twonn', 'correlation', 'pca'].every((name) => rows.some((row) => row.includes(`"${name}"`))), 'CSV names every estimator');
+      assert(!csv.includes('NaN') && !csv.includes('Infinity'), 'CSV never serialises invalid numerical estimates');
+
+      await set('dataset', 'ball');
+      await set('dimension', 8);
+      await set('n', 80);
+      await set('k', 48);
+      await set('noise', .12);
+      await set('boundary', .18);
+      await set('duplicates', .15);
+      await set('outliers', .3);
+      await set('seed', 103);
+      assert(lab.dataset.ready === 'true', 'extreme controls finish on an eight-dimensional noisy sample');
+      assert(!/NaN|Infinity/.test(lab.innerText), 'degenerate local fits are explained without leaking invalid numbers into the interface');
+      const currentLinks = [...doc.querySelectorAll('a[href*="/projects/intrinsic-dimensionality/"]')].filter((a) => /\/(mle|ess|twonn|correlation|pca)\//.test(a.pathname));
+      assert(currentLinks.every((link) => Object.entries(latest.state).every(([key, value]) => new URL(link.href).searchParams.get(key) === String(value))), 'method links preserve every active experiment parameter');
+
+      action('reset').click();
+      await sleep(150);
+      assert(Number.isFinite(numericEstimate()), 'reset recovers a usable laboratory');
+      assert(doc.documentElement.scrollWidth <= width + 1, 'controls and diagnostics remain within viewport after interaction');
+      assert(errors.length === 0, 'interactions complete without runtime errors');
+      assert(latest && latest.pointCount > 0, 'updates report the resulting experiment state');
+      log(`PASS ${method} smoke test completed at ${width}px`);
+      document.body.dataset.testStatus = 'PASS';
+    }
+  </script>
+</body>
+</html>

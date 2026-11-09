@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Correlation dimension · Intrinsic dimensionality | lucia’s room</title>
+  <meta name="description" content="As a ball grows, more pairs fit inside it. The scaling of that count gives a view of the geometry across distance scales.">
+  <meta name="author" content="Lucia">
+  <link rel="canonical" href="https://ldomenichelli.github.io/projects/intrinsic-dimensionality/correlation/">
+  <link rel="icon" href="/favicon-dithered.ico">
+  <link rel="stylesheet" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css">
+  <link rel="stylesheet" href="/assets/css/site-shell.css">
+  <link rel="stylesheet" href="/assets/css/intrinsic-lab.css">
+  <meta name="theme-color" content="#f6f5ef">
+</head>
+<body class="page id-page" id="top">
+<a class="id-skip" href="#experiment">Skip to the interactive lab</a>
+<header class="header"><nav class="nav"><div class="logo"><a href="https://ldomenichelli.github.io/" accesskey="h" title="lucia's room (Alt + H)">lucia's room</a><div class="logo-switches"><ul class="lang-switch"><li>|</li></ul></div></div><button id="menu-trigger" aria-haspopup="menu" aria-label="Menu Button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><ul class="menu hidden"><li><a href="https://ldomenichelli.github.io/about/" title="about"><span>about</span></a></li><li><a href="https://ldomenichelli.github.io/posts/" title="notes"><span>notes</span></a></li><li><a href="https://ldomenichelli.github.io/projects/" title="projects"><span>projects</span></a></li><li><a href="https://ldomenichelli.github.io/random/" title="hobbies"><span>hobbies</span></a></li></ul></nav></header>
+<main class="main">
+<header class="id-detail-heading">
+  <a class="id-back" href="/projects/intrinsic-dimensionality/">← The dimensionality notebook</a>
+  <p class="id-eyebrow">04 / Scaling across radii</p>
+  <h1>Correlation dimension<span aria-hidden="true" style="color:#839674">.</span></h1>
+  <p>Count close pairs. Watch how space fills.</p>
+</header>
+<nav id="algorithmSwitch" class="id-method-nav" aria-label="Choose an estimator"><a class="id-method-link" href="/projects/intrinsic-dimensionality/">Overview</a><a class="id-method-link" href="/projects/intrinsic-dimensionality/mle/">MLE</a><a class="id-method-link" href="/projects/intrinsic-dimensionality/ess/">ESS</a><a class="id-method-link" href="/projects/intrinsic-dimensionality/twonn/">TwoNN</a><a class="id-method-link" href="/projects/intrinsic-dimensionality/correlation/">Correlation</a><a class="id-method-link" href="/projects/intrinsic-dimensionality/pca/">PCA / PR</a></nav>
+<section id="experiment" data-id-lab data-method="correlation" aria-label="Interactive dimensionality lab" tabindex="-1">
+  <p class="id-lab-loading">Preparing the geometry lab…</p>
+  <noscript><p>Enable JavaScript to generate samples and estimate dimension. You can still read the methods and their references below.</p></noscript>
+</section>
+<section class="id-reading" id="method-guide" aria-labelledby="guide-title">
+  <div class="id-section-heading"><div><p class="id-eyebrow">Behind the estimate</p><h2 id="guide-title">A little geometry. A clearer picture.</h2></div><a href="#experiment" class="id-small">Back to the experiment ↑</a></div>
+  <div class="id-reading-grid">
+    <article class="id-explainer">
+      <h2>How it works</h2>
+      <p>As a ball grows, more pairs fit inside it. The scaling of that count gives a view of the geometry across distance scales.</p>
+      <div class="id-equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="The correlation sum is the fraction of distinct unordered sample pairs whose distance is at most radius r."><mrow><mi>C</mi><mo>(</mo><mi>r</mi><mo>)</mo><mo>=</mo><mfrac><mn>2</mn><mrow><mi>N</mi><mo>(</mo><mi>N</mi><mo>−</mo><mn>1</mn><mo>)</mo></mrow></mfrac><munder><mo>∑</mo><mrow><mi>i</mi><mo>&lt;</mo><mi>j</mi></mrow></munder><mn>1</mn><mo>[</mo><mo>‖</mo><msub><mi>x</mi><mi>i</mi></msub><mo>−</mo><msub><mi>x</mi><mi>j</mi></msub><mo>‖</mo><mo>≤</mo><mi>r</mi><mo>]</mo></mrow></math></div>
+      <p class="id-formula-note">In a scaling region, C(r) behaves approximately like r raised to D₂. The slope of log C(r) against log r estimates D₂.</p>
+      <ol class="id-steps"><li><strong>Count distinct pairs.</strong><span>For each radius, find the fraction of unordered pairs separated by at most that radius. Self-pairs are excluded.</span></li><li><strong>Find a useful scale interval.</strong><span>The highlighted portion of the plot is the interval used in the fit.</span></li><li><strong>Read the slope.</strong><span>Fit a straight line in log–log space. Compare intervals before trusting a single number.</span></li></ol>
+    </article>
+    <aside class="id-reading-aside">
+      <section><h3>The version in this notebook</h3><p>This lab fits 24 log-spaced radii between the 1st and 10th percentiles of pair distances by default. Adjust the interval in the controls to explore other scales. The reported slope is a finite-scale estimate, not the mathematical limit as the radius tends to zero.</p></section>
+      <section><h3>What to watch for</h3><p>Tiny radii contain too few pairs; large radii saturate. Noise and boundaries can erase a useful scaling region. A high R² alone does not establish a correct dimension.</p></section>
+      <section><h3>Try this</h3><p>Explore the Swiss roll: small scales see its surface, while larger scales can bridge neighbouring folds.</p></section>
+      <section><h3>Read the original work</h3><a class="id-source" href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.50.346">Characterization of Strange Attractors ↗</a><p class="id-small">Grassberger & Procaccia · Physical Review Letters 1983</p></section>
+    </aside>
+  </div>
+  <p class="id-reading-note">The plot is a view of the data. Distances, angles and covariance are computed in all generated coordinates. Noise, sampling and scale can change an estimate; the underlying noiseless manifold is only a reference.</p>
+</section>
+</main>
+<footer class="footer"><span>© 2026 <a href="/">lucia’s room</a></span><span> · <a href="/privacy/">privacy</a></span></footer>
+<script src="/assets/js/site-shell.js" defer></script>
+<script type="module">
+  import { buildAlgorithmSwitch, buildChooserCards } from '/assets/js/id-algorithms.js';
+  buildAlgorithmSwitch(document.querySelector('#algorithmSwitch'), 'correlation');
+
+  import('/assets/js/id-lab.js').catch(() => {
+    const target = document.querySelector('[data-id-lab]');
+    target.innerHTML = '<p class="id-lab-loading" role="status">The interactive lab could not load. Please reload this page. The method guide below is still available.</p>';
+  });
+</script>
+</body>
+</html>
