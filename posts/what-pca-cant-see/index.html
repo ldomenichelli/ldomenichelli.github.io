@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="index, follow">
+  <title>What PCA Can't See — A Visual Note on Nonlinear Autoencoders | lucia's room</title>
+  <meta name="description" content="An illustrated introduction to nonlinear autoencoders: dependence without correlation, learning hidden structure, and why a lower reconstruction test loss can be misleading.">
+  <meta name="author" content="Lucia Domenichelli">
+  <link rel="canonical" href="https://ldomenichelli.github.io/posts/what-pca-cant-see/">
+  <link rel="icon" href="/favicon-dithered.ico">
+  <link rel="stylesheet" href="/assets/css/stylesheet.5ad9b1caa92e4cea83ebcd3088e97362f239b07d8144490aaf0bc1d6bd89cd17.css">
+  <link rel="stylesheet" href="/assets/css/site-theme.css">
+  <link rel="stylesheet" href="/assets/css/notes-minimal.css">
+  <link rel="stylesheet" href="/assets/css/site-shell.css">
+  <link rel="stylesheet" href="/assets/css/autoencoders-notes.css">
+  <meta name="theme-color" content="#dfe6d8">
+  <meta property="og:title" content="What PCA Can't See">
+  <meta property="og:description" content="A visual introduction to nonlinear autoencoders, hidden structure, and the limits of reconstruction loss.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ldomenichelli.github.io/posts/what-pca-cant-see/">
+  <meta property="og:image" content="https://ldomenichelli.github.io/logo-dithered.png">
+  <meta property="og:site_name" content="lucia's room">
+  <meta property="article:published_time" content="2026-11-12T00:00:00+01:00">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="What PCA Can't See">
+  <meta name="twitter:description" content="Nonlinear autoencoders and the difference between reconstructing data and learning useful structure. An animated reading note.">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "What PCA Can't See",
+      "description": "A visual introduction to nonlinear autoencoders, hidden structure, and the limits of reconstruction loss.",
+      "datePublished": "2026-11-12",
+      "dateModified": "2026-11-12",
+      "inLanguage": "en",
+      "author": {"@type": "Person", "name": "Lucia Domenichelli", "url": "https://ldomenichelli.github.io/about/"},
+      "mainEntityOfPage": "https://ldomenichelli.github.io/posts/what-pca-cant-see/",
+      "citation": "https://arxiv.org/abs/2602.10680"
+    }
+  </script>
+</head>
+<body class="note-page ae-note" id="top">
+  <header class="header">
+    <nav class="nav" aria-label="Primary">
+      <div class="logo"><a href="/" accesskey="h">lucia's room</a></div>
+      <button id="menu-trigger" type="button" aria-label="Menu Button" aria-expanded="false" aria-controls="site-menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <ul class="menu" id="site-menu">
+        <li><a href="/about/">about</a></li>
+        <li><a href="/posts/" aria-current="page">notes</a></li>
+        <li><a href="/projects/">projects</a></li>
+        <li><a href="/random/">hobbies</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="main">
+    <article class="post-single">
+      <header class="post-header">
+        <div class="breadcrumbs"><a href="/">Home</a> » <a href="/posts/">Notes</a></div>
+        <p class="ae-kicker">paper notes / a visual introduction</p>
+        <h1 class="post-title">What PCA can't see</h1>
+        <div class="post-description">Nonlinear autoencoders, hidden structure, and the limits of reconstruction loss.</div>
+        <div class="post-meta">Lucia Domenichelli · <time datetime="2026-11-12">12 November 2026</time> · about 5 min</div>
+      </header>
+      <div class="post-content">
+        <p class="ae-intro">If a model can reconstruct its input well, has it learned the things we care about? It is tempting to say yes. But copying an observation and finding the hidden factors behind it are different goals.</p>
+        <p>This is a short, visual reading note on <a href="https://arxiv.org/abs/2602.10680">Mendes et al. (2026)</a>. Start with a curve, then a bottleneck, then two ways of judging what a model has learned.</p>
+        <nav class="ae-nav" aria-label="In this note">
+          <a href="#correlation">01 / the blind spot</a>
+          <a href="#autoencoder">02 / the bottleneck</a>
+          <a href="#evaluation">03 / two scorecards</a>
+        </nav>
+
+        <section class="ae-section" id="correlation">
+          <h2><span class="ae-number">01 / the blind spot</span>Connected does not always mean correlated</h2>
+          <p><strong>Principal component analysis (PCA)</strong> finds linear directions along which data vary the most. Its map of the data is the covariance matrix: a summary of variances and pairwise linear relationships.</p>
+          <p>Now imagine <strong>y = x²</strong>, with x sampled symmetrically around zero. Positive and negative values of x give the same y. Their contributions to covariance cancel, so the linear correlation is zero. Yet knowing x tells us y exactly.</p>
+
+          <figure class="ae-figure" data-ae-scene="dependence" aria-labelledby="ae-dependence-title">
+            <div class="ae-figure-head">
+              <h3 id="ae-dependence-title">One relationship, two views</h3>
+              <button type="button" data-motion hidden>Pause motion</button>
+            </div>
+            <div class="ae-plots">
+              <div>
+                <span class="ae-plot-label">Original view: y against x</span>
+                <svg class="ae-plot" viewBox="0 0 328 245" role="img" aria-labelledby="ae-raw-title ae-raw-desc">
+                  <title id="ae-raw-title">A parabola with two points at opposite x values</title>
+                  <desc id="ae-raw-desc">For symmetric x values, y equals x squared. The points have the same height, although their x values have opposite signs. Covariance is zero despite exact dependence.</desc>
+                  <path class="ae-grid" d="M49 44H279M49 118H279M49 192H279M49 44V192M279 44V192"/>
+                  <path class="ae-axis" d="M35 192H292M164 206V30"/>
+                  <path class="ae-curve" d="M49 44Q164 340 279 44"/>
+                  <line id="ae-pair-guide" class="ae-guide" x1="89.25" x2="238.75" y1="129.47" y2="129.47"/>
+                  <circle id="ae-negative" class="ae-point ae-point-negative" cx="89.25" cy="129.47" r="7"/>
+                  <circle id="ae-positive" class="ae-point" cx="238.75" cy="129.47" r="7"/>
+                  <text x="43" y="214">−1</text><text x="159" y="224">0</text><text x="275" y="214">1</text>
+                  <text x="294" y="187">x</text><text x="176" y="33">y</text>
+                </svg>
+              </div>
+              <div>
+                <span class="ae-plot-label">Nonlinear feature: y against x²</span>
+                <svg class="ae-plot" viewBox="0 0 328 245" role="img" aria-labelledby="ae-square-title ae-square-desc">
+                  <title id="ae-square-title">The same relationship becomes a straight line when plotted against x squared</title>
+                  <desc id="ae-square-desc">Squaring x maps the two highlighted inputs to the same point on a line. This exposes the dependence but discards the sign of x.</desc>
+                  <path class="ae-grid" d="M49 44H279M49 118H279M164 44V192M279 44V192"/>
+                  <path class="ae-axis" d="M35 192H292M49 206V30"/>
+                  <path class="ae-curve" d="M49 192L279 44"/>
+                  <circle id="ae-squared" class="ae-point" cx="146.175" cy="129.47" r="8"/>
+                  <text x="44" y="214">0</text><text x="274" y="214">1</text>
+                  <text x="294" y="187">x²</text><text x="61" y="33">y</text>
+                </svg>
+              </div>
+            </div>
+            <div class="ae-slider-row" data-slider-controls hidden>
+              <label for="ae-pair">Move the pair</label>
+              <input id="ae-pair" type="range" min="0" max="1" step="0.01" value="0.65" aria-describedby="ae-pair-help">
+              <output id="ae-pair-value" for="ae-pair" aria-live="off">x = ±0.65</output>
+            </div>
+            <figcaption id="ae-pair-help"><strong>Zero correlation does not mean no relationship.</strong> The two dots on the curve share a height; squaring x brings them together. Moving the slider pauses this animation. This toy example illustrates dependence, not the paper's data or a trained autoencoder; the squared view loses the sign of x.</figcaption>
+          </figure>
+
+          <p>This curve alone does not make a direction invisible to PCA: PCA still sees the variance along each axis. The paper goes further. It constructs noisy, high-dimensional data with two hidden directions. One leaves a covariance signal; the other is normalized so that its extra variance disappears. The two latent factors remain dependent beyond covariance. <a class="ae-paper-link" href="https://arxiv.org/html/2602.10680v2#S1">[Paper, §1]</a></p>
+          <p><strong>Higher-order structure</strong> means relationships that need more than pairs of quantities multiplied together to become visible. A nonlinear feature such as x² gives us a first intuition for how to look for them.</p>
+        </section>
+
+        <section class="ae-section" id="autoencoder">
+          <h2><span class="ae-number">02 / the bottleneck</span>Learning by trying to reconstruct</h2>
+          <p>An <strong>autoencoder</strong> sends an input through an encoder to make a compact code, then through a decoder to reconstruct the input. The code is its <em>representation</em>. Training adjusts the model to reduce the difference between the original and the reconstruction.</p>
+          <figure class="ae-figure" data-ae-scene="autoencoder" aria-labelledby="ae-flow-title">
+            <div class="ae-figure-head">
+              <h3 id="ae-flow-title">A trip through the bottleneck</h3>
+              <button type="button" data-motion hidden>Pause motion</button>
+            </div>
+            <div class="ae-pipeline" role="group" aria-label="Input, encoder, compact code, decoder, reconstruction">
+              <div class="ae-stage">
+                <svg viewBox="0 0 58 50" aria-hidden="true" fill="currentColor"><rect x="6" y="8" width="8" height="34"/><rect x="19" y="18" width="8" height="24" opacity=".45"/><rect x="32" y="3" width="8" height="39" opacity=".7"/><rect x="45" y="24" width="8" height="18"/></svg>
+                <strong>Input</strong><small>an observation</small>
+              </div>
+              <div class="ae-stage">
+                <svg viewBox="0 0 58 50" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 6L48 20V30L8 44Z"/><path d="M17 25H39M34 21L39 25L34 29"/></svg>
+                <strong>Encoder</strong><small>compress</small>
+              </div>
+              <div class="ae-stage ae-code">
+                <svg viewBox="0 0 58 50" aria-hidden="true" fill="currentColor"><circle cx="29" cy="25" r="10"/><circle cx="29" cy="25" r="18" fill="none" stroke="currentColor" stroke-dasharray="2 5"/></svg>
+                <strong>Code</strong><small>fewer numbers</small>
+              </div>
+              <div class="ae-stage">
+                <svg viewBox="0 0 58 50" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 20L48 6V44L8 30Z"/><path d="M17 25H39M34 21L39 25L34 29"/></svg>
+                <strong>Decoder</strong><small>reconstruct</small>
+              </div>
+              <div class="ae-stage">
+                <svg viewBox="0 0 58 50" aria-hidden="true" fill="currentColor"><rect x="6" y="12" width="8" height="30"/><rect x="19" y="23" width="8" height="19" opacity=".45"/><rect x="32" y="7" width="8" height="35" opacity=".7"/><rect x="45" y="20" width="8" height="22"/></svg>
+                <strong>Output</strong><small>an approximation</small>
+              </div>
+            </div>
+            <div class="ae-flow-status" id="ae-flow-status">Compare the reconstruction with the input.</div>
+            <figcaption><strong>The training target is the input itself.</strong> This is a schematic of the reconstruction task. The moving highlight follows the information through the model; it does not simulate training.</figcaption>
+          </figure>
+          <p>With linear maps and squared reconstruction error, an optimal undercomplete autoencoder recovers the same principal subspace as PCA. Nonlinear activations let the training objective respond to richer statistical relationships.</p>
+          <p>Here, a single hidden unit with a suitable nonlinearity learns a direction correlated with both hidden directions, including the one PCA misses. This is partial recovery, not perfect disentanglement. Which nonlinearity works depends on the data. <a class="ae-paper-link" href="https://arxiv.org/html/2602.10680v2#S4">[Paper, §4]</a></p>
+        </section>
+
+        <section class="ae-section" id="evaluation">
+          <h2><span class="ae-number">03 / two scorecards</span>A better copy, or a more useful representation?</h2>
+          <p><strong>Test reconstruction loss</strong> asks: “How accurately can the model rebuild inputs it did not train on?” A <strong>downstream task</strong> asks whether what it learned helps with another goal, such as predicting a label. Both use new data, but they measure different things.</p>
+          <figure class="ae-figure" aria-labelledby="ae-scores-title">
+            <div class="ae-figure-head"><h3 id="ae-scores-title">Change the question, change the verdict</h3></div>
+            <div class="ae-score-controls" role="group" aria-label="Choose an evaluation criterion" hidden>
+              <button type="button" data-criterion="reconstruction" aria-pressed="true">Reconstruct the input</button>
+              <button type="button" data-criterion="structure" aria-pressed="false">Find the hidden factor</button>
+            </div>
+            <div class="ae-scorecards">
+              <div class="ae-scorecard" id="ae-linear-card" data-selected="true">
+                <h4>Linear autoencoder / PCA</h4>
+                <dl><dt>Test reconstruction error</dt><dd><strong>Lower</strong></dd><dt>Covariance-hidden direction</dt><dd>Missed</dd></dl>
+              </div>
+              <div class="ae-scorecard" id="ae-nonlinear-card" data-selected="false">
+                <h4>Suitable nonlinear autoencoder</h4>
+                <dl><dt>Test reconstruction error</dt><dd><strong>Higher</strong></dd><dt>Covariance-hidden direction</dt><dd>Partly recovered</dd></dl>
+              </div>
+            </div>
+            <div class="ae-verdict" id="ae-verdict" aria-live="polite">By reconstruction error, the linear model comes out ahead.</div>
+            <figcaption>A qualitative comparison in the paper's recovery regime, not measured values. On its downstream classification task, the nonlinear features also perform better. <a href="https://arxiv.org/html/2602.10680v2#S6">[Paper, §6 and Figure 2]</a></figcaption>
+          </figure>
+          <p>The test set is doing its job: it measures reconstruction on fresh samples. The mismatch comes from using that score to answer a different question about learned structure. A useful evaluation must match what we want to do with the representation.</p>
+          <div class="ae-takeaway"><p><strong>My takeaway:</strong> a low reconstruction loss tells us how well a model copies. To learn what it has understood, we need to ask what its representation makes possible.</p></div>
+          <p>This deliberately simplified model makes the distinction analyzable. It does not establish that every nonlinear autoencoder outperforms PCA.</p>
+        </section>
+
+        <section class="ae-reference" id="paper">
+          <h2>The paper behind this note</h2>
+          <p>Vicente Conde Mendes, Lorenzo Bardone, Cédric Koller, Jorge Medina Moreira, Vittorio Erba, Emanuele Troiani and Lenka Zdeborová. <em>A solvable high-dimensional model where nonlinear autoencoders learn structure invisible to PCA while test loss misaligns with generalization.</em> ICML 2026.</p>
+          <p><a href="https://proceedings.mlr.press/v306/mendes26a.html">Proceedings</a> · <a href="https://arxiv.org/html/2602.10680v2">Read the paper</a> · <a href="https://arxiv.org/pdf/2602.10680">PDF</a> · <a href="https://github.com/SPOC-group/advantage_nonlinearity">Authors' code</a></p>
+          <p>For more background: <a href="/projects/intrinsic-dimensionality/pca/">explore PCA</a> or read my <a href="/posts/embeddings-space/">notes on embedding spaces</a>.</p>
+        </section>
+      </div>
+    </article>
+  </main>
+  <footer class="footer"><span>© 2025–2026 <a href="/">lucia's room</a></span><span aria-hidden="true">•</span><a href="/privacy/">privacy</a></footer>
+  <script src="/assets/js/site-shell.js" defer></script>
+  <script src="/assets/js/autoencoders-notes.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+/* A small visual reading note; all styles stay inside this article. */
+.ae-note .post-single { padding: clamp(20px, 4vw, 44px); }
+.ae-note .post-title { font-size: clamp(1.9rem, 5vw, 2.7rem); max-width: 17ch; margin: 18px 0; }
+.ae-note .ae-kicker { color: var(--note-accent); font-size: .72rem; letter-spacing: .09em; text-transform: uppercase; margin: 20px 0 0; }
+.ae-note .post-description { font-size: 1.02rem; max-width: 54ch; line-height: 1.65; }
+.ae-note .post-meta { margin-top: 15px; font-size: .72rem; }
+.ae-note .ae-intro { font-size: 1.04rem; }
+.ae-note .ae-nav { display: flex; flex-wrap: wrap; gap: 10px 22px; padding: 18px 0; margin: 24px 0 32px; border-block: 1px solid var(--note-border); font-size: .76rem; }
+.ae-note .ae-nav a { box-shadow: none; text-decoration: none; }
+.ae-note .ae-section { margin-top: 46px; scroll-margin-top: 100px; }
+.ae-note .ae-section > h2 { font-size: 1.28rem; margin: 0 0 18px; }
+.ae-note .ae-number { color: var(--note-accent); font-size: .76rem; display: block; margin-bottom: 9px; }
+.ae-note .ae-figure { margin: 26px 0; padding: 18px; border: 1px solid var(--note-border); background: var(--note-surface-muted); }
+.ae-note .ae-figure-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.ae-note .ae-figure-head h3 { font-size: .83rem; margin: 0; text-transform: none; line-height: 1.5; }
+.ae-note button { color: var(--note-accent-strong); background: var(--note-surface); border: 1px solid var(--note-border-strong); border-radius: 0; font: inherit; font-size: .72rem; line-height: 1.4; padding: 8px 12px; min-height: 38px; cursor: pointer; }
+.ae-note button:hover { background: #e3ebe4; }
+.ae-note [hidden] { display: none !important; }
+.ae-note .ae-plots { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.ae-note .ae-plot-label { font-size: .73rem; display: block; text-align: center; margin-bottom: 4px; }
+.ae-note .ae-plot { display: block; width: 100%; height: auto; overflow: visible; }
+.ae-note .ae-plot text { fill: var(--note-muted); font: 13px monospace; }
+.ae-note .ae-grid { stroke: var(--note-border); stroke-width: .65; }
+.ae-note .ae-axis { stroke: var(--note-border-strong); stroke-width: 1; }
+.ae-note .ae-curve { fill: none; stroke: var(--note-accent); stroke-width: 2.5; opacity: .55; }
+.ae-note .ae-guide { stroke: var(--note-border-strong); stroke-width: 1; stroke-dasharray: 4 5; }
+.ae-note .ae-point { fill: #155e6b; stroke: var(--note-surface); stroke-width: 2.5; }
+.ae-note .ae-point-negative { fill: #94502d; }
+.ae-note .ae-slider-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: 12px 0; font-size: .76rem; }
+.ae-note input[type=range] { flex: 1; min-width: 110px; width: 100%; accent-color: var(--note-accent); cursor: pointer; height: 30px; }
+.ae-note output { font-variant-numeric: tabular-nums; min-width: 9ch; }
+.ae-note .ae-figure figcaption { font-size: .74rem; font-weight: 400; line-height: 1.7; margin: 14px 0 0; color: var(--note-muted); }
+.ae-note .ae-figure figcaption strong { color: var(--note-body); }
+.ae-note .ae-pipeline { display: grid; grid-template-columns: 1.1fr .8fr .8fr .8fr 1.1fr; align-items: center; gap: 7px; position: relative; padding: 20px 0 24px; }
+.ae-note .ae-pipeline::before { content: ''; position: absolute; inset: 50% 5% auto; height: 1px; background: var(--note-border); }
+.ae-note .ae-stage { position: relative; z-index: 1; text-align: center; background: var(--note-surface); padding: 16px 3px; border: 1px solid var(--note-border); }
+.ae-note .ae-stage small { display: block; font-size: .62rem; line-height: 1.5; margin-top: 8px; color: var(--note-muted); }
+.ae-note .ae-stage strong { font-size: .74rem; font-weight: 500; }
+.ae-note .ae-stage svg { display: block; width: 58px; height: 50px; margin: 0 auto 10px; color: var(--note-accent); }
+.ae-note .ae-code { background: #e1eae1; border-color: var(--note-accent); }
+.ae-note .ae-stage.is-lit { border-color: var(--note-accent); box-shadow: inset 0 -3px 0 var(--note-accent); }
+.ae-note .ae-flow-status { font-size: .73rem; color: var(--note-accent-strong); text-align: center; min-height: 2.8em; margin-bottom: 4px; }
+.ae-note .ae-paper-link { font-size: .8rem; }
+.ae-note .ae-score-controls { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.ae-note .ae-score-controls button[aria-pressed=true] { background: var(--note-accent-strong); color: #fffdf8; border-color: var(--note-accent-strong); }
+.ae-note .ae-scorecards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ae-note .ae-scorecard { background: var(--note-surface); border: 1px solid var(--note-border); padding: 16px; }
+.ae-note .ae-scorecard h4 { font-size: .86rem; margin: 0 0 20px; text-transform: none; }
+.ae-note .ae-scorecard dl { display: block; margin: 0; }
+.ae-note .ae-scorecard dt { width: auto; padding: 0; font-size: .68rem; font-weight: 400; color: var(--note-muted); margin-bottom: 4px; }
+.ae-note .ae-scorecard dd { width: auto; padding: 0; font-size: .8rem; margin: 0 0 18px; line-height: 1.5; }
+.ae-note .ae-scorecard dd:last-child { margin-bottom: 0; }
+.ae-note .ae-scorecard[data-selected=true] { border-color: var(--note-accent); outline: 1px solid var(--note-accent); }
+.ae-note .ae-verdict { margin: 16px 0 0; font-size: .8rem; line-height: 1.6; min-height: 3.2em; }
+.ae-note .ae-takeaway { border-left: 3px solid var(--note-accent); padding: 5px 0 5px 20px; margin: 32px 0; }
+.ae-note .ae-takeaway p { margin: 0; }
+.ae-note .ae-reference { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--note-border); }
+.ae-note .ae-reference p { font-size: .76rem; line-height: 1.8; }
+.ae-note .ae-reference h2 { font-size: 1rem; margin-top: 0; }
+@media (max-width: 580px) {
+  .ae-note .main { padding: 18px 12px; }
+  .ae-note .post-single { padding: 22px 17px; }
+  .ae-note .ae-figure { padding: 14px 10px; margin-inline: -4px; }
+  .ae-note .ae-plots { grid-template-columns: 1fr; gap: 20px; }
+  .ae-note .ae-plot { max-width: 340px; margin-inline: auto; }
+  .ae-note .ae-pipeline { grid-template-columns: 1fr; padding: 5px 20px; gap: 12px; }
+  .ae-note .ae-pipeline::before { inset: 5% auto 5% 50%; height: auto; width: 1px; }
+  .ae-note .ae-stage { display: grid; grid-template-columns: 64px 1fr; text-align: left; padding: 10px 18px; }
+  .ae-note .ae-stage svg { grid-row: 1 / 3; margin: 0; width: 48px; height: 42px; }
+  .ae-note .ae-stage small { margin-top: 3px; }
+  .ae-note .ae-flow-status { margin-top: 18px; }
+  .ae-note .ae-scorecards { grid-template-columns: 1fr; }
+  .ae-note .ae-scorecard { padding: 16px; }
+}
