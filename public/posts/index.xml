@@ -12,11 +12,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language><atom:link href="https://ldomenichelli.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>What PCA Can&#x27;t See — An Interactive Field Guide</title>
+      <title>What PCA Can&#x27;t See — The Paper, Explained</title>
       <link>https://ldomenichelli.github.io/posts/what-pca-cant-see/</link>
       <pubDate>Thu, 12 Nov 2026 00:00:00 +0100</pubDate>
       <guid>https://ldomenichelli.github.io/posts/what-pca-cant-see/</guid>
-      <description>Three hands-on experiments about nonlinear autoencoders, hidden structure, and why a better reconstruction is not always a better representation.</description>
+      <description>An interactive, detailed explanation of Mendes et al.: the planted data model, nonlinear autoencoders, learning theory, and why reconstruction loss can misrank representations.</description>
     </item>
     <item>
       <title>2026 Analytical Connectionism Summer School Notes</title>

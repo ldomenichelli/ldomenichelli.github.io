@@ -1,239 +1,185 @@
 (function () {
   'use strict';
-  const $ = (selector) => document.querySelector(selector);
-  const $$ = (selector) => Array.from(document.querySelectorAll(selector));
+  const $ = selector => document.querySelector(selector);
+  const $$ = selector => Array.from(document.querySelectorAll(selector));
   const NS = 'http://www.w3.org/2000/svg';
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   let moving = !reduced.matches;
-  let lens = 'data';
-  let blend = 0;
+  let lens = 'latents';
+  let observedBlend = 0;
   let elapsed = 0;
   let lastTime = null;
   let frameId = null;
-  let points = [];
-  let scale = 85;
-  const visibility = { scatter: true, encoder: false };
-  const dots = [];
-  const mean = (values) => values.reduce((a, b) => a + b, 0) / values.length;
-  const standardize = (values) => {
-    const m = mean(values);
-    const sd = Math.sqrt(mean(values.map(v => (v - m) ** 2)));
-    return values.map(v => (v - m) / (sd || 1));
-  };
-  function correlation(xs, ys) {
-    const a = standardize(xs), b = standardize(ys);
-    const r = mean(a.map((v, i) => v * b[i]));
-    return Math.abs(r) < .0005 ? '0.000' : r.toFixed(3);
+  let visible = true;
+  let seed = 260210680;
+  // A fixed seeded sample keeps views comparable. It is not rescaled to force
+  // sample covariance to zero; the displayed moments are population quantities.
+  function uniform() {
+    seed = (Math.imul(1664525, seed) + 1013904223) >>> 0;
+    return (seed + .5) / 4294967296;
   }
-  for (let i = 0; i < 144; i++) {
-    const dot = document.createElementNS(NS, 'circle');
-    dot.setAttribute('r', String(2.1 + (i % 3) * .6));
-    dot.setAttribute('fill', i % 2 ? '#456d53' : '#b5815a');
-    dots.push(dot);
-    $('#scatter-points').appendChild(dot);
-  }
-  $('#scatter-fallback').remove();
-  function makeCloud() {
-    const noise = Number($('#noise').value) / 100;
-    const xs = [], ys = [];
-    for (let i = 0; i < 72; i++) {
-      const t = (i + .5) / 72;
-      // Identical noise within each +/- pair preserves zero sample covariance.
-      const jitter = (Math.sin(i * 127.1 + 3) + .5 * Math.sin(i * 43.7)) * .32 * noise;
-      xs.push(-t, t);
-      ys.push(t * t + jitter, t * t + jitter);
-    }
-    const x = standardize(xs), y = standardize(ys);
-    const squared = standardize(x.map(v => v * v));
-    points = x.map((value, i) => ({ x: value, y: y[i], squared: squared[i] }));
-    scale = Math.min(91, 198 / Math.max(...y), 132 / Math.abs(Math.min(...y)));
-    $('#noise-value').value = Math.round(noise * 100) + '%';
-    $('#correlation-value').textContent = correlation(lens === 'nonlinear' ? squared : x, y);
-    $('.covariance-disc').setAttribute('r', scale.toFixed(2));
-    $('.covariance-cross').setAttribute('d', `M${300-scale-10} 245H${300+scale+10}M300 ${245-scale-10}V${245+scale+10}`);
-    renderCloud();
-  }
-  const lensCopy = {
-    data: ['There’s a relationship here.', 'Linear correlation', 'The dots follow a curve, even though their linear correlation is zero.'],
-    pca: ['Same variance. No preferred direction.', 'Linear correlation', 'PCA sees equal variances and zero covariance. That summary doesn’t reveal the curve.'],
-    nonlinear: ['A different feature reveals the pattern.', 'Correlation of x² and y', 'We supplied x² as a feature. The relationship becomes nearly linear; more noise makes it less clear.']
-  };
-  function chooseLens(next) {
-    lens = next;
-    $$('[data-lens]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.lens === lens)));
-    const copy = lensCopy[lens];
-    $('#plot-annotation').textContent = copy[0];
-    $('#correlation-label').textContent = copy[1];
-    $('#lens-insight').textContent = copy[2];
-    $('#scatter-x-label').textContent = lens === 'nonlinear' ? 'x²' : 'x';
-    $('#scatter-title').textContent = lens === 'pca' ? 'A circular covariance summary hides the curved relationship' : lens === 'nonlinear' ? 'A supplied squared feature reveals an approximately linear relationship' : 'A curved relationship with zero linear correlation';
-    if (!moving) blend = lens === 'nonlinear' ? 1 : 0;
-    makeCloud();
-    schedule();
-  }
-  function renderCloud() {
-    const pca = lens === 'pca';
-    $('#covariance-view').setAttribute('opacity', pca ? '1' : '0');
-    $('#scatter-focus').setAttribute('opacity', pca ? '0' : '1');
-    points.forEach((point, i) => {
-      const x = point.x * (1 - blend) + point.squared * blend;
-      dots[i].setAttribute('cx', (300 + x * scale).toFixed(2));
-      dots[i].setAttribute('cy', (245 - point.y * scale).toFixed(2));
-      dots[i].setAttribute('opacity', pca ? '.14' : String(.45 + (i % 5) * .1));
-    });
-    const index = (Math.floor(elapsed / 85) % 64 + 4) * 2;
-    const a = points[index], b = points[index + 1];
-    const ax = 300 + (a.x * (1 - blend) + a.squared * blend) * scale;
-    const bx = 300 + (b.x * (1 - blend) + b.squared * blend) * scale;
-    const y = 245 - a.y * scale;
-    $('#focus-a').setAttribute('cx', ax); $('#focus-a').setAttribute('cy', y);
-    $('#focus-b').setAttribute('cx', bx); $('#focus-b').setAttribute('cy', y);
-    const line = $('#focus-line');
-    line.setAttribute('x1', ax); line.setAttribute('x2', bx); line.setAttribute('y1', y); line.setAttribute('y2', y);
-  }
-  $$('[data-lens]').forEach(button => button.addEventListener('click', () => chooseLens(button.dataset.lens)));
-  $('#noise').addEventListener('input', makeCloud);
-
-  // A fixed orthonormal DCT encoder/decoder, used only as a compression sketch.
-  const size = 8;
-  const basis = Array.from({ length: size }, (_, frequency) => Array.from({ length: size }, (_, x) =>
-    (frequency === 0 ? Math.sqrt(1 / size) : Math.sqrt(2 / size)) * Math.cos(Math.PI * (2 * x + 1) * frequency / (2 * size))));
-  const order = [];
-  for (let v = 0; v < size; v++) for (let u = 0; u < size; u++) order.push({ u, v });
-  order.sort((a, b) => (a.u + a.v) - (b.u + b.v) || a.u - b.u);
-  let pattern = 'ring';
-  let pixels = [];
-  let coefficients = [];
-  let errorView = false;
-  const inputCells = [], outputCells = [];
-  function prepareMatrix(selector, cells) {
-    $(selector).replaceChildren();
-    for (let i = 0; i < 64; i++) {
-      const cell = document.createElement('span');
-      cell.setAttribute('aria-hidden', 'true');
-      cells.push(cell); $(selector).appendChild(cell);
-    }
-  }
-  prepareMatrix('#input-matrix', inputCells);
-  prepareMatrix('#output-matrix', outputCells);
-  function pixelColor(value, error) {
-    const t = Math.max(0, Math.min(1, value));
-    const low = [28, 48, 36], high = error ? [220, 139, 94] : [210, 225, 157];
-    return `rgb(${low.map((v, i) => Math.round(v + (high[i] - v) * t)).join(',')})`;
-  }
-  function setPattern(next) {
-    pattern = next;
-    pixels = [];
-    for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
-      const px = x - 3.5, py = y - 3.5;
-      let value;
-      if (pattern === 'ring') value = Math.exp(-((Math.hypot(px, py) - 2.45) ** 2) / .37);
-      else if (pattern === 'diagonal') value = Math.exp(-((px - py) ** 2) / 1.2);
-      else value = Math.max(Math.exp(-(px ** 2) / .55), Math.exp(-(py ** 2) / .55));
-      pixels.push(.06 + .94 * value);
-    }
-    coefficients = order.map(({ u, v }) => {
-      let coefficient = 0;
-      for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) coefficient += pixels[y * size + x] * basis[u][x] * basis[v][y];
-      return coefficient;
-    });
-    pixels.forEach((v, i) => { inputCells[i].style.backgroundColor = pixelColor(v, false); });
-    $('#input-matrix').setAttribute('aria-label', `An eight by eight pixel image: ${pattern}`);
-    $$('[data-pattern]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.pattern === pattern)));
-    reconstruct();
-  }
-  function reconstruct() {
-    const count = Number($('#bottleneck').value);
-    const reconstructed = Array(64).fill(0);
-    for (let k = 0; k < count; k++) {
-      const { u, v } = order[k];
-      for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) reconstructed[y * size + x] += coefficients[k] * basis[u][x] * basis[v][y];
-    }
-    const mse = mean(pixels.map((v, i) => (v - reconstructed[i]) ** 2));
-    reconstructed.forEach((v, i) => {
-      outputCells[i].style.backgroundColor = pixelColor(errorView ? Math.abs(pixels[i] - v) : v, errorView);
-    });
-    $('#reconstruction-error').textContent = mse.toFixed(4);
-    $('#reconstruction-error').dataset.value = String(mse);
-    $('#bottleneck-value').value = count;
-    $('#code-count').textContent = count;
-    $('#output-title').textContent = errorView ? 'Error map' : 'Reconstruction';
-    $('#output-caption').textContent = errorView ? 'brighter = a larger pixel error' : 'an approximation of the input';
-    $('#output-matrix').setAttribute('aria-label', `${errorView ? 'Pixel error map' : 'Reconstruction'} of the ${pattern} using ${count} code values. Mean squared error ${mse.toFixed(4)}.`);
-    $('#code-bars').replaceChildren();
-    for (let k = 0; k < Math.min(count, 32); k++) {
-      const bar = document.createElement('span');
-      bar.style.height = Math.min(20, 3 + Math.abs(coefficients[k]) * 10) + 'px';
-      $('#code-bars').appendChild(bar);
-    }
-  }
-  $('#bottleneck').addEventListener('input', reconstruct);
-  $$('[data-pattern]').forEach(button => button.addEventListener('click', () => setPattern(button.dataset.pattern)));
-  $('#error-toggle').addEventListener('click', () => {
-    errorView = !errorView;
-    $('#error-toggle').setAttribute('aria-pressed', String(errorView));
-    reconstruct();
+  function normal() { return Math.sqrt(-2 * Math.log(uniform())) * Math.cos(2 * Math.PI * uniform()); }
+  const points = Array.from({ length: 220 }, () => {
+    const lambda = normal();
+    return { lambda, nu: Math.abs(lambda) < .6744897501960817 ? -Math.SQRT2 : Math.SQRT2, zu: normal(), zv: normal() };
   });
+  const dots = points.map(point => {
+    const circle = document.createElementNS(NS, 'circle');
+    circle.setAttribute('r', '2.6');
+    circle.setAttribute('fill', point.nu > 0 ? '#aa6647' : '#426b50');
+    $('#scatter-points').appendChild(circle);
+    return circle;
+  });
+  function renderCloud() {
+    const whitened = $('#whitening').checked;
+    const covariance = lens === 'covariance';
+    points.forEach((point, index) => {
+      const xu = point.lambda + point.zu;
+      const xv = (point.nu + point.zv) / (whitened ? Math.sqrt(3) : 1);
+      const x = point.lambda + observedBlend * (xu - point.lambda);
+      const y = point.nu + observedBlend * (xv - point.nu);
+      const cx = 300 + x * 55, cy = 200 - y * 55;
+      dots[index].setAttribute('cx', cx.toFixed(2));
+      dots[index].setAttribute('cy', cy.toFixed(2));
+      dots[index].setAttribute('opacity', covariance ? '.14' : '.65');
+    });
+    $('#covariance-view').setAttribute('opacity', covariance ? '1' : '0');
+    $('#covariance-ellipse').setAttribute('ry', String(55 * (whitened ? 1 : Math.sqrt(3))));
+    $('#covariance-ellipse').setAttribute('rx', String(55 * Math.sqrt(2)));
+    $('#covariance-axis').setAttribute('d', whitened ? 'M200 200H400' : 'M300 85V315');
+    const focus = dots[Math.floor(elapsed / 200) % points.length];
+    $('#focus-point').setAttribute('cx', focus.getAttribute('cx'));
+    $('#focus-point').setAttribute('cy', focus.getAttribute('cy'));
+    $('#focus-point').setAttribute('opacity', covariance ? '0' : '.8');
+  }
+  function updateLens(next) {
+    lens = next;
+    const whitened = $('#whitening').checked;
+    const isLatent = lens === 'latents';
+    $$('[data-lens]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.lens === lens)));
+    $('#scatter-x-label').textContent = isLatent ? 'λ' : 'Xᵤ';
+    $('#scatter-y-label').textContent = isLatent ? 'ν' : 'Xᵥ';
+    $('#whitening-state').textContent = whitened ? 'On' : 'Off';
+    let insight, label, value, hint, title;
+    if (isLatent) {
+      label = 'Population E[λν]'; value = '0';
+      insight = 'ν depends on the size of λ, but not its sign. Zero correlation does not mean independence.';
+      hint = 'A sample from the k* = 2 latent law used in Figure 1';
+      title = 'The paper’s dependent but uncorrelated latent variables';
+    } else if (lens === 'observed') {
+      label = 'Population Var(Xᵥ)'; value = whitened ? '1' : '3';
+      insight = whitened ? 'Gaussian noise blurs the dependence. Whitening gives the hidden direction exactly the same variance as pure noise.' : 'Without whitening, the hidden direction has variance 3, above the noise baseline of 1. Its covariance signature returns.';
+      hint = whitened ? 'Xᵤ = λ + Zᵤ;  Xᵥ = (ν + Zᵥ)/√3' : 'Xᵤ = λ + Zᵤ;  Xᵥ = ν + Zᵥ';
+      title = 'Noisy observed projections along the known planted axes';
+    } else {
+      label = 'Variances (Xᵤ, Xᵥ)'; value = whitened ? '2, 1' : '2, 3';
+      insight = whitened ? 'PCA sees the visible spike: variance 2 along u*. The hidden direction has variance 1, just like every background direction.' : 'Without whitening, v* has the largest variance. PCA would detect it. Whitening is what creates the paper’s blind spot.';
+      hint = 'Population one-standard-deviation ellipse; dashed = leading axis';
+      title = 'Population covariance ellipse and its leading principal axis';
+    }
+    $('#correlation-label').textContent = label;
+    $('#correlation-value').textContent = value;
+    $('#lens-insight').textContent = insight;
+    $('#plot-hint').textContent = hint;
+    $('#scatter-title').textContent = title;
+    if (!moving || !visible) observedBlend = isLatent ? 0 : 1;
+    renderCloud(); schedule();
+  }
+  $$('[data-lens]').forEach(button => button.addEventListener('click', () => updateLens(button.dataset.lens)));
+  $('#whitening').addEventListener('change', () => updateLens(lens === 'latents' ? 'observed' : lens));
 
-  $$('[data-criterion]').forEach(button => button.addEventListener('click', () => {
-    const goal = button.dataset.criterion;
-    const structure = goal === 'structure';
-    $$('[data-criterion]').forEach(other => other.setAttribute('aria-pressed', String(other === button)));
-    $('.comparison-stage').dataset.goal = goal;
-    $('#linear-model').dataset.preferred = String(!structure);
-    $('#nonlinear-model').dataset.preferred = String(structure);
-    $('#verdict-title').textContent = structure ? 'The nonlinear one.' : 'The linear one.';
-    $('#verdict-copy').textContent = structure
-      ? 'Its reconstruction loss is higher, but its learned direction is more useful for the paper’s hidden-direction classification task.'
-      : 'It has lower reconstruction loss on new samples. For making a faithful copy, it comes out ahead.';
+  // The exact tied-neuron map on a chosen unit-norm, two-dimensional slice.
+  const input = [-1.3, .8];
+  const scale = 95;
+  const pixel = vector => [300 + scale * vector[0], 190 - scale * vector[1]];
+  function dotPosition(id, vector) {
+    const [x, y] = pixel(vector);
+    $(id).setAttribute('cx', x); $(id).setAttribute('cy', y);
+  }
+  function linePosition(id, start, end) {
+    const [x1, y1] = pixel(start), [x2, y2] = pixel(end);
+    const line = $(id);
+    line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+    line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+  }
+  function neuron() {
+    const angle = Number($('#weight-angle').value);
+    const radians = angle * Math.PI / 180;
+    const a = [Math.cos(radians), Math.sin(radians)];
+    const t = a[0] * input[0] + a[1] * input[1];
+    const name = $('#activation').value;
+    const h = name === 'linear' ? t : name === 'relu' ? Math.max(0, t) : name === 'tanh' ? Math.tanh(t) : 1 / (1 + Math.exp(-t));
+    const projection = a.map(v => v * t), reconstruction = a.map(v => v * h);
+    const projectionError = input.reduce((sum, v, i) => sum + (v - projection[i]) ** 2, 0);
+    const penalty = (h - t) ** 2;
+    const total = input.reduce((sum, v, i) => sum + (v - reconstruction[i]) ** 2, 0);
+    $('#angle-value').value = angle + '°';
+    [['#preactivation', t], ['#code-value', h], ['#projection-error', projectionError], ['#activation-penalty', penalty], ['#total-error', total]].forEach(([id, value]) => {
+      $(id).value = (Math.abs(value) < .0005 ? 0 : value).toFixed(3);
+      $(id).dataset.value = String(value);
+    });
+    linePosition('#decoder-line', a.map(v => -2.8 * v), a.map(v => 2.8 * v));
+    linePosition('#weight-arrow', [0, 0], a);
+    linePosition('#error-line', projection, reconstruction);
+    linePosition('#projection-line', input, projection);
+    dotPosition('#input-dot', input); dotPosition('#projection-dot', projection); dotPosition('#reconstruction-dot', reconstruction);
+    const [labelX, labelY] = pixel(a.map(v => 1.2 * v));
+    $('#weight-label').setAttribute('x', Math.min(475, labelX + 8));
+    $('#weight-label').setAttribute('y', Math.max(22, labelY - 12));
+    $('#neuron-desc').textContent = `Weight angle ${angle} degrees, ${name} activation. Input (${input.join(', ')}). Preactivation ${t.toFixed(3)}, code ${h.toFixed(3)}. Reconstruction error ${total.toFixed(3)} equals projection error ${projectionError.toFixed(3)} plus activation penalty ${penalty.toFixed(3)}.`;
+  }
+  $('#weight-angle').addEventListener('input', neuron);
+  $('#activation').addEventListener('change', neuron);
+  $$('[data-exponent]').forEach(button => button.addEventListener('click', () => {
+    const exponent = button.dataset.exponent;
+    $$('[data-exponent]').forEach(other => other.setAttribute('aria-pressed', String(other === button)));
+    $('.activation-table').dataset.selected = exponent;
+    $('#activation-insight').textContent = exponent === '2'
+      ? 'For k* = 2, ReLU can exploit the mixed third-order signal. tanh has counterexamples, including the latent law in the main experiment.'
+      : 'For k* = 3, the first mixed signal is fourth order. tanh permits logarithmic-time recovery under the theorem’s conditions; ReLU has counterexamples, including Appendix E.4’s latent law.';
   }));
+  $$('[data-criterion]').forEach(button => button.addEventListener('click', () => {
+    const structure = button.dataset.criterion === 'structure';
+    $$('[data-criterion]').forEach(other => other.setAttribute('aria-pressed', String(other === button)));
+    $('#verdict-title').textContent = structure ? 'Suitable nonlinear models win.' : 'The linear model wins.';
+    $('#verdict-copy').textContent = structure
+      ? 'In Figure 2, models that recover v* beat the chance-level linear model on the class-averaged classification task.'
+      : 'In Figure 2, it has lower reconstruction loss on both training and test samples.';
+  }));
+
   function syncMotion() {
     $('#motion-toggle').setAttribute('aria-pressed', String(moving));
+    $('#motion-toggle').setAttribute('aria-label', moving ? 'Pause diagram animation' : 'Play diagram animation');
     $('#motion-label').textContent = moving ? 'Motion on' : 'Motion off';
     $('.motion-icon').textContent = moving ? 'Ⅱ' : '▷';
-    $('#motion-toggle').setAttribute('aria-label', moving ? 'Pause all ambient animations' : 'Play ambient animations');
+  }
+  function stopMotion() {
+    moving = false;
+    if (frameId !== null) { cancelAnimationFrame(frameId); frameId = null; }
+    observedBlend = lens === 'latents' ? 0 : 1;
+    syncMotion(); renderCloud();
   }
   $('#motion-toggle').addEventListener('click', () => {
-    moving = !moving; syncMotion();
-    if (!moving) { blend = lens === 'nonlinear' ? 1 : 0; renderCloud(); }
-    schedule();
+    if (moving) stopMotion();
+    else { moving = true; syncMotion(); schedule(); }
   });
-  reduced.addEventListener('change', event => {
-    if (event.matches) {
-      moving = false; blend = lens === 'nonlinear' ? 1 : 0;
-      syncMotion(); renderCloud();
-    }
-  });
+  reduced.addEventListener('change', event => { if (event.matches) stopMotion(); });
   function schedule() {
-    if (frameId === null && moving && !document.hidden && (visibility.scatter || visibility.encoder)) {
-      lastTime = null;
-      frameId = requestAnimationFrame(tick);
-    }
+    if (frameId === null && moving && visible && !document.hidden) { lastTime = null; frameId = requestAnimationFrame(tick); }
   }
   function tick(now) {
     frameId = null;
+    if (!moving || !visible || document.hidden) return;
     const delta = lastTime === null ? 0 : Math.min(60, now - lastTime);
-    lastTime = now;
-    if (!moving || document.hidden) return;
-    elapsed += delta;
-    const target = lens === 'nonlinear' ? 1 : 0;
-    blend += (target - blend) * (1 - Math.exp(-delta / 130));
-    if (Math.abs(target - blend) < .001) blend = target;
-    if (visibility.scatter) renderCloud();
-    if (visibility.encoder) {
-      $$('.flow-particle').forEach((dot, i) => dot.setAttribute('cx', String(5 + ((elapsed / 28 + i * 45) % 85))));
-      $('.code-orbit').style.transform = `rotate(${elapsed / 80}deg)`;
-    }
-    if (visibility.scatter || visibility.encoder) frameId = requestAnimationFrame(tick);
+    lastTime = now; elapsed += delta;
+    const target = lens === 'latents' ? 0 : 1;
+    observedBlend += (target - observedBlend) * (1 - Math.exp(-delta / 150));
+    if (Math.abs(target - observedBlend) < .001) observedBlend = target;
+    renderCloud(); frameId = requestAnimationFrame(tick);
   }
   if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        visibility[entry.target.id === 'scatter' ? 'scatter' : 'encoder'] = entry.isIntersecting;
-      });
-      schedule();
-    });
-    observer.observe($('#scatter')); observer.observe($('.compression-flow'));
+    const observer = new IntersectionObserver(entries => { visible = entries[0].isIntersecting; schedule(); });
+    observer.observe($('#scatter'));
     const chapters = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) $$('.chapter-nav a').forEach(link => {
@@ -241,16 +187,13 @@
           else link.removeAttribute('aria-current');
         });
       });
-    }, { rootMargin: '-15% 0px -50% 0px', threshold: 0 });
-    ['#correlation', '#autoencoder', '#evaluation'].forEach(id => chapters.observe($(id)));
+    }, { rootMargin: '-15% 0px -65% 0px' });
+    ['data', 'autoencoder', 'theory', 'results', 'evaluation'].forEach(id => chapters.observe($('#' + id)));
   }
   document.addEventListener('visibilitychange', () => {
     if (document.hidden && frameId !== null) { cancelAnimationFrame(frameId); frameId = null; }
     schedule();
   });
   $$('[data-control]').forEach(control => { control.disabled = false; });
-  makeCloud();
-  setPattern('ring');
-  syncMotion();
-  schedule();
+  neuron(); syncMotion(); updateLens('latents');
 }());
